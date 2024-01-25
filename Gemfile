@@ -58,6 +58,10 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  # for hot reloading of tests
+  gem 'guard' # NOTE: this is necessary in newer versions
+  gem 'guard-minitest'
 end
 
 group :test do
