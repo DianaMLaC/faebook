@@ -77,6 +77,9 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
+    annotate (3.2.0)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
     base64 (0.2.0)
     bigdecimal (3.1.6)
     bindex (0.8.1)
@@ -102,7 +105,11 @@ GEM
       reline (>= 0.3.8)
     drb (2.2.0)
       ruby2_keywords
+    email_validator (2.2.4)
+      activemodel
     erubi (1.12.0)
+    faker (3.2.3)
+      i18n (>= 1.8.11, < 2)
     ffi (1.16.3)
     formatador (1.1.0)
     globalid (1.2.1)
@@ -275,9 +282,12 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  annotate
   bootsnap
   capybara
   debug
+  email_validator
+  faker
   guard
   guard-minitest
   importmap-rails

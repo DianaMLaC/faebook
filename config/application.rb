@@ -1,4 +1,5 @@
 require_relative "boot"
+require_relative "../app/middlewares/snake_case_parameters"
 
 require "rails/all"
 
@@ -23,5 +24,8 @@ module Faebook
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # convert incoming camelCase request and query parameters to snake_case
+    config.middleware.use SnakeCaseParameters
   end
 end
