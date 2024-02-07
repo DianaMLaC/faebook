@@ -23,4 +23,14 @@ class Api::AuthenticationControllerTest < ActionDispatch::IntegrationTest
     post '/api/authentication', params: { email: 'jane@smith.com', password: 'PassworD' }
     assert_response :success
   end
+
+  test 'when password is invalid' do
+    # create user
+    post '/api/users',
+         params: { firstName: 'Julie', lastName: 'Soul', password: 'PassworD', dateOfBirth: '2000-10-30',
+                   email: 'jane@smith.com' }
+
+    post '/api/authentication', params: { email: 'jane@smith.com', password: 'nopass' }
+    assert_response 422
+  end
 end
