@@ -9,11 +9,11 @@ class Money
   end
 
   def self.dollar(amount)
-    Dollar.new(amount, 'USD')
+    Money.new(amount, 'USD')
   end
 
   def self.franc(amount)
-    Franc.new(amount, 'CHF')
+    Money.new(amount, 'CHF')
   end
 
   def equals(other)
@@ -26,46 +26,28 @@ class Money
     equals(other)
   end
 
-  # def currency
-  #   currency
-  # end
-
   def times(multiplier)
     Money.new(amount * multiplier, currency)
   end
 end
 
-class Dollar < Money
-  attr_reader :currency
+# class Dollar < Money
+#   attr_reader :currency
 
-  def initialize(amount, currency)
-    super(amount, currency)
-    # @currency = currency
-  end
+#   def initialize(amount, currency)
+#     super(amount, currency)
+#     # @currency = currency
+#   end
+# end
 
-  # def times(multiplier)
-  #   # @amount *= multiplier
-  #   # Money.dollar(amount * multiplier, currency)
-  #   # Money.new(amount * multiplier, currency)
-  #   # Dollar.new(amount * multiplier, currency)
-  # end
-end
+# class Franc < Money
+#   attr_reader :currency
 
-class Franc < Money
-  attr_reader :currency
-
-  def initialize(amount, currency)
-    super(amount, currency)
-    # @currency = currency
-  end
-
-  # def times(multiplier)
-  #   # @amount *= multiplier
-  #   # Money.franc(amount * multiplier, currency)
-  #   # Money.new(amount * multiplier, currency)
-  #   # Franc.new(amount * multiplier, currency)
-  # end
-end
+#   def initialize(amount, currency)
+#     super(amount, currency)
+#     # @currency = currency
+#   end
+# end
 
 class TDD < ActionDispatch::IntegrationTest
   test 'testMultiplication' do
@@ -78,8 +60,8 @@ class TDD < ActionDispatch::IntegrationTest
   test 'testEquality' do
     assert(Money.dollar(5).equals(Money.dollar(5)))
     assert_not(Money.dollar(5).equals(Money.dollar(6)))
-    assert(Money.franc(5).equals(Money.franc(5)))
-    assert_not(Money.franc(5).equals(Money.franc(6)))
+    # assert(Money.franc(5).equals(Money.franc(5)))
+    # assert_not(Money.franc(5).equals(Money.franc(6)))
     assert_not(Money.franc(5).equals(Money.dollar(5)))
   end
 
@@ -94,8 +76,8 @@ class TDD < ActionDispatch::IntegrationTest
     assert_equal('CHF', Money.franc(1).currency)
   end
 
-  test 'testDifferentClassEquality' do
-    assert(Money.new(10, 'CHF').equals(Franc.new(10, 'CHF')))
-    assert(Money.new(10, 'USD').equals(Dollar.new(10, 'USD')))
-  end
+  # test 'testDifferentClassEquality' do
+  #   assert(Money.new(10, 'CHF').equals(Franc.new(10, 'CHF')))
+  #   assert(Money.new(10, 'USD').equals(Dollar.new(10, 'USD')))
+  # end
 end
