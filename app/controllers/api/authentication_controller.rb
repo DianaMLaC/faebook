@@ -10,7 +10,7 @@ class Api::AuthenticationController < ApplicationController
       }, status: 422
     else
 
-      render json: {}, status: 200
+      render json: { 'firstName' => user.first_name, 'lastName' => user.last_name, 'userId' => user.id }, status: 200
     end
   end
 end
