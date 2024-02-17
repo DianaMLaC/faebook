@@ -21,18 +21,26 @@ class Api::AuthenticationControllerTest < ActionDispatch::IntegrationTest
                    email: 'jane@smith.com' }
 
     post '/api/authentication', params: { email: 'jane@smith.com', password: 'nopass' }
-    # assert_response 422
+    assert_response 422
+
+    json_response = JSON.parse(@response.body)
+
+    assert_equal(json_response, {
+                   'errors' => {
+                     'authentication' => 'Email and/or password are invalid'
+                   }
+                 })
   end
 
-  # test 'when email is invalid' do
-  #   # create user
-  #   post '/api/users',
-  #        params: { firstName: 'Julie', lastName: 'Soul', password: 'PassworD', dateOfBirth: '2000-10-30',
-  #                  email: 'jane@smith.com' }
+  test 'when email is invalid' do
+    # create user
+    post '/api/users',
+         params: { firstName: 'Julie', lastName: 'Soul', password: 'PassworD', dateOfBirth: '2000-10-30',
+                   email: 'jane@smith.com' }
 
-  #   post '/api/authentication', params: { email: 'jane@smith.com', password: 'nopass' }
-  #   # assert_response 422
-  # end
+    post '/api/authentication', params: { email: 'jeny@smith.com', password: 'PassworD' }
+    assert_response 422
+  end
 
   test 'when username and password are valid' do
     # create user
@@ -65,5 +73,24 @@ class Api::AuthenticationControllerTest < ActionDispatch::IntegrationTest
     assert_equal(last_name, json_response['lastName'])
     assert_not_nil(json_response['id'])
   end
-  # test 'no email specified, no password specified'
+
+  test 'sets session to the user that was last authenticated' do
+    post '/api/users',
+         params: { firstName: 'Julie', lastName: 'Soul', password: 'PassworD', dateOfBirth: '2000-10-30',
+                   email: 'jane@smith.com' }
+
+    post '/api/users',
+         params: { firstName: 'Sarah', lastName: 'Jones', password: 'PassworD', dateOfBirth: '2000-10-30',
+                   email: 'sarah@jones.com' }
+
+    post '/api/authentication', params: { email: 'jane@smith.com', password: 'PassworD' }
+
+    json_response = JSON.parse(@response.body)
+    user = User.find_by(id: json_response['id'])
+
+    assert_response :success
+
+    assert_not_nil(session[:auth_token])
+    assert_equal(session[:auth_token], user.session_token)
+  end
 end

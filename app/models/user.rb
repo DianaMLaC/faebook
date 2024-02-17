@@ -2,15 +2,19 @@
 #
 # Table name: users
 #
-#  id            :uuid             not null, primary key
-#  first_name    :string           not null
-#  last_name     :string           not null
-#  date_of_birth :date
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id              :uuid             not null, primary key
+#  first_name      :string           not null
+#  last_name       :string           not null
+#  date_of_birth   :date             not null
+#  email           :string           not null
+#  session_token   :string
+#  password_digest :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
+
 class User < ApplicationRecord
-  validates :first_name, :last_name, :password, :date_of_birth, :email, presence: true
+  validates :first_name, :last_name, :password_digest, :date_of_birth, :email, presence: true
   validates :date_of_birth, comparison: { less_than: 14.years.ago.to_date }
   validates :email, uniqueness: true, email: { mode: :strict }
   validates :password, length: { minimum: 6 }
@@ -19,6 +23,16 @@ class User < ApplicationRecord
   before_create :create_session_token
 
   attr_accessor :password
+
+  def has_password?(password)
+    passwd = BCrypt::Password.new(password_digest)
+    passwd == password
+  end
+
+  def password=(password)
+    @password = password
+    self.password_digest = BCrypt::Password.create(password)
+  end
 
   private
 

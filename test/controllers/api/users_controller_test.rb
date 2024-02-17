@@ -108,6 +108,18 @@ class Api::UsersControllerTest < ActionDispatch::IntegrationTest
     # assert_response :success
   end
 
+  test 'password belonging to user can be retrieved' do
+    post '/api/users',
+         params: { firstName: 'Julie', lastName: 'Soul', password: 'PassworD', dateOfBirth: '2000-10-30',
+                   email: 'jane@smith.com' }
+    assert_response 200
+
+    json_response = JSON.parse(@response.body)
+    user = User.find_by(id: json_response['id'])
+    assert_not_nil(user.password_digest)
+    assert(user.has_password?('PassworD'))
+  end
+
   # DOB
   test 'dob must be given' do
     post '/api/users', params: { firstName: 'Jane', lastName: 'Smith', password: 'Password' }
