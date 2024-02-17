@@ -29,6 +29,38 @@ class Money
   def times(multiplier)
     Money.new(amount * multiplier, currency)
   end
+
+  def plus(addend)
+    # Money.new(amount + addend.amount, currency)
+    Sum.new(self, addend)
+  end
+
+  def reduce(_bank, currency)
+    rate = currency.equals('CHF') && @currency.equals('USD') ? 2 : 1
+    Money.new(@amount / rate, currency)
+  end
+end
+
+class Bank
+  def initialize; end
+
+  def reduce(source, currency)
+    source.reduce(bank, currency)
+  end
+end
+
+class Sum
+  attr_reader :augend, :addend
+
+  def initialize(augend, addend)
+    @augend = augend
+    @addend = addend
+  end
+
+  def reduce(_bank, currency)
+    amount = augend.amount + addend.amount
+    Money.new(amount, currency)
+  end
 end
 
 # class Dollar < Money
@@ -80,4 +112,42 @@ class TDD < ActionDispatch::IntegrationTest
   #   assert(Money.new(10, 'CHF').equals(Franc.new(10, 'CHF')))
   #   assert(Money.new(10, 'USD').equals(Dollar.new(10, 'USD')))
   # end
+
+  test 'testSimpleAddition()' do
+    # money_sum = Money.dollar(5).plus(Money.dollar(5))
+    # assert_equal(Money.dollar(10), money_sum)
+    five = Money.dollar(5)
+    expression_sum = five.plus(five)
+    bank = Bank.new
+    reduced = bank.reduce(expression_sum, 'USD')
+    assert_equal(Money.dollar(10), reduced)
+  end
+
+  test 'testPlusReturnsSum' do
+    five = Money.dollar(5)
+    result = five.plus(five)
+    sum = result
+    assert_equal(five, sum.augend)
+    assert_equal(five, sum.addend)
+  end
+
+  test 'testReduceSum' do
+    sum = Sum.new(Money.dollar(3), Money.dollar(4))
+    bank = Bank.new
+    result = bank.reduce(sum, 'USD')
+    assert_equal(Money.dollar(7), result)
+  end
+
+  test 'testReduceMoney' do
+    bank = Bank.new
+    result = bank.reduce(Money.dollar(1), 'USD')
+    assert_equal(Money.dollar(1), result)
+  end
+
+  test 'testReduceMoneyDifferentCurrency' do
+    bank = Bank.new
+    bank.addRate('CHF', 'USD', 2)
+    result = bank.reduce(Money.franc(2), 'USD')
+    assert_equal(Money.dollar(1), result)
+  end
 end
