@@ -63,7 +63,7 @@ class Api::AuthenticationControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal(first_name, json_response['firstName'])
     assert_equal(last_name, json_response['lastName'])
-    assert_not_nil(json_response['userId'])
+    assert_not_nil(json_response['id'])
   end
   # test 'no email specified, no password specified'
 end
