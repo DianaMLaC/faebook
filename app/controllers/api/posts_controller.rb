@@ -1,13 +1,13 @@
 class Api::PostsController < ApplicationController
   def create
-    post = Post.new(text: params[:text], author_id: params[:author])
+    user = User.find(params[:author])
+    post = user.posts.new(text: params[:text])
     if post.save
-      author = User.find_by(id: post.author_id)
-      full_name = author.first_name + ' ' + author.last_name
+      full_name = user.first_name + ' ' + user.last_name
 
       # render :create
       # render json: { 'firstName' => user.first_name, 'lastName' => user.last_name, 'userId' => user.id }, status: 200
-      render json: { 'id' => post.id, 'text' => post.text, 'author' => { 'id' => author.id, 'fullName' => full_name } }
+      render json: { 'id' => post.id, 'text' => post.text, 'author' => { 'id' => user.id, 'fullName' => full_name } }
     else
       render :errors, status: 422
     end

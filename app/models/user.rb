@@ -22,6 +22,10 @@ class User < ApplicationRecord
 
   before_create :create_session_token
 
+  has_many :posts,
+           foreign_key: :author_id,
+           class_name: 'Post'
+
   attr_accessor :password
 
   def has_password?(password)
