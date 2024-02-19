@@ -28,6 +28,10 @@ class User < ApplicationRecord
 
   attr_accessor :password
 
+  def display_name
+    first_name + ' ' + last_name
+  end
+
   def has_password?(password)
     passwd = BCrypt::Password.new(password_digest)
     passwd == password

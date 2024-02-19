@@ -52,7 +52,8 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
 
     post_response = JSON.parse(@response.body)
     assert_not_nil(post_response['author'])
-    assert_not_nil(post_response['author']['fullName'])
+    assert_not_nil(post_response['author']['displayName'])
     assert_equal(user.id, post_response['author']['id'])
+    assert_not_nil(post_response['createdAt'])
   end
 end
