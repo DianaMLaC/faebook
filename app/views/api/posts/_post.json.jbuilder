@@ -2,6 +2,6 @@ json.id @post.id
 json.text @post.text
 json.createdAt @post.created_at
 json.author do 
-  json.id @user.id
-  json.displayName @user.display_name
+  json.id @post.author_id
+  json.displayName @post.author.display_name
 end

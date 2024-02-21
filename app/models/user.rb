@@ -22,8 +22,12 @@ class User < ApplicationRecord
 
   before_create :create_session_token
 
-  has_many :posts,
+  has_many :authored_posts,
            foreign_key: :author_id,
+           class_name: 'Post'
+
+  has_many :profile_posts,
+           foreign_key: :profile_id,
            class_name: 'Post'
 
   attr_accessor :password
