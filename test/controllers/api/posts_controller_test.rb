@@ -8,7 +8,7 @@ def user_params
     email: Faker::Internet.email }
 end
 
-def post_text
+def post_body
   Faker::ChuckNorris.fact
 end
 
@@ -45,12 +45,12 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     user = User.find_by(id: json_response['id'])
     user_full_name = user.first_name + ' ' + user.last_name
 
-    post "/api/users/#{user.id}/posts", params: { text: post_text }
+    post "/api/users/#{user.id}/posts", params: { body: post_body }
     assert_response :success
 
     post_response = JSON.parse(@response.body)
     # check for text, author, createdAt
-    assert_not_nil(post_response['text'])
+    assert_not_nil(post_response['body'])
     assert_not_nil(post_response['author'])
     assert_not_nil(post_response['createdAt'])
     # check for display name matching author's first + last name
@@ -63,7 +63,7 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
   test 'failure when creating a post without a user logged in' do
     user = create_unauthenticated_user
 
-    post "/api/users/#{user.id}/posts", params: { text: post_text }
+    post "/api/users/#{user.id}/posts", params: { body: post_body }
     assert_response 401
   end
 
@@ -72,7 +72,7 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     json_response = sign_in_user(user_params)
     user_two = User.find_by(id: json_response['id'])
 
-    post "/api/users/#{user_one.id}/posts", params: { text: post_text }
+    post "/api/users/#{user_one.id}/posts", params: { body: post_body }
     assert_response :success
     post_response = JSON.parse(@response.body)
     post = Post.find_by(id: post_response['id'])
@@ -84,8 +84,8 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     json_response = sign_in_user(user_params)
 
     user = User.find_by(id: json_response['id'])
-    post "/api/users/#{user.id}/posts", params: { text: post_text }
-    post "/api/users/#{user.id}/posts", params: { text: post_text }
+    post "/api/users/#{user.id}/posts", params: { body: post_body }
+    post "/api/users/#{user.id}/posts", params: { body: post_body }
 
     get "/api/users/#{user.id}/posts"
     assert_response :success
@@ -100,8 +100,8 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     json_response = sign_in_user(user_params)
     user_two = User.find_by(id: json_response['id'])
 
-    post "/api/users/#{user_one.id}/posts", params: { text: post_text }
-    post "/api/users/#{user_one.id}/posts", params: { text: post_text }
+    post "/api/users/#{user_one.id}/posts", params: { body: post_body }
+    post "/api/users/#{user_one.id}/posts", params: { body: post_body }
 
     get "/api/users/#{user_one.id}/posts"
     assert_response :success
@@ -122,12 +122,7 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not allow unauthenticated requests to view post' do
-    user_one = User.create!(first_name: Faker::Name.first_name,
-                            last_name: Faker::Name.last_name,
-                            password: Faker::Internet.password(min_length: 6, mix_case: true,
-                                                               special_characters: true),
-                            date_of_birth: '2000-10-20',
-                            email: Faker::Internet.email)
+    user_one = create_unauthenticated_user
     get "/api/users/#{user_one.id}/posts"
     assert_response :unauthorized
   end

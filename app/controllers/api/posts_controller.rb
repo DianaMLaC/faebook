@@ -13,7 +13,7 @@ class Api::PostsController < ApplicationController
   end
 
   def create
-    @post = @user.profile_posts.new(text: params[:text])
+    @post = @user.profile_posts.new(body: params[:body])
     @post.author_id = current_user.id
 
     if @post.save
