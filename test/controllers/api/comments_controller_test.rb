@@ -49,5 +49,7 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     post "/api/users/#{user_id}/posts/#{post_id}/comments"
     assert_response :success
     # check response to include : id, text, createdAt, author details
+    comment_response = JSON.parse(@response.body)
+    assert_not_nil(comment_response['id'])
   end
 end

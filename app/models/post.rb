@@ -16,4 +16,8 @@ class Post < ApplicationRecord
   belongs_to :profile,
              foreign_key: :profile_id,
              class_name: 'User'
+
+  has_many :comments,
+           foreign_key: :post_id,
+           class_name: 'Comment'
 end
