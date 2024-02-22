@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_22_154926) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_22_161807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "text", null: false
+    t.uuid "author_id", null: false
+    t.uuid "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "body", null: false
@@ -34,6 +42,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_22_154926) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users", column: "author_id"
   add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "posts", "users", column: "profile_id"
 end
