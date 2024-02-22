@@ -121,6 +121,22 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil([], get_response['posts'])
   end
 
+  test 'should return correct attributes for each post object in the array' do
+    json_response = sign_in_user(user_params)
+    user = User.find_by(id: json_response['id'])
+
+    post "/api/users/#{user.id}/posts", params: { body: post_body }
+    get "/api/users/#{user.id}/posts"
+    assert_response :success
+    get_response = JSON.parse(@response.body)
+
+    post = get_response['posts'].last
+    assert_not_nil(post['body'])
+    assert_not_nil(post['createdAt'])
+    assert_not_nil(post['author'])
+    assert_not_nil(post['author']['displayName'])
+  end
+
   test 'should not allow unauthenticated requests to view post' do
     user_one = create_unauthenticated_user
     get "/api/users/#{user_one.id}/posts"

@@ -1,7 +1,7 @@
 class CreatePosts < ActiveRecord::Migration[7.1]
   def change
-    create_table :posts do |t|
-      t.string :text, null: false
+    create_table :posts, id: :uuid do |t|
+      t.string :body, null: false
       t.uuid :author_id, null: false
       t.uuid :profile_id, null: false
 
