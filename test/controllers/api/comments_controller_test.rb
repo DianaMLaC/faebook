@@ -10,7 +10,7 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
       email: Faker::Internet.email }
   end
 
-  def post_body
+  def faker_text
     Faker::ChuckNorris.fact
   end
 
@@ -33,7 +33,7 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def create_post(user_id)
-    post "/api/users/#{user_id}/posts", params: { body: post_body }
+    post "/api/users/#{user_id}/posts", params: { body: faker_text }
     post_response = JSON.parse(@response.body)
     post = Post.find_by(id: post_response['id'])
     post.id
@@ -46,10 +46,21 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     post_id = create_post(user_id)
     # create comment
 
-    post "/api/users/#{user_id}/posts/#{post_id}/comments"
+    post "/api/users/#{user_id}/posts/#{post_id}/comments", params: { text: faker_text }
     assert_response :success
     # check response to include : id, text, createdAt, author details
     comment_response = JSON.parse(@response.body)
     assert_not_nil(comment_response['id'])
+    assert_not_nil(comment_response['text'])
+    assert_not_nil(comment_response['createdAt'])
+  end
+
+  test 'failure response when an unauthorized user comments on a post' do
+    user_two_id = sign_in_user(user_params)
+    post_id = create_post(user_two_id)
+    post "/api/users/#{user_id}/posts/#{post_id}/comments", params: { text: faker_text }
+    assert_response :success
+
+    user_one = create_unauthenticated_user
   end
 end
