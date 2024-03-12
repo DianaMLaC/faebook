@@ -68,21 +68,21 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     # assert_not_nil(comment_response['createdAt'])
   end
 
-  # test 'failure response when an unauthorized user comments on a post' do
-  #   # sign in user to get user id for profile id when creating post
-  #   user_one_id = sign_in_user(user_params)
-  #   # create post to get post id for url when creating comments
-  #   post_id = create_post(user_one_id)
+  test 'failure response when an unauthorized user comments on a post' do
+    # sign in user to get user id for profile id when creating post
+    user_one_id = sign_in_user(user_params)
+    # create post to get post id for url when creating comments
+    post_id = create_post(user_one_id)
 
-  #   post "/api/users/#{user_one_id}/posts/#{post_id}/comments", params: { text: faker_text }
-  #   assert_response :success
+    post "/api/users/#{user_one_id}/posts/#{post_id}/comments", params: { text: faker_text }
+    assert_response :success
 
-  #   user_two = create_unauthenticated_user
-  #   # now that we have a profile belonging to user_one with user_one's own post on it, how does user_two create the comment on the post?
-  #   # in the post we had it set up that the author id is the user authenticated, but in this case,
-  #   # the user authenticated is user_one,
-  #   # should I just pass the author_id in the params?
-  #   # but even if I do, in my crate method I reassign the author_id to match the id of the user that has the session_token same as session[:auth_token]
-  #   # so do I need a log out method? for our first user that created the post?
-  # end
+    user_two = create_unauthenticated_user
+    # now that we have a profile belonging to user_one with user_one's own post on it, how does user_two create the comment on the post?
+    # in the post we had it set up that the author id is the user authenticated, but in this case,
+    # the user authenticated is user_one,
+    # should I just pass the author_id in the params?
+    # but even if I do, in my crate method I reassign the author_id to match the id of the user that has the session_token same as session[:auth_token]
+    # so do I need a log out method? for our first user that created the post?
+  end
 end
