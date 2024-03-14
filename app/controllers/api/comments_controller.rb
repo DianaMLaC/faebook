@@ -13,7 +13,7 @@ class Api::CommentsController < ApplicationController
     if comment.save!
       # render json: :success
 
-      render json: { 'id' => comment.id, 'text' => comment.text, 'createAt' => comment.created_at,
+      render json: { 'id' => comment.id, 'text' => comment.text, 'createdAt' => comment.created_at,
                      'postId' => comment.post_id, 'author' => { 'id' => comment.author_id, 'displayName' => comment.author.display_name } }
     else
       render json: {
