@@ -1,16 +1,8 @@
 class Api::CommentsController < ApplicationController
-  before_action :must_be_authorized
+  before_action :must_be_authorized, :post_must_exist
 
   def create
-    post = Post.find(params[:post_id])
-    if post.nil?
-      render json: {
-        'errors' => {
-          'posts' => 'Post not found'
-        }
-      }, status: 404
-    end
-    comment = post.comments.new(text: params[:text])
+    comment = @post.comments.new(text: params[:text])
     comment.author_id = User.find_by(session_token: session[:auth_token]).id
 
     if comment.save
@@ -37,6 +29,19 @@ class Api::CommentsController < ApplicationController
   end
 
   private
+
+  def post_must_exist
+    @post = Post.find(params[:post_id])
+
+    return unless @post.nil?
+
+    render json: {
+      'errors' => {
+        'posts' => 'Post not found'
+      }
+    }, status: 404
+    nil
+  end
 
   def must_be_authorized
     return unless User.find_by(session_token: session[:auth_token]).nil?

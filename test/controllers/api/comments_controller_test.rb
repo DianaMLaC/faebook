@@ -65,6 +65,27 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     assert(Comment.all.length == 1)
   end
 
+  test 'when post id doesnt exist' do
+    # ARRANGE
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: post_author.id
+    )
+    comment_text = faker_text
+
+    # ACT
+    post(
+      "/api/users/#{post_author.id}/posts/#{post_obj.id}err/comments",
+      params: { text: comment_text }
+    )
+
+    # ASSERT
+    assert_response :not_found
+    assert(Comment.all.length == 0)
+  end
+
   test 'when comment has no text' do
     # ARRANGE
     post_author = create_and_sign_in_user(user_params)
