@@ -42,7 +42,7 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
 
     # ACT
     post(
-      "/api/users/#{post_author.id}/posts/#{post_obj.id}/comments",
+      "/api/posts/#{post_obj.id}/comments",
       params: { text: comment_text }
     )
 
@@ -65,7 +65,7 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     assert(Comment.all.length == 1)
   end
 
-  test 'when post id doesnt exist' do
+  test 'when post id does not exist' do
     # ARRANGE
     post_author = create_and_sign_in_user(user_params)
     post_obj = Post.create!(
@@ -77,7 +77,7 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
 
     # ACT
     post(
-      "/api/users/#{post_author.id}/posts/#{post_obj.id}err/comments",
+      "/api/posts/#{post_obj.id}err/comments",
       params: { text: comment_text }
     )
 
@@ -98,7 +98,7 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
 
     # ACT
     post(
-      "/api/users/#{post_author.id}/posts/#{post_obj.id}/comments",
+      "/api/posts/#{post_obj.id}/comments",
       params: {}
     )
 
@@ -114,7 +114,7 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
                  }, res)
   end
 
-  test 'failure response when an unauthorized user comments on a post' do
+  test 'when an unauthorized user comments on a post' do
     # ARRANGE
     author = create_and_sign_in_user(user_params)
     # create post
@@ -128,12 +128,65 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
 
     # ACT
     post(
-      "/api/users/#{author.id}/posts/#{post_obj.id}/comments",
+      "/api/posts/#{post_obj.id}/comments",
       params: { text: faker_text }
     )
 
     # ASSERT
     assert_response :unauthorized
     assert(Comment.all.length == 0)
+  end
+
+  test 'when there are no comments we return []' do
+    # ARRANGE
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: post_author.id
+    )
+
+    # ACT
+    get(
+      "/api/posts/#{post_obj.id}/comments"
+    )
+
+    # ASSERT
+    assert_response :success
+    assert_not_nil(@response.body)
+    get_response = JSON.parse(@response.body)
+    # assert_equal([], get_response['comments'])
+  end
+
+  test 'should return correct attributes for each comment object in the array' do
+    # ARRANGE
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: post_author.id
+    )
+    comment_one_text = faker_text
+    post(
+      "/api/posts/#{post_obj.id}/comments",
+      params: { text: comment_one_text }
+    )
+    post(
+      "/api/posts/#{post_obj.id}/comments",
+      params: { text: faker_text }
+    )
+
+    # ACT
+    get(
+      "/api/posts/#{post_obj.id}/comments"
+    )
+
+    # ASSERT
+    assert_response :success
+    get_response = JSON.parse(@response.body)
+
+    assert_equal(2, get_response['comments'].length)
+    first_comment = get_response['comments'].first
+    assert_equal(first_comment['text'], comment_one_text)
   end
 end

@@ -1,24 +1,22 @@
 class Api::CommentsController < ApplicationController
   before_action :must_be_authorized, :post_must_exist
 
-  def create
-    comment = @post.comments.new(text: params[:text])
-    comment.author_id = User.find_by(session_token: session[:auth_token]).id
+  def index
+    @comments = @post.comments
+    render json: { 'comments' => [] } if @comments.nil?
 
-    if comment.save
-      render json: {
-        'id' => comment.id,
-        'text' => comment.text,
-        'createdAt' => comment.created_at,
-        'postId' => comment.post_id,
-        'author' => {
-          'id' => comment.author_id,
-          'displayName' => comment.author.display_name
-        }
-      }
+    render :index
+  end
+
+  def create
+    @comment = @post.comments.new(text: params[:text])
+    @comment.author_id = User.find_by(session_token: session[:auth_token]).id
+
+    if @comment.save
+      render :create
     else
       mapped_errors = {
-        text: comment.errors.where(:text).map(&:full_message).join(', ')
+        text: @comment.errors.where(:text).map(&:full_message).join(', ')
       }
       render json: {
         errors: {

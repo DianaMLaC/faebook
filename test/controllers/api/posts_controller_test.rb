@@ -30,14 +30,14 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     JSON.parse(@response.body)
   end
 
-  # test 'failure response when creating a post with no text' do
-  #   json_response = sign_in_user(user_params)
+  test 'failure response when creating a post with no text' do
+    json_response = sign_in_user(user_params)
 
-  #   user = User.find_by(id: json_response['id'])
+    user = User.find_by(id: json_response['id'])
 
-  #   post "/api/users/#{user.id}/posts"
-  #   assert_response 422
-  # end
+    post "/api/users/#{user.id}/posts"
+    assert_response 422
+  end
 
   test 'successful response when creating a post with a given text' do
     json_response = sign_in_user(user_params)
@@ -118,7 +118,7 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     get_response = JSON.parse(@response.body)
 
-    assert_not_nil([], get_response['posts'])
+    assert_equal([], get_response['posts'])
   end
 
   test 'should return correct attributes for each post object in the array' do
