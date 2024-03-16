@@ -13,7 +13,7 @@ class Api::CommentsController < ApplicationController
     comment = post.comments.new(text: params[:text])
     comment.author_id = User.find_by(session_token: session[:auth_token]).id
 
-    if comment.save!
+    if comment.save
       render json: {
         'id' => comment.id,
         'text' => comment.text,
@@ -25,11 +25,14 @@ class Api::CommentsController < ApplicationController
         }
       }
     else
+      mapped_errors = {
+        text: comment.errors.where(:text).map(&:full_message).join(', ')
+      }
       render json: {
-        'errors' => {
-          'authentication' => 'Unauthorized! User need to sign in/ log in'
+        errors: {
+          comment: mapped_errors
         }
-      }, status: 401
+      }, status: 422
     end
   end
 

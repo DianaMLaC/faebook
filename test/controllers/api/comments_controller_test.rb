@@ -30,13 +30,6 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     User.find_by(id: user_response['id'])
   end
 
-  def create_post(user_id)
-    post "/api/users/#{user_id}/posts", params: { body: faker_text }
-    post_response = JSON.parse(@response.body)
-    post = Post.find_by(id: post_response['id'])
-    post.id
-  end
-
   test 'when an authenticated user comments on a post' do
     # ARRANGE
     post_author = create_and_sign_in_user(user_params)
@@ -70,6 +63,34 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     # check db
     assert_equal(Comment.last.id, res['id'])
     assert(Comment.all.length == 1)
+  end
+
+  test 'when comment has no text' do
+    # ARRANGE
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: post_author.id
+    )
+    comment_text = faker_text
+
+    # ACT
+    post(
+      "/api/users/#{post_author.id}/posts/#{post_obj.id}/comments",
+      params: {}
+    )
+
+    # ASSERT
+    assert_response 422
+    res = JSON.parse(@response.body)
+    assert_equal({
+                   'errors' => {
+                     'comment' => {
+                       'text' => "Text can't be blank"
+                     }
+                   }
+                 }, res)
   end
 
   test 'failure response when an unauthorized user comments on a post' do
