@@ -23,13 +23,11 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
                  email: Faker::Internet.email)
   end
 
-  def sign_in_user(user_info)
+  def create_and_sign_in_user(user_info)
     post '/api/users', params: user_info
-    post '/api/authentication', params: { email: user_info[:email], password: user_info[:password] }
 
     user_response = JSON.parse(@response.body)
-    user = User.find_by(id: user_response['id'])
-    user.id
+    User.find_by(id: user_response['id'])
   end
 
   def create_post(user_id)
@@ -40,24 +38,60 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'when an authenticated user comments on a post' do
-    # arrange
-    user_id = sign_in_user(user_params)
-    Post.create(body: faker_text, author_id: user_id, profile_id: user_id)
-    post = Post.find_by(author_id: user_id)
+    # ARRANGE
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: post_author.id
+    )
+    comment_text = faker_text
 
-    # act
-    post "/api/users/#{user_id}/posts/#{post.id}/comments", params: { text: faker_text }
-    comment_response = JSON.parse(@response.body)
-    comment = Comment.find_by(author_id: user_id)
-    # assert
-    assert_not_nil(post)
-    assert_not_nil(comment)
-    assert_equal(comment_response['author']['id'], comment.author_id)
-    assert_not_nil(comment_response['author']['displayName'])
-    assert_not_nil(comment_response['createdAt'])
+    # ACT
+    post(
+      "/api/users/#{post_author.id}/posts/#{post_obj.id}/comments",
+      params: { text: comment_text }
+    )
+
+    # ASSERT
+    assert_response :success
+
+    # check response body
+    res = JSON.parse(@response.body)
+    assert_not_nil(res['id'])
+    assert_not_nil(res['createdAt'])
+    assert_equal(comment_text, res['text'])
+    assert_equal(post_obj.id, res['postId'])
+
+    # check comment author
+    assert_equal(post_author.id, res['author']['id'])
+    assert_equal(post_author.display_name, res['author']['displayName'])
+
+    # check db
+    assert_equal(Comment.last.id, res['id'])
+    assert(Comment.all.length == 1)
   end
 
-  # test 'failure response when an unauthorized user comments on a post' do
+  test 'failure response when an unauthorized user comments on a post' do
+    # ARRANGE
+    author = create_and_sign_in_user(user_params)
+    # create post
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: author.id,
+      profile_id: author.id
+    )
+    # log out user
+    reset!
 
-  # end
+    # ACT
+    post(
+      "/api/users/#{author.id}/posts/#{post_obj.id}/comments",
+      params: { text: faker_text }
+    )
+
+    # ASSERT
+    assert_response :unauthorized
+    assert(Comment.all.length == 0)
+  end
 end
