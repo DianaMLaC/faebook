@@ -189,4 +189,39 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     first_comment = get_response['comments'].first
     assert_equal(first_comment['text'], comment_one_text)
   end
+
+  test 'when a user comments on another comment' do
+    # ARRANGE
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: post_author.id
+    )
+
+    parent_comment = Comment.create!(
+      text: faker_text,
+      author_id: post_author.id,
+      post_id: post_obj.id
+    )
+
+    # ACT
+    post(
+      "/api/posts/#{post_obj.id}/comments", params: {
+        text: faker_text,
+        parent_comment_id: parent_comment.id
+      }
+    )
+
+    # ASSERT
+
+    assert_response :success
+    resp = JSON.parse(@response.body)
+    assert_equal(parent_comment.id, resp['parentCommentId'])
+
+    assert_equal(parent_comment.id, Comment.last.parent_comment_id)
+  end
+
+  # when a user comments on a reply, failure: 422
+  # When an unauthenticated user comments on another comment, failure: 401
 end
