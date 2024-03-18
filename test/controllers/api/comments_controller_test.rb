@@ -274,6 +274,43 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(3, Comment.all.length)
   end
 
-  # when a user comments on a reply, failure: 422
+  test 'when a user comments on a reply' do
+    # ARRANGE
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: post_author.id
+    )
+
+    top_level_comment = Comment.create!(
+      author_id: post_author.id,
+      text: faker_text,
+      post_id: post_obj.id
+    )
+
+    reply = Comment.create!(
+      author_id: post_author.id,
+      text: faker_text,
+      post_id: post_obj.id,
+      parent_comment_id: top_level_comment.id
+    )
+
+    # ACT
+
+    post(
+      "/api/posts/#{post_obj.id}/comments", params: {
+        text: faker_text,
+        parent_comment_id: reply.id
+      }
+    )
+
+    # ASSERT
+    assert_response 422
+    resp = JSON.parse(@response.body)
+    assert_not_nil(resp['errors']['comments'])
+    assert_equal(2, Comments.all)
+  end
+  # failure: 422
   # When an unauthenticated user comments on another comment, failure: 401
 end
