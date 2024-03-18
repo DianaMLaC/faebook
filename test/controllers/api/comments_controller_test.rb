@@ -274,7 +274,7 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(3, Comment.all.length)
   end
 
-  test 'when a user comments on a reply' do
+  test 'when a user tries to comment on a reply then it should fail' do
     # ARRANGE
     post_author = create_and_sign_in_user(user_params)
     post_obj = Post.create!(
@@ -308,7 +308,7 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     # ASSERT
     assert_response 422
     resp = JSON.parse(@response.body)
-    assert_not_nil(resp['errors']['comments'])
+    assert_not_nil(resp['errors']['comment'])
     assert_equal(2, Comments.all)
   end
   # failure: 422

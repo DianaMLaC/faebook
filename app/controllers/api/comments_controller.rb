@@ -11,6 +11,19 @@ class Api::CommentsController < ApplicationController
   def create
     @comment = @post.comments.new(text: params[:text])
     @comment.author_id = User.find_by(session_token: session[:auth_token]).id
+
+    if params[:parent_comment_id].present?
+      parent_comment = Comment.find(params[:parent_comment_id])
+      if parent_comment.parent_comment_id.present?
+        render json: {
+          errors: {
+            comment: 'cannot comment on a comment that is a reply'
+          }
+        }, status: 422
+        return
+      end
+    end
+
     @comment.parent_comment_id = params[:parent_comment_id]
 
     if @comment.save
