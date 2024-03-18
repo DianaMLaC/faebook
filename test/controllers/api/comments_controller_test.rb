@@ -218,7 +218,6 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     resp = JSON.parse(@response.body)
     assert_equal(parent_comment.id, resp['parentCommentId'])
-
     assert_equal(parent_comment.id, Comment.last.parent_comment_id)
   end
 

@@ -11,6 +11,7 @@ class Api::CommentsController < ApplicationController
   def create
     @comment = @post.comments.new(text: params[:text])
     @comment.author_id = User.find_by(session_token: session[:auth_token]).id
+    @comment.parent_comment_id = params[:parent_comment_id]
 
     if @comment.save
       render :create
