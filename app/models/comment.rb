@@ -11,6 +11,8 @@
 #  parent_comment_id :uuid
 #
 class Comment < ApplicationRecord
+  validates(:text, presence: true)
+
   belongs_to :post,
              foreign_key: :post_id,
              class_name: 'Post'
@@ -19,5 +21,7 @@ class Comment < ApplicationRecord
              foreign_key: :author_id,
              class_name: 'User'
 
-  validates(:text, presence: true)
+  has_many :replies,
+           foreign_key: :parent_comment_id,
+           class_name: 'Comment'
 end

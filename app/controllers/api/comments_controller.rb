@@ -2,7 +2,7 @@ class Api::CommentsController < ApplicationController
   before_action :must_be_authorized, :post_must_exist
 
   def index
-    @comments = @post.comments
+    @comments = @post.comments.where(parent_comment_id: nil)
     render json: { 'comments' => [] } if @comments.nil?
 
     render :index
