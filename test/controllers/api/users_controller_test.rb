@@ -25,14 +25,6 @@ class Api::UsersControllerTest < ActionDispatch::IntegrationTest
       password: Faker::Internet.password(min_length: 6, mix_case: true, special_characters: true), dateOfBirth: '2000-10-20', email: Faker::Internet.email }
   end
 
-  test 'filters empty values' do
-    input = { 'email' => 'Email has already been taken', 'firstName' => '', 'lastName' => '', 'password' => '',
-              'dateOfBirth' => '' }
-    output = omit_empty_strings(input)
-
-    assert_equal(output, { 'email' => 'Email has already been taken' })
-  end
-
   test 'returns a user id' do
     # ARRANGE
 

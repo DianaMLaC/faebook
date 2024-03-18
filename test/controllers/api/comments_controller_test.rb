@@ -308,8 +308,8 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     # ASSERT
     assert_response 422
     resp = JSON.parse(@response.body)
-    assert_not_nil(resp['errors']['comment'])
-    assert_equal(2, Comments.all)
+    assert_not_nil(resp['errors']['comment']['parentCommentId'])
+    assert_equal(2, Comment.all.count)
   end
   # failure: 422
   # When an unauthenticated user comments on another comment, failure: 401

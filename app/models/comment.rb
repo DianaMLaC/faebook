@@ -12,6 +12,7 @@
 #
 class Comment < ApplicationRecord
   validates(:text, presence: true)
+  validate(:cannot_comment_on_reply)
 
   belongs_to :post,
              foreign_key: :post_id,
@@ -24,4 +25,16 @@ class Comment < ApplicationRecord
   has_many :replies,
            foreign_key: :parent_comment_id,
            class_name: 'Comment'
+
+  belongs_to :parent_comment,
+             foreign_key: :parent_comment_id,
+             class_name: 'Comment',
+             optional: true
+
+  def cannot_comment_on_reply
+    return if parent_comment.nil?
+    return if parent_comment.parent_comment_id.nil?
+
+    errors.add(:parent_comment_id, 'cannot comment on a reply')
+  end
 end
