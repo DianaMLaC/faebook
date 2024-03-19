@@ -47,17 +47,19 @@ class Api::LikesController < ApplicationController
   end
 
   def destroy
-    @like = Like.find(params[:id])
-    if @like.nil?
+    @like = Like.find_by(id: params[:id])
+    liker_obj = User.find_by(session_token: session[:auth_token])
+
+    if @like && @like.liker_id == liker_obj.id
+      @like.destroy
+      render json: {}, status: 200
+    else
       render json: {
         'errors' => {
-          'like' => 'Like not found'
+          'like' => 'Like by this user not found'
         }
       }, status: 404
-      return
     end
-    @like.destroy
-    render json: {}, status: 200
   end
 
   private
