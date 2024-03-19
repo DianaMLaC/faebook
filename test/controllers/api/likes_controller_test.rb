@@ -88,4 +88,24 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal([], Like.all)
   end
+
+  test 'when a user tries to like a post that does not exist' do
+    # then failure 404
+
+    # Arrange
+    Liker = create_and_sign_in_user(user_params)
+    fake_post_id = SecureRandom.uuid
+    # Act
+    post("/api/posts/#{fake_post_id}/likes")
+
+    # Arrange
+    assert_response 404
+    # res = JSON.parse(@response.body)
+    # assert_equal({
+    #                'errors' => {
+    #                  'posts' => 'Post not found'
+    #                }
+    #              }, res)
+    # assert_equal([], Like.all)
+  end
 end
