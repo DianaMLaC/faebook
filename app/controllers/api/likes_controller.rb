@@ -1,5 +1,22 @@
 class Api::LikesController < ApplicationController
   before_action :must_be_authorized
+
+  def index
+    # check if the post exists
+    @post = Post.find(params[:post_id])
+    if @post.nil?
+      render json: {
+        'errors' => {
+          'posts' => 'Post not found'
+        }
+      }, status: 404
+
+      return
+    end
+    @likes = @post.likes
+    render json: { 'likes' => @likes }, status: 200
+  end
+
   def create
     # check if like already exists
 

@@ -219,8 +219,8 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
 
     # Assert
     assert_response :success
-    res = JSON.parse(@response..body)
+    res = JSON.parse(@response.body)
     assert_equal([], res['likes'])
-    assert_equal([], Like.all.length)
+    assert_equal(0, Like.all.length)
   end
 end
