@@ -10,8 +10,17 @@ class Api::LikesController < ApplicationController
       return
     end
 
-    @like = Like.new(post_id: params[:post_id],
-                     liker_id: post.author_id)
+    @like = Like.new(post_id: params[:post_id])
+    user_logged = User.find_by(session_token: session[:auth_token])
+    if user_logged.nil?
+      render json: {
+        'errors' => {
+          'authentication' => 'Unauthorized! User need to sign in/ log in'
+        }
+      }, status: 401
+      return
+    end
+    @like.liker_id = user_logged.id
 
     if @like.save
       render :create

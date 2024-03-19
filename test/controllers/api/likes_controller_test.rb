@@ -69,6 +69,8 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
       author_id: post_author.id,
       profile_id: post_author.id
     )
+    # log out user
+    reset!
 
     # Act
     post("/api/posts/#{post_obj.id}/likes",
@@ -84,6 +86,6 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
                    }
                  }, res)
 
-    assert_nil(Like.all)
+    assert_equal([], Like.all)
   end
 end
