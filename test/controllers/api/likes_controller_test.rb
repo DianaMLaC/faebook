@@ -116,6 +116,6 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     # Assert
 
     assert_response 422
-    assert_equal([], Likes.all)
+    assert_equal(1, Like.all.length)
   end
 end

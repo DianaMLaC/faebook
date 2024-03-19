@@ -1,5 +1,16 @@
 class Api::LikesController < ApplicationController
   def create
+    # find the user authenticated
+    user_logged = User.find_by(session_token: session[:auth_token])
+    if user_logged.nil?
+      render json: {
+        'errors' => {
+          'authentication' => 'Unauthorized! User need to sign in/ log in'
+        }
+      }, status: 401
+      return
+    end
+    # find the post to create the like from association
     @post = Post.find(params[:post_id])
     if @post.nil?
       render json: {
@@ -10,14 +21,18 @@ class Api::LikesController < ApplicationController
       return
     end
 
-    # @like = Like.new(post_id: params[:post_id])
-    user_logged = User.find_by(session_token: session[:auth_token])
-    if user_logged.nil?
-      render json: {
-        'errors' => {
-          'authentication' => 'Unauthorized! User need to sign in/ log in'
-        }
-      }, status: 401
+    # check if like already exists
+
+    # find like with .find_sole_by
+    # like = Like.find_sole_by(
+    #   post_id: params[:post_id],
+    #   liker_id: params[:liker_id]
+    # ) ----- it fails other tests!!!
+
+    liker_obj = User.find_by(session_token: session[:auth_token])
+    like = Like.find_by(liker_id: liker_obj.id, post_id: params[:post_id])
+    if like.present?
+      render json: {}, status: 422
       return
     end
 
@@ -26,12 +41,7 @@ class Api::LikesController < ApplicationController
 
     if @like.save
       render :create
-      # render json: { 'id' => like.id,
-      #                'postId' => like.post_id,
-      #                'liker' => {
-      #                  'id' => like.liker_id,
-      #                  'displayName' => post.author.display_name
-      #                } }, status: 200
+
     else
       render json: {}, status: 422
     end
