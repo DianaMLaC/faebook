@@ -116,6 +116,12 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     # Assert
 
     assert_response 422
+    res = JSON.parse(@response.body)
+    assert_equal({
+                   'errors' => {
+                     'like' => 'User already liked this'
+                   }
+                 }, res)
     assert_equal(1, Like.all.length)
   end
 end

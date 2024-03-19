@@ -32,7 +32,11 @@ class Api::LikesController < ApplicationController
     liker_obj = User.find_by(session_token: session[:auth_token])
     like = Like.find_by(liker_id: liker_obj.id, post_id: params[:post_id])
     if like.present?
-      render json: {}, status: 422
+      render json: {
+        'errors' => {
+          'like' => 'User already liked this'
+        }
+      }, status: 422
       return
     end
 
