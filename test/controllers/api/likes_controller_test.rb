@@ -124,4 +124,22 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
                  }, res)
     assert_equal(1, Like.all.length)
   end
+
+  test 'when a user unlikes a post he likes then response is 200' do
+    # Arrange
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: post_author.id
+    )
+    like = Like.create!(post_id: post_obj.id,
+                        liker_id: post_author.id)
+    # Act
+    delete("/api/posts/#{post_obj.id}/likes/#{like.id}")
+    # Assert
+
+    assert_response :success
+    assert_equal([], Like.all)
+  end
 end
