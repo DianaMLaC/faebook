@@ -47,23 +47,13 @@ class Api::LikesController < ApplicationController
   end
 
   def destroy
-    # user_logged = User.find_by(session_token: session[:auth_token])
-    # if user_logged.nil?
-    #   render json: {
-    #     'errors' => {
-    #       'authentication' => 'Unauthorized! User need to sign in/ log in'
-    #     }
-    #   }, status: 401
-    #   return
-    # end
-
     @like = Like.find(params[:id])
     if @like.nil?
       render json: {
         'errors' => {
           'like' => 'Like not found'
         }
-      }, status: 422
+      }, status: 404
       return
     end
     @like.destroy

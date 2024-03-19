@@ -181,4 +181,27 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_response 404
     assert_equal([], Like.all)
   end
+
+  test 'when a user tries to unlike a post he has not liked yet then response is 404' do
+    # Arrange
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: post_author.id
+    )
+    like = Like.create!(post_id: post_obj.id,
+                        liker_id: post_author.id)
+
+    reset!
+
+    new_user = create_and_sign_in_user(user_params)
+
+    # Act
+    delete("/api/posts/#{post_obj.id}/likes/#{like.id}")
+    # Assert
+
+    assert_response 404
+    assert_equal(1, Like.all.length)
+  end
 end
