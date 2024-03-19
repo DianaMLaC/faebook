@@ -46,7 +46,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_equal(1, Like.all.length)
     assert_equal(post_obj.id, Like.first.post_id)
     assert_equal(post_author.id, Like.first.liker_id)
-    assert_not_null(Like.first.created_at)
-    assert_not_null(Like.first.id)
+    assert_not_nil(Like.first.created_at)
+    assert_not_nil(Like.first.id)
   end
 end
