@@ -9,11 +9,12 @@ Rails.application.routes.draw do
   # root "posts#index"
   namespace :api, defaults: { format: :json } do
     resources :users, only: %i[create delete] do
-      resources :posts, only: %i[create index destroy]
+      resources :posts, only: %i[create index]
     end
 
     resources :posts, only: [] do
       resources :comments, only: %i[create index]
+      resources :likes, only: %i[create index destroy]
     end
 
     resources :authentication, only: %i[create]
