@@ -1,26 +1,6 @@
 class Api::LikesController < ApplicationController
+  before_action :must_be_authorized
   def create
-    # find the user authenticated
-    user_logged = User.find_by(session_token: session[:auth_token])
-    if user_logged.nil?
-      render json: {
-        'errors' => {
-          'authentication' => 'Unauthorized! User need to sign in/ log in'
-        }
-      }, status: 401
-      return
-    end
-    # find the post to create the like from association
-    @post = Post.find(params[:post_id])
-    if @post.nil?
-      render json: {
-        'errors' => {
-          'posts' => 'Post not found'
-        }
-      }, status: 404
-      return
-    end
-
     # check if like already exists
 
     # find like with .find_sole_by
@@ -40,7 +20,22 @@ class Api::LikesController < ApplicationController
       return
     end
 
+    # check if the post exists
+    @post = Post.find(params[:post_id])
+    if @post.nil?
+      render json: {
+        'errors' => {
+          'posts' => 'Post not found'
+        }
+      }, status: 404
+
+      return
+    end
+
     @like = @post.likes.new
+
+    # set the authenticated user as the liker
+    user_logged = User.find_by(session_token: session[:auth_token])
     @like.liker_id = user_logged.id
 
     if @like.save
@@ -52,15 +47,15 @@ class Api::LikesController < ApplicationController
   end
 
   def destroy
-    user_logged = User.find_by(session_token: session[:auth_token])
-    if user_logged.nil?
-      render json: {
-        'errors' => {
-          'authentication' => 'Unauthorized! User need to sign in/ log in'
-        }
-      }, status: 401
-      return
-    end
+    # user_logged = User.find_by(session_token: session[:auth_token])
+    # if user_logged.nil?
+    #   render json: {
+    #     'errors' => {
+    #       'authentication' => 'Unauthorized! User need to sign in/ log in'
+    #     }
+    #   }, status: 401
+    #   return
+    # end
 
     @like = Like.find(params[:id])
     if @like.nil?
@@ -73,5 +68,18 @@ class Api::LikesController < ApplicationController
     end
     @like.destroy
     render json: {}, status: 200
+  end
+
+  private
+
+  def must_be_authorized
+    return unless User.find_by(session_token: session[:auth_token]).nil?
+
+    # we'll redirect to log in page instead of errors.
+    render json: {
+      'errors' => {
+        'authentication' => 'Unauthorized! User need to sign in/ log in'
+      }
+    }, status: 401
   end
 end

@@ -143,7 +143,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_equal([], Like.all)
   end
 
-  test 'when an unathenticated user unlikes a post he likes then response is 401' do
+  test 'when an unauthenticated user unlikes a post he likes then response is 401' do
     # Arrange
     post_author = create_and_sign_in_user(user_params)
     post_obj = Post.create!(
