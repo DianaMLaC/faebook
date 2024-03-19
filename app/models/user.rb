@@ -34,6 +34,10 @@ class User < ApplicationRecord
            foreign_key: :author_id,
            class_name: 'Comment'
 
+  has_many :likes,
+           foreign_key: :liker_id,
+           class_name: 'Like'
+
   attr_accessor :password
 
   def display_name

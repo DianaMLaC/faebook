@@ -10,16 +10,17 @@ class Api::LikesController < ApplicationController
       return
     end
 
-    like = Like.new(post_id: params[:post_id],
-                    liker_id: post.author_id)
+    @like = Like.new(post_id: params[:post_id],
+                     liker_id: post.author_id)
 
-    if like.save
-      render json: { 'id' => like.id,
-                     'postId' => like.post_id,
-                     'liker' => {
-                       'id' => like.liker_id,
-                       'displayName' => post.author.display_name
-                     } }, status: 200
+    if @like.save
+      render :create
+      # render json: { 'id' => like.id,
+      #                'postId' => like.post_id,
+      #                'liker' => {
+      #                  'id' => like.liker_id,
+      #                  'displayName' => post.author.display_name
+      #                } }, status: 200
     else
       render json: {}, status: 422
     end
