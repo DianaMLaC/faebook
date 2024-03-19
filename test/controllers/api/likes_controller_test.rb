@@ -20,7 +20,7 @@ def faker_text
 end
 
 class Api::LikesControllerTest < ActionDispatch::IntegrationTest
-  test 'when a user likes his own post' do
+  test 'when a user likes his own post then response is 200' do
     # then it's a success(200) with response body
 
     # Arrange
@@ -51,7 +51,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil(Like.first.id)
   end
 
-  test 'when an unauthenticated user tries to like a post' do
+  test 'when an unauthenticated user tries to like a post then response is 401' do
     # then failure, 401
 
     # Arrange
@@ -89,17 +89,33 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_equal([], Like.all)
   end
 
-  test 'when a user tries to like a post that does not exist' do
-    # then failure 404
-
+  test 'when a user tries to like a post that does not exist then response is 404' do
     # Arrange
     liker = create_and_sign_in_user(user_params)
 
     # Act
     post("/api/posts/#{SecureRandom.uuid}/likes")
 
-    # Arrange
+    # Assert
     assert_response 404
     assert_equal([], Like.all)
+  end
+
+  test 'when a user tries to like a post that he already liked then response is 422' do
+    # Arrange
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: post_author.id
+    )
+    Like.create!(post_id: post_obj.id,
+                 liker_id: post_author.id)
+    # Act
+    post("/api/posts/#{post_obj.id}/likes")
+    # Assert
+
+    assert_response 422
+    assert_equal([], Likes.all)
   end
 end

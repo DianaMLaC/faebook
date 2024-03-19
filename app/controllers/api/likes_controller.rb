@@ -20,6 +20,7 @@ class Api::LikesController < ApplicationController
       }, status: 401
       return
     end
+
     @like = @post.likes.new
     @like.liker_id = user_logged.id
 
