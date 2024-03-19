@@ -1,7 +1,7 @@
 class Api::LikesController < ApplicationController
   def create
-    post = Post.find(params[:post_id])
-    if post.nil?
+    @post = Post.find(params[:post_id])
+    if @post.nil?
       render json: {
         'errors' => {
           'posts' => 'Post not found'
@@ -10,7 +10,7 @@ class Api::LikesController < ApplicationController
       return
     end
 
-    @like = Like.new(post_id: params[:post_id])
+    # @like = Like.new(post_id: params[:post_id])
     user_logged = User.find_by(session_token: session[:auth_token])
     if user_logged.nil?
       render json: {
@@ -20,6 +20,7 @@ class Api::LikesController < ApplicationController
       }, status: 401
       return
     end
+    @like = @post.likes.new
     @like.liker_id = user_logged.id
 
     if @like.save
