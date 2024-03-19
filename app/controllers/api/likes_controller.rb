@@ -50,4 +50,18 @@ class Api::LikesController < ApplicationController
       render json: {}, status: 422
     end
   end
+
+  def destroy
+    @like = Like.find(params[:id])
+    if @like.nil?
+      render json: {
+        'errors' => {
+          'like' => 'Like not found'
+        }
+      }, status: 422
+      return
+    end
+    @like.destroy
+    render json: {}, status: 200
+  end
 end
