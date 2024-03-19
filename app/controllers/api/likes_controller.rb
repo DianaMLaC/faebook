@@ -4,9 +4,9 @@ class Api::LikesController < ApplicationController
     if post.nil?
       render json: {
         'errors' => {
-          'authentication' => 'Unauthorized! User need to sign in/ log in'
+          'posts' => 'Post not found'
         }
-      }, status: 401
+      }, status: 404
       return
     end
 

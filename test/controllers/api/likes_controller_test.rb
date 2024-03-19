@@ -93,19 +93,13 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     # then failure 404
 
     # Arrange
-    Liker = create_and_sign_in_user(user_params)
-    fake_post_id = SecureRandom.uuid
+    liker = create_and_sign_in_user(user_params)
+
     # Act
-    post("/api/posts/#{fake_post_id}/likes")
+    post("/api/posts/#{SecureRandom.uuid}/likes")
 
     # Arrange
     assert_response 404
-    # res = JSON.parse(@response.body)
-    # assert_equal({
-    #                'errors' => {
-    #                  'posts' => 'Post not found'
-    #                }
-    #              }, res)
-    # assert_equal([], Like.all)
+    assert_equal([], Like.all)
   end
 end
