@@ -311,6 +311,4 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil(resp['errors']['comment']['parentCommentId'])
     assert_equal(2, Comment.all.count)
   end
-  # failure: 422
-  # When an unauthenticated user comments on another comment, failure: 401
 end
