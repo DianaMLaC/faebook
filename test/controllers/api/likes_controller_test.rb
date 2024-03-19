@@ -137,8 +137,8 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
                         liker_id: post_author.id)
     # Act
     delete("/api/posts/#{post_obj.id}/likes/#{like.id}")
-    # Assert
 
+    # Assert
     assert_response :success
     assert_equal([], Like.all)
   end
@@ -157,8 +157,8 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     reset!
     # Act
     delete("/api/posts/#{post_obj.id}/likes/#{like.id}")
-    # Assert
 
+    # Assert
     assert_response 401
     assert_equal(1, Like.all.length)
   end
@@ -176,8 +176,8 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     like.destroy
     # Act
     delete("/api/posts/#{post_obj.id}/likes/#{like.id}")
-    # Assert
 
+    # Assert
     assert_response 404
     assert_equal([], Like.all)
   end
@@ -199,9 +199,28 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
 
     # Act
     delete("/api/posts/#{post_obj.id}/likes/#{like.id}")
-    # Assert
 
+    # Assert
     assert_response 404
     assert_equal(1, Like.all.length)
+  end
+
+  test 'when there are no likes on a post we return []' do
+    # Arrange
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: post_author.id
+    )
+
+    # Act
+    get("/api/posts/#{post_obj.id}/likes")
+
+    # Assert
+    assert_response :success
+    res = JSON.parse(@response..body)
+    assert_equal([], res['likes'])
+    assert_equal([], Like.all.length)
   end
 end
