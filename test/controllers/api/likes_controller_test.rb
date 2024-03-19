@@ -50,4 +50,40 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil(Like.first.created_at)
     assert_not_nil(Like.first.id)
   end
+
+  test 'when an unauthenticated user tries to like a post' do
+    # then failure, 401
+
+    # Arrange
+    user = User.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      password: Faker::Internet.password(min_length: 6, mix_case: true, special_characters: true),
+      date_of_birth: '2000-10-20',
+      email: Faker::Internet.email
+    )
+
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: post_author.id
+    )
+
+    # Act
+    post("/api/posts/#{post_obj.id}/likes",
+         params: { liker_id: user.id })
+
+    # Assert
+
+    assert_response 401
+    res = JSON.parse(@response.body)
+    assert_equal({
+                   'errors' => {
+                     'authentication' => 'Unauthorized! User need to sign in/ log in'
+                   }
+                 }, res)
+
+    assert_nil(Like.all)
+  end
 end
