@@ -14,7 +14,9 @@ class Api::LikesController < ApplicationController
       return
     end
     @likes = @post.likes
-    render json: { 'likes' => @likes }, status: 200
+    render json: { 'likes' => [] } if @likes.nil?
+
+    render :index
   end
 
   def create
