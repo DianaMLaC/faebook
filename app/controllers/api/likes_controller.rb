@@ -1,18 +1,7 @@
 class Api::LikesController < ApplicationController
-  before_action :must_be_authorized
+  before_action :must_be_authorized, :post_must_exist
 
   def index
-    # check if the post exists
-    @post = Post.find(params[:post_id])
-    if @post.nil?
-      render json: {
-        'errors' => {
-          'posts' => 'Post not found'
-        }
-      }, status: 404
-
-      return
-    end
     @likes = @post.likes
     render json: { 'likes' => [] } if @likes.nil?
 
@@ -20,14 +9,6 @@ class Api::LikesController < ApplicationController
   end
 
   def create
-    # check if like already exists
-
-    # find like with .find_sole_by
-    # like = Like.find_sole_by(
-    #   post_id: params[:post_id],
-    #   liker_id: params[:liker_id]
-    # ) ----- it fails other tests!!!
-
     liker_obj = User.find_by(session_token: session[:auth_token])
     like = Like.find_by(liker_id: liker_obj.id, post_id: params[:post_id])
     if like.present?
@@ -39,21 +20,8 @@ class Api::LikesController < ApplicationController
       return
     end
 
-    # check if the post exists
-    @post = Post.find(params[:post_id])
-    if @post.nil?
-      render json: {
-        'errors' => {
-          'posts' => 'Post not found'
-        }
-      }, status: 404
-
-      return
-    end
-
     @like = @post.likes.new
 
-    # set the authenticated user as the liker
     user_logged = User.find_by(session_token: session[:auth_token])
     @like.liker_id = user_logged.id
 
@@ -92,5 +60,18 @@ class Api::LikesController < ApplicationController
         'authentication' => 'Unauthorized! User need to sign in/ log in'
       }
     }, status: 401
+  end
+
+  def post_must_exist
+    @post = Post.find_by(id: params[:post_id])
+
+    return unless @post.nil?
+
+    render json: {
+      'errors' => {
+        'posts' => 'Post not found'
+      }
+    }, status: 404
+    nil
   end
 end
