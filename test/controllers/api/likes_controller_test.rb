@@ -223,4 +223,33 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_equal([], res['likes'])
     assert_equal(0, Like.all.length)
   end
+
+  test 'when there are likes we return an array with each attribute of the like' do
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: post_author.id
+    )
+    like_one = Like.create!(post_id: post_obj.id,
+                            liker_id: post_author.id)
+
+    reset!
+    new_user = create_and_sign_in_user(user_params)
+    like_two = Like.create!(post_id: post_obj.id,
+                            liker_id: new_user.id)
+
+    # Act
+    get("/api/posts/#{post_obj.id}/likes")
+
+    # Assert
+    assert_response :success
+    res = JSON.parse(@response.body)
+    assert_not_nil(res['likes'].first['id'])
+    assert_not_nil(res['likes'].first['postId'])
+    assert_not_nil(res['likes'].first['liker']['id'])
+    assert_not_nil(res['likes'].first['liker']['displayName'])
+
+    assert_equal(2, Like.all.length)
+  end
 end
