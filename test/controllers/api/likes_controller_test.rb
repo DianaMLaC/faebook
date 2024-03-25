@@ -19,15 +19,12 @@ def faker_text
   Faker::ChuckNorris.fact
 end
 
-def like_item(likeable, user)
-  likeable_type = likeable.class.to_s.downcase # Determines if it's a post or comment
-  post "/api/#{likeable_type.pluralize}/#{likeable.id}/likes", headers: { 'Authorization': "Token #{user.auth_token}" }
-  if likeable.class == 'Post'
-    post("/api/posts/#{likeable.id}/likes", params: {})
-  else
-    likeable.class
-    post("/api/comments/#{likeable.id}/likes", params: {})
-  end
+def like_item(likeable, _user = nil)
+  likeable_type = likeable.class.to_s.underscore.pluralize
+  # headers = {}
+  # headers['Authorization'] = "Token #{user.auth_token}" if user.present?
+
+  post "/api/#{likeable_type}/#{likeable.id}/likes"
 end
 
 class Api::LikesControllerTest < ActionDispatch::IntegrationTest
@@ -43,7 +40,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     )
 
     # Act
-    post("/api/posts/#{post_obj.id}/likes")
+    like_item(post_obj, user)
 
     # Assert
     assert_response :success
