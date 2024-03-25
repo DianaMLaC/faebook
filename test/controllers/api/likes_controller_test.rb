@@ -223,7 +223,6 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
   #   post_obj = create_post(post_author)
 
   #   # Act
-  #   # get("/api/posts/#{post_obj.id}/likes")
   #   fetch_likes(post_obj)
   #   # Assert
   #   assert_response :success
@@ -242,7 +241,6 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
   #   like_two = create_like(post_obj, new_user)
 
   #   # Act
-  #   # get("/api/posts/#{post_obj.id}/likes")
   #   fetch_likes(post_obj)
 
   #   # Assert
@@ -402,21 +400,62 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_equal([], Like.all)
   end
 
-  # test 'when a user tries to unlike a post he has not liked yet then response is 404' do
-  #   # Arrange
-  #   post_author = create_and_sign_in_user(user_params)
-  #   post_obj = create_post(post_author)
-  #   like = create_like(post_obj, post_author)
+  test 'when a user tries to unlike a post he has not liked yet then response is 404' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
+    post = create_post(user)
+    comment = create_comment(user, post)
+    like = create_like(comment, user)
 
-  #   reset!
+    reset!
 
-  #   new_user = create_and_sign_in_user(user_params)
+    new_user = create_and_sign_in_user(user_params)
 
-  #   # Act
-  #   unlike_item(post_obj, like)
+    # Act
+    unlike_item(comment, like)
 
-  #   # Assert
-  #   assert_response 404
-  #   assert_equal(1, Like.all.length)
-  # end
+    # Assert
+    assert_response 404
+    assert_equal(1, Like.all.length)
+  end
+
+  test 'when there are no likes on a post we return []' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
+    post = create_post(user)
+    comment = create_comment(user, post)
+
+    # Act
+    fetch_likes(comment)
+    # Assert
+    assert_response :success
+    res = JSON.parse(@response.body)
+    assert_equal([], res['likes'])
+    assert_equal(0, Like.all.length)
+  end
+
+  test 'when there are likes we return an array with each attribute of the like' do
+    user = create_and_sign_in_user(user_params)
+    post = create_post(user)
+    comment = create_comment(user, post)
+    like_one = create_like(comment, user)
+
+    reset!
+    new_user = create_and_sign_in_user(user_params)
+    like_two = create_like(comment, new_user)
+
+    # Act
+    fetch_likes(comment)
+
+    # Assert
+    assert_response :success
+    res = JSON.parse(@response.body)
+    assert_not_nil(res['likes'].first['id'])
+    assert_equal(post_obj.id, res['likes'].first['likeableId'])
+    assert_equal('Post', res['likes'].first['likeableType'])
+    assert_not_nil(res['likes'].first['liker']['id'])
+    assert_not_nil(res['likes'].first['liker']['displayName'])
+
+    assert_equal(2, Like.all.length)
+  end
 end
