@@ -62,198 +62,198 @@ end
 class Api::LikesControllerTest < ActionDispatch::IntegrationTest
   # TEST FOR LIKES ON POSTS
 
-  # test 'when a user likes his own post then response is 200' do
-  #   # then it's a success(200) with response body
+  test 'when a user likes his own post then response is 200' do
+    # then it's a success(200) with response body
 
-  #   # Arrange
-  #   user = create_and_sign_in_user(user_params)
-  #   post_obj = create_post(user)
+    # Arrange
+    user = create_and_sign_in_user(user_params)
+    post_obj = create_post(user)
 
-  #   # Act
-  #   like_item(post_obj)
+    # Act
+    like_item(post_obj)
 
-  #   # Assert
-  #   assert_response :success
-  #   like_res = JSON.parse(@response.body)
-  #   assert_not_nil(like_res)
-  #   assert_not_nil(like_res['id'])
-  #   assert_equal(post_obj.id, like_res['likeableId'])
-  #   assert_equal('Post', like_res['likeableType'])
-  #   assert_equal(user.id, like_res['liker']['id'])
-  #   assert_equal(user.display_name, like_res['liker']['displayName'])
+    # Assert
+    assert_response :success
+    like_res = JSON.parse(@response.body)
+    assert_not_nil(like_res)
+    assert_not_nil(like_res['id'])
+    assert_equal(post_obj.id, like_res['likeableId'])
+    assert_equal('Post', like_res['likeableType'])
+    assert_equal(user.id, like_res['liker']['id'])
+    assert_equal(user.display_name, like_res['liker']['displayName'])
 
-  #   assert_equal(1, Like.count)
-  #   like = Like.first
-  #   assert_equal(post_obj.id, like.likeable_id)
-  #   assert_equal('Post', like.likeable_type)
-  #   assert_equal(user.id, like.liker_id)
-  # end
+    assert_equal(1, Like.count)
+    like = Like.first
+    assert_equal(post_obj.id, like.likeable_id)
+    assert_equal('Post', like.likeable_type)
+    assert_equal(user.id, like.liker_id)
+  end
 
-  # test 'when an unauthenticated user tries to like a post then response is 401' do
-  #   # then failure, 401
+  test 'when an unauthenticated user tries to like a post then response is 401' do
+    # then failure, 401
 
-  #   # Arrange
-  #   user = User.create!(
-  #     first_name: Faker::Name.first_name,
-  #     last_name: Faker::Name.last_name,
-  #     password: Faker::Internet.password(min_length: 6, mix_case: true, special_characters: true),
-  #     date_of_birth: '2000-10-20',
-  #     email: Faker::Internet.email
-  #   )
+    # Arrange
+    user = User.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      password: Faker::Internet.password(min_length: 6, mix_case: true, special_characters: true),
+      date_of_birth: '2000-10-20',
+      email: Faker::Internet.email
+    )
 
-  #   post_author = create_and_sign_in_user(user_params)
-  #   post_obj = create_post(post_author)
-  #   # log out user
-  #   reset!
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = create_post(post_author)
+    # log out user
+    reset!
 
-  #   # Act
+    # Act
 
-  #   like_item(post_obj, user)
-  #   # Assert
+    like_item(post_obj, user)
+    # Assert
 
-  #   assert_response 401
-  #   res = JSON.parse(@response.body)
-  #   assert_equal({
-  #                  'errors' => {
-  #                    'authentication' => 'Unauthorized! User need to sign in/ log in'
-  #                  }
-  #                }, res)
+    assert_response 401
+    res = JSON.parse(@response.body)
+    assert_equal({
+                   'errors' => {
+                     'authentication' => 'Unauthorized! User need to sign in/ log in'
+                   }
+                 }, res)
 
-  #   assert_equal([], Like.all)
-  # end
+    assert_equal([], Like.all)
+  end
 
-  # test 'when a user tries to like a post that does not exist then response is 404' do
-  #   # Arrange
-  #   liker = create_and_sign_in_user(user_params)
-  #   post_obj = create_post(liker)
-  #   post_obj.delete
+  test 'when a user tries to like a post that does not exist then response is 404' do
+    # Arrange
+    liker = create_and_sign_in_user(user_params)
+    post_obj = create_post(liker)
+    post_obj.delete
 
-  #   # Act
-  #   like_item(post_obj, liker)
+    # Act
+    like_item(post_obj, liker)
 
-  #   # Assert
-  #   assert_response 404
-  #   assert_equal([], Like.all)
-  # end
+    # Assert
+    assert_response 404
+    assert_equal([], Like.all)
+  end
 
-  # test 'when a user tries to like a post that he already liked then response is 422' do
-  #   # Arrange
-  #   post_author = create_and_sign_in_user(user_params)
-  #   post_obj = create_post(post_author)
-  #   create_like(post_obj, post_author)
+  test 'when a user tries to like a post that he already liked then response is 422' do
+    # Arrange
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = create_post(post_author)
+    create_like(post_obj, post_author)
 
-  #   # Act
-  #   like_item(post_obj)
+    # Act
+    like_item(post_obj)
 
-  #   # Assert
+    # Assert
 
-  #   assert_response 422
-  #   res = JSON.parse(@response.body)
-  #   assert_equal({
-  #                  'errors' => {
-  #                    'like' => 'User already liked this'
-  #                  }
-  #                }, res)
-  #   assert_equal(1, Like.all.length)
-  # end
+    assert_response 422
+    res = JSON.parse(@response.body)
+    assert_equal({
+                   'errors' => {
+                     'like' => 'User already liked this'
+                   }
+                 }, res)
+    assert_equal(1, Like.all.length)
+  end
 
-  # test 'when a user unlikes a post he likes then response is 200' do
-  #   # Arrange
-  #   post_author = create_and_sign_in_user(user_params)
-  #   post_obj = create_post(post_author)
-  #   like = create_like(post_obj, post_author)
-  #   # Act
-  #   unlike_item(post_obj, like)
+  test 'when a user unlikes a post he likes then response is 200' do
+    # Arrange
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = create_post(post_author)
+    like = create_like(post_obj, post_author)
+    # Act
+    unlike_item(post_obj, like)
 
-  #   # Assert
-  #   assert_response :success
-  #   assert_equal([], Like.all)
-  # end
+    # Assert
+    assert_response :success
+    assert_equal([], Like.all)
+  end
 
-  # test 'when an unauthenticated user unlikes a post he likes then response is 401' do
-  #   # Arrange
-  #   post_author = create_and_sign_in_user(user_params)
-  #   post_obj = create_post(post_author)
-  #   like = create_like(post_obj, post_author)
+  test 'when an unauthenticated user unlikes a post he likes then response is 401' do
+    # Arrange
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = create_post(post_author)
+    like = create_like(post_obj, post_author)
 
-  #   reset!
-  #   # Act
-  #   unlike_item(post_obj, like, post_author)
+    reset!
+    # Act
+    unlike_item(post_obj, like, post_author)
 
-  #   # Assert
-  #   assert_response 401
-  #   assert_equal(1, Like.all.length)
-  # end
+    # Assert
+    assert_response 401
+    assert_equal(1, Like.all.length)
+  end
 
-  # test 'when a user tries to unlike a post twice then response is 404' do
-  #   # Arrange
-  #   post_author = create_and_sign_in_user(user_params)
-  #   post_obj = create_post(post_author)
-  #   like = create_like(post_obj, post_author)
-  #   like.destroy
-  #   # Act
-  #   unlike_item(post_obj, like)
+  test 'when a user tries to unlike a post twice then response is 404' do
+    # Arrange
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = create_post(post_author)
+    like = create_like(post_obj, post_author)
+    like.destroy
+    # Act
+    unlike_item(post_obj, like)
 
-  #   # Assert
-  #   assert_response 404
-  #   assert_equal([], Like.all)
-  # end
+    # Assert
+    assert_response 404
+    assert_equal([], Like.all)
+  end
 
-  # test 'when a user tries to unlike a post he has not liked yet then response is 404' do
-  #   # Arrange
-  #   post_author = create_and_sign_in_user(user_params)
-  #   post_obj = create_post(post_author)
-  #   like = create_like(post_obj, post_author)
+  test 'when a user tries to unlike a post he has not liked yet then response is 404' do
+    # Arrange
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = create_post(post_author)
+    like = create_like(post_obj, post_author)
 
-  #   reset!
+    reset!
 
-  #   new_user = create_and_sign_in_user(user_params)
+    new_user = create_and_sign_in_user(user_params)
 
-  #   # Act
-  #   unlike_item(post_obj, like)
+    # Act
+    unlike_item(post_obj, like)
 
-  #   # Assert
-  #   assert_response 404
-  #   assert_equal(1, Like.all.length)
-  # end
+    # Assert
+    assert_response 404
+    assert_equal(1, Like.all.length)
+  end
 
-  # test 'when there are no likes on a post we return []' do
-  #   # Arrange
-  #   post_author = create_and_sign_in_user(user_params)
-  #   post_obj = create_post(post_author)
+  test 'when there are no likes on a post we return []' do
+    # Arrange
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = create_post(post_author)
 
-  #   # Act
-  #   fetch_likes(post_obj)
-  #   # Assert
-  #   assert_response :success
-  #   res = JSON.parse(@response.body)
-  #   assert_equal([], res['likes'])
-  #   assert_equal(0, Like.all.length)
-  # end
+    # Act
+    fetch_likes(post_obj)
+    # Assert
+    assert_response :success
+    res = JSON.parse(@response.body)
+    assert_equal([], res['likes'])
+    assert_equal(0, Like.all.length)
+  end
 
-  # test 'when there are likes we return an array with each attribute of the like' do
-  #   post_author = create_and_sign_in_user(user_params)
-  #   post_obj = create_post(post_author)
-  #   like_one = create_like(post_obj, post_author)
+  test 'when there are likes we return an array with each attribute of the like' do
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = create_post(post_author)
+    like_one = create_like(post_obj, post_author)
 
-  #   reset!
-  #   new_user = create_and_sign_in_user(user_params)
-  #   like_two = create_like(post_obj, new_user)
+    reset!
+    new_user = create_and_sign_in_user(user_params)
+    like_two = create_like(post_obj, new_user)
 
-  #   # Act
-  #   fetch_likes(post_obj)
+    # Act
+    fetch_likes(post_obj)
 
-  #   # Assert
-  #   assert_response :success
-  #   res = JSON.parse(@response.body)
-  #   assert_not_nil(res['likes'].first['id'])
-  #   assert_equal(post_obj.id, res['likes'].first['likeableId'])
-  #   assert_equal('Post', res['likes'].first['likeableType'])
-  #   assert_not_nil(res['likes'].first['liker']['id'])
-  #   assert_not_nil(res['likes'].first['liker']['displayName'])
+    # Assert
+    assert_response :success
+    res = JSON.parse(@response.body)
+    assert_not_nil(res['likes'].first['id'])
+    assert_equal(post_obj.id, res['likes'].first['likeableId'])
+    assert_equal('Post', res['likes'].first['likeableType'])
+    assert_not_nil(res['likes'].first['liker']['id'])
+    assert_not_nil(res['likes'].first['liker']['displayName'])
 
-  #   assert_equal(2, Like.all.length)
-  # end
+    assert_equal(2, Like.all.length)
+  end
 
   # TESTS FOR LIKES ON COMMENTS
 
@@ -400,7 +400,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_equal([], Like.all)
   end
 
-  test 'when a user tries to unlike a post he has not liked yet then response is 404' do
+  test 'when a user tries to unlike a comment he has not liked yet then response is 404' do
     # Arrange
     user = create_and_sign_in_user(user_params)
     post = create_post(user)
