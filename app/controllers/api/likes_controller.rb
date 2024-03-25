@@ -1,5 +1,5 @@
 class Api::LikesController < ApplicationController
-  before_action :must_be_authorized, :post_must_exist
+  before_action :must_be_authorized, :set_likeable
 
   def index
     @likes = @post.likes
@@ -10,7 +10,8 @@ class Api::LikesController < ApplicationController
 
   def create
     liker_obj = User.find_by(session_token: session[:auth_token])
-    like = Like.find_by(liker_id: liker_obj.id, likeable_id: params[:post_id])
+
+    like = Like.find_by(liker_id: liker_obj.id, likeable_id: @likeable.id)
     if like.present?
       render json: {
         'errors' => {
@@ -20,7 +21,7 @@ class Api::LikesController < ApplicationController
       return
     end
 
-    @like = @post.likes.new
+    @like = @likeable.likes.new
 
     user_logged = User.find_by(session_token: session[:auth_token])
     @like.liker_id = user_logged.id
@@ -62,16 +63,22 @@ class Api::LikesController < ApplicationController
     }, status: 401
   end
 
-  def post_must_exist
-    @post = Post.find_by(id: params[:post_id])
+  def set_likeable
+    likeable_types = {
+      'post_id' => Post,
+      'comment_id' => Comment
+      # Add more mappings here as your application grows
+    }
 
-    return unless @post.nil?
-
-    render json: {
-      'errors' => {
-        'posts' => 'Post not found'
-      }
-    }, status: 404
-    nil
+    likeable_type = likeable_types.find { |param_key, _class| params[param_key].present? }
+    if likeable_type
+      @likeable = likeable_type[1].find_by(id: params[likeable_type[0]])
+      unless @likeable
+        render json: { 'errors' => { 'likes' => "#{likeable_type[1].name} not found" } }, status: 404
+        nil
+      end
+    else
+      render json: { 'errors' => { 'likes' => 'Likeable type not found' } }, status: 404
+    end
   end
 end
