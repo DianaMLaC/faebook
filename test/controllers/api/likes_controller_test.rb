@@ -25,6 +25,12 @@ def create_post(user)
                profile_id: user.id)
 end
 
+def create_like(likeable, user)
+  Like.create!(likeable_id: likeable.id,
+               likeable_type: likeable.class,
+               liker_id: user.id)
+end
+
 def like_item(likeable, user = nil)
   likeable_type = likeable.class.to_s.underscore.pluralize
   headers = {}
@@ -125,9 +131,8 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     # Arrange
     post_author = create_and_sign_in_user(user_params)
     post_obj = create_post(post_author)
-    Like.create!(likeable_id: post_obj.id,
-                 likeable_type: post_obj.class,
-                 liker_id: post_author.id)
+    create_like(post_obj, post_author)
+
     # Act
     like_item(post_obj)
 
@@ -147,9 +152,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     # Arrange
     post_author = create_and_sign_in_user(user_params)
     post_obj = create_post(post_author)
-    like = Like.create!(likeable_id: post_obj.id,
-                        likeable_type: post_obj.class,
-                        liker_id: post_author.id)
+    like = create_like(post_obj, post_author)
     # Act
     unlike_item(post_obj, like)
 
@@ -162,9 +165,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     # Arrange
     post_author = create_and_sign_in_user(user_params)
     post_obj = create_post(post_author)
-    like = Like.create!(likeable_id: post_obj.id,
-                        likeable_type: post_obj.class,
-                        liker_id: post_author.id)
+    like = create_like(post_obj, post_author)
 
     reset!
     # Act
@@ -179,9 +180,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     # Arrange
     post_author = create_and_sign_in_user(user_params)
     post_obj = create_post(post_author)
-    like = Like.create!(likeable_id: post_obj.id,
-                        likeable_type: post_obj.class,
-                        liker_id: post_author.id)
+    like = create_like(post_obj, post_author)
     like.destroy
     # Act
     unlike_item(post_obj, like)
@@ -195,9 +194,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     # Arrange
     post_author = create_and_sign_in_user(user_params)
     post_obj = create_post(post_author)
-    like = Like.create!(likeable_id: post_obj.id,
-                        likeable_type: post_obj.class,
-                        liker_id: post_author.id)
+    like = create_like(post_obj, post_author)
 
     reset!
 
@@ -229,15 +226,11 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
   test 'when there are likes we return an array with each attribute of the like' do
     post_author = create_and_sign_in_user(user_params)
     post_obj = create_post(post_author)
-    like_one = Like.create!(likeable_id: post_obj.id,
-                            likeable_type: post_obj.class,
-                            liker_id: post_author.id)
+    like_one = create_like(post_obj, post_author)
 
     reset!
     new_user = create_and_sign_in_user(user_params)
-    like_two = Like.create!(likeable_id: post_obj.id,
-                            likeable_type: post_obj.class,
-                            liker_id: new_user.id)
+    like_two = create_like(post_obj, new_user)
 
     # Act
     # get("/api/posts/#{post_obj.id}/likes")
