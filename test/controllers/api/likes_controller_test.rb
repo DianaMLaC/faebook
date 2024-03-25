@@ -19,6 +19,12 @@ def faker_text
   Faker::ChuckNorris.fact
 end
 
+def create_post(user)
+  Post.create!(body: faker_text,
+               author_id: user.id,
+               profile_id: user.id)
+end
+
 def like_item(likeable, user = nil)
   likeable_type = likeable.class.to_s.underscore.pluralize
   headers = {}
@@ -46,11 +52,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
 
     # Arrange
     user = create_and_sign_in_user(user_params)
-    post_obj = Post.create!(
-      body: faker_text,
-      author_id: user.id,
-      profile_id: user.id
-    )
+    post_obj = create_post(user)
 
     # Act
     like_item(post_obj)
@@ -85,11 +87,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     )
 
     post_author = create_and_sign_in_user(user_params)
-    post_obj = Post.create!(
-      body: faker_text,
-      author_id: post_author.id,
-      profile_id: post_author.id
-    )
+    post_obj = create_post(post_author)
     # log out user
     reset!
 
@@ -112,11 +110,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
   test 'when a user tries to like a post that does not exist then response is 404' do
     # Arrange
     liker = create_and_sign_in_user(user_params)
-    post_obj = Post.create!(
-      body: faker_text,
-      author_id: liker.id,
-      profile_id: liker.id
-    )
+    post_obj = create_post(liker)
     post_obj.delete
 
     # Act
@@ -130,11 +124,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
   test 'when a user tries to like a post that he already liked then response is 422' do
     # Arrange
     post_author = create_and_sign_in_user(user_params)
-    post_obj = Post.create!(
-      body: faker_text,
-      author_id: post_author.id,
-      profile_id: post_author.id
-    )
+    post_obj = create_post(post_author)
     Like.create!(likeable_id: post_obj.id,
                  likeable_type: post_obj.class,
                  liker_id: post_author.id)
@@ -156,11 +146,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
   test 'when a user unlikes a post he likes then response is 200' do
     # Arrange
     post_author = create_and_sign_in_user(user_params)
-    post_obj = Post.create!(
-      body: faker_text,
-      author_id: post_author.id,
-      profile_id: post_author.id
-    )
+    post_obj = create_post(post_author)
     like = Like.create!(likeable_id: post_obj.id,
                         likeable_type: post_obj.class,
                         liker_id: post_author.id)
@@ -175,11 +161,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
   test 'when an unauthenticated user unlikes a post he likes then response is 401' do
     # Arrange
     post_author = create_and_sign_in_user(user_params)
-    post_obj = Post.create!(
-      body: faker_text,
-      author_id: post_author.id,
-      profile_id: post_author.id
-    )
+    post_obj = create_post(post_author)
     like = Like.create!(likeable_id: post_obj.id,
                         likeable_type: post_obj.class,
                         liker_id: post_author.id)
@@ -196,11 +178,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
   test 'when a user tries to unlike a post twice then response is 404' do
     # Arrange
     post_author = create_and_sign_in_user(user_params)
-    post_obj = Post.create!(
-      body: faker_text,
-      author_id: post_author.id,
-      profile_id: post_author.id
-    )
+    post_obj = create_post(post_author)
     like = Like.create!(likeable_id: post_obj.id,
                         likeable_type: post_obj.class,
                         liker_id: post_author.id)
@@ -216,11 +194,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
   test 'when a user tries to unlike a post he has not liked yet then response is 404' do
     # Arrange
     post_author = create_and_sign_in_user(user_params)
-    post_obj = Post.create!(
-      body: faker_text,
-      author_id: post_author.id,
-      profile_id: post_author.id
-    )
+    post_obj = create_post(post_author)
     like = Like.create!(likeable_id: post_obj.id,
                         likeable_type: post_obj.class,
                         liker_id: post_author.id)
@@ -240,11 +214,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
   test 'when there are no likes on a post we return []' do
     # Arrange
     post_author = create_and_sign_in_user(user_params)
-    post_obj = Post.create!(
-      body: faker_text,
-      author_id: post_author.id,
-      profile_id: post_author.id
-    )
+    post_obj = create_post(post_author)
 
     # Act
     # get("/api/posts/#{post_obj.id}/likes")
@@ -258,11 +228,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
 
   test 'when there are likes we return an array with each attribute of the like' do
     post_author = create_and_sign_in_user(user_params)
-    post_obj = Post.create!(
-      body: faker_text,
-      author_id: post_author.id,
-      profile_id: post_author.id
-    )
+    post_obj = create_post(post_author)
     like_one = Like.create!(likeable_id: post_obj.id,
                             likeable_type: post_obj.class,
                             liker_id: post_author.id)
