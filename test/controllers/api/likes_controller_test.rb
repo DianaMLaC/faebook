@@ -386,4 +386,37 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_response 401
     assert_equal(1, Like.all.length)
   end
+
+  test 'when a user tries to unlike a comment twice then response is 404' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
+    post = create_post(user)
+    comment = create_comment(user, post)
+    like = create_like(comment, user)
+    like.destroy
+    # Act
+    unlike_item(comment, like)
+
+    # Assert
+    assert_response 404
+    assert_equal([], Like.all)
+  end
+
+  # test 'when a user tries to unlike a post he has not liked yet then response is 404' do
+  #   # Arrange
+  #   post_author = create_and_sign_in_user(user_params)
+  #   post_obj = create_post(post_author)
+  #   like = create_like(post_obj, post_author)
+
+  #   reset!
+
+  #   new_user = create_and_sign_in_user(user_params)
+
+  #   # Act
+  #   unlike_item(post_obj, like)
+
+  #   # Assert
+  #   assert_response 404
+  #   assert_equal(1, Like.all.length)
+  # end
 end
