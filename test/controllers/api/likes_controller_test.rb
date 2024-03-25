@@ -451,8 +451,8 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     res = JSON.parse(@response.body)
     assert_not_nil(res['likes'].first['id'])
-    assert_equal(post_obj.id, res['likes'].first['likeableId'])
-    assert_equal('Post', res['likes'].first['likeableType'])
+    assert_equal(comment.id, res['likes'].first['likeableId'])
+    assert_equal('Comment', res['likes'].first['likeableType'])
     assert_not_nil(res['likes'].first['liker']['id'])
     assert_not_nil(res['likes'].first['liker']['displayName'])
 

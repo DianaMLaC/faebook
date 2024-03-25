@@ -2,7 +2,7 @@ class Api::LikesController < ApplicationController
   before_action :must_be_authorized, :set_likeable
 
   def index
-    @likes = @post.likes
+    @likes = @likeable.likes
     render json: { 'likes' => [] } if @likes.nil?
 
     render :index
