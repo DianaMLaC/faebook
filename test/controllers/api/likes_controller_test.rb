@@ -288,4 +288,35 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Comment', like.likeable_type)
     assert_equal(user.id, like.liker_id)
   end
+
+  test 'when an unauthenticated user tries to like a comment then response is 401' do
+    # Arrange
+    user = User.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      password: Faker::Internet.password(min_length: 6, mix_case: true, special_characters: true),
+      date_of_birth: '2000-10-20',
+      email: Faker::Internet.email
+    )
+
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = create_post(post_author)
+    comment = create_comment(post_author, post_obj)
+    # log out user
+    reset!
+
+    # Act
+    like_item(comment, user)
+
+    # Assert
+    assert_response 401
+    res = JSON.parse(@response.body)
+    assert_equal({
+                   'errors' => {
+                     'authentication' => 'Unauthorized! User need to sign in/ log in'
+                   }
+                 }, res)
+
+    assert_equal([], Like.all)
+  end
 end
