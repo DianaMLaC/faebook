@@ -458,4 +458,35 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal(2, Like.all.length)
   end
+
+  test 'when a user likes his own reply on a comment then response is 200' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
+    post = create_post(user)
+    comment = create_comment(user, post)
+    reply = create_comment(user, post, comment.id)
+
+    # Act
+    like_item(reply, user)
+
+    # Assert
+    assert_not_nil(user)
+    assert_not_nil(post)
+    assert_not_nil(reply)
+
+    assert_response :success
+    like_res = JSON.parse(@response.body)
+    assert_not_nil(like_res)
+    assert_not_nil(like_res['id'])
+    assert_equal(reply.id, like_res['likeableId'])
+    assert_equal('Comment', like_res['likeableType'])
+    assert_equal(user.id, like_res['liker']['id'])
+    assert_equal(user.display_name, like_res['liker']['displayName'])
+
+    assert_equal(1, Like.count)
+    like = Like.first
+    assert_equal(reply.id, like.likeable_id)
+    assert_equal('Comment', like.likeable_type)
+    assert_equal(user.id, like.liker_id)
+  end
 end
