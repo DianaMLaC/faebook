@@ -31,6 +31,8 @@ class Comment < ApplicationRecord
              class_name: 'Comment',
              optional: true
 
+  has_many :likes, as: :likeable
+
   def cannot_comment_on_reply
     return if parent_comment.nil?
     return if parent_comment.parent_comment_id.nil?
