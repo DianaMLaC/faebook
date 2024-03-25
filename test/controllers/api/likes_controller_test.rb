@@ -319,4 +319,19 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal([], Like.all)
   end
+
+  test 'when a user tries to like a comment that does not exist then response is 404' do
+    # Arrange
+    liker = create_and_sign_in_user(user_params)
+    post = create_post(liker)
+    comment = create_comment(liker, post)
+    comment.delete
+
+    # Act
+    like_item(comment, liker)
+
+    # Assert
+    assert_response 404
+    assert_equal([], Like.all)
+  end
 end
