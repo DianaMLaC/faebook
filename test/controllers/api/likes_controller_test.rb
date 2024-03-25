@@ -335,7 +335,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_equal([], Like.all)
   end
 
-  test 'when a user tries to like a post that he already liked then response is 422' do
+  test 'when a user tries to like a comment that he already liked then response is 422' do
     # Arrange
     user = create_and_sign_in_user(user_params)
     post = create_post(user)
@@ -354,6 +354,36 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
                      'like' => 'User already liked this'
                    }
                  }, res)
+    assert_equal(1, Like.all.length)
+  end
+
+  test 'when a user unlikes a comment he likes then response is 200' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
+    post = create_post(user)
+    comment = create_comment(user, post)
+    like = create_like(comment, user)
+    # Act
+    unlike_item(comment, like)
+
+    # Assert
+    assert_response :success
+    assert_equal([], Like.all)
+  end
+
+  test 'when an unauthenticated user unlikes a comment he likes then response is 401' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
+    post = create_post(user)
+    comment = create_comment(user, post)
+    like = create_like(comment, user)
+
+    reset!
+    # Act
+    unlike_item(comment, like, user)
+
+    # Assert
+    assert_response 401
     assert_equal(1, Like.all.length)
   end
 end
