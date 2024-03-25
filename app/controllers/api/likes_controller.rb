@@ -10,7 +10,7 @@ class Api::LikesController < ApplicationController
 
   def create
     liker_obj = User.find_by(session_token: session[:auth_token])
-    like = Like.find_by(liker_id: liker_obj.id, post_id: params[:post_id])
+    like = Like.find_by(liker_id: liker_obj.id, likeable_id: params[:post_id])
     if like.present?
       render json: {
         'errors' => {
