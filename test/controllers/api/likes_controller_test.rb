@@ -334,4 +334,26 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_response 404
     assert_equal([], Like.all)
   end
+
+  test 'when a user tries to like a post that he already liked then response is 422' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
+    post = create_post(user)
+    comment = create_comment(user, post)
+    create_like(comment, user)
+
+    # Act
+    like_item(comment, user)
+
+    # Assert
+
+    assert_response 422
+    res = JSON.parse(@response.body)
+    assert_equal({
+                   'errors' => {
+                     'like' => 'User already liked this'
+                   }
+                 }, res)
+    assert_equal(1, Like.all.length)
+  end
 end
