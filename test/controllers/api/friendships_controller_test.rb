@@ -28,10 +28,15 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     res = JSON.parse(@response.body)
-    assert_equal('pending', res['status'])
+    # assert_nil(res)
+    assert_equal(false, res['friendship'])
 
-    assert_equal(1, Friends.all)
-    assert_equal(user_one.id, Friends.all.first.receiver_id)
-    assert_equal(user_two.id, Friends.all.first.sender_id)
+    friendship = Friendship.all.first
+
+    assert_equal(1, Friendship.count)
+    assert_equal(user_one.id, friendship.receiver_id)
+    assert_equal(user_two.id, friendship.sender_id)
+    assert_equal(user_one.sent_friendships, friendship)
+    assert_equal(user_one.received_friendships, friendship)
   end
 end
