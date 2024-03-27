@@ -36,7 +36,8 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(1, Friendship.count)
     assert_equal(user_one.id, friendship.receiver_id)
     assert_equal(user_two.id, friendship.sender_id)
-    assert_equal(user_one.sent_friendships, friendship)
-    assert_equal(user_one.received_friendships, friendship)
+    assert_not_includes(user_one.received_friends, user_two)
+    assert_includes(user_two.sent_friendships, friendship)
+    assert_includes(user_one.received_friendships, friendship)
   end
 end

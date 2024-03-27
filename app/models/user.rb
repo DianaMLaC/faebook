@@ -38,6 +38,21 @@ class User < ApplicationRecord
            foreign_key: :liker_id,
            class_name: 'Like'
 
+  has_many :received_friendships,
+           foreign_key: :receiver_id,
+           class_name: 'Friendship'
+
+  has_many :sent_friendships,
+           foreign_key: :sender_id,
+           class_name: 'Friendship'
+
+  has_many :received_friends,
+           through: :received_friendships,
+           source: :receiver
+
+  has_many :sent_friends,
+           through: :sent_friendships,
+           source: :sender
   attr_accessor :password
 
   def display_name
