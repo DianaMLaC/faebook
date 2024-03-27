@@ -419,7 +419,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_equal(1, Like.all.length)
   end
 
-  test 'when there are no likes on a post we return []' do
+  test 'when there are no likes on a comment we return []' do
     # Arrange
     user = create_and_sign_in_user(user_params)
     post = create_post(user)
@@ -434,7 +434,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_equal(0, Like.all.length)
   end
 
-  test 'when there are likes we return an array with each attribute of the like' do
+  test 'when there are likes on comments we return an array with each attribute of the like' do
     user = create_and_sign_in_user(user_params)
     post = create_post(user)
     comment = create_comment(user, post)
