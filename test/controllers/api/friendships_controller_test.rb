@@ -15,14 +15,14 @@ def create_and_sign_in_user(user_info)
   User.find_by(id: user_response['id'])
 end
 
-class Api::FriendsControllerTest < ActionDispatch::IntegrationTest
+class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
   test 'when a user requests a friendship with other user, then response is 200' do
     # Arrange
     user_one = create_and_sign_in_user(user_params)
     reset!
     user_two = create_and_sign_in_user(user_params)
     # Act
-    post "/api/users/#{user_one.id}/friends"
+    post "/api/users/#{user_one.id}/friendships"
 
     # Assert
     assert_response :success

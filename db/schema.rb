@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_25_102847) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_27_121515) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_102847) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "parent_comment_id"
+  end
+
+  create_table "friendships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "sender_id", null: false
+    t.uuid "receiver_id", null: false
+    t.boolean "is_accepted", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id", "is_accepted"], name: "index_friendships_on_receiver_id_and_is_accepted"
+    t.index ["receiver_id"], name: "index_friendships_on_receiver_id"
+    t.index ["sender_id"], name: "index_friendships_on_sender_id"
   end
 
   create_table "likes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -53,6 +64,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_102847) do
 
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users", column: "author_id"
+  add_foreign_key "friendships", "users", column: "receiver_id"
+  add_foreign_key "friendships", "users", column: "sender_id"
   add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "posts", "users", column: "profile_id"
 end
