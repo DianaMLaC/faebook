@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resources :users, only: %i[create delete] do
       resources :posts, only: %i[create index]
+      resources :friends, only: %i[create]
     end
 
     resources :posts, only: [] do
