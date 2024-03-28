@@ -64,6 +64,14 @@ class Api::FriendshipsController < ApplicationController
       }, status: 403 and return
     end
 
+    if friendship.is_accepted
+      render json: {
+        'errors' => {
+          'friendship' => 'Friendship already pending/accepted'
+        }
+      }, status: 403 and return
+    end
+
     friendship.is_accepted = true
     if friendship.save
       render json: { 'friendship' => friendship.is_accepted }, status: 200
