@@ -107,6 +107,8 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
 
     # Assert
     assert_response 422
+    res = JSON.parse(@response.body)
+    assert_includes(res['errors'], "Receiver can't be the same as sender")
     assert_equal(0, Friendship.count)
   end
 end
