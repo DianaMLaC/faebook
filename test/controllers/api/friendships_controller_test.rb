@@ -120,7 +120,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     user_one = create_and_sign_in_user(user_params)
     reset!
     user_two = create_and_sign_in_user(user_params)
-    friendship = Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: false)
+    friendship = Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: false)
 
     # Act
     patch "/api/friendships/#{friendship.id}/accept"
@@ -134,5 +134,21 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(true, res['friendship'])
     assert_equal(1, Friendship.count)
     assert_equal(true, Friendship.all.first.is_accepted)
+  end
+
+  test 'when a user that requested a friendship tries to change the status' do
+    # Arrange
+    user_one = create_and_sign_in_user(user_params)
+    reset!
+    user_two = create_and_sign_in_user(user_params)
+    friendship = Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: false)
+
+    # Act
+    patch "/api/friendships/#{friendship.id}/accept"
+
+    # Assert
+    assert_response 403
+    assert_equal(1, Friendship.count)
+    assert_equal(false, Friendship.all.first.is_accepted)
   end
 end
