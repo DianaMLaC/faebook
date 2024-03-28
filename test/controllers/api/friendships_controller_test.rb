@@ -81,4 +81,20 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_response 422
     assert_equal(1, Friendship.count)
   end
+
+  test 'when a user requests a friendship with a user that has a pending request from the same user, then response is 422' do
+    # Arrange
+    user_one = create_and_sign_in_user(user_params)
+    reset!
+    user_two = create_and_sign_in_user(user_params)
+
+    Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: false)
+
+    # Act
+    post "/api/users/#{user_one.id}/friendships"
+
+    # Assert
+    assert_response 422
+    assert_equal(1, Friendship.count)
+  end
 end
