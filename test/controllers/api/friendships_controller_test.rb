@@ -43,14 +43,26 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
 
   test 'when an unauthenticated user requests a friendship with other user, then response is 401 unauthorized' do
     # Arrange
-    user_one = create_and_sign_in_user(user_params)
+    user = create_and_sign_in_user(user_params)
     reset!
 
     # Act
-    post "/api/users/#{user_one.id}/friendships"
+    post "/api/users/#{user.id}/friendships"
 
     # Assert
     assert_response 401
     assert_equal(0, Friendship.count)
+  end
+
+  test 'when an user requests a friendship with other user that does not exist, then response is 404 not found' do
+    # Arrange
+
+    create_and_sign_in_user(user_params)
+
+    # Act
+    post "/api/users/#{SecureRandom.uuid}/friendships"
+
+    # Assert
+    assert_response 404
   end
 end
