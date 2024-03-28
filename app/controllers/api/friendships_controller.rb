@@ -38,6 +38,17 @@ class Api::FriendshipsController < ApplicationController
   end
 
   def accept
-    render json: {}, status: 200
+    friendship = Friendship.find_by(id: params[:id])
+    if friendship.nil?
+      render json: {}, status: 404
+      return
+    end
+
+    friendship.is_accepted = true
+    if friendship.save
+      render json: { 'friendship' => friendship.is_accepted }, status: 200
+    else
+      render json: { errors: friendship.errors.full_messages }, status: 422
+    end
   end
 end

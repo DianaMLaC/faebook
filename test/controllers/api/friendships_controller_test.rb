@@ -128,6 +128,8 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     # Assert
     assert_response :success
     res = JSON.parse(@response.body)
+    friendship.reload
+
     assert_equal(true, friendship.is_accepted)
     assert_equal(true, res['friendship'])
     assert_equal(1, Friendship.count)
