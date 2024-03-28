@@ -44,6 +44,26 @@ class Api::FriendshipsController < ApplicationController
       return
     end
 
+    authenticated_user = User.find_by(session_token: session[:auth_token])
+
+    if authenticated_user.nil?
+
+      render json: {
+        'errors' => {
+          'authentication' => 'Unauthorized! User need to sign in/ log in'
+        }
+      }, status: 401 and return
+      # return
+    end
+
+    if authenticated_user.id != friendship.receiver_id
+      render json: {
+        'errors' => {
+          'friendship' => 'Forbidden! Only receiver can accept the friendship'
+        }
+      }, status: 403 and return
+    end
+
     friendship.is_accepted = true
     if friendship.save
       render json: { 'friendship' => friendship.is_accepted }, status: 200
