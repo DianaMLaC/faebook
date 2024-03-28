@@ -1,7 +1,8 @@
 class Api::FriendshipsController < ApplicationController
   def create
     # receiver
-    receiver = User.find_by(id: params[:user_id])
+    receiver = User.find(params[:user_id])
+
     # sender
     authenticated_user = User.find_by(session_token: session[:auth_token])
 
