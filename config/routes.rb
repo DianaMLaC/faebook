@@ -22,6 +22,12 @@ Rails.application.routes.draw do
       resources :likes, only: %i[create index destroy]
     end
 
+    resources :friendships, only: [] do
+      member do
+        patch :accept
+      end
+    end
+
     resources :authentication, only: %i[create]
   end
 end
