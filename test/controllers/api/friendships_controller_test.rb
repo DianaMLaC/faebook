@@ -54,7 +54,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(0, Friendship.count)
   end
 
-  test 'when an user requests a friendship with other user that does not exist, then response is 404 not found' do
+  test 'test' do
     # Arrange
 
     create_and_sign_in_user(user_params)
@@ -64,5 +64,21 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
 
     # Assert
     assert_response 404
+  end
+
+  test 'when a user requests a friendship with a user that he’s already friends with, then response is 422' do
+    # Arrange
+    user_one = create_and_sign_in_user(user_params)
+    reset!
+    user_two = create_and_sign_in_user(user_params)
+
+    Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
+
+    # Act
+    post "/api/users/#{user_one.id}/friendships"
+
+    # Assert
+    assert_response 422
+    assert_equal(1, Friendship.count)
   end
 end
