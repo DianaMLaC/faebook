@@ -24,9 +24,9 @@ class Api::FriendshipsController < ApplicationController
     if existing_relation
       render json: {
         'errors' => {
-          'friendship' => 'Friendship already exists'
+          'friendship' => 'Friendship already pending/accepted'
         }
-      }, status: 422 and return
+      }, status: 403 and return
     end
 
     friendship = Friendship.new(receiver_id: receiver.id, sender_id: authenticated_user.id)

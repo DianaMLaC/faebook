@@ -53,7 +53,7 @@ class User < ApplicationRecord
   has_many :sent_friends,
            through: :sent_friendships,
            source: :sender
-  attr_accessor :password
+  attr_reader :password
 
   def display_name
     first_name + ' ' + last_name

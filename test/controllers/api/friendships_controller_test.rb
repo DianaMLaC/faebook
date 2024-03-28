@@ -16,6 +16,7 @@ def create_and_sign_in_user(user_info)
 end
 
 class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
+  # CREATE (REQUEST)
   test 'when a user requests a friendship with other user, then response is 200' do
     # Arrange
     user_one = create_and_sign_in_user(user_params)
@@ -66,7 +67,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_response 404
   end
 
-  test 'when a user requests a friendship with a user that he is already friends with, then response is 422' do
+  test 'when a user requests a friendship with a user that he is already friends with, then response is 403' do
     # Arrange
     user_one = create_and_sign_in_user(user_params)
     reset!
@@ -78,11 +79,11 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     post "/api/users/#{user_one.id}/friendships"
 
     # Assert
-    assert_response 422
+    assert_response 403
     assert_equal(1, Friendship.count)
   end
 
-  test 'when a user requests a friendship with a user that has a pending request from the same user, then response is 422' do
+  test 'when a user requests a friendship with a user that has a pending request from the same user, then response is 403' do
     # Arrange
     user_one = create_and_sign_in_user(user_params)
     reset!
@@ -94,7 +95,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     post "/api/users/#{user_one.id}/friendships"
 
     # Assert
-    assert_response 422
+    assert_response 403
     assert_equal(1, Friendship.count)
   end
 
@@ -110,5 +111,26 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     res = JSON.parse(@response.body)
     assert_includes(res['errors'], "Receiver can't be the same as sender")
     assert_equal(0, Friendship.count)
+  end
+
+  # UPDATE (ACCEPT)
+
+  test 'when  a user accepts a friend request, then response is 200' do
+    # Arrange
+    user_one = create_and_sign_in_user(user_params)
+    reset!
+    user_two = create_and_sign_in_user(user_params)
+    friendship = Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: false)
+
+    # Act
+    patch "/api/friendships/#{friendship.id}/accept"
+
+    # Assert
+    assert_response :success
+    res = JSON.parse(@response.body)
+    assert_equal(true, friendship.is_accepted)
+    assert_equal(true, res['friendship'])
+    assert_equal(1, Friendship.count)
+    assert_equal(true, Friendship.all.first.is_accepted)
   end
 end
