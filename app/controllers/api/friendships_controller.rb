@@ -36,4 +36,8 @@ class Api::FriendshipsController < ApplicationController
       render json: { errors: friendship.errors.full_messages }, status: 422
     end
   end
+
+  def accept
+    render json: {}, status: 200
+  end
 end
