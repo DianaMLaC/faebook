@@ -17,12 +17,11 @@ class Api::FriendshipsController < ApplicationController
     end
 
     # friendship
-    existing_friendship = Friendship.find_by(receiver_id: receiver.id, sender_id: authenticated_user.id,
-                                             is_accepted: true) ||
-                          Friendship.find_by(receiver_id: authenticated_user.id, sender_id: receiver.id,
-                                             is_accepted: true)
+    existing_relation =
+      Friendship.find_by(receiver_id: receiver.id, sender_id: authenticated_user.id) ||
+      Friendship.find_by(receiver_id: authenticated_user.id, sender_id: receiver.id)
 
-    if existing_friendship
+    if existing_relation
       render json: {
         'errors' => {
           'friendship' => 'Friendship already exists'
