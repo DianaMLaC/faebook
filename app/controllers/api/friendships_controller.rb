@@ -17,6 +17,19 @@ class Api::FriendshipsController < ApplicationController
     end
 
     # friendship
+    existing_friendship = Friendship.find_by(receiver_id: receiver.id, sender_id: authenticated_user.id,
+                                             is_accepted: true) ||
+                          Friendship.find_by(receiver_id: authenticated_user.id, sender_id: receiver.id,
+                                             is_accepted: true)
+
+    if existing_friendship
+      render json: {
+        'errors' => {
+          'friendship' => 'Friendship already exists'
+        }
+      }, status: 422 and return
+    end
+
     friendship = Friendship.new(receiver_id: receiver.id, sender_id: authenticated_user.id)
     if friendship.save
       render json: { 'friendship' => friendship.is_accepted }, status: 200
