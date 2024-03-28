@@ -69,7 +69,7 @@ class Api::FriendshipsController < ApplicationController
         'errors' => {
           'friendship' => 'Friendship already pending/accepted'
         }
-      }, status: 403 and return
+      }, status: 422 and return
     end
 
     friendship.is_accepted = true

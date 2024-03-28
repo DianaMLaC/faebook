@@ -175,7 +175,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     user_two = create_and_sign_in_user(user_params)
     reset!
     user_three = create_and_sign_in_user(user_params)
-    friendship = Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
+    friendship = Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: false)
 
     # Act
     patch "/api/friendships/#{friendship.id}/accept"
