@@ -1,7 +1,27 @@
 class Api::FriendshipsController < ApplicationController
   def index
-    friendships = Friendship.all
-    render json: { 'friendships' => friendships }, status: 200
+    authenticated_user = User.find_by(session_token: session[:auth_token])
+
+    if authenticated_user.nil?
+
+      render json: {
+        'errors' => {
+          'authentication' => 'Unauthorized! User need to sign in/ log in'
+        }
+      }, status: 401 and return
+      # return
+    end
+
+    if authenticated_user.id == params[:user_id]
+      friendships = Friendship.all
+      render json: { 'friendships' => friendships }, status: 200
+    else
+      render json: {
+        'errors' => {
+          'authentication' => 'Unauthorized! User need to sign in/ log in'
+        }
+      }, status: 401 and return
+    end
   end
 
   def create
