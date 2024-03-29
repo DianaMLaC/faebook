@@ -1,4 +1,8 @@
 class Api::FriendshipsController < ApplicationController
+  def index
+    render json: {}, status: 200
+  end
+
   def create
     # receiver
     receiver = User.find(params[:user_id])
