@@ -246,4 +246,18 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     # Assert
     assert_response 404
   end
+
+  test 'when an unauthenticated user attempts to delete a friendship, then response 401' do
+    user_one = create_and_sign_in_user(user_params)
+    reset!
+    user_two = create_and_sign_in_user(user_params)
+    reset!
+    friendship = Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: true)
+
+    # A ct
+    delete "/api/friendships/#{friendship.id}err"
+
+    # Assert
+    assert_response 401
+  end
 end
