@@ -218,7 +218,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(1, Friendship.count)
   end
 
-  test 'when a any user deletes an accepted friendship, then response is 200' do
+  test 'when any user deletes an accepted friendship, then response is 200' do
     # Arrange
     user_one = create_and_sign_in_user(user_params)
     reset!

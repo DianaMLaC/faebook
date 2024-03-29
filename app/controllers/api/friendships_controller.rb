@@ -99,6 +99,11 @@ class Api::FriendshipsController < ApplicationController
       return
     end
 
+    if friendship.is_accepted
+      friendship.delete
+      render json: {}, status: 200 and return
+    end
+
     if authenticated_user.id == friendship.receiver_id
 
       friendship.delete
