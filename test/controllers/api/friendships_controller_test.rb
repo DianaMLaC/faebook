@@ -282,6 +282,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
   # GET
 
   test 'when a user tries to retrieve all his friends with no data, then response 200' do
+    # Arrange
     user_one = create_and_sign_in_user(user_params)
     reset!
     user_two = create_and_sign_in_user(user_params)
@@ -301,6 +302,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'when a unauthenticated user tries to retrieve his friends, then response 401' do
+    # Arrange
     user_one = create_and_sign_in_user(user_params)
     reset!
     user_two = create_and_sign_in_user(user_params)
@@ -315,5 +317,34 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
 
     # Assert
     assert_response 401
+  end
+
+  test 'when a user tries to retrieve all his friends and has data' do
+    # Arrange
+    user_one = create_and_sign_in_user(user_params)
+    reset!
+    user_two = create_and_sign_in_user(user_params)
+    reset!
+    user_three = create_and_sign_in_user(user_params)
+    reset!
+    user_four = create_and_sign_in_user(user_params)
+
+    Friendship.create!(sender_id: user_four.id, receiver_id: user_two.id, is_accepted: true)
+    Friendship.create!(sender_id: user_four.id, receiver_id: user_three.id, is_accepted: true)
+    Friendship.create!(sender_id: user_four.id, receiver_id: user_one.id, is_accepted: false)
+    Friendship.create!(sender_id: user_two.id, receiver_id: user_three.id, is_accepted: true)
+    Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: true)
+
+    # Act
+    get "/api/users/#{user_four.id}/friendships"
+
+    # Assert
+    assert_response :success
+    res = JSON.parse(@response.body)
+    assert_not_nil(res['friendships'])
+    assert_not_nil(res['friendships']['accepted'])
+    assert_not_nil(res['friendships']['pending'])
+
+    assert_equal(4, Friendship.count)
   end
 end
