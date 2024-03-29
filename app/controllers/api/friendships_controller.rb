@@ -70,17 +70,10 @@ class Api::FriendshipsController < ApplicationController
       render json: {}, status: 200 and return
     end
 
-    if @authenticated_user.id == friendship.receiver_id
+    return unless ensure_user_is_receiver(friendship)
 
-      friendship.delete
-      render json: {}, status: 200
-    else
-      render json: {
-        'errors' => {
-          'friendship' => 'Forbidden! Only receiver can delete/accept the friendship'
-        }
-      }, status: 403 and return
-    end
+    friendship.delete
+    render json: {}, status: 200
   end
 
   def set_authenticated_user
