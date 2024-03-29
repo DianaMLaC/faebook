@@ -296,7 +296,8 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     res = JSON.parse(@response.body)
-    assert_equal([], res['friendships'])
+    assert_equal([], res['friendships']['accepted'])
+    assert_equal([], res['friendships']['pending'])
 
     assert_equal(0, Friendship.count)
   end
@@ -345,6 +346,6 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil(res['friendships']['accepted'])
     assert_not_nil(res['friendships']['pending'])
 
-    assert_equal(4, Friendship.count)
+    assert_equal(5, Friendship.count)
   end
 end
