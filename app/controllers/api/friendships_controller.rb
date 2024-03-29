@@ -13,8 +13,9 @@ class Api::FriendshipsController < ApplicationController
     end
 
     if authenticated_user.id == params[:user_id]
-      pending_friendships = authenticated_user.sent_friendships.where(is_accepted: false)
-      accepted_friendships = authenticated_user.sent_friendships.where(is_accepted: true)
+      accepted_friendships = authenticated_user.sent_friendships.where(is_accepted: true) +
+                             authenticated_user.received_friendships.where(is_accepted: true)
+      pending_friendships = authenticated_user.received_friendships.where(is_accepted: false)
       render json: {
         'friendships' => {
           'accepted' => accepted_friendships,

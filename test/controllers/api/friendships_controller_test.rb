@@ -332,7 +332,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
 
     Friendship.create!(sender_id: user_four.id, receiver_id: user_two.id, is_accepted: true)
     Friendship.create!(sender_id: user_four.id, receiver_id: user_three.id, is_accepted: true)
-    Friendship.create!(sender_id: user_four.id, receiver_id: user_one.id, is_accepted: false)
+    Friendship.create!(sender_id: user_one.id, receiver_id: user_four.id, is_accepted: false)
     Friendship.create!(sender_id: user_two.id, receiver_id: user_three.id, is_accepted: true)
     Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: true)
 
