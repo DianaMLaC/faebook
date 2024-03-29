@@ -185,4 +185,21 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(1, Friendship.count)
     assert_equal(false, Friendship.all.first.is_accepted)
   end
+
+  # DELETE
+
+  test 'when a user rejects a pending friend request, then response is 200' do
+    # Arrange
+    user_one = create_and_sign_in_user(user_params)
+    reset!
+    user_two = create_and_sign_in_user(user_params)
+    friendship = Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: false)
+
+    # A ct
+    delete "/api/friendships/#{friendship.id}"
+
+    # Assert
+    assert_response :success
+    assert_equal(0, Friendship.count)
+  end
 end
