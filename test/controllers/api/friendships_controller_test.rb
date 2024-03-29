@@ -232,4 +232,18 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal(0, Friendship.count)
   end
+
+  test 'when the specified friendship does not exist, then response 404' do
+    # Arrange
+    user_one = create_and_sign_in_user(user_params)
+    reset!
+    user_two = create_and_sign_in_user(user_params)
+    friendship = Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: true)
+
+    # A ct
+    delete "/api/friendships/#{friendship.id}err"
+
+    # Assert
+    assert_response 404
+  end
 end
