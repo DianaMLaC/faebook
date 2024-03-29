@@ -1,12 +1,10 @@
 class Api::FriendshipsController < ApplicationController
-  before_action :must_be_authorized
+  before_action :set_authenticated_user
   def index
-    authenticated_user = User.find_by(session_token: session[:auth_token])
-
-    if authenticated_user.id == params[:user_id]
-      accepted_friendships = authenticated_user.sent_friendships.where(is_accepted: true) +
-                             authenticated_user.received_friendships.where(is_accepted: true)
-      pending_friendships = authenticated_user.received_friendships.where(is_accepted: false)
+    if @authenticated_user.id == params[:user_id]
+      accepted_friendships = @authenticated_user.sent_friendships.where(is_accepted: true) +
+                             @authenticated_user.received_friendships.where(is_accepted: true)
+      pending_friendships = @authenticated_user.received_friendships.where(is_accepted: false)
       render json: {
         'friendships' => {
           'accepted' => accepted_friendships,
@@ -27,12 +25,11 @@ class Api::FriendshipsController < ApplicationController
     receiver = User.find(params[:user_id])
 
     # sender
-    authenticated_user = User.find_by(session_token: session[:auth_token])
 
     # friendship
     existing_relation =
-      Friendship.find_by(receiver_id: receiver.id, sender_id: authenticated_user.id) ||
-      Friendship.find_by(receiver_id: authenticated_user.id, sender_id: receiver.id)
+      Friendship.find_by(receiver_id: receiver.id, sender_id: @authenticated_user.id) ||
+      Friendship.find_by(receiver_id: @authenticated_user.id, sender_id: receiver.id)
 
     if existing_relation
       render json: {
@@ -42,7 +39,7 @@ class Api::FriendshipsController < ApplicationController
       }, status: 403 and return
     end
 
-    friendship = Friendship.new(receiver_id: receiver.id, sender_id: authenticated_user.id)
+    friendship = Friendship.new(receiver_id: receiver.id, sender_id: @authenticated_user.id)
     if friendship.save
       render json: { 'friendship' => friendship.is_accepted }, status: 200
     else
@@ -57,9 +54,7 @@ class Api::FriendshipsController < ApplicationController
       return
     end
 
-    authenticated_user = User.find_by(session_token: session[:auth_token])
-
-    if authenticated_user.id != friendship.receiver_id
+    if @authenticated_user.id != friendship.receiver_id
       render json: {
         'errors' => {
           'friendship' => 'Forbidden! Only receiver can delete/accept the friendship'
@@ -84,20 +79,18 @@ class Api::FriendshipsController < ApplicationController
   end
 
   def destroy
-    authenticated_user = User.find_by(session_token: session[:auth_token])
-
     friendship = Friendship.find_by(id: params[:id])
     if friendship.nil?
       render json: {}, status: 404
       return
     end
 
-    if friendship.is_accepted && friendship.sender_id == authenticated_user.id
+    if friendship.is_accepted && friendship.sender_id == @authenticated_user.id
       friendship.delete
       render json: {}, status: 200 and return
     end
 
-    if authenticated_user.id == friendship.receiver_id
+    if @authenticated_user.id == friendship.receiver_id
 
       friendship.delete
       render json: {}, status: 200
@@ -110,8 +103,9 @@ class Api::FriendshipsController < ApplicationController
     end
   end
 
-  def must_be_authorized
-    return unless User.find_by(session_token: session[:auth_token]).nil?
+  def set_authenticated_user
+    @authenticated_user = User.find_by(session_token: session[:auth_token])
+    return unless @authenticated_user.nil?
 
     # we'll redirect to log in page instead of errors.
     render json: {
