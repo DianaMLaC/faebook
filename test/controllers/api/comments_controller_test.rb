@@ -137,6 +137,34 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     assert(Comment.all.length == 0)
   end
 
+  test 'when a user tries to comment on a post posted on a non-friend profile while he is friends with the post_author, return 422' do
+    # ARRANGE
+    user_profile = create_and_sign_in_user(user_params)
+    reset!
+    post_author = create_and_sign_in_user(user_params)
+    reset!
+    another_user = create_and_sign_in_user(user_params)
+
+    Friendship.create(sender_id: user_profile.id, receiver_id: post_author.id, is_accepted: true)
+    Friendship.create(sender_id: post_author.id, receiver_id: another_user.id, is_accepted: true)
+
+    # create post
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: user_profile.id
+    )
+
+    # Act
+    post(
+      "/api/posts/#{post_obj.id}/comments",
+      params: { text: faker_text }
+    )
+
+    # Assert
+    assert_response 422
+  end
+
   test 'when there are no comments we return []' do
     # ARRANGE
     post_author = create_and_sign_in_user(user_params)
