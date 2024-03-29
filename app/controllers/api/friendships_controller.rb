@@ -59,7 +59,7 @@ class Api::FriendshipsController < ApplicationController
     if authenticated_user.id != friendship.receiver_id
       render json: {
         'errors' => {
-          'friendship' => 'Forbidden! Only receiver can accept the friendship'
+          'friendship' => 'Forbidden! Only receiver can delete/accept the friendship'
         }
       }, status: 403 and return
     end
@@ -81,8 +81,34 @@ class Api::FriendshipsController < ApplicationController
   end
 
   def destroy
-    render json: {}, status: 200
+    authenticated_user = User.find_by(session_token: session[:auth_token])
+
+    if authenticated_user.nil?
+
+      render json: {
+        'errors' => {
+          'authentication' => 'Unauthorized! User need to sign in/ log in'
+        }
+      }, status: 401 and return
+      # return
+    end
+
     friendship = Friendship.find_by(id: params[:id])
-    friendship.delete
+    if friendship.nil?
+      render json: {}, status: 404
+      return
+    end
+
+    if authenticated_user.id == friendship.receiver_id
+
+      friendship.delete
+      render json: {}, status: 200
+    else
+      render json: {
+        'errors' => {
+          'friendship' => 'Forbidden! Only receiver can delete/accept the friendship'
+        }
+      }, status: 403 and return
+    end
   end
 end

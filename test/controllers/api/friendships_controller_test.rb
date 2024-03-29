@@ -202,4 +202,34 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal(0, Friendship.count)
   end
+
+  test 'when a user that requested a friendship tries to delete the friendship, then response is 403' do
+    # Arrange
+    user_one = create_and_sign_in_user(user_params)
+    reset!
+    user_two = create_and_sign_in_user(user_params)
+    friendship = Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: false)
+
+    # A ct
+    delete "/api/friendships/#{friendship.id}"
+
+    # Assert
+    assert_response 403
+    assert_equal(1, Friendship.count)
+  end
+
+  test 'when a any user deletes an accepted friendship, then response is 200' do
+    # Arrange
+    user_one = create_and_sign_in_user(user_params)
+    reset!
+    user_two = create_and_sign_in_user(user_params)
+    friendship = Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
+
+    # A ct
+    delete "/api/friendships/#{friendship.id}"
+
+    # Assert
+    assert_response :success
+    assert_equal(0, Friendship.count)
+  end
 end
