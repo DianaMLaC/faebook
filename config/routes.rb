@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :friendships, only: [] do
       member do
         patch :accept
+        delete :destroy
       end
     end
 
