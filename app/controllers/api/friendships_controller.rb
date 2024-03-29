@@ -1,6 +1,7 @@
 class Api::FriendshipsController < ApplicationController
   def index
-    render json: {}, status: 200
+    friendships = Friendship.all
+    render json: { 'friendships' => friendships }, status: 200
   end
 
   def create

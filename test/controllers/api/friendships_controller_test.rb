@@ -294,8 +294,8 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     # Assert
     assert_response :success
 
-    # res = JSON.parse(@response.body)
-    # assert_equal([], res['friendships'])
+    res = JSON.parse(@response.body)
+    assert_equal([], res['friendships'])
 
     assert_equal(0, Friendship.count)
   end
