@@ -82,5 +82,7 @@ class Api::FriendshipsController < ApplicationController
 
   def destroy
     render json: {}, status: 200
+    friendship = Friendship.find_by(id: params[:id])
+    friendship.delete
   end
 end
