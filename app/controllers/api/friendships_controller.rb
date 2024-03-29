@@ -40,13 +40,7 @@ class Api::FriendshipsController < ApplicationController
       return
     end
 
-    if @authenticated_user.id != friendship.receiver_id
-      render json: {
-        'errors' => {
-          'friendship' => 'Forbidden! Only receiver can delete/accept the friendship'
-        }
-      }, status: 403 and return
-    end
+    return unless ensure_user_is_receiver(friendship)
 
     if friendship.is_accepted
       render json: {
@@ -108,6 +102,15 @@ class Api::FriendshipsController < ApplicationController
 
     if existing_relation
       render json: { 'errors' => { 'friendship' => 'Friendship already pending/accepted' } },
+             status: 403 and return false
+    end
+
+    true
+  end
+
+  def ensure_user_is_receiver(friendship)
+    unless @authenticated_user.id == friendship.receiver_id
+      render json: { 'errors' => { 'friendship' => 'Forbidden! Only receiver can delete/accept the friendship' } },
              status: 403 and return false
     end
 
