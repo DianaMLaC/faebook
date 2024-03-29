@@ -223,7 +223,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     user_one = create_and_sign_in_user(user_params)
     reset!
     user_two = create_and_sign_in_user(user_params)
-    friendship = Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
+    friendship = Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: true)
 
     # A ct
     delete "/api/friendships/#{friendship.id}"
