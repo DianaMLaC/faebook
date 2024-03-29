@@ -278,4 +278,25 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(1, Friendship.count)
     assert_equal(friendship.id, Friendship.all.first.id)
   end
+
+  # GET
+
+  test 'when a user tries to retrieve all his friends with no data, then response 200' do
+    user_one = create_and_sign_in_user(user_params)
+    reset!
+    user_two = create_and_sign_in_user(user_params)
+    reset!
+    user_three = create_and_sign_in_user(user_params)
+
+    # Act
+    get "/api/users/#{user_three.id}/friendships"
+
+    # Assert
+    assert_response :success
+
+    # res = JSON.parse(@response.body)
+    # assert_equal([], res['friendships'])
+
+    assert_equal(0, Friendship.count)
+  end
 end
