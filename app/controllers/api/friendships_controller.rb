@@ -1,16 +1,7 @@
 class Api::FriendshipsController < ApplicationController
+  before_action :must_be_authorized
   def index
     authenticated_user = User.find_by(session_token: session[:auth_token])
-
-    if authenticated_user.nil?
-
-      render json: {
-        'errors' => {
-          'authentication' => 'Unauthorized! User need to sign in/ log in'
-        }
-      }, status: 401 and return
-      # return
-    end
 
     if authenticated_user.id == params[:user_id]
       accepted_friendships = authenticated_user.sent_friendships.where(is_accepted: true) +
@@ -37,16 +28,6 @@ class Api::FriendshipsController < ApplicationController
 
     # sender
     authenticated_user = User.find_by(session_token: session[:auth_token])
-
-    if authenticated_user.nil?
-
-      render json: {
-        'errors' => {
-          'authentication' => 'Unauthorized! User need to sign in/ log in'
-        }
-      }, status: 401 and return
-      # return
-    end
 
     # friendship
     existing_relation =
@@ -78,16 +59,6 @@ class Api::FriendshipsController < ApplicationController
 
     authenticated_user = User.find_by(session_token: session[:auth_token])
 
-    if authenticated_user.nil?
-
-      render json: {
-        'errors' => {
-          'authentication' => 'Unauthorized! User need to sign in/ log in'
-        }
-      }, status: 401 and return
-      # return
-    end
-
     if authenticated_user.id != friendship.receiver_id
       render json: {
         'errors' => {
@@ -115,16 +86,6 @@ class Api::FriendshipsController < ApplicationController
   def destroy
     authenticated_user = User.find_by(session_token: session[:auth_token])
 
-    if authenticated_user.nil?
-
-      render json: {
-        'errors' => {
-          'authentication' => 'Unauthorized! User need to sign in/ log in'
-        }
-      }, status: 401 and return
-      # return
-    end
-
     friendship = Friendship.find_by(id: params[:id])
     if friendship.nil?
       render json: {}, status: 404
@@ -147,5 +108,16 @@ class Api::FriendshipsController < ApplicationController
         }
       }, status: 403 and return
     end
+  end
+
+  def must_be_authorized
+    return unless User.find_by(session_token: session[:auth_token]).nil?
+
+    # we'll redirect to log in page instead of errors.
+    render json: {
+      'errors' => {
+        'authentication' => 'Unauthorized! User need to sign in/ log in'
+      }
+    }, status: 401
   end
 end
