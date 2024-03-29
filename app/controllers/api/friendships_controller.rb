@@ -21,23 +21,9 @@ class Api::FriendshipsController < ApplicationController
   end
 
   def create
-    # receiver
     receiver = User.find(params[:user_id])
 
-    # sender
-
-    # friendship
-    existing_relation =
-      Friendship.find_by(receiver_id: receiver.id, sender_id: @authenticated_user.id) ||
-      Friendship.find_by(receiver_id: @authenticated_user.id, sender_id: receiver.id)
-
-    if existing_relation
-      render json: {
-        'errors' => {
-          'friendship' => 'Friendship already pending/accepted'
-        }
-      }, status: 403 and return
-    end
+    return unless ensure_no_existing_friendship(receiver, @authenticated_user)
 
     friendship = Friendship.new(receiver_id: receiver.id, sender_id: @authenticated_user.id)
     if friendship.save
@@ -113,5 +99,18 @@ class Api::FriendshipsController < ApplicationController
         'authentication' => 'Unauthorized! User need to sign in/ log in'
       }
     }, status: 401
+  end
+
+  def ensure_no_existing_friendship(receiver, sender)
+    existing_relation =
+      Friendship.find_by(receiver_id: receiver.id, sender_id: sender.id) ||
+      Friendship.find_by(receiver_id: sender.id, sender_id: receiver.id)
+
+    if existing_relation
+      render json: { 'errors' => { 'friendship' => 'Friendship already pending/accepted' } },
+             status: 403 and return false
+    end
+
+    true
   end
 end
