@@ -260,4 +260,22 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     # Assert
     assert_response 401
   end
+
+  test 'when a user tries to delete a friend request or friendship that involves users other than themselves, then response 403' do
+    # Arrange
+    user_one = create_and_sign_in_user(user_params)
+    reset!
+    user_two = create_and_sign_in_user(user_params)
+    reset!
+    user_three = create_and_sign_in_user(user_params)
+    friendship = Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
+
+    # Act
+    delete "/api/friendships/#{friendship.id}"
+
+    # Assert
+    assert_response 403
+    assert_equal(1, Friendship.count)
+    assert_equal(friendship.id, Friendship.all.first.id)
+  end
 end
