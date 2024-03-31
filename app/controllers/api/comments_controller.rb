@@ -15,7 +15,7 @@ class Api::CommentsController < ApplicationController
                         Friendship.find_by(receiver_id: @post.profile_id, sender_id: authorized_user_id,
                                            is_accepted: true)
 
-    if existing_relation.nil?
+    if authorized_user_id != @post.profile_id && existing_relation.nil?
       render json: {
         'errors' => {
           'friendship' => 'No relation between users'
