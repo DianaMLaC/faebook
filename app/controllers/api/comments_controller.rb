@@ -1,5 +1,5 @@
 class Api::CommentsController < ApplicationController
-  before_action :must_be_authorized, :post_must_exist
+  before_action :set_authenticated_user, :post_must_exist
 
   def index
     @comments = @post.comments.where(parent_comment_id: nil)
@@ -9,13 +9,12 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
-    authorized_user_id = User.find_by(session_token: session[:auth_token]).id
-    existing_relation = Friendship.find_by(receiver_id: authorized_user_id, sender_id: @post.profile_id,
+    existing_relation = Friendship.find_by(receiver_id: @authenticated_user.id, sender_id: @post.profile_id,
                                            is_accepted: true) ||
-                        Friendship.find_by(receiver_id: @post.profile_id, sender_id: authorized_user_id,
+                        Friendship.find_by(receiver_id: @post.profile_id, sender_id: @authenticated_user.id,
                                            is_accepted: true)
 
-    if authorized_user_id != @post.profile_id && existing_relation.nil?
+    if @authenticated_user.id != @post.profile_id && existing_relation.nil?
       render json: {
         'errors' => {
           'friendship' => 'No relation between users'
@@ -24,7 +23,7 @@ class Api::CommentsController < ApplicationController
     end
 
     @comment = @post.comments.new(text: params[:text])
-    @comment.author_id = authorized_user_id
+    @comment.author_id = @authenticated_user.id
     @comment.parent_comment_id = params[:parent_comment_id]
 
     if @comment.save
@@ -57,8 +56,9 @@ class Api::CommentsController < ApplicationController
     nil
   end
 
-  def must_be_authorized
-    return unless User.find_by(session_token: session[:auth_token]).nil?
+  def set_authenticated_user
+    @authenticated_user = User.find_by(session_token: session[:auth_token])
+    return unless @authenticated_user.nil?
 
     # we'll redirect to log in page instead of errors.
     render json: {
