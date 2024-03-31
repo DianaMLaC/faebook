@@ -85,7 +85,8 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     user_one = create_unauthenticated_user
     user_two = create_and_sign_in_user(user_params)
 
-    # use reset!
+    Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
+
     # Act
     post "/api/users/#{user_one.id}/posts", params: { body: post_body }
 
@@ -97,9 +98,18 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(user_one.id, post.profile_id)
   end
 
-  # test 'when a user tries to make a post on a non friend profile, then response is 422' do
+  test 'when a user tries to make a post on a non friend profile, then response is 422' do
+    # Arrange
+    user_one = create_unauthenticated_user
+    create_and_sign_in_user(user_params)
 
-  # end
+    # Act
+    post "/api/users/#{user_one.id}/posts", params: { body: post_body }
+
+    # Assert
+    assert_response 422
+    assert_equal(0, Post.count)
+  end
 
   test 'should get all the posts for a specific users profile' do
     # Arrange
@@ -119,7 +129,9 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
   test 'when an authenticated  user tries to view posts on another friends profile, response is 200' do
     # Arrange
     user_one = create_unauthenticated_user
-    create_and_sign_in_user(user_params)
+    user_two = create_and_sign_in_user(user_params)
+
+    Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
 
     post "/api/users/#{user_one.id}/posts", params: { body: post_body }
     post "/api/users/#{user_one.id}/posts", params: { body: post_body }
@@ -169,8 +181,11 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'when unauthenticated requests to view posts, then 401' do
+    # Arrange
     user_one = create_unauthenticated_user
+    # Act
     get "/api/users/#{user_one.id}/posts"
+    # Assert
     assert_response :unauthorized
   end
 end
