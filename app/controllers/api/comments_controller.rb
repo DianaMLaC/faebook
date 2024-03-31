@@ -10,16 +10,18 @@ class Api::CommentsController < ApplicationController
 
   def create
     authorized_user_id = User.find_by(session_token: session[:auth_token]).id
-    # existing_relation = Friendship.find_by(receiver_id: authorized_user_id, sender_id: @post.profile_id) ||
-    #                     Friendship.find_by(receiver_id: @post.profile_id, sender_id: authorized_user_id)
+    existing_relation = Friendship.find_by(receiver_id: authorized_user_id, sender_id: @post.profile_id,
+                                           is_accepted: true) ||
+                        Friendship.find_by(receiver_id: @post.profile_id, sender_id: authorized_user_id,
+                                           is_accepted: true)
 
-    # if existing_relation.nil?
-    #   render json: {
-    #     'errors' => {
-    #       'friendship' => 'No relation between users'
-    #     }
-    #   }, status: 422 and return
-    # end
+    if existing_relation.nil?
+      render json: {
+        'errors' => {
+          'friendship' => 'No relation between users'
+        }
+      }, status: 422 and return
+    end
 
     @comment = @post.comments.new(text: params[:text])
     @comment.author_id = authorized_user_id
