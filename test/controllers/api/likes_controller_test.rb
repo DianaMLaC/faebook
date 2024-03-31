@@ -38,6 +38,10 @@ def create_like(likeable, user)
                liker_id: user.id)
 end
 
+def create_friendship(user_one, user_two)
+  Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
+end
+
 def like_item(likeable, user = nil)
   likeable_type = likeable.class.to_s.underscore.pluralize
   headers = {}
@@ -155,6 +159,39 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
                    }
                  }, res)
     assert_equal(1, Like.all.length)
+  end
+
+  test 'when a user tries to like another friends post, then response is 200' do
+    # Arrange
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = create_post(post_author)
+
+    reset!
+
+    user_two = create_and_sign_in_user(user_params)
+    create_friendship(user_two, post_author)
+    # Act
+    like_item(post_obj)
+
+    # Assert
+
+    assert_response :success
+    assert_equal(1, Like.count)
+  end
+
+  test 'when a user tries to like another non_friend_users post, then response is 200' do
+    # Arrange
+    post_author = create_and_sign_in_user(user_params)
+    post_obj = create_post(post_author)
+    reset!
+    user_two = create_and_sign_in_user(user_params)
+    # Act
+    like_item(post_obj)
+
+    # Assert
+
+    assert_response :success
+    assert_equal(1, Like.count)
   end
 
   test 'when a user unlikes a post he likes then response is 200' do
@@ -353,6 +390,41 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
                    }
                  }, res)
     assert_equal(1, Like.all.length)
+  end
+
+  test 'when a user tries to like another friends comment, then response is 200' do
+    # Arrange
+    user_one = create_and_sign_in_user(user_params)
+    post = create_post(user_one)
+    comment = create_comment(user_one, post)
+    reset!
+
+    user_two = create_and_sign_in_user(user_params)
+    create_friendship(user_two, user_one)
+    # Act
+    like_item(comment)
+
+    # Assert
+
+    assert_response :success
+    assert_equal(1, Like.count)
+  end
+
+  test 'when a user tries to like another non_friend_users comment, then response is 200' do
+    # Arrange
+    user_one = create_and_sign_in_user(user_params)
+    post = create_post(user_one)
+    comment = create_comment(user_one, post)
+    reset!
+
+    user_two = create_and_sign_in_user(user_params)
+    # Act
+    like_item(comment)
+
+    # Assert
+
+    assert_response :success
+    assert_equal(1, Like.count)
   end
 
   test 'when a user unlikes a comment he likes then response is 200' do

@@ -1,34 +1,39 @@
 require 'test_helper'
 
+def user_params
+  { firstName: Faker::Name.first_name,
+    lastName: Faker::Name.last_name,
+    password: Faker::Internet.password(min_length: 6, mix_case: true, special_characters: true),
+    dateOfBirth: '2000-10-20',
+    email: Faker::Internet.email }
+end
+
+def faker_text
+  Faker::ChuckNorris.fact
+end
+
+def create_unauthenticated_user
+  User.create!(first_name: Faker::Name.first_name,
+               last_name: Faker::Name.last_name,
+               password: Faker::Internet.password(min_length: 6, mix_case: true,
+                                                  special_characters: true),
+               date_of_birth: '2000-10-20',
+               email: Faker::Internet.email)
+end
+
+def create_and_sign_in_user(user_info)
+  post '/api/users', params: user_info
+
+  user_response = JSON.parse(@response.body)
+  User.find_by(id: user_response['id'])
+end
+
+def create_friendship(user_one, user_two)
+  Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
+end
+
 class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
   # helper methods
-  def user_params
-    { firstName: Faker::Name.first_name,
-      lastName: Faker::Name.last_name,
-      password: Faker::Internet.password(min_length: 6, mix_case: true, special_characters: true),
-      dateOfBirth: '2000-10-20',
-      email: Faker::Internet.email }
-  end
-
-  def faker_text
-    Faker::ChuckNorris.fact
-  end
-
-  def create_unauthenticated_user
-    User.create!(first_name: Faker::Name.first_name,
-                 last_name: Faker::Name.last_name,
-                 password: Faker::Internet.password(min_length: 6, mix_case: true,
-                                                    special_characters: true),
-                 date_of_birth: '2000-10-20',
-                 email: Faker::Internet.email)
-  end
-
-  def create_and_sign_in_user(user_info)
-    post '/api/users', params: user_info
-
-    user_response = JSON.parse(@response.body)
-    User.find_by(id: user_response['id'])
-  end
 
   test 'when an authenticated user comments on a post' do
     # ARRANGE
@@ -137,33 +142,61 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     assert(Comment.all.length == 0)
   end
 
-  # test 'when a user tries to comment on a strangers profile, return 422' do
-  #   # ARRANGE
-  #   user_profile = create_and_sign_in_user(user_params)
-  #   reset!
-  #   post_author = create_and_sign_in_user(user_params)
-  #   reset!
-  #   another_user = create_and_sign_in_user(user_params)
+  test 'when a user tries to comment on a strangers profile, return 422' do
+    # ARRANGE
+    user_profile = create_and_sign_in_user(user_params)
+    reset!
+    post_author = create_and_sign_in_user(user_params)
+    reset!
+    another_user = create_and_sign_in_user(user_params)
 
-  #   Friendship.create(sender_id: user_profile.id, receiver_id: post_author.id, is_accepted: true)
-  #   Friendship.create(sender_id: post_author.id, receiver_id: another_user.id, is_accepted: true)
+    create_friendship(user_profile, post_author)
+    create_friendship(another_user, post_author)
 
-  #   # create post
-  #   post_obj = Post.create!(
-  #     body: faker_text,
-  #     author_id: post_author.id,
-  #     profile_id: user_profile.id
-  #   )
+    # create post
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: user_profile.id
+    )
 
-  #   # Act
-  #   post(
-  #     "/api/posts/#{post_obj.id}/comments",
-  #     params: { text: faker_text }
-  #   )
+    # Act
+    post(
+      "/api/posts/#{post_obj.id}/comments",
+      params: { text: faker_text }
+    )
 
-  #   # Assert
-  #   assert_response 422
-  # end
+    # Assert
+    assert_response 422
+  end
+
+  test 'when a user tries to comment on a friends profile, but is not friends with the post_author, return 200' do
+    # ARRANGE
+    user_profile = create_and_sign_in_user(user_params)
+    reset!
+    post_author = create_and_sign_in_user(user_params)
+    reset!
+    another_user = create_and_sign_in_user(user_params)
+
+    create_friendship(user_profile, another_user)
+    create_friendship(user_profile, post_author)
+
+    # create post
+    post_obj = Post.create!(
+      body: faker_text,
+      author_id: post_author.id,
+      profile_id: user_profile.id
+    )
+
+    # Act
+    post(
+      "/api/posts/#{post_obj.id}/comments",
+      params: { text: faker_text }
+    )
+
+    # Assert
+    assert_response :success
+  end
 
   test 'when there are no comments we return []' do
     # ARRANGE
@@ -183,40 +216,8 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_not_nil(@response.body)
     get_response = JSON.parse(@response.body)
-    # assert_equal([], get_response['comments'])
+    assert_equal([], get_response['comments'])
   end
-
-  # test 'should return correct attributes for each comment object in the array' do
-  #   # ARRANGE
-  #   post_author = create_and_sign_in_user(user_params)
-  #   post_obj = Post.create!(
-  #     body: faker_text,
-  #     author_id: post_author.id,
-  #     profile_id: post_author.id
-  #   )
-  #   comment_one_text = faker_text
-  #   post(
-  #     "/api/posts/#{post_obj.id}/comments",
-  #     params: { text: comment_one_text }
-  #   )
-  #   post(
-  #     "/api/posts/#{post_obj.id}/comments",
-  #     params: { text: faker_text }
-  #   )
-
-  #   # ACT
-  #   get(
-  #     "/api/posts/#{post_obj.id}/comments"
-  #   )
-
-  #   # ASSERT
-  #   assert_response :success
-  #   get_response = JSON.parse(@response.body)
-
-  #   assert_equal(2, get_response['comments'].length)
-  #   first_comment = get_response['comments'].first
-  #   assert_equal(first_comment['text'], comment_one_text)
-  # end
 
   test 'when a user comments on another comment' do
     # ARRANGE
