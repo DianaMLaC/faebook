@@ -85,7 +85,7 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     user_one = create_unauthenticated_user
     user_two = create_and_sign_in_user(user_params)
 
-    Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
+    create_friendship(user_one, user_two)
 
     # Act
     post "/api/users/#{user_one.id}/posts", params: { body: post_body }
@@ -131,7 +131,7 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     user_one = create_unauthenticated_user
     user_two = create_and_sign_in_user(user_params)
 
-    Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
+    create_friendship(user_one, user_two)
 
     post "/api/users/#{user_one.id}/posts", params: { body: post_body }
     post "/api/users/#{user_one.id}/posts", params: { body: post_body }

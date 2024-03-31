@@ -1,6 +1,6 @@
 class Api::PostsController < ApplicationController
-  before_action :set_user_profile, only: %i[create index]
-  before_action :must_be_authorized
+  before_action :set_authenticated_user
+  before_action :set_user_profile, :ensure_relation, only: %i[create index]
 
   def index
     # We need to get all the posts of the user's profile page which is not the author
@@ -14,7 +14,7 @@ class Api::PostsController < ApplicationController
 
   def create
     @post = @user.profile_posts.new(body: params[:body])
-    @post.author_id = User.find_by(session_token: session[:auth_token]).id
+    @post.author_id = @authenticated_user.id
 
     if @post.save
       render :create
@@ -29,8 +29,9 @@ class Api::PostsController < ApplicationController
     @user = User.find(params[:user_id])
   end
 
-  def must_be_authorized
-    return unless User.find_by(session_token: session[:auth_token]).nil?
+  def set_authenticated_user
+    @authenticated_user = User.find_by(session_token: session[:auth_token])
+    return unless @authenticated_user.nil?
 
     # we'll redirect to log in page instead of errors.
     render json: {
@@ -38,5 +39,20 @@ class Api::PostsController < ApplicationController
         'authentication' => 'Unauthorized! User need to sign in/ log in'
       }
     }, status: 401
+  end
+
+  def ensure_relation
+    existing_relation = Friendship.find_by(receiver_id: @authenticated_user.id, sender_id: @user.id,
+                                           is_accepted: true) ||
+                        Friendship.find_by(receiver_id: @user.id, sender_id: @authenticated_user.id,
+                                           is_accepted: true)
+
+    return unless @authenticated_user.id != @user.id && existing_relation.nil?
+
+    render json: {
+      'errors' => {
+        'friendship' => 'No relation between users'
+      }
+    }, status: 422 and false
   end
 end
