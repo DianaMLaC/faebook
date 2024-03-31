@@ -21,11 +21,11 @@ def create_unauthenticated_user
                email: Faker::Internet.email)
 end
 
-def sign_in_user(user_info)
+def create_and_sign_in_user(user_info)
   post '/api/users', params: user_info
-  post '/api/authentication', params: { email: user_info[:email], password: user_info[:password] }
 
-  JSON.parse(@response.body)
+  user_response = JSON.parse(@response.body)
+  User.find_by(id: user_response['id'])
 end
 
 def create_friendship(user_one, user_two)
@@ -35,22 +35,26 @@ end
 class Api::PostsControllerTest < ActionDispatch::IntegrationTest
   # before post creation we need to create and log in a user.
 
-  test 'failure response when creating a post with no text' do
-    json_response = sign_in_user(user_params)
+  test 'when a user tries to make a post  on his own profile with no body, then response is 422' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
 
-    user = User.find_by(id: json_response['id'])
-
+    # Act
     post "/api/users/#{user.id}/posts"
+
+    # Assert
     assert_response 422
   end
 
-  test 'successful response when creating a post with a given text' do
-    json_response = sign_in_user(user_params)
-
-    user = User.find_by(id: json_response['id'])
+  test 'when a user tries to make a post  on his own profile with a given text, then response is 200' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
     user_full_name = user.first_name + ' ' + user.last_name
 
+    # Act
     post "/api/users/#{user.id}/posts", params: { body: post_body }
+
+    # Assert
     assert_response :success
 
     post_response = JSON.parse(@response.body)
@@ -65,19 +69,27 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(user.id, post_response['author']['id'])
   end
 
-  test 'failure when creating a post without a user logged in' do
+  test 'when an unauthorized user tries to create a post, response is 401' do
+    # Arrange
     user = create_unauthenticated_user
 
+    # Act
     post "/api/users/#{user.id}/posts", params: { body: post_body }
+
+    # Assert
     assert_response 401
   end
 
-  test 'should allow an author to post on another profile' do
+  test 'when a user tries to make a post on a friends profile, then response is 200' do
+    # Arrange
     user_one = create_unauthenticated_user
-    json_response = sign_in_user(user_params)
-    user_two = User.find_by(id: json_response['id'])
+    user_two = create_and_sign_in_user(user_params)
 
+    # use reset!
+    # Act
     post "/api/users/#{user_one.id}/posts", params: { body: post_body }
+
+    # Assert
     assert_response :success
     post_response = JSON.parse(@response.body)
     post = Post.find_by(id: post_response['id'])
@@ -85,10 +97,14 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(user_one.id, post.profile_id)
   end
 
+  # test 'when a user tries to make a post on a non friend profile, then response is 422' do
+
+  # end
+
   test 'should get all the posts for a specific users profile' do
-    json_response = sign_in_user(user_params)
+    # Arrange
+    user = create_and_sign_in_user(user_params)
 
-    user = User.find_by(id: json_response['id'])
     post "/api/users/#{user.id}/posts", params: { body: post_body }
     post "/api/users/#{user.id}/posts", params: { body: post_body }
 
@@ -97,41 +113,51 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     get_response = JSON.parse(@response.body)
 
     assert_equal(2, get_response['posts'].length)
+    assert_equal(2, Post.count)
   end
 
-  test 'user authenticated should be able to view posts on another users profile' do
+  test 'when an authenticated  user tries to view posts on another friends profile, response is 200' do
+    # Arrange
     user_one = create_unauthenticated_user
-
-    json_response = sign_in_user(user_params)
-    user_two = User.find_by(id: json_response['id'])
+    create_and_sign_in_user(user_params)
 
     post "/api/users/#{user_one.id}/posts", params: { body: post_body }
     post "/api/users/#{user_one.id}/posts", params: { body: post_body }
 
+    # Act
     get "/api/users/#{user_one.id}/posts"
+
+    # Assert
     assert_response :success
     get_response = JSON.parse(@response.body)
 
     assert_equal(2, get_response['posts'].length)
+    assert_equal(2, Post.count)
   end
 
-  test 'should return empty array for users with no posts' do
-    json_response = sign_in_user(user_params)
-    user = User.find_by(id: json_response['id'])
+  test 'when we retrieve posts with no data, then  we return []' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
 
+    # Act
     get "/api/users/#{user.id}/posts"
+
+    # Assert
     assert_response :success
     get_response = JSON.parse(@response.body)
 
     assert_equal([], get_response['posts'])
   end
 
-  test 'should return correct attributes for each post object in the array' do
-    json_response = sign_in_user(user_params)
-    user = User.find_by(id: json_response['id'])
-
+  test 'when we retrieve posts with data, then we should correct attributes for each post object in the array' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
     post "/api/users/#{user.id}/posts", params: { body: post_body }
+
+    # Act
     get "/api/users/#{user.id}/posts"
+
+    # Assert
     assert_response :success
     get_response = JSON.parse(@response.body)
 
@@ -142,7 +168,7 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil(post['author']['displayName'])
   end
 
-  test 'should not allow unauthenticated requests to view post' do
+  test 'when unauthenticated requests to view posts, then 401' do
     user_one = create_unauthenticated_user
     get "/api/users/#{user_one.id}/posts"
     assert_response :unauthorized
