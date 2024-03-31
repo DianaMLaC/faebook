@@ -1,5 +1,6 @@
 class Api::CommentsController < ApplicationController
   before_action :set_authenticated_user, :post_must_exist
+  before_action :ensure_relation, only: [:create]
 
   def index
     @comments = @post.comments.where(parent_comment_id: nil)
@@ -9,18 +10,18 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
-    existing_relation = Friendship.find_by(receiver_id: @authenticated_user.id, sender_id: @post.profile_id,
-                                           is_accepted: true) ||
-                        Friendship.find_by(receiver_id: @post.profile_id, sender_id: @authenticated_user.id,
-                                           is_accepted: true)
+    # existing_relation = Friendship.find_by(receiver_id: @authenticated_user.id, sender_id: @post.profile_id,
+    #                                        is_accepted: true) ||
+    #                     Friendship.find_by(receiver_id: @post.profile_id, sender_id: @authenticated_user.id,
+    #                                        is_accepted: true)
 
-    if @authenticated_user.id != @post.profile_id && existing_relation.nil?
-      render json: {
-        'errors' => {
-          'friendship' => 'No relation between users'
-        }
-      }, status: 422 and return
-    end
+    # if @authenticated_user.id != @post.profile_id && existing_relation.nil?
+    #   render json: {
+    #     'errors' => {
+    #       'friendship' => 'No relation between users'
+    #     }
+    #   }, status: 422 and return
+    # end
 
     @comment = @post.comments.new(text: params[:text])
     @comment.author_id = @authenticated_user.id
@@ -66,5 +67,20 @@ class Api::CommentsController < ApplicationController
         'authentication' => 'Unauthorized! User need to sign in/ log in'
       }
     }, status: 401
+  end
+
+  def ensure_relation
+    existing_relation = Friendship.find_by(receiver_id: @authenticated_user.id, sender_id: @post.profile_id,
+                                           is_accepted: true) ||
+                        Friendship.find_by(receiver_id: @post.profile_id, sender_id: @authenticated_user.id,
+                                           is_accepted: true)
+
+    return unless @authenticated_user.id != @post.profile_id && existing_relation.nil?
+
+    render json: {
+      'errors' => {
+        'friendship' => 'No relation between users'
+      }
+    }, status: 422 and false
   end
 end
