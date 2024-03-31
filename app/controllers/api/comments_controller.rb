@@ -9,8 +9,20 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
+    authorized_user_id = User.find_by(session_token: session[:auth_token]).id
+    # existing_relation = Friendship.find_by(receiver_id: authorized_user_id, sender_id: @post.profile_id) ||
+    #                     Friendship.find_by(receiver_id: @post.profile_id, sender_id: authorized_user_id)
+
+    # if existing_relation.nil?
+    #   render json: {
+    #     'errors' => {
+    #       'friendship' => 'No relation between users'
+    #     }
+    #   }, status: 422 and return
+    # end
+
     @comment = @post.comments.new(text: params[:text])
-    @comment.author_id = User.find_by(session_token: session[:auth_token]).id
+    @comment.author_id = authorized_user_id
     @comment.parent_comment_id = params[:parent_comment_id]
 
     if @comment.save

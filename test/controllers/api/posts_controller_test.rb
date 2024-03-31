@@ -12,23 +12,28 @@ def post_body
   Faker::ChuckNorris.fact
 end
 
+def create_unauthenticated_user
+  User.create!(first_name: Faker::Name.first_name,
+               last_name: Faker::Name.last_name,
+               password: Faker::Internet.password(min_length: 6, mix_case: true,
+                                                  special_characters: true),
+               date_of_birth: '2000-10-20',
+               email: Faker::Internet.email)
+end
+
+def sign_in_user(user_info)
+  post '/api/users', params: user_info
+  post '/api/authentication', params: { email: user_info[:email], password: user_info[:password] }
+
+  JSON.parse(@response.body)
+end
+
+def create_friendship(user_one, user_two)
+  Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
+end
+
 class Api::PostsControllerTest < ActionDispatch::IntegrationTest
   # before post creation we need to create and log in a user.
-  def create_unauthenticated_user
-    User.create!(first_name: Faker::Name.first_name,
-                 last_name: Faker::Name.last_name,
-                 password: Faker::Internet.password(min_length: 6, mix_case: true,
-                                                    special_characters: true),
-                 date_of_birth: '2000-10-20',
-                 email: Faker::Internet.email)
-  end
-
-  def sign_in_user(user_info)
-    post '/api/users', params: user_info
-    post '/api/authentication', params: { email: user_info[:email], password: user_info[:password] }
-
-    JSON.parse(@response.body)
-  end
 
   test 'failure response when creating a post with no text' do
     json_response = sign_in_user(user_params)
