@@ -53,6 +53,15 @@ class User < ApplicationRecord
   has_many :sent_friends,
            through: :sent_friendships,
            source: :sender
+
+  has_many :albums,
+           foreign_key: :user_id,
+           class_name: 'Album'
+
+  has_many :photos,
+           through: :albums,
+           source: :photos
+
   attr_reader :password
 
   def display_name
