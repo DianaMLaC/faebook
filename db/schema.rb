@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_04_105904) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_05_122621) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,6 +67,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_04_105904) do
     t.index ["receiver_id", "is_accepted"], name: "index_friendships_on_receiver_id_and_is_accepted"
     t.index ["receiver_id"], name: "index_friendships_on_receiver_id"
     t.index ["sender_id"], name: "index_friendships_on_sender_id"
+  end
+
+  create_table "intros", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "work"
+    t.string "location"
+    t.string "education"
+    t.string "relationship"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_intros_on_user_id"
   end
 
   create_table "likes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
