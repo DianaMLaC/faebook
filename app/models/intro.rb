@@ -12,4 +12,11 @@
 #  updated_at   :datetime         not null
 #
 class Intro < ApplicationRecord
+  RELATIONSHIP_STATUSES = %w[single married divorced widowed in_a_relationship its_complicated]
+  validates :user_id, presence: true
+  validates :relationship, inclusion: { in: RELATIONSHIP_STATUSES }
+
+  belongs_to :user,
+             foreign_key: :user_id,
+             class_name: 'User'
 end
