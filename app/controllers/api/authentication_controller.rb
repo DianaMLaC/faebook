@@ -15,4 +15,8 @@ class Api::AuthenticationController < ApplicationController
       }, status: 422
     end
   end
+
+  def delete
+    render json: {}, status: 200
+  end
 end
