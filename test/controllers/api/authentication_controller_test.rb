@@ -93,4 +93,17 @@ class Api::AuthenticationControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil(session[:auth_token])
     assert_equal(session[:auth_token], user.session_token)
   end
+
+  test 'when a user signs out, then response is success 200 ' do
+    # create user
+    post '/api/users',
+         params: { firstName: 'Julie', lastName: 'Soul', password: 'PassworD', dateOfBirth: '2000-10-30',
+                   email: 'jane@smith.com' }
+
+    post '/api/authentication', params: { email: 'jane@smith.com', password: 'PassworD' }
+
+    delete 'api/authentication'
+    assert_response :success
+    assert_nil(session[:auth_token])
+  end
 end
