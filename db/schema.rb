@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_05_122621) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_05_133217) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_122621) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_albums_on_user_id"
   end
 
   create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -56,6 +57,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_122621) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "parent_comment_id"
+    t.index ["author_id"], name: "index_comments_on_author_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
   create_table "friendships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -86,6 +89,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_122621) do
     t.datetime "updated_at", null: false
     t.string "likeable_type"
     t.uuid "likeable_id"
+    t.index ["likeable_id"], name: "index_likes_on_likeable_id"
+    t.index ["liker_id"], name: "index_likes_on_liker_id"
   end
 
   create_table "photos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -93,6 +98,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_122621) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_photos_on_album_id"
   end
 
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -101,6 +107,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_122621) do
     t.uuid "profile_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_posts_on_author_id"
+    t.index ["profile_id"], name: "index_posts_on_profile_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -117,10 +125,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_122621) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "albums", "users"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users", column: "author_id"
   add_foreign_key "friendships", "users", column: "receiver_id"
   add_foreign_key "friendships", "users", column: "sender_id"
+  add_foreign_key "intros", "users"
+  add_foreign_key "likes", "users", column: "liker_id"
+  add_foreign_key "photos", "albums"
   add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "posts", "users", column: "profile_id"
 end
