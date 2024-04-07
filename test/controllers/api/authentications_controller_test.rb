@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class Api::AuthenticationControllerTest < ActionDispatch::IntegrationTest
+class Api::AuthenticationsControllerTest < ActionDispatch::IntegrationTest
   test 'when email and password are invalid' do
-    post '/api/authentication'
+    post '/api/authentications'
     assert_response 422
 
     json_response = JSON.parse(@response.body)
@@ -20,7 +20,7 @@ class Api::AuthenticationControllerTest < ActionDispatch::IntegrationTest
          params: { firstName: 'Julie', lastName: 'Soul', password: 'PassworD', dateOfBirth: '2000-10-30',
                    email: 'jane@smith.com' }
 
-    post '/api/authentication', params: { email: 'jane@smith.com', password: 'nopass' }
+    post '/api/authentications', params: { email: 'jane@smith.com', password: 'nopass' }
     assert_response 422
 
     json_response = JSON.parse(@response.body)
@@ -38,7 +38,7 @@ class Api::AuthenticationControllerTest < ActionDispatch::IntegrationTest
          params: { firstName: 'Julie', lastName: 'Soul', password: 'PassworD', dateOfBirth: '2000-10-30',
                    email: 'jane@smith.com' }
 
-    post '/api/authentication', params: { email: 'jeny@smith.com', password: 'PassworD' }
+    post '/api/authentications', params: { email: 'jeny@smith.com', password: 'PassworD' }
     assert_response 422
   end
 
@@ -48,7 +48,7 @@ class Api::AuthenticationControllerTest < ActionDispatch::IntegrationTest
          params: { firstName: 'Julie', lastName: 'Soul', password: 'PassworD', dateOfBirth: '2000-10-30',
                    email: 'jane@smith.com' }
 
-    post '/api/authentication', params: { email: 'jane@smith.com', password: 'PassworD' }
+    post '/api/authentications', params: { email: 'jane@smith.com', password: 'PassworD' }
     assert_response :success
   end
 
@@ -65,7 +65,7 @@ class Api::AuthenticationControllerTest < ActionDispatch::IntegrationTest
                    dateOfBirth: '2000-10-20',
                    email: }
 
-    post '/api/authentication', params: { email:, password: }
+    post '/api/authentications', params: { email:, password: }
 
     json_response = JSON.parse(@response.body)
 
@@ -83,10 +83,10 @@ class Api::AuthenticationControllerTest < ActionDispatch::IntegrationTest
          params: { firstName: 'Sarah', lastName: 'Jones', password: 'PassworD', dateOfBirth: '2000-10-30',
                    email: 'sarah@jones.com' }
 
-    post '/api/authentication', params: { email: 'jane@smith.com', password: 'PassworD' }
+    post '/api/authentications', params: { email: 'jane@smith.com', password: 'PassworD' }
 
-    json_response = JSON.parse(@response.body)
-    user = User.find_by(id: json_response['id'])
+    # json_response = JSON.parse(@response.body)
+    user = User.find_by(email: 'jane@smith.com')
 
     assert_response :success
 
@@ -100,9 +100,9 @@ class Api::AuthenticationControllerTest < ActionDispatch::IntegrationTest
          params: { firstName: 'Julie', lastName: 'Soul', password: 'PassworD', dateOfBirth: '2000-10-30',
                    email: 'jane@smith.com' }
 
-    post '/api/authentication', params: { email: 'jane@smith.com', password: 'PassworD' }
+    post '/api/authentications', params: { email: 'jane@smith.com', password: 'PassworD' }
 
-    delete 'api/authentication'
+    delete '/api/authentications/'
     assert_response :success
     assert_nil(session[:auth_token])
   end

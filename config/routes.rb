@@ -29,6 +29,6 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :authentication, only: %i[create destroy]
+    resource :authentications, only: %i[create destroy]
   end
 end

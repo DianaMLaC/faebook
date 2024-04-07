@@ -1,4 +1,6 @@
-class Api::AuthenticationController < ApplicationController
+class Api::AuthenticationsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def create
     @user = User.find_by(email: params[:email])
 
@@ -16,7 +18,8 @@ class Api::AuthenticationController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
+    session[:auth_token] = nil
     render json: {}, status: 200
   end
 end
