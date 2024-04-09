@@ -1,5 +1,5 @@
 class Api::PostsController < ApplicationController
-  before_action :set_authenticated_user
+  before_action :current_user
   before_action :set_user_profile, :ensure_relation, only: %i[create index]
 
   def index

@@ -1,5 +1,5 @@
 class Api::LikesController < ApplicationController
-  before_action :set_authenticated_user, :set_likeable
+  before_action :current_user, :set_likeable
 
   def index
     @likes = @likeable.likes
