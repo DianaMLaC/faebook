@@ -1,5 +1,5 @@
 class Api::FriendshipsController < ApplicationController
-  before_action :current_user
+  before_action :must_be_authorized
   def index
     if @authenticated_user.id == params[:user_id]
       accepted_friendships = @authenticated_user.sent_friendships.where(is_accepted: true) +

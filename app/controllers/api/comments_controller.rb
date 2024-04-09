@@ -1,5 +1,5 @@
 class Api::CommentsController < ApplicationController
-  before_action :current_user, :post_must_exist, :ensure_relation
+  before_action :must_be_authorized, :post_must_exist, :ensure_relation
 
   def index
     @comments = @post.comments.where(parent_comment_id: nil)

@@ -26,6 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def must_be_authorized
+    current_user
     return unless @authenticated_user.nil?
 
     render json: {
