@@ -13,3 +13,91 @@
  *= require_tree .
  *= require_self
  */
+
+
+ /* Overall body styling */
+ :root {
+  --primary-color: #4ef7dd;
+  --secondary-color: #3DCCC7;
+  --accent-color: #A280E3;
+  --background-color: #E0F7FA;
+  --text-color: #20504F;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+
+/* START PAGE */
+
+.start-page {
+  width: 100%; /* Full width of the container */
+  max-width: 900px; /* Maximum width of the content */
+  display: flex;
+  justify-content: space-between; /* Space out the title and form */
+  align-items: center; /* Align items vertically */
+  padding: 20px; /* Add some padding */
+  box-sizing: border-box; /* Include padding in the width */
+}
+
+.faebook-title {
+  font-size: 4em; /* Larger and bolder font size */
+  font-weight: bold; /* Make it bold */
+  color: var(--primary-color);
+  flex-basis: 50%; /* Take up half the .start-page width */
+}
+
+.faebook-motto {
+  font-size: 1.5em; /* Slightly larger motto */
+  color: var(--accent-color);
+  padding-right: 20px;
+}
+
+
+
+.login-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-basis: 40%; /* Take up less than half the .start-page width */
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  padding: 14px;
+  margin-bottom: 10px;
+  border: 1px solid #dddfe2;
+  border-radius: 5px;
+  font-size: 17px;
+}
+
+.login-form button {
+  padding: 10px 0;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background-color: var(--secondary-color);
+}

@@ -28,13 +28,13 @@ const AuthProvider = ({ children }) => {
     } catch (err) {
       console.error("Error caught in AuthProvider logout:", err)
     }
-
-    return (
-      <AuthContext.Provider value={{ currentUser, signup, login, logout }}>
-        {children}
-      </AuthContext.Provider>
-    )
   }
+
+  return (
+    <AuthContext.Provider value={{ currentUser, signup, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export const useAuth = () => {

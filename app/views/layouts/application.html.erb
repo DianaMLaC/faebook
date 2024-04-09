@@ -7,13 +7,14 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag 'bundle' %>
+
     <% if current_user %>
       <script>
           window.currentUser = {
             "id": <%= current_user.id %>,
             "displayName": "<%= current_user.display_name%>",
-            "email": "<%%= curent_user.email%>"
+            "email": "<%= curent_user.email%>"
           }
       </script>
     <% end %>
