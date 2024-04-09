@@ -8,6 +8,15 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <% if current_user %>
+      <script>
+          window.currentUser = {
+            "id": <%= current_user.id %>,
+            "displayName": "<%= current_user.display_name%>",
+            "email": "<%%= curent_user.email%>"
+          }
+      </script>
+    <% end %>
   </head>
 
   <body>

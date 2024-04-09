@@ -50,6 +50,7 @@ class Api::AuthenticationsControllerTest < ActionDispatch::IntegrationTest
 
     post '/api/authentications', params: { email: 'jane@smith.com', password: 'PassworD' }
     assert_response :success
+    assert_not_nil(session[:auth_token])
   end
 
   test 'returns correct response body' do

@@ -1,5 +1,5 @@
 class Api::LikesController < ApplicationController
-  before_action :must_be_authorized, :set_likeable
+  before_action :set_authenticated_user, :set_likeable
 
   def index
     @likes = @likeable.likes
@@ -23,8 +23,8 @@ class Api::LikesController < ApplicationController
 
     @like = @likeable.likes.new
 
-    user_logged = User.find_by(session_token: session[:auth_token])
-    @like.liker_id = user_logged.id
+    # user_logged = User.find_by(session_token: session[:auth_token])
+    @like.liker_id = @authenticated_user.id
 
     if @like.save
       render :create
@@ -36,9 +36,8 @@ class Api::LikesController < ApplicationController
 
   def destroy
     @like = Like.find_by(id: params[:id])
-    liker_obj = User.find_by(session_token: session[:auth_token])
 
-    if @like && @like.liker_id == liker_obj.id
+    if @like && @like.liker_id == @authenticated_user.id
       @like.destroy
       render json: {}, status: 200
     else
@@ -51,17 +50,6 @@ class Api::LikesController < ApplicationController
   end
 
   private
-
-  def must_be_authorized
-    return unless User.find_by(session_token: session[:auth_token]).nil?
-
-    # we'll redirect to log in page instead of errors.
-    render json: {
-      'errors' => {
-        'authentication' => 'Unauthorized! User need to sign in/ log in'
-      }
-    }, status: 401
-  end
 
   def set_likeable
     likeable_types = {
