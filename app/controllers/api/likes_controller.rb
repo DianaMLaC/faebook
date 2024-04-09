@@ -9,9 +9,7 @@ class Api::LikesController < ApplicationController
   end
 
   def create
-    liker_obj = User.find_by(session_token: session[:auth_token])
-
-    like = Like.find_by(liker_id: liker_obj.id, likeable_id: @likeable.id)
+    like = Like.find_by(liker_id: @authenticated_user.id, likeable_id: @likeable.id)
     if like.present?
       render json: {
         'errors' => {
@@ -22,8 +20,6 @@ class Api::LikesController < ApplicationController
     end
 
     @like = @likeable.likes.new
-
-    # user_logged = User.find_by(session_token: session[:auth_token])
     @like.liker_id = @authenticated_user.id
 
     if @like.save
