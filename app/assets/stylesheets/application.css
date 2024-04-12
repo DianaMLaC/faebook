@@ -58,8 +58,9 @@ body {
 
 .faebook-motto {
   font-size: 1.5em; /* Slightly larger motto */
-  color: var(--accent-color);
-  padding-right: 20px;
+  color: var(--text-color);
+  padding-right: 40px;
+  margin-right: 40px
 }
 
 
@@ -77,6 +78,7 @@ body {
 .login-form form {
   display: flex;
   flex-direction: column;
+  gap: 15px; 
 }
 
 .login-form input[type="text"],
@@ -100,4 +102,20 @@ body {
 
 .login-form button:hover {
   background-color: var(--secondary-color);
+}
+
+.signup-button {
+  background-color: var(--accent-color); 
+  color: white; 
+  padding: 10px 0;
+  font-size: 17px; 
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-container .separator {
+  border-top: 1px solid #dddfe2; /* A light grey line */
+  margin-top: 20px; /* Space between the line and the login button */
+  margin-bottom: 10px; /* Space between the line and the create account button */
 }
