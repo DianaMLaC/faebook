@@ -4624,7 +4624,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Signup = function Signup() {
-  var signup = _context_auth__WEBPACK_IMPORTED_MODULE_1__.useAuth.signup;
+  var tenYearsAgo = new Date(new Date().setFullYear(new Date().getFullYear() - 14));
+  var maxDate = tenYearsAgo.toISOString().split("T")[0];
+  var _useAuth = (0,_context_auth__WEBPACK_IMPORTED_MODULE_1__.useAuth)(),
+    signup = _useAuth.signup;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState2 = _slicedToArray(_useState, 2),
     firstName = _useState2[0],
@@ -4641,7 +4644,7 @@ var Signup = function Signup() {
     _useState8 = _slicedToArray(_useState7, 2),
     password = _useState8[0],
     setPassword = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(maxDate),
     _useState10 = _slicedToArray(_useState9, 2),
     dateOfBirth = _useState10[0],
     setDateOfBirth = _useState10[1];
@@ -4667,9 +4670,9 @@ var Signup = function Signup() {
             userData = {
               firstName: firstName,
               lastName: lastName,
-              email: email,
               password: password,
-              dateOfBirth: dateOfBirth
+              dateOfBirth: dateOfBirth,
+              email: email
             };
             _context.next = 5;
             return signup(userData);
@@ -4696,8 +4699,12 @@ var Signup = function Signup() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "signup-header"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, " Sign Up"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, " It's quick and easy.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "separator"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "signup-form"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "user-name"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
     placeholder: "First name",
     value: firstName,
@@ -4711,7 +4718,7 @@ var Signup = function Signup() {
     onChange: function onChange(e) {
       return setLastName(e.target.value);
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
     placeholder: "Email",
     value: email,
@@ -4725,9 +4732,12 @@ var Signup = function Signup() {
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "dob"
+  }, "Birthday"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "date",
     value: dateOfBirth,
+    max: maxDate,
     onChange: function onChange(e) {
       return setDateOfBirth(e.target.value);
     }
@@ -4799,8 +4809,9 @@ var StartPage = function StartPage() {
     contentLabel: "Sign Up",
     className: "Modal"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_signup__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: closeModal
-  }, "Close")));
+    onClick: closeModal,
+    className: "close-modal-button"
+  }, "x")));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StartPage);
 
@@ -4959,22 +4970,31 @@ function checkResponse(_x) {
 // POST USER
 function _checkResponse() {
   _checkResponse = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(response) {
-    var backendErrorList;
+    var backendErrorResponse, backendErrorList, errorMessages;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) switch (_context4.prev = _context4.next) {
         case 0:
           if (response.ok) {
-            _context4.next = 5;
+            _context4.next = 11;
             break;
           }
           _context4.next = 3;
           return response.json();
         case 3:
-          backendErrorList = _context4.sent;
-          throw new Error(backendErrorList.join("\n"));
-        case 5:
+          backendErrorResponse = _context4.sent;
+          if (!(backendErrorResponse && backendErrorResponse.errors && backendErrorResponse.errors.user)) {
+            _context4.next = 10;
+            break;
+          }
+          // If the structure is as expected, extract error messages and join them.
+          backendErrorList = backendErrorResponse.errors.user;
+          errorMessages = Object.values(backendErrorList).flat(); // Flatten in case it's an array of arrays
+          throw new Error(errorMessages.join("\n"));
+        case 10:
+          throw new Error("An error occurred. Please try again.");
+        case 11:
           return _context4.abrupt("return", response);
-        case 6:
+        case 12:
         case "end":
           return _context4.stop();
       }
@@ -4988,35 +5008,35 @@ var postUser = /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _context.prev = 0;
-          _context.next = 3;
+          console.log(userData);
+          _context.prev = 1;
+          _context.next = 4;
           return fetch("http://localhost:3000/api/users", {
             method: "POST",
             headers: customHeaders,
-            body: JSON.stringify({
-              user: userData
-            })
+            body: JSON.stringify(userData)
           });
-        case 3:
+        case 4:
           response = _context.sent;
-          _context.next = 6;
+          _context.next = 7;
           return checkResponse(response);
-        case 6:
-          _context.next = 8;
+        case 7:
+          _context.next = 9;
           return response.json();
-        case 8:
+        case 9:
           user = _context.sent;
           return _context.abrupt("return", user);
-        case 12:
-          _context.prev = 12;
-          _context.t0 = _context["catch"](0);
+        case 13:
+          _context.prev = 13;
+          _context.t0 = _context["catch"](1);
+          console.error(_context.t0.message);
           console.error("Error with response code or parsing response in API POST User", _context.t0);
           throw _context.t0;
-        case 16:
+        case 18:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 12]]);
+    }, _callee, null, [[1, 13]]);
   }));
   return function postUser(_x2) {
     return _ref.apply(this, arguments);

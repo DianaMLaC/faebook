@@ -2,12 +2,15 @@ import React, { useState } from "react"
 import { useAuth } from "../../context/auth"
 
 const Signup = () => {
-  const { signup } = useAuth
+  const tenYearsAgo = new Date(new Date().setFullYear(new Date().getFullYear() - 14))
+  const maxDate = tenYearsAgo.toISOString().split("T")[0]
+
+  const { signup } = useAuth()
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [dateOfBirth, setDateOfBirth] = useState("")
+  const [dateOfBirth, setDateOfBirth] = useState(maxDate)
 
   const [formErr, setFormErr] = useState("")
 
@@ -21,7 +24,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const userData = { firstName, lastName, email, password, dateOfBirth }
+      const userData = { firstName, lastName, password, dateOfBirth, email }
       await signup(userData)
     } catch (err) {
       clearForm()
@@ -35,21 +38,24 @@ const Signup = () => {
         <h1> Sign Up</h1>
         <p> It's quick and easy.</p>
       </div>
+      <div className="separator"></div>
       <div className="signup-form">
         <form>
-          <input
-            type="text"
-            placeholder="First name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
+          <div className="user-name">
+            <input
+              type="text"
+              placeholder="First name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
 
-          <input
-            type="text"
-            placeholder="Last name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
+            <input
+              type="text"
+              placeholder="Last name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
 
           <input
             type="text"
@@ -64,8 +70,13 @@ const Signup = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
-          <input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
+          <div className="dob">Birthday</div>
+          <input
+            type="date"
+            value={dateOfBirth}
+            max={maxDate}
+            onChange={(e) => setDateOfBirth(e.target.value)}
+          />
 
           {formErr && <p>{formErr}</p>}
 

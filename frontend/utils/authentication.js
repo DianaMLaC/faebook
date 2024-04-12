@@ -4,8 +4,16 @@ export const customHeaders = {
 
 export async function checkResponse(response) {
   if (!response.ok) {
-    const backendErrorList = await response.json()
-    throw new Error(backendErrorList.join("\n"))
+    const backendErrorResponse = await response.json()
+    if (backendErrorResponse && backendErrorResponse.errors && backendErrorResponse.errors.user) {
+      // If the structure is as expected, extract error messages and join them.
+      const backendErrorList = backendErrorResponse.errors.user
+      const errorMessages = Object.values(backendErrorList).flat() // Flatten in case it's an array of arrays
+      throw new Error(errorMessages.join("\n"))
+    } else {
+      // If the structure is not as expected, throw a generic error or handle as needed
+      throw new Error("An error occurred. Please try again.")
+    }
   }
   return response
 }
@@ -13,16 +21,18 @@ export async function checkResponse(response) {
 // POST USER
 
 export const postUser = async (userData) => {
+  console.log(userData)
   try {
     const response = await fetch("http://localhost:3000/api/users", {
       method: "POST",
       headers: customHeaders,
-      body: JSON.stringify({ user: userData }),
+      body: JSON.stringify(userData),
     })
     await checkResponse(response)
     const user = await response.json()
     return user
   } catch (err) {
+    console.error(err.message)
     console.error("Error with response code or parsing response in API POST User", err)
     throw err
   }

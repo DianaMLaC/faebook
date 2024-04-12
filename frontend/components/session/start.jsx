@@ -42,7 +42,9 @@ const StartPage = () => {
         className="Modal"
       >
         <Signup />
-        <button onClick={closeModal}>Close</button>
+        <button onClick={closeModal} className="close-modal-button">
+          x
+        </button>
       </ReactModal>
     </div>
   )

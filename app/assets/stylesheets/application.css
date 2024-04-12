@@ -40,24 +40,24 @@ body {
 /* START PAGE */
 
 .start-page {
-  width: 100%; /* Full width of the container */
-  max-width: 900px; /* Maximum width of the content */
+  width: 100%; 
+  max-width: 900px; 
   display: flex;
-  justify-content: space-between; /* Space out the title and form */
-  align-items: center; /* Align items vertically */
-  padding: 20px; /* Add some padding */
-  box-sizing: border-box; /* Include padding in the width */
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 20px; 
+  box-sizing: border-box; 
 }
 
 .faebook-title {
-  font-size: 4em; /* Larger and bolder font size */
-  font-weight: bold; /* Make it bold */
+  font-size: 4em; 
+  font-weight: bold; 
   color: var(--primary-color);
-  flex-basis: 50%; /* Take up half the .start-page width */
+  flex-basis: 50%; 
 }
 
 .faebook-motto {
-  font-size: 1.5em; /* Slightly larger motto */
+  font-size: 1.5em; 
   color: var(--text-color);
   padding-right: 40px;
   margin-right: 40px
@@ -70,7 +70,7 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  flex-basis: 40%; /* Take up less than half the .start-page width */
+  flex-basis: 40%; 
   display: flex;
   flex-direction: column;
 }
@@ -114,8 +114,94 @@ body {
   cursor: pointer;
 }
 
-.login-container .separator {
-  border-top: 1px solid #dddfe2; /* A light grey line */
-  margin-top: 20px; /* Space between the line and the login button */
-  margin-bottom: 10px; /* Space between the line and the create account button */
+.separator {
+  border-top: 1px solid #dddfe2; 
+  margin-top: 20px; 
+  margin-bottom: 15px; 
+}
+
+.ReactModal__Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.ReactModal__Content {
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  max-width: 500px; 
+  outline: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Sign Up form styling */
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.signup-header h1 {
+  color: var(--primary-color);
+  margin-bottom: 0.5em;
+}
+
+.signup-header p {
+  color: var(--text-color);
+  margin-bottom: 1em;
+}
+
+.signup-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-form input[type="text"],
+.signup-form input[type="password"],
+.signup-form input[type="date"],
+.signup-form input[type="email"] {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #dddfe2;
+  border-radius: 5px;
+  font-size: 17px;
+}
+
+.dob {
+  padding: 5px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.signup-form button {
+  margin-top: 20px;
+  padding: 10px 0;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.close-modal-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  font-size: 1.5em;
+  color: var(--text-color);
 }
