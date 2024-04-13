@@ -37,6 +37,8 @@ body {
 }
 
 
+
+
 /* START PAGE */
 
 .start-page {
@@ -204,4 +206,28 @@ body {
   right: 20px;
   font-size: 1.5em;
   color: var(--text-color);
+}
+
+@media only screen and (max-width: 600px) {
+  .start-page {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .faebook-title, .login-container {
+    flex-basis: auto; 
+  }
+
+  .faebook-motto {
+    padding-right: 20px;
+    margin-right: 20px;
+    font-size: 1em; /* Adjust the font size as needed */
+  }
+
+  .login-form input[type="text"],
+  .login-form input[type="password"] {
+    padding: 12px;
+  }
+
+  /* Adjust other styles as needed */
 }
