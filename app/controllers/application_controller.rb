@@ -16,13 +16,6 @@ class ApplicationController < ActionController::Base
     return unless @authenticated_user.nil?
 
     nil
-
-    # we'll redirect to log in page instead of errors.
-    # render json: {
-    #   'errors' => {
-    #     'authentication' => 'Unauthorized! User need to sign in/ log in'
-    #   }
-    # }, status: 401
   end
 
   def must_be_authorized

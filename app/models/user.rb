@@ -62,6 +62,10 @@ class User < ApplicationRecord
            through: :albums,
            source: :photos
 
+  has_one :intro,
+          foreign_key: :user_id,
+          class_name: 'Intro'
+
   attr_reader :password
 
   def profile_photo_album

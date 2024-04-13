@@ -24,7 +24,6 @@ const AuthRoute = ({ authorized, notAuthorized }) => {
 const App = () => (
   <div>
     <Routes>
-      {console.log("inside app.jsx, in the Routes tag")}
       <Route
         path="/"
         element={<AuthRoute authorized={<UserProfile />} notAuthorized={<StartPage />} />}

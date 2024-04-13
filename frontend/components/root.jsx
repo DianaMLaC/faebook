@@ -7,7 +7,6 @@ const Root = () => (
   <StrictMode>
     <HashRouter>
       <AuthProvider>
-        {console.log("inside root.jsx, in the authProvider tag")}
         <App />
       </AuthProvider>
     </HashRouter>

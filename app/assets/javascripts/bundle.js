@@ -4422,7 +4422,7 @@ var AuthRoute = function AuthRoute(_ref2) {
   return notAuthorized;
 };
 var App = function App() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Routes, null, console.log("inside app.jsx, in the Routes tag"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
     path: "/",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(AuthRoute, {
       authorized: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_profile__WEBPACK_IMPORTED_MODULE_2__["default"], null),
@@ -4453,20 +4453,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _context_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../context/auth */ "./frontend/context/auth.jsx");
 
 
-
-// const UserProfile = () => {
-//   const { currentUser } = useAuth()
-
-//   return (
-//     <div>
-//       <h1>Welcome, {currentUser.displayName}</h1>
-//       <h5>This will be our user profile on which we are redirected after authentication</h5>
-//     </div>
-//   )
-// }
-
 var UserProfile = function UserProfile() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, " Welcome user ");
+  var _useAuth = (0,_context_auth__WEBPACK_IMPORTED_MODULE_1__.useAuth)(),
+    currentUser = _useAuth.currentUser;
+  var _useAuth2 = (0,_context_auth__WEBPACK_IMPORTED_MODULE_1__.useAuth)(),
+    logout = _useAuth2.logout;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Welcome, ", currentUser.displayName), console.log(currentUser), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", null, "This will be our user profile on which we are redirected after authentication"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UserProfile);
 
@@ -4493,7 +4485,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Root = function Root() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react__WEBPACK_IMPORTED_MODULE_0__.StrictMode, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.HashRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_context_auth__WEBPACK_IMPORTED_MODULE_1__["default"], null, console.log("inside root.jsx, in the authProvider tag"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_app__WEBPACK_IMPORTED_MODULE_2__["default"], null))));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react__WEBPACK_IMPORTED_MODULE_0__.StrictMode, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.HashRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_context_auth__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_app__WEBPACK_IMPORTED_MODULE_2__["default"], null))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Root);
 
@@ -4549,7 +4541,7 @@ var Login = function Login() {
             e.preventDefault();
             _context.prev = 1;
             formData = {
-              username: username,
+              email: email,
               password: password
             };
             _context.next = 5;
@@ -5056,9 +5048,7 @@ var postSession = /*#__PURE__*/function () {
           return fetch("http://localhost:3000/api/authentications", {
             method: "POST",
             headers: customHeaders,
-            body: JSON.stringify({
-              user: sessionData
-            })
+            body: JSON.stringify(sessionData)
           });
         case 3:
           response = _context2.sent;

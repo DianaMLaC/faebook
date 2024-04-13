@@ -1,3 +1,4 @@
 json.id @user.id
-json.firstName @user.first_name
-json.lastName @user.last_name
+json.displayName @user.display_name
+json.email @user.email
+json.dob @user.date_of_birth

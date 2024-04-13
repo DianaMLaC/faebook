@@ -12,7 +12,7 @@ const Login = () => {
     e.preventDefault()
 
     try {
-      const formData = { username, password }
+      const formData = { email, password }
       await login(formData)
     } catch (err) {
       setPassword("")

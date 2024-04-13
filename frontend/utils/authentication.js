@@ -45,7 +45,7 @@ export const postSession = async (sessionData) => {
     const response = await fetch("http://localhost:3000/api/authentications", {
       method: "POST",
       headers: customHeaders,
-      body: JSON.stringify({ user: sessionData }),
+      body: JSON.stringify(sessionData),
     })
     await checkResponse(response)
     const session = await response.json()
