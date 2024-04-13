@@ -3,41 +3,37 @@ import { useAuth } from "../context/auth"
 import { Route, Routes, Navigate } from "react-router-dom"
 import UserProfile from "./profile"
 import StartPage from "./session/start"
-import Login from "./session/login"
+import NavBar from "./nav"
 
-const Protected = ({ children }) => {
-  const auth = useAuth()
-  if (auth.currentUser) {
-    return <Navigate to="/" />
-  }
-  return children
-}
+const App = () => {
+  const { currentUser } = useAuth()
 
-const AuthRoute = ({ authorized, notAuthorized }) => {
-  const auth = useAuth()
-  if (auth.currentUser) {
-    return authorized
-  }
-  return notAuthorized
-}
-
-const App = () => (
-  <div>
+  return (
     <Routes>
+      <Route path="/start" element={<StartPage />} />
+      <Route
+        path="/login"
+        element={currentUser ? <Navigate to="/profile-page" replace /> : <StartPage />}
+      />
+      <Route
+        path="/signup"
+        element={currentUser ? <Navigate to="/profile-page" replace /> : <StartPage />}
+      />
+
+      <Route element={currentUser ? <NavBar /> : <Navigate to="/start" replace />}>
+        <Route path="/profile-page" element={<UserProfile />} />
+      </Route>
+
+      <Route path="*" element={<Navigate to="/start" replace />} />
+
       <Route
         path="/"
-        element={<AuthRoute authorized={<UserProfile />} notAuthorized={<StartPage />} />}
-      ></Route>
-      <Route
-        path="login"
         element={
-          <Protected>
-            <Login />
-          </Protected>
+          currentUser ? <Navigate to="/profile-page" replace /> : <Navigate to="/start" replace />
         }
       />
     </Routes>
-  </div>
-)
+  )
+}
 
 export default App

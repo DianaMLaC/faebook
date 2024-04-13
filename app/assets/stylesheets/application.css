@@ -17,8 +17,8 @@
 
  /* Overall body styling */
  :root {
-  --primary-color: #4ef7dd;
-  --secondary-color: #3DCCC7;
+  --primary-color: #3DCCC7;
+  --secondary-color: #4ef7dd;
   --accent-color: #A280E3;
   --background-color: #E0F7FA;
   --text-color: #20504F;
@@ -30,9 +30,6 @@ body {
   color: var(--text-color);
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
 }
 
@@ -42,10 +39,11 @@ body {
 /* START PAGE */
 
 .start-page {
-  width: 100%; 
-  max-width: 900px; 
   display: flex;
-  justify-content: space-between; 
+  width: 100%; 
+  min-height: 100vh;
+  justify-content: space-around; 
+  justify-content: center;
   align-items: center; 
   padding: 20px; 
   box-sizing: border-box; 
@@ -229,5 +227,62 @@ body {
     padding: 12px;
   }
 
-  /* Adjust other styles as needed */
+  
+}
+
+/* Nav Bar */
+
+.nav-bar {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-left, .nav-center, .nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-center {
+  flex-grow: 1; /* Allows the center to grow */
+  justify-content: center; /* Centers items horizontally */
+}
+
+.nav-logo {
+  font-size: 24px; /* Larger text for the logo */
+  font-weight: bold;
+  padding-right: 20px;
+  color: var(--secondary-color);
+}
+
+.nav-search input[type="search"] {
+  background-color: white;
+  border: 1px solid #ccd0d5;
+  border-radius: 18px;
+  padding: 5px 15px;
+  font-size: 15px;
+  width: 220px;
+}
+
+.nav-home-button, .nav-friends-button, .nav-groups-button,
+.nav-friend-requests-button, .nav-menu-button, .nav-messenger-button,
+.nav-notifications-button, .nav-account-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Makes the buttons round */
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  margin: 0 4px;
+}
+
+/* Hover effect for buttons */
+.nav-home-button:hover, .nav-friends-button:hover, .nav-groups-button:hover,
+.nav-friend-requests-button:hover, .nav-menu-button:hover, .nav-messenger-button:hover,
+.nav-notifications-button:hover, .nav-account-button:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Soft white hover effect */
 }
