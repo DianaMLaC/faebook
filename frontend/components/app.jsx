@@ -1,7 +1,7 @@
 import React from "react"
 import { useAuth } from "../context/auth"
 import { Route, Routes, Navigate } from "react-router-dom"
-import UserProfile from "./profile"
+import UserProfile from "./profile/profile_page"
 import StartPage from "./session/start"
 import NavBar from "./nav"
 
