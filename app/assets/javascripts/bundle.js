@@ -4909,11 +4909,21 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var AuthContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)(null);
 var AuthProvider = function AuthProvider(_ref) {
   var children = _ref.children;
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(window.currentUser || null),
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(function () {
+      var savedUser = sessionStorage.getItem("currentUser");
+      return savedUser ? JSON.parse(savedUser) : window.currentUser || null;
+    }),
     _useState2 = _slicedToArray(_useState, 2),
     currentUser = _useState2[0],
     setCurrentUser = _useState2[1];
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (currentUser) {
+      sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
+    } else {
+      sessionStorage.removeItem("currentUser");
+    }
+  }, [currentUser]);
   var signup = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(newUserData) {
       var dbUser;

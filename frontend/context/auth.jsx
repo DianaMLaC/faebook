@@ -1,12 +1,23 @@
-import React, { useState, createContext, useContext } from "react"
+import React, { useState, createContext, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { postUser, postSession, deleteSession } from "../utils/authentication"
 
 const AuthContext = createContext(null)
 
 const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(window.currentUser || null)
   const navigate = useNavigate()
+  const [currentUser, setCurrentUser] = useState(() => {
+    const savedUser = sessionStorage.getItem("currentUser")
+    return savedUser ? JSON.parse(savedUser) : window.currentUser || null
+  })
+
+  useEffect(() => {
+    if (currentUser) {
+      sessionStorage.setItem("currentUser", JSON.stringify(currentUser))
+    } else {
+      sessionStorage.removeItem("currentUser")
+    }
+  }, [currentUser])
 
   const signup = async (newUserData) => {
     const dbUser = await postUser(newUserData)
