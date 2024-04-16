@@ -1,5 +1,14 @@
 class Api::UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
+
+  def show
+    @user = User.includes(albums: [:photos], posts: [:likes, { comments: [:likes] }]).find_by(id: params[:user_id])
+
+    return unless @user
+
+    render :show, status: 200
+  end
+
   def create
     @user = User.new(
       first_name: params[:first_name],

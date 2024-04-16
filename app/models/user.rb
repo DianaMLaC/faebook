@@ -80,6 +80,14 @@ class User < ApplicationRecord
     first_name + ' ' + last_name
   end
 
+  def friends
+    sent_friendships.where(is_accepted: true)
+  end
+
+  def friend_requests
+    received_friendships.where(is_accepted: false)
+  end
+
   def has_password?(password)
     passwd = BCrypt::Password.new(password_digest)
     passwd == password
