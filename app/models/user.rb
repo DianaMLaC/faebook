@@ -58,13 +58,13 @@ class User < ApplicationRecord
            foreign_key: :user_id,
            class_name: 'Album'
 
-  has_many :photos,
-           through: :albums,
-           source: :photos
-
   has_one :intro,
           foreign_key: :user_id,
           class_name: 'Intro'
+
+  has_many :photos,
+           through: :albums,
+           source: :photos
 
   attr_reader :password
 

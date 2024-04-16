@@ -9,6 +9,8 @@
 #  updated_at :datetime         not null
 #
 class Album < ApplicationRecord
+  validates :name, inclusion: { in: %w[Profile Cover Timeline Tagged] }
+
   belongs_to :user,
              foreign_key: :user_id,
              class_name: 'User'
