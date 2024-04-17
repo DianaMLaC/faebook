@@ -1,24 +1,28 @@
-import React, { useState } from "react"
+import React, { useCallback, useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
-import { useUserProfile } from "../../context/user_profile"
+import ProfilePhotoUpload from "./profile_photo_uploader"
+import ReactModal from "react-modal"
 
 const ProfileHeader = () => {
   const { currentUser } = useAuth()
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [profilePhotoFileUrl, setProfilePhotoFileUrl] = useState(null)
 
-  const [profilePhoto, setProfilePhoto] = useState(null)
+  const updateProfilePhoto = useCallback((url) => {
+    setProfilePhotoFileUrl(url)
+  }, [])
 
-  const handleFileChange = (e) => {
-    setProfilePhoto(e.target.files[0])
+  const openModal = () => {
+    setModalIsOpen(true)
   }
 
-  const handleUpload = async () => {
-    if (!profilePhoto) return
-
-    const formData = new FormData()
-    formData.append("image", file)
-
-    const response = await fetch()
+  const closeModal = () => {
+    setModalIsOpen(false)
   }
+
+  useEffect(() => {
+    ReactModal.setAppElement(".profile-header") // Or whatever selector that captures your app's root element
+  }, [])
 
   return (
     <header className="profile-header">
@@ -28,14 +32,30 @@ const ProfileHeader = () => {
       </section>
 
       <section className="profile-photo-container">
-        <div className="profile-photo"></div>
+        <div className="profile-photo">
+          {profilePhotoFileUrl && <img src={profilePhotoFileUrl} alt="Profile" />}
+        </div>
       </section>
 
       <div className="profile-display-name-container">
         <div>
-          <button className="profile-photo-button">Edit</button>
+          <button className="profile-photo-button" onClick={openModal}>
+            Edit
+          </button>
           <h1 className="profile-display-name">{currentUser.displayName}</h1>
         </div>
+
+        <ReactModal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          contentLabel="Profile Photo Upload"
+          className="Modal"
+        >
+          <ProfilePhotoUpload updateProfilePhoto={updateProfilePhoto} />
+          <button onClick={closeModal} className="close-modal-button">
+            x
+          </button>
+        </ReactModal>
 
         <div className="profile-header-nav-buttons">
           <button className="add-to-story-button"> + Add to story</button>

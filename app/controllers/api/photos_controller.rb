@@ -1,16 +1,20 @@
 class Api::PhotosController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :must_be_authorized
   def create
-    album = @authenticated_user.profile_photo_album || @authenticated_user.albums.create!(name: 'Profile')
+    album = @authenticated_user.albums.find_by(name: 'Profile') || @authenticated_user.albums.create(name: 'Profile')
+    photo = album.photos.create(photo_params)
 
-    if album.nil?
-      render json: { error: 'Album not found' }, status: :not_found
-      return
+    if photo.save
+      render json: { id: photo.id, url: url_for(photo.image) }, status: :created
+    else
+      render json: { errors: photo.errors.full_messages }, status: :unprocessable_entity
     end
+  end
 
-    photo = album.photos.new(description: params[:description], image: params[:image])
-    return unless photo.save!
+  private
 
-    render json: photo, status: 200
+  def photo_params
+    params.require(:photo).permit(:description, :image)
   end
 end
