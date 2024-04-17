@@ -215,7 +215,7 @@ class Api::UsersControllerTest < ActionDispatch::IntegrationTest
           password: Faker::Internet.password(min_length: 6, mix_case: true, special_characters: true),
           dateOfBirth: '2000-10-03',
           email: Faker::Internet.email }
-
+    assert_response :success
     resp = JSON.parse(@response.body)
     user_id = resp['id']
 
