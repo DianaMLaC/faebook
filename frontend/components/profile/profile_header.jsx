@@ -1,8 +1,24 @@
 import React, { useState } from "react"
 import { useAuth } from "../../context/auth"
+import { useUserProfile } from "../../context/user_profile"
 
 const ProfileHeader = () => {
   const { currentUser } = useAuth()
+
+  const [profilePhoto, setProfilePhoto] = useState(null)
+
+  const handleFileChange = (e) => {
+    setProfilePhoto(e.target.files[0])
+  }
+
+  const handleUpload = async () => {
+    if (!profilePhoto) return
+
+    const formData = new FormData()
+    formData.append("image", file)
+
+    const response = await fetch()
+  }
 
   return (
     <header className="profile-header">
@@ -18,7 +34,7 @@ const ProfileHeader = () => {
       <div className="profile-display-name-container">
         <div>
           <button className="profile-photo-button">Edit</button>
-          <h1 class="profile-display-name">{currentUser.displayName}</h1>
+          <h1 className="profile-display-name">{currentUser.displayName}</h1>
         </div>
 
         <div className="profile-header-nav-buttons">
