@@ -4537,21 +4537,49 @@ var ProfileHeader = function ProfileHeader() {
     currentUser = _useAuth.currentUser;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
-    modalIsOpen = _useState2[0],
-    setModalIsOpen = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    profileModalIsOpen = _useState2[0],
+    setProfileModalIsOpen = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
-    profilePhotoFileUrl = _useState4[0],
-    setProfilePhotoFileUrl = _useState4[1];
-  var updateProfilePhoto = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (url) {
-    setProfilePhotoFileUrl(url);
-  }, []);
-  var openModal = function openModal() {
-    setModalIsOpen(true);
+    coverModalIsOpen = _useState4[0],
+    setCoverModalIsOpen = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState6 = _slicedToArray(_useState5, 2),
+    profilePhotoFileUrl = _useState6[0],
+    setProfilePhotoFileUrl = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    coverPhotoFileUrl = _useState8[0],
+    setCoverPhotoFileUrl = _useState8[1];
+  var updatePhoto = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (albumName, url) {
+    switch (albumName) {
+      case "Profile":
+        {
+          setProfilePhotoFileUrl(url);
+          console.log("url has been set for ProfilePhoto");
+          break;
+        }
+      case "Cover":
+        {
+          setCoverPhotoFileUrl(url);
+          console.log("url has been set for CoverPhoto");
+          break;
+        }
+    }
+  }, [setCoverPhotoFileUrl, setProfilePhotoFileUrl]);
+  var openProfileModal = function openProfileModal() {
+    setProfileModalIsOpen(true);
     console.log("Modal opened");
   };
-  var closeModal = function closeModal() {
-    setModalIsOpen(false);
+  var openCoverModal = function openCoverModal() {
+    setCoverModalIsOpen(true);
+    console.log("Modal opened");
+  };
+  var closeProfileModal = function closeProfileModal() {
+    setProfileModalIsOpen(false);
+  };
+  var closeCoverModal = function closeCoverModal() {
+    setCoverModalIsOpen(false);
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     react_modal__WEBPACK_IMPORTED_MODULE_3___default().setAppElement(".profile-header");
@@ -4560,11 +4588,23 @@ var ProfileHeader = function ProfileHeader() {
     className: "profile-header"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "cover-photo-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "cover-photo"
+  }, coverPhotoFileUrl && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: "cover-photo",
+    src: coverPhotoFileUrl,
+    alt: "Cover"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "cover-photo-button"
-  }, "Add cover photo")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    className: "cover-photo-button",
+    onClick: openCoverModal
+  }, "Add cover photo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react_modal__WEBPACK_IMPORTED_MODULE_3___default()), {
+    isOpen: coverModalIsOpen,
+    onRequestClose: closeCoverModal,
+    contentLabel: "Cover",
+    className: "Modal"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_profile_photo_uploader__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    updatePhoto: updatePhoto,
+    closeModalContainer: closeCoverModal,
+    albumName: "Cover"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "profile-photo-container"
   }, profilePhotoFileUrl && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: "profile-photo",
@@ -4574,21 +4614,19 @@ var ProfileHeader = function ProfileHeader() {
     className: "profile-display-name-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "profile-photo-button",
-    onClick: openModal
+    onClick: openProfileModal
   }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
     className: "profile-display-name"
   }, currentUser.displayName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react_modal__WEBPACK_IMPORTED_MODULE_3___default()), {
-    isOpen: modalIsOpen,
-    onRequestClose: closeModal,
-    contentLabel: "Profile Photo Upload",
+    isOpen: profileModalIsOpen,
+    onRequestClose: closeProfileModal,
+    contentLabel: "Profile",
     className: "Modal"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_profile_photo_uploader__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    updateProfilePhoto: updateProfilePhoto,
-    closeModalContainer: closeModal
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: closeModal,
-    className: "close-modal-button"
-  }, "x")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    updatePhoto: updatePhoto,
+    closeModalContainer: closeProfileModal,
+    albumName: "Profile"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "profile-header-nav-buttons"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "add-to-story-button"
@@ -4686,9 +4724,10 @@ function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" !=
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
-var ProfilePhotoUpload = function ProfilePhotoUpload(_ref) {
-  var updateProfilePhoto = _ref.updateProfilePhoto,
-    closeModalContainer = _ref.closeModalContainer;
+var PhotoUpload = function PhotoUpload(_ref) {
+  var updatePhoto = _ref.updatePhoto,
+    closeModalContainer = _ref.closeModalContainer,
+    albumName = _ref.albumName;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
     photoFile = _useState2[0],
@@ -4714,18 +4753,22 @@ var ProfilePhotoUpload = function ProfilePhotoUpload(_ref) {
             return _context.abrupt("return");
           case 3:
             formData = new FormData();
+            console.log("photo[image]:", photoFile);
+            console.log("photo[description]:", description);
+            console.log("photo[album_name]:", albumName);
             formData.append("photo[image]", photoFile);
             formData.append("photo[description]", description);
-            console.log("formData:", formData);
-            _context.next = 9;
+            formData.append("photo[album_name]", albumName);
+            _context.next = 12;
             return (0,_utils_profile__WEBPACK_IMPORTED_MODULE_1__.uploadProfilePhoto)(formData);
-          case 9:
+          case 12:
             fileData = _context.sent;
             console.log("PhotoData returned as fileData");
             console.log("fileData:", fileData);
-            updateProfilePhoto(fileData.url);
+            updatePhoto(fileData.albumName, fileData.url);
+            console.log("Data has been sent to parent with updatePhoto callback");
             closeModalContainer();
-          case 14:
+          case 18:
           case "end":
             return _context.stop();
         }
@@ -4747,7 +4790,7 @@ var ProfilePhotoUpload = function ProfilePhotoUpload(_ref) {
     onClick: handleUpload
   }, "Upload"));
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ProfilePhotoUpload);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PhotoUpload);
 
 /***/ }),
 

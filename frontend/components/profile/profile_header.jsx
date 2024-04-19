@@ -1,24 +1,52 @@
 import React, { useCallback, useState, useEffect, useContext } from "react"
 import { useAuth } from "../../context/auth"
-import ProfilePhotoUpload from "./profile_photo_uploader"
+import PhotoUpload from "./profile_photo_uploader"
 import ReactModal from "react-modal"
 
 const ProfileHeader = () => {
   const { currentUser } = useAuth()
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [profileModalIsOpen, setProfileModalIsOpen] = useState(false)
+  const [coverModalIsOpen, setCoverModalIsOpen] = useState(false)
+
   const [profilePhotoFileUrl, setProfilePhotoFileUrl] = useState(null)
+  const [coverPhotoFileUrl, setCoverPhotoFileUrl] = useState(null)
 
-  const updateProfilePhoto = useCallback((url) => {
-    setProfilePhotoFileUrl(url)
-  }, [])
+  const updatePhoto = useCallback(
+    (albumName, url) => {
+      switch (albumName) {
+        case "Profile": {
+          setProfilePhotoFileUrl(url)
+          console.log("url has been set for ProfilePhoto")
 
-  const openModal = () => {
-    setModalIsOpen(true)
+          break
+        }
+        case "Cover": {
+          setCoverPhotoFileUrl(url)
+          console.log("url has been set for CoverPhoto")
+
+          break
+        }
+      }
+    },
+    [setCoverPhotoFileUrl, setProfilePhotoFileUrl]
+  )
+
+  const openProfileModal = () => {
+    setProfileModalIsOpen(true)
     console.log("Modal opened")
   }
 
-  const closeModal = () => {
-    setModalIsOpen(false)
+  const openCoverModal = () => {
+    setCoverModalIsOpen(true)
+    console.log("Modal opened")
+  }
+
+  const closeProfileModal = () => {
+    setProfileModalIsOpen(false)
+  }
+
+  const closeCoverModal = () => {
+    setCoverModalIsOpen(false)
   }
 
   useEffect(() => {
@@ -28,8 +56,22 @@ const ProfileHeader = () => {
   return (
     <header className="profile-header">
       <section className="cover-photo-container">
-        <div className="cover-photo"></div>
-        <button className="cover-photo-button">Add cover photo</button>
+        {coverPhotoFileUrl && <img className="cover-photo" src={coverPhotoFileUrl} alt="Cover" />}
+        <button className="cover-photo-button" onClick={openCoverModal}>
+          Add cover photo
+        </button>
+        <ReactModal
+          isOpen={coverModalIsOpen}
+          onRequestClose={closeCoverModal}
+          contentLabel="Cover"
+          className="Modal"
+        >
+          <PhotoUpload
+            updatePhoto={updatePhoto}
+            closeModalContainer={closeCoverModal}
+            albumName={"Cover"}
+          />
+        </ReactModal>
       </section>
 
       <section className="profile-photo-container">
@@ -40,25 +82,23 @@ const ProfileHeader = () => {
 
       <div className="profile-display-name-container">
         <div>
-          <button className="profile-photo-button" onClick={openModal}>
+          <button className="profile-photo-button" onClick={openProfileModal}>
             Edit
           </button>
           <h1 className="profile-display-name">{currentUser.displayName}</h1>
         </div>
 
         <ReactModal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          contentLabel="Profile Photo Upload"
+          isOpen={profileModalIsOpen}
+          onRequestClose={closeProfileModal}
+          contentLabel="Profile"
           className="Modal"
         >
-          <ProfilePhotoUpload
-            updateProfilePhoto={updateProfilePhoto}
-            closeModalContainer={closeModal}
+          <PhotoUpload
+            updatePhoto={updatePhoto}
+            closeModalContainer={closeProfileModal}
+            albumName={"Profile"}
           />
-          <button onClick={closeModal} className="close-modal-button">
-            x
-          </button>
         </ReactModal>
 
         <div className="profile-header-nav-buttons">
