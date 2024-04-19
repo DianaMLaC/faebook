@@ -4693,8 +4693,10 @@ var ProfilePhotoUpload = function ProfilePhotoUpload(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     photoFile = _useState2[0],
     setPhotoFile = _useState2[1];
-  // const [description, setDescription] = useState("")
-
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState4 = _slicedToArray(_useState3, 2),
+    description = _useState4[0],
+    setDescription = _useState4[1];
   var handleFileChange = function handleFileChange(e) {
     setPhotoFile(e.target.files[0]);
   };
@@ -4713,16 +4715,17 @@ var ProfilePhotoUpload = function ProfilePhotoUpload(_ref) {
           case 3:
             formData = new FormData();
             formData.append("photo[image]", photoFile);
+            formData.append("photo[description]", description);
             console.log("formData:", formData);
-            _context.next = 8;
+            _context.next = 9;
             return (0,_utils_profile__WEBPACK_IMPORTED_MODULE_1__.uploadProfilePhoto)(formData);
-          case 8:
+          case 9:
             fileData = _context.sent;
             console.log("PhotoData returned as fileData");
             console.log("fileData:", fileData);
             updateProfilePhoto(fileData.url);
             closeModalContainer();
-          case 13:
+          case 14:
           case "end":
             return _context.stop();
         }
@@ -4735,6 +4738,11 @@ var ProfilePhotoUpload = function ProfilePhotoUpload(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "file",
     onChange: handleFileChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "text",
+    onChange: function onChange(e) {
+      return setDescription(e.target.value);
+    }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: handleUpload
   }, "Upload"));

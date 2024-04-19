@@ -3,7 +3,7 @@ import { uploadProfilePhoto } from "../../utils/profile"
 
 const ProfilePhotoUpload = ({ updateProfilePhoto, closeModalContainer }) => {
   const [photoFile, setPhotoFile] = useState(null)
-  // const [description, setDescription] = useState("")
+  const [description, setDescription] = useState("")
 
   const handleFileChange = (e) => {
     setPhotoFile(e.target.files[0])
@@ -17,6 +17,8 @@ const ProfilePhotoUpload = ({ updateProfilePhoto, closeModalContainer }) => {
 
     const formData = new FormData()
     formData.append("photo[image]", photoFile)
+    formData.append("photo[description]", description)
+
     console.log("formData:", formData)
 
     const fileData = await uploadProfilePhoto(formData)
@@ -29,6 +31,8 @@ const ProfilePhotoUpload = ({ updateProfilePhoto, closeModalContainer }) => {
   return (
     <div>
       <input type="file" onChange={handleFileChange} />
+
+      <input type="text" onChange={(e) => setDescription(e.target.value)} />
       <button onClick={handleUpload}>Upload</button>
     </div>
   )

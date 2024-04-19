@@ -9,7 +9,7 @@ class Api::PhotosController < ApplicationController
     photo = album.photos.create(photo_params)
 
     if photo.save
-      render json: { id: photo.id, url: url_for(photo.image) }, status: :created
+      render json: { id: photo.id, description: photo.description, url: url_for(photo.image) }, status: :created
     else
       render json: { errors: photo.errors.full_messages }, status: :unprocessable_entity
     end
