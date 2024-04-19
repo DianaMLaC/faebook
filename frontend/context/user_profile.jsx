@@ -13,8 +13,8 @@ const UserProfileProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    if (currentUser) {
-      loadUserProfile(currentUser.id)
+    if (currentUser && currentUser.user) {
+      loadUserProfile(currentUser.user.id)
     }
   }, [currentUser])
 

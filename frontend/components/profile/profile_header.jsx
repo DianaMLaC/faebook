@@ -4,31 +4,36 @@ import PhotoUpload from "./profile_photo_uploader"
 import ReactModal from "react-modal"
 
 const ProfileHeader = () => {
-  const { currentUser } = useAuth()
+  const { currentUser, setCurrentUser } = useAuth()
   const [profileModalIsOpen, setProfileModalIsOpen] = useState(false)
   const [coverModalIsOpen, setCoverModalIsOpen] = useState(false)
 
-  const [profilePhotoFileUrl, setProfilePhotoFileUrl] = useState(null)
-  const [coverPhotoFileUrl, setCoverPhotoFileUrl] = useState(null)
-
   const updatePhoto = useCallback(
     (albumName, url) => {
+      let newUserData = {}
       switch (albumName) {
         case "Profile": {
-          setProfilePhotoFileUrl(url)
-          console.log("url has been set for ProfilePhoto")
+          newUserData = { ...currentUser, profilePhotoUrl: url }
 
+          console.log("currentUser:", currentUser)
+          console.log("url has been set for ProfilePhoto")
           break
         }
         case "Cover": {
-          setCoverPhotoFileUrl(url)
-          console.log("url has been set for CoverPhoto")
+          newUserData = { ...currentUser, coverPhotoUrl: url }
 
+          console.log("currentUser:", currentUser)
+          console.log("url has been set for CoverPhoto")
           break
         }
+        default:
+          return
       }
+
+      setCurrentUser(newUserData)
+      sessionStorage.setItem("currentUser", JSON.stringify(newUserData))
     },
-    [setCoverPhotoFileUrl, setProfilePhotoFileUrl]
+    [currentUser, setCurrentUser]
   )
 
   const openProfileModal = () => {
@@ -56,7 +61,9 @@ const ProfileHeader = () => {
   return (
     <header className="profile-header">
       <section className="cover-photo-container">
-        {coverPhotoFileUrl && <img className="cover-photo" src={coverPhotoFileUrl} alt="Cover" />}
+        {currentUser.coverPhotoUrl && (
+          <img className="cover-photo" src={currentUser.coverPhotoUrl} alt="Cover" />
+        )}
         <button className="cover-photo-button" onClick={openCoverModal}>
           Add cover photo
         </button>
@@ -75,8 +82,8 @@ const ProfileHeader = () => {
       </section>
 
       <section className="profile-photo-container">
-        {profilePhotoFileUrl && (
-          <img className="profile-photo" src={profilePhotoFileUrl} alt="Profile" />
+        {currentUser.profilePhotoUrl && (
+          <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
         )}
       </section>
 

@@ -8,7 +8,10 @@ const AuthProvider = ({ children }) => {
   const navigate = useNavigate()
   const [currentUser, setCurrentUser] = useState(() => {
     const savedUser = sessionStorage.getItem("currentUser")
-    return savedUser ? JSON.parse(savedUser) : window.currentUser || null
+    const initialUser = savedUser
+      ? JSON.parse(savedUser)
+      : { user: window.currentUser || null, profilePhotoUrl: null, coverPhotoUrl: null }
+    return initialUser
   })
 
   useEffect(() => {
@@ -42,7 +45,7 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ currentUser, signup, login, logout }}>
+    <AuthContext.Provider value={{ currentUser, setCurrentUser, signup, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
