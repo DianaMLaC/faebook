@@ -14,6 +14,7 @@ const ProfileHeader = () => {
 
   const openModal = () => {
     setModalIsOpen(true)
+    console.log("Modal opened")
   }
 
   const closeModal = () => {
@@ -21,7 +22,7 @@ const ProfileHeader = () => {
   }
 
   useEffect(() => {
-    ReactModal.setAppElement(".profile-header") // Or whatever selector that captures your app's root element
+    ReactModal.setAppElement(".profile-header")
   }, [])
 
   return (
@@ -32,9 +33,9 @@ const ProfileHeader = () => {
       </section>
 
       <section className="profile-photo-container">
-        <div className="profile-photo">
-          {profilePhotoFileUrl && <img src={profilePhotoFileUrl} alt="Profile" />}
-        </div>
+        {profilePhotoFileUrl && (
+          <img className="profile-photo" src={profilePhotoFileUrl} alt="Profile" />
+        )}
       </section>
 
       <div className="profile-display-name-container">

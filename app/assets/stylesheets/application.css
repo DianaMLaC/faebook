@@ -297,7 +297,7 @@ body {
 .profile-photo {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
   display: block;
 }
 
@@ -368,11 +368,11 @@ body {
 
 
 /* NOT IMPLEMENTED YET*/
-.nav-home-button, .nav-friends-button, .nav-groups-button,
+/* .nav-home-button, .nav-friends-button, .nav-groups-button,
 .nav-friend-requests-button, .nav-menu-button, .nav-messenger-button,
 .nav-notifications-button, .nav-account-button, .nav-search, .nav-logo {
   color: red;
-}
+} */
 
 
 @media only screen and (max-width: 600px) {
@@ -431,9 +431,6 @@ body {
   .profile-header-nav a {
     font-size: 12px;
   }
-
-
   
 
-  
 }

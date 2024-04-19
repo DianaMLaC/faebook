@@ -33,6 +33,7 @@ export const uploadProfilePhoto = async (formData) => {
     })
     await checkResponse(response)
     const photoData = await response.json()
+    console.log("LOG: API POST 'api/photos/")
     return photoData
   } catch (err) {
     console.error("Error in uploadProfilePhoto api:", err.message)

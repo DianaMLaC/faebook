@@ -4548,12 +4548,13 @@ var ProfileHeader = function ProfileHeader() {
   }, []);
   var openModal = function openModal() {
     setModalIsOpen(true);
+    console.log("Modal opened");
   };
   var closeModal = function closeModal() {
     setModalIsOpen(false);
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    react_modal__WEBPACK_IMPORTED_MODULE_3___default().setAppElement(".profile-header"); // Or whatever selector that captures your app's root element
+    react_modal__WEBPACK_IMPORTED_MODULE_3___default().setAppElement(".profile-header");
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("header", {
     className: "profile-header"
@@ -4565,12 +4566,11 @@ var ProfileHeader = function ProfileHeader() {
     className: "cover-photo-button"
   }, "Add cover photo")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "profile-photo-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "profile-photo"
   }, profilePhotoFileUrl && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: "profile-photo",
     src: profilePhotoFileUrl,
     alt: "Profile"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "profile-display-name-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "profile-photo-button",
@@ -4649,7 +4649,9 @@ var UserProfile = function UserProfile() {
     currentUser = _useAuth.currentUser;
   var _useAuth2 = (0,_context_auth__WEBPACK_IMPORTED_MODULE_1__.useAuth)(),
     logout = _useAuth2.logout;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "profile-page"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "profile-header-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_profile_header__WEBPACK_IMPORTED_MODULE_2__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Welcome, ", currentUser.displayName), console.log(currentUser), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h5", null, "This will be our user profile on which we are redirected after authentication"));
 };
@@ -4709,12 +4711,15 @@ var ProfilePhotoUpload = function ProfilePhotoUpload(_ref) {
           case 3:
             formData = new FormData();
             formData.append("photo[image]", photoFile);
-            _context.next = 7;
+            console.log("formData:", formData);
+            _context.next = 8;
             return (0,_utils_profile__WEBPACK_IMPORTED_MODULE_1__.uploadProfilePhoto)(formData);
-          case 7:
+          case 8:
             fileData = _context.sent;
+            console.log("PhotoData returned as fileData");
+            console.log("fileData:", fileData);
             updateProfilePhoto(fileData.url);
-          case 9:
+          case 12:
           case "end":
             return _context.stop();
         }
@@ -5500,17 +5505,18 @@ var uploadProfilePhoto = /*#__PURE__*/function () {
           return response.json();
         case 8:
           photoData = _context2.sent;
+          console.log("LOG: API POST 'api/photos/");
           return _context2.abrupt("return", photoData);
-        case 12:
-          _context2.prev = 12;
+        case 13:
+          _context2.prev = 13;
           _context2.t0 = _context2["catch"](0);
           console.error("Error in uploadProfilePhoto api:", _context2.t0.message);
           throw _context2.t0;
-        case 16:
+        case 17:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 12]]);
+    }, _callee2, null, [[0, 13]]);
   }));
   return function uploadProfilePhoto(_x3) {
     return _ref2.apply(this, arguments);

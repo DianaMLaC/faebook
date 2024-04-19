@@ -20,7 +20,7 @@ module.exports = {
       },
     ],
   },
-  devtool: "source-map",
+  devtool: process.env.NODE_ENV === "production" ? false : "source-map",
   resolve: {
     extensions: [".js", ".jsx", "*"],
   },

@@ -17,8 +17,11 @@ const ProfilePhotoUpload = ({ updateProfilePhoto }) => {
 
     const formData = new FormData()
     formData.append("photo[image]", photoFile)
+    console.log("formData:", formData)
 
     const fileData = await uploadProfilePhoto(formData)
+    console.log("PhotoData returned as fileData")
+    console.log("fileData:", fileData)
     updateProfilePhoto(fileData.url)
   }
 

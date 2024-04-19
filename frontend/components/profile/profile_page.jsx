@@ -7,7 +7,7 @@ const UserProfile = () => {
   const { logout } = useAuth()
 
   return (
-    <div>
+    <div className="profile-page">
       <div className="profile-header-container">
         <ProfileHeader />
       </div>
