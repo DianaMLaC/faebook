@@ -4583,7 +4583,8 @@ var ProfileHeader = function ProfileHeader() {
     contentLabel: "Profile Photo Upload",
     className: "Modal"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_profile_photo_uploader__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    updateProfilePhoto: updateProfilePhoto
+    updateProfilePhoto: updateProfilePhoto,
+    closeModalContainer: closeModal
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: closeModal,
     className: "close-modal-button"
@@ -4686,7 +4687,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var ProfilePhotoUpload = function ProfilePhotoUpload(_ref) {
-  var updateProfilePhoto = _ref.updateProfilePhoto;
+  var updateProfilePhoto = _ref.updateProfilePhoto,
+    closeModalContainer = _ref.closeModalContainer;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
     photoFile = _useState2[0],
@@ -4719,7 +4721,8 @@ var ProfilePhotoUpload = function ProfilePhotoUpload(_ref) {
             console.log("PhotoData returned as fileData");
             console.log("fileData:", fileData);
             updateProfilePhoto(fileData.url);
-          case 12:
+            closeModalContainer();
+          case 13:
           case "end":
             return _context.stop();
         }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { uploadProfilePhoto } from "../../utils/profile"
 
-const ProfilePhotoUpload = ({ updateProfilePhoto }) => {
+const ProfilePhotoUpload = ({ updateProfilePhoto, closeModalContainer }) => {
   const [photoFile, setPhotoFile] = useState(null)
   // const [description, setDescription] = useState("")
 
@@ -23,6 +23,7 @@ const ProfilePhotoUpload = ({ updateProfilePhoto }) => {
     console.log("PhotoData returned as fileData")
     console.log("fileData:", fileData)
     updateProfilePhoto(fileData.url)
+    closeModalContainer()
   }
 
   return (

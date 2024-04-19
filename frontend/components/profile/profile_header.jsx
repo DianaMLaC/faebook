@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react"
+import React, { useCallback, useState, useEffect, useContext } from "react"
 import { useAuth } from "../../context/auth"
 import ProfilePhotoUpload from "./profile_photo_uploader"
 import ReactModal from "react-modal"
@@ -52,7 +52,10 @@ const ProfileHeader = () => {
           contentLabel="Profile Photo Upload"
           className="Modal"
         >
-          <ProfilePhotoUpload updateProfilePhoto={updateProfilePhoto} />
+          <ProfilePhotoUpload
+            updateProfilePhoto={updateProfilePhoto}
+            closeModalContainer={closeModal}
+          />
           <button onClick={closeModal} className="close-modal-button">
             x
           </button>
