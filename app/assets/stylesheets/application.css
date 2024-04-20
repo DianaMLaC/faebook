@@ -17,10 +17,11 @@
 
  /* Overall body styling */
  :root {
-  --primary-color: #3DCCC7;
-  --secondary-color: #4ef7dd;
+  --primary-color: #5ce1e6;
   --accent-color: #A280E3;
-  --background-color: #E0F7FA;
+  --secondary-color: #E0F7FA;
+  --background-color: white;
+  --shade-background-color: whitesmoke;
   --text-color: #20504F;
 }
 
@@ -210,8 +211,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 6px; 
+  box-shadow: 0 2px 4px rgba(8, 5, 5, 0.1);
+  height: 40px;
 }
 
 .nav-left, .nav-center, .nav-right {
@@ -219,20 +221,24 @@ body {
   align-items: center;
 }
 
-.nav-center {
-  flex-grow: 1; 
-  justify-content: center; 
-}
-
 .nav-logo {
+  height: 36px;
+  width: 36px;
   font-size: 24px; 
   font-weight: bold;
   padding-right: 20px;
-  color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.nav-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .nav-search input[type="search"] {
-  background-color: white;
+  background-color: var(--secondary-color);
   border: 1px solid #ccd0d5;
   border-radius: 18px;
   padding: 5px 15px;
@@ -240,23 +246,111 @@ body {
   width: 220px;
 }
 
-.nav-home-button, .nav-friends-button, .nav-groups-button,
-.nav-friend-requests-button, .nav-menu-button, .nav-messenger-button,
+.nav-search input[type="search"]:hover {
+  background-color: var(--accent-color);
+  cursor:auto;
+}
+.nav-search input[type="search"]::placeholder {
+  color: var(--primary-color);
+}
+
+.nav-center {
+  flex-grow: 1; 
+  justify-content: center; 
+}
+
+.nav-friends-button {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nav-home-button {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nav-groups-button {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nav-more-button {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  bottom: 6px;
+  top: 6px;
+}
+
+/* Nav right */
+
+.nav-create-button {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  bottom: 6px;
+  top: 6px;
+}
+
+.nav-messenger-button {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  bottom: 6px;
+  top: 6px;
+}
+
+.nav-notifications-button {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  bottom: 6px;
+  top: 6px;
+}
+
+.nav-account-button {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  bottom: 6px;
+  top: 6px;
+}
+
+.nav-home-button, .nav-friends-button, .nav-more-button, .nav-groups-button,
+.nav-create-button, .nav-menu-button, .nav-messenger-button,
 .nav-notifications-button, .nav-account-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%; 
-  width: 40px; 
-  height: 40px; 
+  /* border-radius: 50%;  */
+  width: 36px; 
+  height: 36px; 
   margin: 0 4px;
 }
 
-.nav-home-button:hover, .nav-friends-button:hover, .nav-groups-button:hover,
-.nav-friend-requests-button:hover, .nav-menu-button:hover, .nav-messenger-button:hover,
-.nav-notifications-button:hover, .nav-account-button:hover {
-  background-color: rgba(255, 255, 255, 0.1); 
+.nav-home-button:hover, .nav-friends-button:hover, .nav-groups-button:hover, .nav-more-button:hover {
+  border-bottom: 5px solid var(--accent-color);
+  cursor: pointer;
 }
+
+.nav-create-button:hover, .nav-messenger-button:hover, .nav-notifications-button:hover, .nav-messenger-button:hover,
+ .nav-account-button:hover {
+  border: 3px solid var(--accent-color);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 
 /* Profile Header */
 
@@ -284,6 +378,11 @@ body {
   position: absolute;
   right: 10px;
   bottom: 10px;
+}
+
+.cover-photo-button:hover {
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
 }
 
 .profile-photo-container {
