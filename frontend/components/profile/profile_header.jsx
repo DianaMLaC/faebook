@@ -90,7 +90,11 @@ const ProfileHeader = () => {
       <div className="profile-display-name-container">
         <div>
           <button className="profile-photo-button" onClick={openProfileModal}>
-            Edit
+            <img
+              className="nav-button-icon"
+              src={require("../../../app/assets/images/camera.png").default}
+              alt="Edit profile picture"
+            />
           </button>
           <h1 className="profile-display-name">{currentUser.displayName}</h1>
         </div>

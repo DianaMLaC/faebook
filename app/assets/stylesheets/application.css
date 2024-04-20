@@ -425,14 +425,33 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: transparent;
+}
+
+.nav-button-icon, .profile-photo-edit-image {
+  width: 36px; 
+  height: 36px;
+  background: transparent; 
+  object-fit: cover; 
+  border-radius: 50%; 
 }
 
 .profile-photo-button {
- position: absolute;
- z-index: 12;
- left: 100px;
+  background-color: var(--primary-color);
+  position: absolute;
+  z-index: 12;
+  left: 100px;
+  border: none; 
+  background: transparent; 
+  cursor: pointer;
 }
+
+.profile-photo-button:hover {
+  background-color: var(--primary-color);
+  border-radius: 50%;
+}
+
+
 .profile-display-name {
   position: relative;
   margin-left: 160px;
@@ -443,13 +462,18 @@ body {
 
 .profile-header button {
   padding: 8px 12px;
-  background-color: var(--background-color);
+  /* background-color: var(--background-color); */
   color: var(--text-color);
   font-size: 12px; 
   border-radius: 5px;
   border-color: transparent;
   cursor: pointer;
-  margin-right: 10px; 
+  margin-right: 9px; 
+}
+
+.profile-header-nav-buttons button:hover {
+  background-color: var(--accent-color);
+  color: var(--primary-color);
 }
 
 

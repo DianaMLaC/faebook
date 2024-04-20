@@ -4645,7 +4645,11 @@ var ProfileHeader = function ProfileHeader() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "profile-photo-button",
     onClick: openProfileModal
-  }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: "nav-button-icon",
+    src: (__webpack_require__(/*! ../../../app/assets/images/camera.png */ "./app/assets/images/camera.png")["default"]),
+    alt: "Edit profile picture"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
     className: "profile-display-name"
   }, currentUser.displayName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react_modal__WEBPACK_IMPORTED_MODULE_3___default()), {
     isOpen: profileModalIsOpen,
@@ -5674,6 +5678,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "b33d5af9b17a12861e77089b074f6096.png");
+
+/***/ }),
+
+/***/ "./app/assets/images/camera.png":
+/*!**************************************!*\
+  !*** ./app/assets/images/camera.png ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "bd08664160357955d6db8b5deb9719a0.png");
 
 /***/ }),
 
