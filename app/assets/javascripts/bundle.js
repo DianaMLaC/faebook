@@ -4633,6 +4633,8 @@ var ProfileHeader = function ProfileHeader() {
     closeModalContainer: closeCoverModal,
     albumName: "Cover"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    className: "profile-photo-background"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "profile-photo-container"
   }, currentUser.profilePhotoUrl && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: "profile-photo",
