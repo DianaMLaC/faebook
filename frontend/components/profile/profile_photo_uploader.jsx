@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react"
 import { uploadProfilePhoto } from "../../utils/profile"
+import { CircleLoader } from "react-spinners"
 
 const PhotoUpload = ({ updatePhoto, closeModalContainer, albumName }) => {
   const [photoFile, setPhotoFile] = useState(null)
   const [description, setDescription] = useState("")
+  const [isUploading, setIsUploading] = useState(false)
 
   const handleFileChange = (e) => {
     setPhotoFile(e.target.files[0])
   }
 
   const handleUpload = async () => {
+    setIsUploading(true)
     if (!photoFile) {
       console.error("No file selected for upload.")
       return
@@ -30,13 +33,19 @@ const PhotoUpload = ({ updatePhoto, closeModalContainer, albumName }) => {
     updatePhoto(fileData.albumName, fileData.url)
     console.log("Data has been sent to parent with updatePhoto callback")
     closeModalContainer()
+    setIsUploading(false)
   }
 
   return (
-    <div>
+    <div className="photo-uploader">
+      <input
+        type="text"
+        placeholder="Description"
+        onChange={(e) => setDescription(e.target.value)}
+      />
       <input type="file" onChange={handleFileChange} />
-      <input type="text" onChange={(e) => setDescription(e.target.value)} />
       <button onClick={handleUpload}>Upload</button>
+      <div className="spinner">{isUploading && <CircleLoader loading={isUploading} />}</div>
     </div>
   )
 }

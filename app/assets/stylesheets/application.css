@@ -364,6 +364,9 @@ body {
   position: relative;
   background-color: var(--background-color);
   overflow: hidden;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+
 }
 
 .cover-photo {
@@ -382,7 +385,7 @@ body {
 
 .cover-photo-button:hover {
   background-color: var(--accent-color);
-  color: var(--secondary-color);
+  color: var(--primary-color);
 }
 
 .profile-photo-background {
@@ -505,6 +508,63 @@ body {
 .profile-header-nav-left {
   display: flex;
 }
+
+.photo-uploader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.photo-uploader input[type="file"] {
+  border-radius: 5px;
+  padding: 6px;
+}
+.photo-uploader input[type="text"] {
+  border-radius: 5px;
+  width: 90%;
+  margin: 8px;
+  padding: 8px;
+  background: var(--secondary-color);
+}
+
+.photo-uploader input[type="file"]::-webkit-file-upload-button {
+  border-radius: 5px;
+  border: none;
+  padding: 8px 15px;
+  background: var(--secondary-color);
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.photo-uploader input[type="file"]::-webkit-file-upload-button:hover, .photo-uploader button:hover {
+  background: var(--accent-color);
+  color: var(--primary-color);
+}
+
+.spinner {
+  padding: 8px;
+  margin: 8px;
+}
+
+/* .photo-uploader input:hover {
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+  border: 1px solid #dddfe2;
+  border-radius: 5px;
+} */
+
+.photo-uploader button {
+  margin-top: 20px; 
+  border-radius: 5px;
+  background: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+
+
 
 
 
