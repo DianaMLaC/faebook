@@ -1,10 +1,12 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useAuth } from "../../context/auth"
 import Album from "./album"
 
 const Albums = () => {
   const { currentUser } = useAuth()
   const [albums, setAlbums] = useState(null)
+
+  useEffect(() => {})
 
   return (
     <ul className="albums-list">

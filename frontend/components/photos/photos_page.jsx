@@ -9,10 +9,10 @@ const PhotosPage = () => {
     <div className="photos-container">
       <header className="photos-header">
         <div>
-          <h3> Photos</h3>
+          <h3>Photos</h3>
         </div>
         <div>
-          <button>{/* photo uploader and input for hidden from timeline*/}</button>
+          <button>{/* photo uploader and input for hidden from timeline*/}Add photos/video</button>
           <div className="photo-header-more-button">
             {/* the more image and a pop-up See photos hidden from timeline*/}
           </div>
@@ -24,7 +24,7 @@ const PhotosPage = () => {
 
         <a href="#albums">Albums</a>
       </nav>
-      <div className="albums-page">
+      <div className="photos-link-page">
         <Albums />
       </div>
     </div>
