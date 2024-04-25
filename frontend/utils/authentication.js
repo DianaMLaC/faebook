@@ -4,7 +4,9 @@ export const customHeaders = {
 
 export async function checkResponse(response) {
   if (!response.ok) {
+    console.log("error in response not ok")
     const backendErrorResponse = await response.json()
+
     if (backendErrorResponse && backendErrorResponse.errors && backendErrorResponse.errors.user) {
       // If the structure is as expected, extract error messages and join them.
       const backendErrorList = backendErrorResponse.errors.user
@@ -48,6 +50,7 @@ export const postSession = async (sessionData) => {
       body: JSON.stringify(sessionData),
     })
     await checkResponse(response)
+    console.log(response)
     const session = await response.json()
     return session
   } catch (err) {

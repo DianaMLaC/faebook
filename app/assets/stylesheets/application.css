@@ -563,6 +563,19 @@ body {
   cursor: pointer;
 }
 
+/* PROFILE PAGE - PHOTOS*/
+
+.profile-pages-container {
+  background-color: var(--secondary-color);
+}
+
+.photos-container {
+  background-color: white;
+  box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+
 
 
 

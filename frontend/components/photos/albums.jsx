@@ -2,15 +2,12 @@ import React, { useEffect, useState } from "react"
 import { useAuth } from "../../context/auth"
 import Album from "./album"
 
-const Albums = () => {
+const Albums = ({ albums }) => {
   const { currentUser } = useAuth()
-  const [albums, setAlbums] = useState(null)
-
-  useEffect(() => {})
 
   return (
     <ul className="albums-list">
-      <li className="albums-list-first">
+      <li className="album-cover">
         <div className="album-cover-photo-create"></div>
         <div>AlbumForm</div>
         <div></div>

@@ -1,6 +1,7 @@
 import React from "react"
 import { useAuth } from "../../context/auth"
 import ProfileHeader from "./profile_header"
+import PhotosPage from "../photos/photos_page"
 
 const UserProfile = () => {
   const { currentUser } = useAuth()
@@ -11,9 +12,9 @@ const UserProfile = () => {
       <div className="profile-header-container">
         <ProfileHeader />
       </div>
-      <h1>Welcome, {currentUser.displayName}</h1>
-      {console.log(currentUser)}
-      <h5>This will be our user profile on which we are redirected after authentication</h5>
+      <div className="profile-pages-container">
+        <PhotosPage />
+      </div>
     </div>
   )
 }

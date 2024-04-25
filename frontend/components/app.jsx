@@ -22,9 +22,7 @@ const App = () => {
       />
 
       <Route element={currentUser ? <NavBar /> : <Navigate to="/start" replace />}>
-        <Route path="/profile-page" element={<UserProfile />}>
-          <Route path="/photos" element={<PhotosPage />}></Route>
-        </Route>
+        <Route path="/profile-page" element={<UserProfile />}></Route>
       </Route>
 
       <Route path="*" element={<Navigate to="/start" replace />} />

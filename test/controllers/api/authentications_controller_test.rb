@@ -67,12 +67,11 @@ class Api::AuthenticationsControllerTest < ActionDispatch::IntegrationTest
                    email: }
 
     post '/api/authentications', params: { email:, password: }
-
+    assert_response 200
     json_response = JSON.parse(@response.body)
 
-    assert_equal(first_name, json_response['firstName'])
-    assert_equal(last_name, json_response['lastName'])
     assert_not_nil(json_response['id'])
+    assert_not_nil(json_response['displayName'])
   end
 
   test 'sets session to the user that was last authenticated' do

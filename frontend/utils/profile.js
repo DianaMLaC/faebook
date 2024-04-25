@@ -40,3 +40,18 @@ export const uploadProfilePhoto = async (formData) => {
     throw err
   }
 }
+
+export const fetchAlbums = async (userID) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/users/${userID}/albums`, {
+      method: "GET",
+    })
+    await checkResponse(response)
+    const photoData = await response.json()
+    console.log("LOG: API GET 'api/users/user_id/albums")
+    return photoData
+  } catch (err) {
+    console.error("Error in get Albums api:", err.message)
+    throw err
+  }
+}

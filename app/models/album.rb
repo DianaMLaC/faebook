@@ -18,4 +18,9 @@ class Album < ApplicationRecord
   has_many :photos,
            foreign_key: :album_id,
            class_name: 'Photo'
+
+  def cover_photo
+    cover_photo = photos.order(created_at: :desc).first
+    # url_for(cover_photo)
+  end
 end

@@ -3,31 +3,6 @@ require 'test_helper'
 def createUser(user_info); end
 
 class Api::UsersControllerTest < ActionDispatch::IntegrationTest
-  # def create_user(user_info, should_fail: false)
-  #   post '/api/users', params: user_info
-
-  #   if !should_fail
-  #     assert_response :success
-  #   else
-  #     assert_response 422
-  #     return
-  #   end
-
-  #   json_response = JSON.parse(@response.body)
-
-  #   assert_equal(user_info[:firstName], json_response['firstName'])
-  #   assert_equal(user_info[:lastName], json_response['lastName'])
-  #   assert_nil(json_response['password'])
-
-  #   json_response
-  # end
-
-  # def generate_user_info
-  #   { firstName: Faker::Name.first_name, lastName: Faker::Name.last_name,
-  #     password: Faker::Internet.password(min_length: 6, mix_case: true, special_characters: true), dateOfBirth: '2000-10-20', email: Faker::Internet.email }
-  # end
-
-  # first_name and last_name
   test 'when creating a user with no last name or first name, response is 422' do
     post '/api/users', params:
         { firstName: '',
