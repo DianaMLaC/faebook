@@ -635,22 +635,28 @@ body {
 
 .photos-nav a {
   text-decoration: none;
-  font-size: 16px;
-  font-weight: bolder;
+  font-size: 14px;
+  font-weight: bold;
   color: var(--text-color);
   padding: 10px
 }
 
 .photos-nav a:hover {
-  color: var(--primary-color);
-  border-bottom: 4px solid var(--primary-color);
+  background-color: var(--shade-background-color);
+  border-radius: 4px;
 }
 
+.photos-nav a.active, .photos-nav a.active:hover {
+  color: var(--primary-color);
+  background-color: transparent;
+  border-bottom: 4px solid var(--primary-color);
+}
 /* Albums */
 
 .albums-list {
   display: flex;
   justify-content: start;
+  padding-inline-start: 5px;
 }
 
 .albums-list > li {
@@ -695,10 +701,13 @@ body {
 .album-cover-title {
   font-size: 16px;
   font-weight: bold;
+  margin-top: 4px;
 }
 
-.album-cover-title {
+.album-cover-items-number {
   font-size: 12px;
+  margin-top: 2px;
+
 }
 
 

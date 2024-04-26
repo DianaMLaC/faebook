@@ -5,10 +5,12 @@ import PhotoUpload from "../profile/photo_uploader"
 
 const PhotosPage = () => {
   const [toggle, setToggle] = useState(false)
+  const [activeLink, setActiveLink] = useState(null)
 
-  const showAlbums = async (e) => {
+  const handleClick = (e, link) => {
     e.preventDefault()
     setToggle(true)
+    setActiveLink(link)
   }
   return (
     <div className="photos-container">
@@ -30,7 +32,11 @@ const PhotosPage = () => {
         <a href="#tagged-photos">Photos of You</a>
         <a href="#user-uploaded-photos-all">Your Photos</a>
 
-        <a href="#albums" onClick={showAlbums}>
+        <a
+          href="#albums"
+          onClick={(e) => handleClick(e, "albums")}
+          className={activeLink === "albums" ? "active" : ""}
+        >
           Albums
         </a>
       </nav>
