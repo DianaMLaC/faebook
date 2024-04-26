@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect, useContext } from "react"
 import { useAuth } from "../../context/auth"
-import PhotoUpload from "./profile_photo_uploader"
+import PhotoUpload from "./photo_uploader"
 import ReactModal from "react-modal"
 
 const ProfileHeader = () => {

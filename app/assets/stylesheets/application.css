@@ -354,6 +354,10 @@ body {
 
 /* Profile Header */
 
+.profile-header-container {
+  padding: 10px;
+}
+
 .profile-header {
   position: relative;
 }
@@ -567,13 +571,136 @@ body {
 
 .profile-pages-container {
   background-color: var(--secondary-color);
+  padding: 10px;
+
+}
+
+.photos-container::before {
+  background-color: var(--secondary-color);
+  border: 2px solid white;
+  border-radius: 1px;
+
 }
 
 .photos-container {
   background-color: white;
   box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
+  padding: 10px;
 }
+
+.photos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.photos-header div:nth-child(2) {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.add-photo-button {
+  padding: 8px 12px;
+  background-color: var(--background-color);
+  color: var(--primary-color);
+  font-size: 16px; 
+  font-weight: bolder; 
+
+  border-radius: 5px;
+  border-color: transparent;
+  cursor: pointer;
+  margin-right: 9px; 
+}
+
+.photo-header-more-button {
+  padding: 8px 12px;
+  background-color: var(--shade-background-color);
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: bolder; 
+  border-radius: 5px;
+  border-color: transparent;
+  cursor: pointer;
+  margin-right: 9px; 
+}
+
+.photos-container nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 10px;
+}
+
+.photos-nav a {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bolder;
+  color: var(--text-color);
+  padding: 10px
+}
+
+.photos-nav a:hover {
+  color: var(--primary-color);
+  border-bottom: 4px solid var(--primary-color);
+}
+
+/* Albums */
+
+.albums-list {
+  display: flex;
+  justify-content: start;
+}
+
+.albums-list > li {
+  width: 150px;
+  height: 200px;
+  /* border-color: 1px solid red; */
+  margin: 5px;
+}
+
+.album-cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 10px;
+
+}
+
+.album-cover:hover {
+  text-decoration: underline;
+}
+
+.album-cover div:first-child {
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  border-color: transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+
+
+.album-cover-photo {
+  width: inherit;
+  height: inherit;
+  object-fit: cover;
+  overflow: hidden;
+  display: block;
+  border-radius: 5px;
+}
+
+.album-cover-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.album-cover-title {
+  font-size: 12px;
+}
+
 
 
 

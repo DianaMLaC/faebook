@@ -1,27 +1,27 @@
 import React, { useState } from "react"
 import { useAuth } from "../../context/auth"
 import Albums from "./albums"
-import { fetchAlbums, uploadProfilePhoto } from "../../utils/profile"
+import PhotoUpload from "../profile/photo_uploader"
 
 const PhotosPage = () => {
-  const { currentUser } = useAuth()
-  const [albums, setAlbums] = useState(null)
+  const [toggle, setToggle] = useState(false)
 
   const showAlbums = async (e) => {
     e.preventDefault()
-    const albumsData = await fetchAlbums(currentUser.id)
-    setAlbums(albumsData)
-    console.log("albumsData:", albumsData)
+    setToggle(true)
   }
   return (
     <div className="photos-container">
       <header className="photos-header">
         <div>
-          <h3>Photos</h3>
+          <h4>Photos</h4>
         </div>
         <div>
-          <button>{/* photo uploader and input for hidden from timeline*/}Add photos/video</button>
+          <button className="add-photo-button">
+            {/* photo uploader and input for hidden from timeline*/}Add photos/video
+          </button>
           <div className="photo-header-more-button">
+            ...
             {/* the more image and a pop-up See photos hidden from timeline*/}
           </div>
         </div>
@@ -34,7 +34,7 @@ const PhotosPage = () => {
           Albums
         </a>
       </nav>
-      <div className="photos-link-page">{/* <Albums albums={albums} /> */}</div>
+      <div className="photos-link-page">{toggle && <Albums />}</div>
     </div>
   )
 }
