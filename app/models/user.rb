@@ -68,12 +68,12 @@ class User < ApplicationRecord
 
   attr_reader :password
 
-  def profile_photo_album
-    albums.find_by(name: 'Profile')
+  def profile_photo_url
+    albums.find_by(name: 'Profile')&.cover_photo_url
   end
 
-  def profile_photo
-    profile_photo_album.photos.order(created_at: :desc).first
+  def cover_photo_url
+    albums.find_by(name: 'Cover')&.cover_photo_url
   end
 
   def display_name

@@ -3,13 +3,13 @@
 # Table name: intros
 #
 #  id           :uuid             not null, primary key
-#  user_id      :uuid             not null
 #  work         :string
 #  location     :string
 #  education    :string
 #  relationship :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  user_id      :uuid
 #
 class Intro < ApplicationRecord
   RELATIONSHIP_STATUSES = %w[single married divorced widowed in_a_relationship its_complicated]

@@ -2,7 +2,7 @@ json.id user.id
 json.email user.email
 json.displayName user.display_name
 json.dateOfBirth user.date_of_birth
-json.profilePhotoUrl user.profile_photo&.image&.url
+json.profilePhotoUrl (user.profile_photo.image.url if user.profile_photo&.image&.attached?)
 
 json.albums @user.albums do |album|
   json.id album.id
