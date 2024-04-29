@@ -27,7 +27,7 @@ const Albums = () => {
     <ul className="albums-list">
       <li className="album-cover">
         <div className="album-cover-photo-create"></div>
-        <div>AlbumForm</div>
+        <div className="album-cover-title">Create Album</div>
         <div></div>
       </li>
       {albums && albums.map((album) => <Album key={album.id} album={album} />)}

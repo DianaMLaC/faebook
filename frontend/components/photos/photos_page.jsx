@@ -2,14 +2,28 @@ import React, { useState } from "react"
 import { useAuth } from "../../context/auth"
 import Albums from "./albums"
 import PhotoUpload from "../profile/photo_uploader"
+import Photos from "./photos_index"
 
 const PhotosPage = () => {
-  const [toggle, setToggle] = useState(false)
+  const [toggleAlbums, setToggleAlbums] = useState(false)
+  const [togglePhotos, setTogglePhotos] = useState(false)
   const [activeLink, setActiveLink] = useState(null)
 
-  const handleClick = (e, link) => {
+  const handleAlbumsClick = (e, link) => {
     e.preventDefault()
-    setToggle(true)
+    if (togglePhotos) {
+      setTogglePhotos(false)
+    }
+    setToggleAlbums(true)
+    setActiveLink(link)
+  }
+
+  const handlePhotosClick = (e, link) => {
+    e.preventDefault()
+    if (toggleAlbums) {
+      setToggleAlbums(false)
+    }
+    setTogglePhotos(true)
     setActiveLink(link)
   }
   return (
@@ -30,17 +44,24 @@ const PhotosPage = () => {
       </header>
       <nav className="photos-nav">
         <a href="#tagged-photos">Photos of You</a>
-        <a href="#user-uploaded-photos-all">Your Photos</a>
+        <a
+          href="#user-uploaded-photos-all"
+          onClick={(e) => handlePhotosClick(e, "allPhotos")}
+          className={activeLink === "allPhotos" ? "active" : ""}
+        >
+          Your Photos
+        </a>
 
         <a
           href="#albums"
-          onClick={(e) => handleClick(e, "albums")}
+          onClick={(e) => handleAlbumsClick(e, "albums")}
           className={activeLink === "albums" ? "active" : ""}
         >
           Albums
         </a>
       </nav>
-      <div className="photos-link-page">{toggle && <Albums />}</div>
+      <div className="photos-link-page">{toggleAlbums && <Albums />}</div>
+      <div className="photos-link-page">{togglePhotos && <Photos />}</div>
     </div>
   )
 }

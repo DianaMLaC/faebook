@@ -2,6 +2,18 @@ class Api::PhotosController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :must_be_authorized
   before_action :resize_before_save, only: [:create]
+
+  def index
+    @user = User.find(params[:user_id])
+    @photos = @user.photos.includes(image_attachment: :blob)
+
+    if @photos.empty?
+      render json: { errors: ['No photos found for this user.'] }, status: :not_found
+    else
+      render :index
+    end
+  end
+
   def create
     album = find_or_create_album
     photo = album.photos.build(photo_params)
