@@ -5,27 +5,28 @@ import PhotoUpload from "../profile/photo_uploader"
 import Photos from "./photos_index"
 
 const PhotosPage = () => {
-  const [toggleAlbums, setToggleAlbums] = useState(false)
-  const [togglePhotos, setTogglePhotos] = useState(false)
+  const [activeView, setActiveView] = useState(null)
   const [activeLink, setActiveLink] = useState(null)
 
-  const handleAlbumsClick = (e, link) => {
+  const handleViewChange = (e, view) => {
     e.preventDefault()
-    if (togglePhotos) {
-      setTogglePhotos(false)
-    }
-    setToggleAlbums(true)
-    setActiveLink(link)
+    setActiveView(view)
+    setActiveLink(view)
   }
 
-  const handlePhotosClick = (e, link) => {
-    e.preventDefault()
-    if (toggleAlbums) {
-      setToggleAlbums(false)
+  const getViewComponent = () => {
+    switch (activeView) {
+      case "albums":
+        return <Albums />
+      case "allPhotos":
+        return <Photos />
+      case "taggedPhotos":
+        return <Photos tagged />
+      default:
+        return null
     }
-    setTogglePhotos(true)
-    setActiveLink(link)
   }
+
   return (
     <div className="photos-container">
       <header className="photos-header">
@@ -33,35 +34,34 @@ const PhotosPage = () => {
           <h4>Photos</h4>
         </div>
         <div>
-          <button className="add-photo-button">
-            {/* photo uploader and input for hidden from timeline*/}Add photos/video
-          </button>
-          <div className="photo-header-more-button">
-            ...
-            {/* the more image and a pop-up See photos hidden from timeline*/}
-          </div>
+          <button className="add-photo-button">Add photos/video</button>
+          <div className="photo-header-more-button">...</div>
         </div>
       </header>
       <nav className="photos-nav">
-        <a href="#tagged-photos">Photos of You</a>
+        <a
+          href="#tagged-photos"
+          onClick={(e) => handleViewChange(e, "taggedPhotos")}
+          className={activeLink === "taggedPhotos" ? "active" : ""}
+        >
+          Photos of You
+        </a>
         <a
           href="#user-uploaded-photos-all"
-          onClick={(e) => handlePhotosClick(e, "allPhotos")}
+          onClick={(e) => handleViewChange(e, "allPhotos")}
           className={activeLink === "allPhotos" ? "active" : ""}
         >
           Your Photos
         </a>
-
         <a
           href="#albums"
-          onClick={(e) => handleAlbumsClick(e, "albums")}
+          onClick={(e) => handleViewChange(e, "albums")}
           className={activeLink === "albums" ? "active" : ""}
         >
           Albums
         </a>
       </nav>
-      <div className="photos-link-page">{toggleAlbums && <Albums />}</div>
-      <div className="photos-link-page">{togglePhotos && <Photos />}</div>
+      <div className="photos-link-page">{getViewComponent()}</div>
     </div>
   )
 }

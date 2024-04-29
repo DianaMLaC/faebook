@@ -4751,33 +4751,32 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var PhotosPage = function PhotosPage() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
-    toggleAlbums = _useState2[0],
-    setToggleAlbums = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    activeView = _useState2[0],
+    setActiveView = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState4 = _slicedToArray(_useState3, 2),
-    togglePhotos = _useState4[0],
-    setTogglePhotos = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState6 = _slicedToArray(_useState5, 2),
-    activeLink = _useState6[0],
-    setActiveLink = _useState6[1];
-  var handleAlbumsClick = function handleAlbumsClick(e, link) {
+    activeLink = _useState4[0],
+    setActiveLink = _useState4[1];
+  var handleViewChange = function handleViewChange(e, view) {
     e.preventDefault();
-    if (togglePhotos) {
-      setTogglePhotos(false);
-    }
-    setToggleAlbums(true);
-    setActiveLink(link);
+    setActiveView(view);
+    setActiveLink(view);
   };
-  var handlePhotosClick = function handlePhotosClick(e, link) {
-    e.preventDefault();
-    if (toggleAlbums) {
-      setToggleAlbums(false);
+  var getViewComponent = function getViewComponent() {
+    switch (activeView) {
+      case "albums":
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_albums__WEBPACK_IMPORTED_MODULE_2__["default"], null);
+      case "allPhotos":
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_photos_index__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+      case "taggedPhotos":
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_photos_index__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          tagged: true
+        });
+      default:
+        return null;
     }
-    setTogglePhotos(true);
-    setActiveLink(link);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "photos-container"
@@ -4790,26 +4789,49 @@ var PhotosPage = function PhotosPage() {
   }, "..."))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", {
     className: "photos-nav"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-    href: "#tagged-photos"
+    href: "#tagged-photos",
+    onClick: function onClick(e) {
+      return handleViewChange(e, "taggedPhotos");
+    },
+    className: activeLink === "taggedPhotos" ? "active" : ""
   }, "Photos of You"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
     href: "#user-uploaded-photos-all",
     onClick: function onClick(e) {
-      return handlePhotosClick(e, "allPhotos");
+      return handleViewChange(e, "allPhotos");
     },
     className: activeLink === "allPhotos" ? "active" : ""
   }, "Your Photos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
     href: "#albums",
     onClick: function onClick(e) {
-      return handleAlbumsClick(e, "albums");
+      return handleViewChange(e, "albums");
     },
     className: activeLink === "albums" ? "active" : ""
   }, "Albums")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "photos-link-page"
-  }, toggleAlbums && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_albums__WEBPACK_IMPORTED_MODULE_2__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "photos-link-page"
-  }, togglePhotos && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_photos_index__WEBPACK_IMPORTED_MODULE_4__["default"], null)));
+  }, getViewComponent()));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PhotosPage);
+
+/***/ }),
+
+/***/ "./frontend/components/profile/about_me.jsx":
+/*!**************************************************!*\
+  !*** ./frontend/components/profile/about_me.jsx ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+var AboutMe = function AboutMe() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "About me"));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AboutMe);
 
 /***/ }),
 
@@ -5116,6 +5138,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _context_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../context/auth */ "./frontend/context/auth.jsx");
 /* harmony import */ var _profile_header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./profile_header */ "./frontend/components/profile/profile_header.jsx");
 /* harmony import */ var _photos_photos_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../photos/photos_page */ "./frontend/components/photos/photos_page.jsx");
+/* harmony import */ var _about_me__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./about_me */ "./frontend/components/profile/about_me.jsx");
+
 
 
 
@@ -5130,6 +5154,8 @@ var UserProfile = function UserProfile() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "profile-header-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_profile_header__WEBPACK_IMPORTED_MODULE_2__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "about-me-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_about_me__WEBPACK_IMPORTED_MODULE_4__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "profile-pages-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_photos_photos_page__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
 };
