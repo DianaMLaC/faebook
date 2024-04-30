@@ -706,6 +706,65 @@ body {
 
 }
 
+/* About me */
+
+.profile-about-me-container {
+  background-color: var(--secondary-color);
+  padding: 10px;
+}
+
+.about-me-container {
+  position: relative;
+  background-color: white;
+  box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+}
+
+.about-me-title {
+  font-size: 18px;
+  font-weight: 900;
+  padding-bottom: 10px;
+}
+
+.about-me-nav {
+  flex: 0 0 300px; 
+  padding: 10px; 
+  height: 100%; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-right: 2px solid var(--shade-background-color);
+}
+
+.about-me-nav button {
+  padding: 10px;
+  margin-bottom: 10px; /* Space between buttons */
+  background-color: transparent;
+  border: none;
+  text-align: left; 
+  cursor: pointer;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.about-me-nav button:hover {
+  background-color: var(--shade-background-color);
+  border-radius: 5px;
+}
+
+.about-me-nav button.active {
+  background-color: var(--secondary-color);
+  border-radius: 5px;
+  color: var(--primary-color);
+}
+
+
+
+
+
 
 
 
