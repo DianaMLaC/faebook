@@ -1,81 +1,91 @@
 import React from "react"
-import { AiOutlinePlus, AiFillEye, AiOutlineEllipsis } from "react-icons/ai"
+import { HiBriefcase, HiHome, HiHeart, HiPhone } from "react-icons/hi2"
+import { BsFillMortarboardFill } from "react-icons/bs"
+import { CiCirclePlus } from "react-icons/ci"
+import { useAuth } from "../../context/auth"
 
-const Overview = ({ userData }) => {
+const Overview = () => {
+  const { currentUser } = useAuth()
+
   return (
     <div className="overview">
       <div className="section">
-        <h3>Work</h3>
-        {userData.work ? (
+        {currentUser.work ? (
           <div className="data-item">
-            <AiFillEye className="icon" />
-            <p>{userData.work}</p>
-            <AiOutlineEllipsis className="more-icon" />
+            <HiBriefcase className="icon" />
+            <p>{currentUser.work}</p>
           </div>
         ) : (
-          <button className="add-button">
-            <AiOutlinePlus /> Add workplace
-          </button>
+          <div className="data-missing">
+            <div className="data-missing-icon">
+              <CiCirclePlus />
+            </div>
+            <div>Add workplace</div>
+          </div>
         )}
       </div>
 
       <div className="section">
-        <h3>Education</h3>
-        {userData.education ? (
+        {currentUser.education ? (
           <div className="data-item">
-            <AiFillEye className="icon" />
-            <p>{userData.education}</p>
-            <AiOutlineEllipsis className="more-icon" />
+            <BsFillMortarboardFill className="icon" />
+            <p>{currentUser.education}</p>
           </div>
         ) : (
-          <button className="add-button">
-            <AiOutlinePlus /> Add education
-          </button>
+          <div className="data-missing">
+            <div className="data-missing-icon">
+              <CiCirclePlus />
+            </div>
+            <div>Add Education</div>
+          </div>
         )}
       </div>
 
       <div className="section">
-        <h3>Location</h3>
-        {userData.location ? (
+        {currentUser.location ? (
           <div className="data-item">
-            <AiFillEye className="icon" />
-            <p>{userData.location}</p>
-            <AiOutlineEllipsis className="more-icon" />
+            <HiHome className="icon" />
+            <p>{currentUser.location}</p>
           </div>
         ) : (
-          <button className="add-button">
-            <AiOutlinePlus /> Add hometown
-          </button>
+          <div className="data-missing">
+            <div className="data-missing-icon">
+              <CiCirclePlus />
+            </div>
+            <div>Add hometown</div>
+          </div>
         )}
       </div>
 
       <div className="section">
-        <h3>Relationship Status</h3>
-        {userData.relationship ? (
+        {currentUser.relationship ? (
           <div className="data-item">
-            <AiFillEye className="icon" />
-            <p>{userData.relationship}</p>
-            <AiOutlineEllipsis className="more-icon" />
+            <HiHeart className="icon" />
+            <p>{currentUser.relationship}</p>
           </div>
         ) : (
-          <button className="add-button">
-            <AiOutlinePlus /> Add relationship status
-          </button>
+          <div className="data-missing">
+            <div className="data-missing-icon">
+              <CiCirclePlus />
+            </div>
+            <div>Add relationship status</div>
+          </div>
         )}
       </div>
 
       <div className="section">
-        <h3>Contact</h3>
-        {userData.phone ? (
+        {currentUser.phone ? (
           <div className="data-item">
-            <AiFillEye className="icon" />
-            <p>{userData.phone}</p>
-            <AiOutlineEllipsis className="more-icon" />
+            <HiPhone className="icon" />
+            <p>{currentUser.phone}</p>
           </div>
         ) : (
-          <button className="add-button">
-            <AiOutlinePlus /> Add phone
-          </button>
+          <div className="data-missing">
+            <div className="data-missing-icon">
+              <CiCirclePlus />
+            </div>
+            <div>Add contact details</div>
+          </div>
         )}
       </div>
     </div>

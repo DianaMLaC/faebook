@@ -1,9 +1,7 @@
 import React, { useState } from "react"
-import { useAuth } from "../../context/auth"
 import Overview from "./overview"
-
+import WorkAndEducation from "./work_and_education"
 const AboutMe = () => {
-  const { currentUser } = useAuth()
   const [activeCategory, setActiveCategory] = useState("Overview")
 
   const categories = [
@@ -19,19 +17,19 @@ const AboutMe = () => {
   const renderCategory = () => {
     switch (activeCategory) {
       case "Overview":
-        return <Overview userData={currentUser} />
+        return <Overview />
       case "Work and education":
-        return <WorkAndEducation userData={currentUser} />
+        return <WorkAndEducation />
       case "Contact and basic info":
-        return <ContactInfo userData={currentUser} />
+        return <ContactInfo />
       case "Life events":
-        return <LifeEvents userData={currentUser} />
+        return <LifeEvents />
       case "Places lived":
-        return <PlacesLived userData={currentUser} />
+        return <PlacesLived />
       case "Family and relationships":
-        return <FamilyAndRelationships userData={currentUser} />
+        return <FamilyAndRelationships />
       case "Details about you":
-        return <DetailsAboutYou userData={currentUser} />
+        return <DetailsAboutYou />
       default:
         return <div>Select a category</div>
     }

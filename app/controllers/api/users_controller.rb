@@ -2,9 +2,7 @@ class Api::UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def show
-    # @user = User.includes(albums: [:photos], posts: [:likes, comments => [:likes]]).find(params[:id])
-    # change json to detail
-    @user = User.find_by(id: params[:id])
+    @user = User.includes(:intro).find_by(id: params[:id])
 
     unless @user
       render json: { error: 'User not found' }, status: :not_found
