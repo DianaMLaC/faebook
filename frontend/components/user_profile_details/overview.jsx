@@ -13,7 +13,7 @@ const Overview = () => {
         {currentUser.work ? (
           <div className="data-item">
             <HiBriefcase className="icon" />
-            <p>{currentUser.work}</p>
+            <div>{currentUser.work}</div>
           </div>
         ) : (
           <div className="data-missing">
@@ -29,7 +29,7 @@ const Overview = () => {
         {currentUser.education ? (
           <div className="data-item">
             <BsFillMortarboardFill className="icon" />
-            <p>{currentUser.education}</p>
+            <div>{currentUser.education}</div>
           </div>
         ) : (
           <div className="data-missing">
@@ -45,7 +45,7 @@ const Overview = () => {
         {currentUser.location ? (
           <div className="data-item">
             <HiHome className="icon" />
-            <p>{currentUser.location}</p>
+            <div>{currentUser.location}</div>
           </div>
         ) : (
           <div className="data-missing">
@@ -61,7 +61,7 @@ const Overview = () => {
         {currentUser.relationship ? (
           <div className="data-item">
             <HiHeart className="icon" />
-            <p>{currentUser.relationship}</p>
+            <div>{currentUser.relationship}</div>
           </div>
         ) : (
           <div className="data-missing">
@@ -77,7 +77,7 @@ const Overview = () => {
         {currentUser.phone ? (
           <div className="data-item">
             <HiPhone className="icon" />
-            <p>{currentUser.phone}</p>
+            <div>{currentUser.phone}</div>
           </div>
         ) : (
           <div className="data-missing">

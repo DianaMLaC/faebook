@@ -766,14 +766,14 @@ body {
   padding: 10px;
 }
 
-.data-missing {
+.data-missing{
   font-size: 20px;
   color: var(--primary-color);
   display: flex;
   flex-direction: row;
 }
 
-.data-missing-icon {
+.data-missing-icon{
   font-size: 30px;
   padding-right: 10px;
   /* padding: 5px; */
@@ -785,6 +785,25 @@ body {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;
+}
+
+.section {
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  padding-bottom: 10px;
+}
+
+.icon {
+  padding-right: 10px;
+  font-size: 30px;
+}
+
+.about-me-location-icon {
+  height: 35px;
+  width: 35px;
+  padding-right: 10px;
+  border-radius: 50%;
 }
 
 

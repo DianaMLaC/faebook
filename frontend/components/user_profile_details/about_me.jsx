@@ -1,6 +1,10 @@
 import React, { useState } from "react"
 import Overview from "./overview"
 import WorkAndEducation from "./work_and_education"
+import PlacesLived from "./placed_lived"
+import ContactInfo from "./contact_info"
+import FamilyAndRelationships from "./relationships"
+import LifeEvents from "./life_events"
 const AboutMe = () => {
   const [activeCategory, setActiveCategory] = useState("Overview")
 
@@ -10,7 +14,6 @@ const AboutMe = () => {
     "Places lived",
     "Contact and basic info",
     "Family and relationships",
-    "Details about you",
     "Life events",
   ]
 
@@ -28,8 +31,6 @@ const AboutMe = () => {
         return <PlacesLived />
       case "Family and relationships":
         return <FamilyAndRelationships />
-      case "Details about you":
-        return <DetailsAboutYou />
       default:
         return <div>Select a category</div>
     }

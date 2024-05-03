@@ -14,7 +14,7 @@ const WorkAndEducation = () => {
           <HiBriefcase className="icon" />
           {currentUser.work ? (
             <div className="data-item">
-              <p>{currentUser.work}</p>
+              <div>{currentUser.work}</div>
             </div>
           ) : (
             <div>No workplaces to show</div>
@@ -27,7 +27,7 @@ const WorkAndEducation = () => {
           <BsFillMortarboardFill className="icon" />
           {currentUser.education ? (
             <div className="data-item">
-              <p>{currentUser.education}</p>
+              <div>{currentUser.education}</div>
             </div>
           ) : (
             <div>No University to show</div>
@@ -40,7 +40,7 @@ const WorkAndEducation = () => {
           <BsFillMortarboardFill className="icon" />
           {currentUser.education ? (
             <div className="data-item">
-              <p>{currentUser.education}</p>
+              <div>{currentUser.education}</div>
             </div>
           ) : (
             <div>No High School to show</div>
