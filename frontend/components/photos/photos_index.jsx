@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
 import { fetchUserPhotos } from "../../utils/profile"
+import Photo from "./photo"
 
 const Photos = () => {
   const { currentUser } = useAuth()
-  const [photosUrls, setPhotosUrls] = useState(null)
+  const [photos, setPhotos] = useState(null)
 
   useEffect(() => {
     if (currentUser.id === null) {
@@ -15,16 +16,16 @@ const Photos = () => {
     async function fetchAllPhotosUrls() {
       const photosData = await fetchUserPhotos(currentUser.id)
       console.log("photos-urls:", { photosData })
-      setPhotosUrls(photosData)
+      setPhotos(photosData)
     }
 
     fetchAllPhotosUrls()
-  }, [currentUser, setPhotosUrls])
+  }, [currentUser, setPhotos])
 
   return (
-    <div>
-      <div> Photos</div>
-    </div>
+    <ul className="photos-list">
+      {photos && photos.map((photo) => <Photo key={photo.id} photo={photo} />)}
+    </ul>
   )
 }
 

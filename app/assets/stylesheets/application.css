@@ -561,7 +561,7 @@ body {
 
 /* PROFILE PAGE - PHOTOS*/
 
-.profile-pages-container {
+.profile-photos-container {
   background-color: var(--secondary-color);
   padding: 10px;
 
@@ -652,7 +652,6 @@ body {
 .albums-list > li {
   width: 150px;
   height: 200px;
-  /* border-color: 1px solid red; */
   margin: 10px;
 }
 
@@ -661,7 +660,6 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   margin: 10px;
-
 }
 
 .album-cover:hover {
@@ -678,12 +676,8 @@ body {
 }
 
 .album-cover-photo-create {
-
   background-color: var(--shade-background-color);
-
-
 }
-
 
 .album-cover-photo {
   width: inherit;
@@ -704,6 +698,33 @@ body {
   font-size: 12px;
   margin-top: 2px;
 
+}
+
+.photos-list {
+  display: flex;
+  justify-content: start;
+  padding-inline-start: 5px;
+}
+
+.photos-list > li {
+  width: 150px;
+  height: 200px;
+  margin: 10px;
+}
+
+.photo-container {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+}
+
+.photo-cover-image {
+  width: inherit;
+  height: inherit;
+  object-fit: cover;
+  overflow: hidden;
+  display: block;
+  border-radius: 5px;
 }
 
 /* About me */

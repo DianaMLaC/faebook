@@ -1,12 +1,12 @@
 import React, { useState } from "react"
 import { useAuth } from "../../context/auth"
-import Albums from "./albums"
+import Albums from "./albums_index"
 import PhotoUpload from "../profile/photo_uploader"
 import Photos from "./photos_index"
 
 const PhotosPage = () => {
-  const [activeView, setActiveView] = useState(null)
-  const [activeLink, setActiveLink] = useState(null)
+  const [activeView, setActiveView] = useState("allPhotos")
+  const [activeLink, setActiveLink] = useState("allPhotos")
 
   const handleViewChange = (e, view) => {
     e.preventDefault()
