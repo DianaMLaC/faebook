@@ -5,7 +5,7 @@ class Api::PhotosController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
-    @photos = @user.photos.includes(image_attachment: :blob)
+    @photos = @user.photos
 
     if @photos.empty?
       render json: { errors: ['No photos found for this user.'] }, status: :not_found
@@ -19,8 +19,12 @@ class Api::PhotosController < ApplicationController
     photo = album.photos.build(photo_params)
 
     if photo.save
-      album.update(cover_photo_url: url_for(photo.image)) if photo.image.attached?
-      render json: { id: photo.id, albumName: album.name, url: url_for(photo.image) }, status: :created
+      if photo.image.attached?
+        photo.update(photo_url: url_for(photo.image))
+        photo.save
+        album.update(cover_photo_url: url_for(photo.image))
+      end
+      render json: { id: photo.id, albumName: album.name, url: photo.photo_url }, status: 200
     else
       render json: { errors: photo.errors.full_messages }, status: :unprocessable_entity
     end

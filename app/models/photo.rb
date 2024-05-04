@@ -7,6 +7,7 @@
 #  description :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  photo_url   :string
 #
 class Photo < ApplicationRecord
   belongs_to :album,
