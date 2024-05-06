@@ -26,8 +26,6 @@ class Api::UsersController < ApplicationController
       session[:auth_token] = @user.session_token
       render :create
     else
-      # as per previous projects
-      # render json: @user.errors.full_messages, status: 401
       mapped_errors = {
         email: @user.errors.where(:email).map(&:full_message).join(', '),
         firstName: @user.errors.where(:first_name).map(&:full_message).join(', '),
@@ -35,8 +33,6 @@ class Api::UsersController < ApplicationController
         password: @user.errors.where(:password).map(&:full_message).join(', '),
         dateOfBirth: @user.errors.where(:date_of_birth).map(&:full_message).join(', ')
       }
-
-      # render :errors, status: 422
 
       render json: {
         errors: {
