@@ -12,6 +12,8 @@ const App = () => {
   return (
     <Routes>
       <Route path="/start" element={<StartPage />} />
+      <Route path="/" element={<Navigate to="/start" replace />} />
+
       <Route
         path="/login"
         element={currentUser ? <Navigate to="/profile-page" replace /> : <StartPage />}
@@ -26,13 +28,6 @@ const App = () => {
       </Route>
 
       <Route path="*" element={<Navigate to="/start" replace />} />
-
-      <Route
-        path="/"
-        element={
-          currentUser ? <Navigate to="/profile-page" replace /> : <Navigate to="/start" replace />
-        }
-      />
     </Routes>
   )
 }
