@@ -71,3 +71,21 @@ export const fetchUserPhotos = async (userID) => {
     throw err
   }
 }
+
+export const createIntro = async (userID, intro) => {
+  // console.log(introData)
+  try {
+    const response = await fetch(`http://localhost:3000/api/users/${userID}/intros`, {
+      method: "POST",
+      headers: customHeaders,
+      body: JSON.stringify(intro),
+    })
+    await checkResponse(response)
+    const introData = await response.json()
+    console.log("API POST 'api/users/user_id/intro")
+    return introData
+  } catch (err) {
+    console.error("Error in get Intro api:", err.message)
+    throw err
+  }
+}

@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
   const login = async (userData) => {
     const dbUser = await postSession(userData)
     setCurrentUser(dbUser)
-    navigate("/")
+    navigate("/profile-page")
   }
 
   const logout = async () => {

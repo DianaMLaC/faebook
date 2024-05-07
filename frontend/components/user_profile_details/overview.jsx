@@ -20,7 +20,23 @@ const Overview = () => {
             <div className="data-missing-icon">
               <CiCirclePlus />
             </div>
-            <div>Add workplace</div>
+            <div>Add a workplace</div>
+          </div>
+        )}
+      </div>
+
+      <div className="section">
+        {currentUser.highSchool ? (
+          <div className="data-item">
+            <sFillMortarboardFill className="icon" />
+            <div>{currentUser.highSchool}</div>
+          </div>
+        ) : (
+          <div className="data-missing">
+            <div className="data-missing-icon">
+              <CiCirclePlus />
+            </div>
+            <div>Add high school</div>
           </div>
         )}
       </div>
@@ -36,7 +52,23 @@ const Overview = () => {
             <div className="data-missing-icon">
               <CiCirclePlus />
             </div>
-            <div>Add Education</div>
+            <div>Add college</div>
+          </div>
+        )}
+      </div>
+
+      <div className="section">
+        {currentUser.location ? (
+          <div className="data-item">
+            <HiHome className="icon" />
+            <div>{currentUser.location}</div>
+          </div>
+        ) : (
+          <div className="data-missing">
+            <div className="data-missing-icon">
+              <CiCirclePlus />
+            </div>
+            <div>Add current city</div>
           </div>
         )}
       </div>

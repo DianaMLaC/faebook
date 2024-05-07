@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :friendships, only: %i[create index]
       resources :albums, only: [:index]
       resources :photos, only: [:index]
+      resources :intros, only: %i[create update]
     end
     resources :photos, only: [:create]
 

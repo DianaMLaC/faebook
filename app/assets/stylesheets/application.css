@@ -788,10 +788,12 @@ body {
 }
 
 .data-missing{
-  font-size: 20px;
+  font-size: 18px;
   color: var(--primary-color);
   display: flex;
   flex-direction: row;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .data-missing-icon{

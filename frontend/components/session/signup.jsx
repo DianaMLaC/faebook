@@ -26,8 +26,8 @@ const Signup = () => {
     try {
       const userData = { firstName, lastName, password, dateOfBirth, email }
       await signup(userData)
-    } catch (err) {
       clearForm()
+    } catch (err) {
       setFormErr(err.message)
     }
   }
