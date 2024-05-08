@@ -564,7 +564,6 @@ body {
 .profile-photos-container {
   background-color: var(--secondary-color);
   padding: 10px;
-
 }
 
 
@@ -743,6 +742,7 @@ body {
   display: flex;
 }
 
+
 .about-me-title {
   font-size: 18px;
   font-weight: 900;
@@ -832,8 +832,116 @@ body {
 .data-item {
   display: flex;
   flex-direction: row;
-  padding-left: 12px;
 }
+
+/* No INFO containers */
+
+.profile-sports-container, 
+.profile-music-container, 
+.profile-movies-container,
+.profile-tv-shows-container, 
+.profile-books-container  {
+  background-color: var(--secondary-color);
+  padding: 10px;
+}
+
+.sports-container, 
+.music-container, 
+.movies-container, 
+.tv-shows-container, 
+.books-container  {
+  position: relative;
+  background-color: white;
+  box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.sports-header, 
+.music-header, 
+.movies-header, 
+.tv-shows-header, 
+.books-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px;
+  font-size: 18px;
+}
+
+.sports-header-more-button, 
+.music-header-more-button, 
+.movies-header-more-button, 
+.tv-shows-header-more-button, 
+.books-header-more-button {
+  padding: 8px 12px;
+  background-color: var(--shade-background-color);
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: bolder; 
+  border-radius: 5px;
+  border-color: transparent;
+  /* cursor: pointer; */
+  margin-right: 9px; 
+}
+
+.sports-container nav, 
+.music-container nav, 
+.movies-container nav, 
+.tv-shows-container nav,
+.books-container nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 6px;
+}
+
+.sports-nav a, 
+.music-nav a, 
+.movies-nav a, 
+.tv-shows-nav a,
+.books-nav a {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-color);
+  opacity: 0.7;
+  padding: 10px;
+}
+
+.sports-nav a:hover, 
+.music-nav a:hover, 
+.movies-nav a:hover, 
+.tv-shows-nav a:hover,
+.books-nav a:hover {
+  background-color: var(--shade-background-color);
+  border-radius: 4px;
+}
+
+.sports-nav a.active, .sports-nav a.active:hover, 
+.music-nav a.active, .music-nav a.active:hover, 
+.movies-nav a.active, .movies-nav a.active:hover, 
+.tv-shows-nav a.active, .tv-shows-nav a.active:hover,
+.books-nav a.active, .books-nav a.active:hover  {
+  color: var(--primary-color);
+  background-color: transparent;
+  border-bottom: 4px solid var(--primary-color);
+}
+
+.no-info-to-show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 24px;
+  color: #20504F;
+  opacity: 0.7;
+  margin: 10px;
+}
+
+
+
+
 
 
 
