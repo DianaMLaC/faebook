@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useAuth } from "../../context/auth"
 import Albums from "./albums_index"
 import PhotoUpload from "../profile/photo_uploader"
-import Photos from "./photos_index"
+import PhotosIndex from "./photos_index"
 
 const PhotosPage = () => {
   const [activeView, setActiveView] = useState("allPhotos")
@@ -19,7 +19,7 @@ const PhotosPage = () => {
       case "albums":
         return <Albums />
       case "allPhotos":
-        return <Photos />
+        return <PhotosIndex />
       case "taggedPhotos":
         return <Photos tagged />
       default:

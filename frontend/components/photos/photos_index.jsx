@@ -3,7 +3,7 @@ import { useAuth } from "../../context/auth"
 import { fetchUserPhotos } from "../../utils/profile"
 import Photo from "./photo"
 
-const Photos = () => {
+const PhotosIndex = () => {
   const { currentUser } = useAuth()
   const [photos, setPhotos] = useState(null)
 
@@ -16,6 +16,7 @@ const Photos = () => {
     async function fetchAllPhotosUrls() {
       const photosData = await fetchUserPhotos(currentUser.id)
       console.log("photos-urls:", { photosData })
+      console.log(photosData.length)
       setPhotos(photosData)
     }
 
@@ -29,4 +30,4 @@ const Photos = () => {
   )
 }
 
-export default Photos
+export default PhotosIndex

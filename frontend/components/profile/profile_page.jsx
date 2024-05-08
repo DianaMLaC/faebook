@@ -7,6 +7,9 @@ import Music from "./music"
 import Movies from "./movies"
 import TvShows from "./tv_shows"
 import Books from "./books"
+import Videos from "./videos"
+import CheckIns from "./check_ins"
+import PostsPage from "../posts/posts_page"
 
 const UserProfile = () => {
   return (
@@ -14,11 +17,20 @@ const UserProfile = () => {
       <div className="profile-header-container">
         <ProfileHeader />
       </div>
+      <div className="profile-posts-container">
+        <PostsPage />
+      </div>
       <div className="profile-about-me-container">
         <AboutMe />
       </div>
       <div className="profile-photos-container">
         <PhotosPage />
+      </div>
+      <div className="profile-videos-container">
+        <Videos />
+      </div>
+      <div className="profile-check-ins-container">
+        <CheckIns />
       </div>
       <div className="profile-sports-container">
         <Sports />

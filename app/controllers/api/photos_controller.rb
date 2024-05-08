@@ -5,7 +5,7 @@ class Api::PhotosController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
-    @photos = @user.photos
+    @photos = @user.photos.order(created_at: :desc)
 
     if @photos.empty?
       render json: { errors: ['No photos found for this user.'] }, status: :not_found
