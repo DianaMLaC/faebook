@@ -819,7 +819,7 @@ body {
 
 .icon {
   padding-right: 10px;
-  font-size: 30px;
+  font-size: 26px;
 }
 
 .about-me-location-icon {
@@ -827,6 +827,12 @@ body {
   width: 35px;
   padding-right: 10px;
   border-radius: 50%;
+}
+
+.data-item {
+  display: flex;
+  flex-direction: row;
+  padding-left: 12px;
 }
 
 
