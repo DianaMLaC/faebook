@@ -4,7 +4,7 @@ import PhotoUpload from "./photo_uploader"
 import ReactModal from "react-modal"
 
 const ProfileHeader = () => {
-  const { currentUser, setCurrentUser } = useAuth()
+  const { currentUser, setCurrentUser, profileUser } = useAuth()
   const [profileModalIsOpen, setProfileModalIsOpen] = useState(false)
   const [coverModalIsOpen, setCoverModalIsOpen] = useState(false)
 
@@ -61,12 +61,14 @@ const ProfileHeader = () => {
   return (
     <header className="profile-header">
       <section className="cover-photo-container">
-        {currentUser.coverPhotoUrl && (
-          <img className="cover-photo" src={currentUser.coverPhotoUrl} alt="Cover" />
+        {profileUser.coverPhotoUrl && (
+          <img className="cover-photo" src={profileUser.coverPhotoUrl} alt="Cover" />
         )}
-        <button className="cover-photo-button" onClick={openCoverModal}>
-          Add cover photo
-        </button>
+        {currentUser.id === profileUser.id && (
+          <button className="cover-photo-button" onClick={openCoverModal}>
+            Add cover photo
+          </button>
+        )}
         <ReactModal
           isOpen={coverModalIsOpen}
           onRequestClose={closeCoverModal}
@@ -89,14 +91,17 @@ const ProfileHeader = () => {
 
       <div className="profile-display-name-container">
         <div>
-          <button className="profile-photo-button" onClick={openProfileModal}>
-            <img
-              className="nav-button-icon"
-              src={require("../../../app/assets/images/camera.png").default}
-              alt="Edit profile picture"
-            />
-          </button>
-          <h1 className="profile-display-name">{currentUser.displayName}</h1>
+          {currentUser.id === profileUser.id && (
+            <button className="profile-photo-button" onClick={openProfileModal}>
+              <img
+                className="nav-button-icon"
+                src={require("../../../app/assets/images/camera.png").default}
+                alt="Edit profile picture"
+              />
+            </button>
+          )}
+
+          <h1 className="profile-display-name">{profileUser.displayName}</h1>
         </div>
 
         <ReactModal
@@ -113,8 +118,12 @@ const ProfileHeader = () => {
         </ReactModal>
 
         <div className="profile-header-nav-buttons">
-          <button className="add-to-story-button"> + Add to story</button>
-          <button className="edit-profile-button">Edit profile</button>
+          {currentUser.id === profileUser.id && (
+            <button className="add-to-story-button"> + Add to story</button>
+          )}
+          {currentUser.id === profileUser.id && (
+            <button className="edit-profile-button">Edit profile</button>
+          )}
         </div>
       </div>
 

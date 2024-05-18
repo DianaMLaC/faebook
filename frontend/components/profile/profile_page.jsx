@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import ProfileHeader from "./profile_header"
 import PhotosPage from "../photos/photos_page"
 import AboutMe from "../user_profile_details/about_me"
@@ -10,8 +10,27 @@ import Books from "./books"
 import Videos from "./videos"
 import CheckIns from "./check_ins"
 import PostsPage from "../posts/posts_page"
+import { fetchUserProfile } from "../../utils/profile"
+import { useAuth } from "../../context/auth"
 
-const UserProfile = () => {
+const UserProfile = ({ profileId }) => {
+  const { setProfileUser } = useAuth()
+
+  useEffect(() => {
+    if (profileId === null) {
+      console.log("no profile id")
+      return
+    }
+
+    async function fetchProfile() {
+      const userProfileData = await fetchUserProfile(profileId)
+      console.log("userProfileData", { userProfileData })
+      setProfileUser(userProfileData)
+    }
+
+    fetchProfile()
+  }, [profileId, setProfileUser])
+
   return (
     <div className="profile-page">
       <div className="profile-header-container">

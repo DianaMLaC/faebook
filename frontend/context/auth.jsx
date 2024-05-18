@@ -1,11 +1,13 @@
 import React, { useState, createContext, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { postUser, postSession, deleteSession } from "../utils/authentication"
+import { fetchUserProfile } from "../utils/profile"
 
 const AuthContext = createContext(null)
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate()
+  const [profileUser, setProfileUser] = useState(null)
   const [currentUser, setCurrentUser] = useState(() => {
     const savedUser = sessionStorage.getItem("currentUser")
     const initialUser = savedUser
@@ -21,6 +23,17 @@ const AuthProvider = ({ children }) => {
       sessionStorage.removeItem("currentUser")
     }
   }, [currentUser])
+
+  useEffect(() => {
+    if (currentUser && currentUser.user) {
+      loadUserProfile(currentUser.user.id)
+    }
+  }, [currentUser])
+
+  const loadUserProfile = async (userId) => {
+    const profileData = await fetchUserProfile(userId)
+    setProfileUser(profileData)
+  }
 
   const signup = async (newUserData) => {
     const dbUser = await postUser(newUserData)
@@ -45,7 +58,9 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser, signup, login, logout }}>
+    <AuthContext.Provider
+      value={{ currentUser, profileUser, setCurrentUser, setProfileUser, signup, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   )

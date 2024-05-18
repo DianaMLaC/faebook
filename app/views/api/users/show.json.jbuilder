@@ -1,5 +1,7 @@
-json.extract! @user, :id, :first_name, :last_name, :email, :date_of_birth  
-json.displayName @user.display_name  
+json.id @user.id
+json.email @user.email
+json.displayName @user.display_name
+json.dateOfBirth @user.date_of_birth
 
 if @user.profile_photo_url.present?
   json.profilePhotoUrl @user.profile_photo_url
