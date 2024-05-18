@@ -12,7 +12,7 @@ async function fileChecksum(file) {
 export const fetchUserProfile = async (userId) => {
   try {
     const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
-      method: "POST",
+      method: "GET",
       headers: customHeaders,
     })
     await checkResponse(response)

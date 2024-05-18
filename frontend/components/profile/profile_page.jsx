@@ -14,7 +14,7 @@ import { fetchUserProfile } from "../../utils/profile"
 import { useAuth } from "../../context/auth"
 
 const UserProfile = ({ profileId }) => {
-  const { setProfileUser } = useAuth()
+  const { profileUser, setProfileUser } = useAuth()
 
   useEffect(() => {
     if (profileId === null) {
@@ -23,13 +23,26 @@ const UserProfile = ({ profileId }) => {
     }
 
     async function fetchProfile() {
-      const userProfileData = await fetchUserProfile(profileId)
-      console.log("userProfileData", { userProfileData })
-      setProfileUser(userProfileData)
+      try {
+        const profileUserData = await fetchUserProfile(profileId)
+        console.log("profileUserData", { profileUserData })
+        setProfileUser(profileUserData)
+        console.log("profileUserState:", profileUser)
+      } catch (err) {
+        console.error("Error in fetching the User Profile", err)
+      }
     }
 
     fetchProfile()
   }, [profileId, setProfileUser])
+
+  useEffect(() => {
+    console.log("Updated profileUser state:", profileUser)
+  }, [profileUser])
+
+  if (!profileUser) {
+    return <div>Loading profile...</div>
+  }
 
   return (
     <div className="profile-page">
