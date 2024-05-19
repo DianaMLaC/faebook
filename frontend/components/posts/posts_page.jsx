@@ -2,6 +2,7 @@ import React from "react"
 import Intro from "./intro"
 import Photos from "./photos"
 import Post from "./post"
+import CreatePost from "./create-post-container"
 
 const PostsPage = () => {
   return (
@@ -15,7 +16,9 @@ const PostsPage = () => {
         </div>
       </div>
       <div className="posts-right">
-        <div className="create-post-container">create post</div>
+        <div className="create-post-container">
+          <CreatePost />
+        </div>
         <div className="post-container">
           <Post />
         </div>

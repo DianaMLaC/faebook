@@ -1039,19 +1039,83 @@ ul.photos-display-grid {
   flex: 1 0 33.33%; /* Basis of 33.33% for 3x3 grid */
   max-width: 33.33%; /* Ensure no overflow */
   box-sizing: border-box; /* Include padding in the width */
-  padding: 5px; /* Optional: Add some spacing between items */
+  padding: 6px; /* Optional: Add some spacing between items */
 }
 
 
 
 .create-post-container {
-  height: 500px;
   background-color: white;
   box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding-bottom: 10px;
-  margin-bottom: 10px
+
+  margin-bottom: 10px;
 }
+
+.create-post {
+  padding: 16px;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-bottom: -6px;
+}
+
+.create-post-top {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  /* width: 100%; */
+  padding-bottom: 16px;
+}
+
+.create-post-input-bar {
+  padding: 6px;
+  padding-left: 10px;
+  background-color: var(--secondary-color);
+  border: transparent;
+  border-radius: 25px;
+  width: 90%;
+  margin-left: 6px;
+  align-self: center;
+}
+
+  
+
+.create-post-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-color);
+  opacity: 0.7;
+  background-color: transparent;
+  border-top-color: rgb(206, 208, 212);
+  border-top-style: solid;
+  border-top-width: 0.555556px;
+}
+
+.create-post-bottom > div {
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.create-post-bottom p {
+  padding-left: 10px;
+  
+}
+
+.create-post-bottom img {
+  object-fit: cover;
+  width: 24px;
+  height: 24px;
+  align-self: center
+}
+
+
+
 
 .post-container {
   background-color: white;
@@ -1194,20 +1258,15 @@ ul.photos-display-grid {
 }
 
 .comment-input-bar {
-padding: 6px;
+padding: 10px;
 padding-left: 10px;
 background-color: var(--secondary-color);
 border: transparent;
-border-radius: 15px;
-width: 100%;
+border-radius: 25px;
+width: 90%;
 margin-left: 6px;
+align-self: center;
 }
-
-
-
-
-
-
 
 .posts-index-container {
   height: 100%;
