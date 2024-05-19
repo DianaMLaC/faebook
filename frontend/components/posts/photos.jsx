@@ -4,23 +4,23 @@ import Photo from "../photos/photo"
 import { fetchUserPhotos } from "../../utils/profile"
 
 const Photos = () => {
-  const { currentUser } = useAuth()
+  const { profileUser } = useAuth()
   const [photos, setPhotos] = useState(null)
 
   useEffect(() => {
-    if (!currentUser?.id) {
+    if (!profileUser.id) {
       console.log("no current user id")
       return
     }
 
     async function fetchAllPhotosUrls() {
-      const photosData = await fetchUserPhotos(currentUser.id)
+      const photosData = await fetchUserPhotos(profileUser.id)
       const displayPhotos = photosData.length > 9 ? photosData.slice(0, 9) : photosData
       setPhotos(displayPhotos)
     }
 
     fetchAllPhotosUrls()
-  }, [currentUser])
+  }, [profileUser])
 
   return (
     <div className="photos-container">

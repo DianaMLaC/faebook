@@ -4,24 +4,24 @@ import Album from "./album"
 import { fetchAlbums } from "../../utils/profile"
 
 const Albums = () => {
-  const { currentUser } = useAuth()
+  const { profileUser } = useAuth()
   const [albums, setAlbums] = useState(null)
 
   useEffect(() => {
-    if (currentUser.id === null) {
+    if (profileUser.id === null) {
       console.log("no current user id")
       return
     }
 
     async function fetchAlbumsData() {
-      const albumsData = await fetchAlbums(currentUser.id)
+      const albumsData = await fetchAlbums(profileUser.id)
       console.log("albumsData:", { albumsData })
       setAlbums(albumsData)
       console.log("albums-state:", albums)
     }
 
     fetchAlbumsData()
-  }, [currentUser, setAlbums])
+  }, [profileUser, setAlbums])
 
   return (
     <ul className="albums-list">

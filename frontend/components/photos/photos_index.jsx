@@ -4,24 +4,24 @@ import { fetchUserPhotos } from "../../utils/profile"
 import Photo from "./photo"
 
 const PhotosIndex = () => {
-  const { currentUser } = useAuth()
+  const { profileUser } = useAuth()
   const [photos, setPhotos] = useState(null)
 
   useEffect(() => {
-    if (currentUser.id === null) {
+    if (profileUser.id === null) {
       console.log("no current user id")
       return
     }
 
     async function fetchAllPhotosUrls() {
-      const photosData = await fetchUserPhotos(currentUser.id)
+      const photosData = await fetchUserPhotos(profileUser.id)
       console.log("photos-urls:", { photosData })
       console.log(photosData.length)
       setPhotos(photosData)
     }
 
     fetchAllPhotosUrls()
-  }, [currentUser, setPhotos])
+  }, [profileUser, setPhotos])
 
   return (
     <ul className="photos-list">
