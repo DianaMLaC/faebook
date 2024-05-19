@@ -4,4 +4,5 @@ json.createdAt post.created_at
 json.author do 
   json.id post.author_id
   json.displayName post.author.display_name
+  json.profilePhotoUrl post.author.profile_photo_url
 end

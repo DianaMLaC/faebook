@@ -1,6 +1,7 @@
 import React from "react"
 import Intro from "./intro"
 import Photos from "./photos"
+import Post from "./post"
 
 const PostsPage = () => {
   return (
@@ -15,6 +16,9 @@ const PostsPage = () => {
       </div>
       <div className="posts-right">
         <div className="create-post-container">create post</div>
+        <div className="post-container">
+          <Post />
+        </div>
         <div className="posts-index-container">Post Index</div>
       </div>
     </div>
