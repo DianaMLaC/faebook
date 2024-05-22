@@ -5,7 +5,7 @@ class Api::PostsController < ApplicationController
 
   def index
     # We need to get all the posts of the user's profile page which is not the author
-    @posts = @user.profile_posts
+    @posts = @user.profile_posts.order(created_at: :desc)
     if @posts.nil?
       render json: { 'posts' => [] }
     else

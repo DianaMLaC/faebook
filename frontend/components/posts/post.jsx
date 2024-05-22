@@ -5,10 +5,8 @@ import { PiShareFat } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
 import { fetchUserProfile } from "../../utils/profile"
 
-const Post = () => {
-  // const [postUser, setPostUser] = useState(null)
-  // const { currentUser } = useAuth()
-  // const authorId = post.author.id
+const Post = ({ post }) => {
+  const { currentUser } = useAuth()
 
   // useEffect(() => {
   //   if (authorId === null) {
@@ -35,14 +33,20 @@ const Post = () => {
   // }, [postUser])
 
   return (
-    <div className="post">
+    <div className="post-container">
       <header className="post-header">
         <div className="post-header-left">
-          <div className="avatar"></div>
+          <div className="avatar">
+            {post.author.profilePhotoUrl && (
+              <img className="profile-photo" src={post.author.profilePhotoUrl} alt="Profile" />
+            )}
+          </div>
           <div className="post-details">
-            <div className="post-user-display-name">Diana Linn</div>
+            <div className="post-user-display-name">{post.author.displayName}</div>
             <div className="post-visibility">
-              <div className="post-created-at">May 8 at 2:08PM</div>
+              {/* <div className="post-created-at">May 8 at 2:08PM</div> */}
+              <div className="post-created-at">{post.createdAt}</div>
+
               <FaUserFriends />
             </div>
           </div>
@@ -50,10 +54,7 @@ const Post = () => {
         <div className="more-button">...</div>
       </header>
 
-      <div className="post-content">
-        Just finished a coding session in JavaScript, and I managed to solve a tricky bug that's
-        been bothering me all week. Nothing feels better than overcoming these challenges!{" "}
-      </div>
+      <div className="post-content">{post.body}</div>
       <div className="post-action-buttons">
         <div className="like">
           <AiOutlineLike />
@@ -69,7 +70,12 @@ const Post = () => {
         </div>
       </div>
       <div className="post-comment">
-        <div className="comment-avatar"></div>
+        <div className="comment-avatar">
+          {" "}
+          {currentUser.profilePhotoUrl && (
+            <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
+          )}
+        </div>
         <div className="comment-input-bar">Write a comment...</div>
       </div>
     </div>

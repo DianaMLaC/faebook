@@ -3,6 +3,7 @@ import Intro from "./intro"
 import Photos from "./photos"
 import Post from "./post"
 import CreatePost from "./create-post-container"
+import PostsIndex from "./posts_index"
 
 const PostsPage = () => {
   return (
@@ -19,10 +20,12 @@ const PostsPage = () => {
         <div className="create-post-container">
           <CreatePost />
         </div>
-        <div className="post-container">
+        {/* <div className="post-container">
           <Post />
+        </div> */}
+        <div className="posts-index-container">
+          <PostsIndex />
         </div>
-        <div className="posts-index-container">Post Index</div>
       </div>
     </div>
   )

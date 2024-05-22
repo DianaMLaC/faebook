@@ -22,7 +22,11 @@ const CreatePost = () => {
   return (
     <div className="create-post">
       <div className="create-post-top">
-        <div className="avatar">{currentUser.profilePictureUrl}</div>
+        <div className="avatar">
+          {currentUser.profilePhotoUrl && (
+            <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
+          )}
+        </div>
         <div className="create-post-input-bar" onClick={openModal}>
           What's on your mind?
         </div>

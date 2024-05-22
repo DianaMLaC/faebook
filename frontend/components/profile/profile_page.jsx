@@ -12,6 +12,7 @@ import CheckIns from "./check_ins"
 import PostsPage from "../posts/posts_page"
 import { fetchUserProfile } from "../../utils/profile"
 import { useAuth } from "../../context/auth"
+import { PostsProvider } from "../../context/posts"
 
 const UserProfile = ({ profileId }) => {
   const { profileUser, setProfileUser } = useAuth()
@@ -50,7 +51,9 @@ const UserProfile = ({ profileId }) => {
         <ProfileHeader />
       </div>
       <div className="profile-posts-container">
-        <PostsPage />
+        <PostsProvider>
+          <PostsPage />
+        </PostsProvider>
       </div>
       <div className="profile-about-me-container">
         <AboutMe />

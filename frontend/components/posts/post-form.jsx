@@ -3,8 +3,10 @@ import { useAuth } from "../../context/auth"
 import { FaUserFriends } from "react-icons/fa"
 import { createPost } from "../../utils/post"
 import { CircleLoader } from "react-spinners"
+import { usePosts } from "../../context/posts"
 
 const PostForm = ({ closeModalContainer }) => {
+  const { addPost } = usePosts()
   const { currentUser, profileUser } = useAuth()
   const [postBody, setPostBody] = useState("")
   const [formErr, setFormErr] = useState("")
@@ -19,19 +21,18 @@ const PostForm = ({ closeModalContainer }) => {
     e.preventDefault()
     setIsUploading(true)
     let postResponse = null
+    setIsUploading(true)
     try {
-      postResponse = await createPost(postBody, profileUser.id)
-      setCreatedPost(postResponse)
-      console.log("new post:", createdPost)
+      const postResponse = await createPost(postBody, profileUser.id)
+      if (postResponse) {
+        addPost(postResponse)
+        setPostBody("")
+        closeModalContainer()
+      }
     } catch (err) {
       setFormErr(err.message)
     } finally {
       setIsUploading(false)
-    }
-
-    if (postResponse) {
-      setPostBody("")
-      closeModalContainer()
     }
   }
 
