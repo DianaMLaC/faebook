@@ -1,4 +1,5 @@
 class Api::PostsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :must_be_authorized
   before_action :set_user_profile, :ensure_relation, only: %i[create index]
 

@@ -2,12 +2,14 @@ import React, { useState } from "react"
 import { useAuth } from "../../context/auth"
 import { FaUserFriends } from "react-icons/fa"
 import { createPost } from "../../utils/post"
+import { CircleLoader } from "react-spinners"
 
 const PostForm = ({ closeModalContainer }) => {
   const { currentUser, profileUser } = useAuth()
   const [postBody, setPostBody] = useState("")
   const [formErr, setFormErr] = useState("")
-  const [createPost, setCreatedPost] = useState(null)
+  const [createdPost, setCreatedPost] = useState(null)
+  const [isUploading, setIsUploading] = useState(false)
 
   const handleInput = (e) => {
     setPostBody(e.target.value)
@@ -15,21 +17,22 @@ const PostForm = ({ closeModalContainer }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const body = postBody
-    const authorId = currentUser.id
-    const profileId = profileUser.id
+    setIsUploading(true)
+    let postResponse = null
     try {
-      const postData = { body, authorId, profileId }
-      const postResponse = await createPost(postData)
-      console.log("Submit post:", postResponse)
+      postResponse = await createPost(postBody, profileUser.id)
       setCreatedPost(postResponse)
-      setPostBody("")
+      console.log("new post:", createdPost)
     } catch (err) {
       setFormErr(err.message)
+    } finally {
+      setIsUploading(false)
     }
-    // After submission I want to close the modal
-    setFormErr("")
-    closeModalContainer()
+
+    if (postResponse) {
+      setPostBody("")
+      closeModalContainer()
+    }
   }
 
   return (
@@ -59,11 +62,11 @@ const PostForm = ({ closeModalContainer }) => {
         </div>
       </div>
       <div className="post-form-body-input">
-        <input
-          type="text"
+        <textarea
           value={postBody}
           onChange={handleInput}
           placeholder="What's on your mind?"
+          rows="3"
         />
       </div>
       <div className="post-form-add-on-banner">
@@ -71,9 +74,13 @@ const PostForm = ({ closeModalContainer }) => {
         {/* Place for icons and other add-ons */}
       </div>
 
-      {formErr && <p>{formErr}</p>}
+      {formErr ? (
+        <div className="form-errors">{formErr}</div>
+      ) : (
+        <div className="spinner">{isUploading && <CircleLoader loading={isUploading} />}</div>
+      )}
 
-      <button type="submit" className="post-submit-active">
+      <button type="submit" className="post-submit-button" disabled={!postBody.trim()}>
         Post
       </button>
     </form>
