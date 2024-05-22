@@ -26,6 +26,7 @@ export const fetchPosts = async (userID) => {
   try {
     const response = await fetch(`http://localhost:3000/api/users/${userID}/posts`, {
       method: "GET",
+      headers: customHeaders,
     })
     await checkResponse(response)
     const postsData = await response.json()
@@ -33,6 +34,22 @@ export const fetchPosts = async (userID) => {
     return postsData
   } catch (err) {
     console.error("Error in get Posts api:", err.message)
+    throw err
+  }
+}
+
+export const createLike = async (likeable, likeableId) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/${likeable}/${likeableId}/likes`, {
+      method: "POST",
+      headers: customHeaders,
+    })
+    await checkResponse(response)
+    const likeData = await response.json()
+    console.log("LOG: API POST 'api/likes/")
+    return likeData
+  } catch (err) {
+    console.error("Error in create like api:", err.message)
     throw err
   }
 }

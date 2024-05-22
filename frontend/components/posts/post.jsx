@@ -3,10 +3,11 @@ import { FaUserFriends, FaRegComment } from "react-icons/fa"
 import { AiOutlineLike } from "react-icons/ai"
 import { PiShareFat } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
-import { fetchUserProfile } from "../../utils/profile"
+import { createLike } from "../../utils/post"
 
 const Post = ({ post }) => {
   const { currentUser } = useAuth()
+  const [likes, setLikes] = useState(null)
 
   const formatDate = (dateString) => {
     const options = {
@@ -18,8 +19,19 @@ const Post = ({ post }) => {
     }
     return new Date(dateString).toLocaleString("en-US", options).replace(",", " at")
   }
-
   const postTimeStamp = formatDate(post.createdAt)
+
+  const handleLike = async (e) => {
+    e.preventDefault()
+    const likeable = "posts"
+
+    const likeResponse = await createLike(likeable, post.id)
+
+    if (likeResponse) {
+      console.log("post liked successfully")
+      setLikes(likeResponse)
+    }
+  }
 
   return (
     <div className="post-container">
@@ -45,7 +57,7 @@ const Post = ({ post }) => {
 
       <div className="post-content">{post.body}</div>
       <div className="post-action-buttons">
-        <div className="like">
+        <div className="like" onClick={handleLike}>
           <AiOutlineLike />
           <div className="action-name">Like</div>
         </div>

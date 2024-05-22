@@ -1,4 +1,5 @@
 class Api::LikesController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :must_be_authorized, :set_likeable
 
   def index

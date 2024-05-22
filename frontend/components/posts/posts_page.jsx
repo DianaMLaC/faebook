@@ -20,9 +20,6 @@ const PostsPage = () => {
         <div className="create-post-container">
           <CreatePost />
         </div>
-        {/* <div className="post-container">
-          <Post />
-        </div> */}
         <div className="posts-index-container">
           <PostsIndex />
         </div>
