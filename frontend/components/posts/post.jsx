@@ -8,29 +8,18 @@ import { fetchUserProfile } from "../../utils/profile"
 const Post = ({ post }) => {
   const { currentUser } = useAuth()
 
-  // useEffect(() => {
-  //   if (authorId === null) {
-  //     console.log("post author id not found")
-  //     return
-  //   }
+  const formatDate = (dateString) => {
+    const options = {
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    }
+    return new Date(dateString).toLocaleString("en-US", options).replace(",", " at")
+  }
 
-  //   async function fetchProfile() {
-  //     try {
-  //       const postUserData = await fetchUserProfile(authorId)
-  //       console.log("postUserData", { postUserData })
-  //       setPostUser(postUserData)
-  //       console.log("postUserState:", postUser)
-  //     } catch (err) {
-  //       console.error("Error in fetching the User Profile for Post", err)
-  //     }
-  //   }
-
-  //   fetchProfile()
-  // }, [authorId, setPostUser])
-
-  // useEffect(() => {
-  //   console.log("Updated postUser state:", postUser)
-  // }, [postUser])
+  const postTimeStamp = formatDate(post.createdAt)
 
   return (
     <div className="post-container">
@@ -45,7 +34,7 @@ const Post = ({ post }) => {
             <div className="post-user-display-name">{post.author.displayName}</div>
             <div className="post-visibility">
               {/* <div className="post-created-at">May 8 at 2:08PM</div> */}
-              <div className="post-created-at">{post.createdAt}</div>
+              <div className="post-created-at">{postTimeStamp}</div>
 
               <FaUserFriends />
             </div>
