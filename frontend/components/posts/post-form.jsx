@@ -1,44 +1,82 @@
 import React, { useState } from "react"
 import { useAuth } from "../../context/auth"
 import { FaUserFriends } from "react-icons/fa"
+import { createPost } from "../../utils/post"
 
-const PostForm = ({ closeModal }) => {
-  const { currentUser } = useAuth()
+const PostForm = ({ closeModalContainer }) => {
+  const { currentUser, profileUser } = useAuth()
   const [postBody, setPostBody] = useState("")
+  const [formErr, setFormErr] = useState("")
+  const [createPost, setCreatedPost] = useState(null)
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    //need to add the api to sent postBody to backend to create post, we also need to send a userId to be used in the url belonging to the profile on which we're posting on
+  const handleInput = (e) => {
+    setPostBody(e.target.value)
   }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const body = postBody
+    const authorId = currentUser.id
+    const profileId = profileUser.id
+    try {
+      const postData = { body, authorId, profileId }
+      const postResponse = await createPost(postData)
+      console.log("Submit post:", postResponse)
+      setCreatedPost(postResponse)
+      setPostBody("")
+    } catch (err) {
+      setFormErr(err.message)
+    }
+    // After submission I want to close the modal
+    setFormErr("")
+    closeModalContainer()
+  }
+
   return (
-    <div className="post-form">
+    <form className="post-form" onSubmit={handleSubmit}>
       <header className="post-form-header">
         <h3>Create post</h3>
-        <div className="close-post-form" onCLick={closeModal()}>
-          X
-        </div>
+        <button className="close-post-form" onClick={closeModalContainer}>
+          <img
+            className="close"
+            src={require("../../../app/assets/images/close.png").default}
+            alt="close"
+          />
+        </button>
       </header>
       <div className="post-form-user-details">
-        <div className="avatar"></div>
+        <div className="avatar">
+          {currentUser.profilePhotoUrl && (
+            <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
+          )}
+        </div>
         <div>
-          <div>{currentUser.displayName}</div>
-          <div className="visibility">
+          <div className="post-user-display-name">{currentUser.displayName}</div>
+          <div className="post-form-visibility">
             <FaUserFriends />
-            Friends
+            <span>Friends</span>
           </div>
         </div>
       </div>
-      <form>
-        <input type="text" value={postBody} onChange={(e) => setPostBody(e.target.value)} />
-        <div className="post-form-add-on-banner">
-          <div>
-            <p>Add to your post</p>
-          </div>
-          <div>Icons</div>
-        </div>
-        <button type="submit" onClick={handleSubmit}></button>
-      </form>
-    </div>
+      <div className="post-form-body-input">
+        <input
+          type="text"
+          value={postBody}
+          onChange={handleInput}
+          placeholder="What's on your mind?"
+        />
+      </div>
+      <div className="post-form-add-on-banner">
+        <p>Add to your post</p>
+        {/* Place for icons and other add-ons */}
+      </div>
+
+      {formErr && <p>{formErr}</p>}
+
+      <button type="submit" className="post-submit-active">
+        Post
+      </button>
+    </form>
   )
 }
 

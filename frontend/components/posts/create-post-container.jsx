@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react"
 import ReactModal from "react-modal"
 import PostForm from "./post-form"
+import { useAuth } from "../../context/auth"
 
 const CreatePost = () => {
+  const { currentUser } = useAuth()
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
   const openModal = () => {
@@ -14,13 +16,13 @@ const CreatePost = () => {
   }
 
   useEffect(() => {
-    ReactModal.setAppElement(".profile-page")
+    ReactModal.setAppElement(".posts-page")
   }, [])
 
   return (
     <div className="create-post">
       <div className="create-post-top">
-        <div className="avatar"></div>
+        <div className="avatar">{currentUser.profilePictureUrl}</div>
         <div className="create-post-input-bar" onClick={openModal}>
           What's on your mind?
         </div>
@@ -31,9 +33,6 @@ const CreatePost = () => {
           className="Modal"
         >
           <PostForm closeModalContainer={closeModal} />
-          <button onClick={closeModal} className="close-modal-button">
-            x
-          </button>
         </ReactModal>
       </div>
       <div className="create-post-bottom">
