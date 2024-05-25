@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { FaUserFriends, FaRegComment } from "react-icons/fa"
 import { BiSolidLike, BiLike } from "react-icons/bi"
-import { PiShareFat } from "react-icons/pi"
+import { PiShareFat, PiPaperPlaneRightFill } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
-import { toggleLike } from "../../utils/post"
+import { toggleLike } from "../../utils/post_and_comments"
 import { usePosts } from "../../context/posts"
 import Likes from "./likes"
-import Comments from "./comments_index"
+import Comments from "../comments/comments_index"
+import CommentForm from "../comments/comment_form"
 
 const Post = ({ post }) => {
   const { currentUser } = useAuth()
@@ -16,6 +17,7 @@ const Post = ({ post }) => {
     post.likes.some((like) => like.liker.id === currentUser.id)
   )
   const [comments, setComments] = useState(post.comments || [])
+  const [toggleCommenting, setToggleCommenting] = useState(false)
 
   const formatDate = (dateString) => {
     const options = {
@@ -95,7 +97,7 @@ const Post = ({ post }) => {
           <div className="action-name">Share</div>
         </div>
       </div>
-      {comments && <Comments comments={comments} />}
+      {/* {comments && <Comments comments={comments} />} */}
       <div className="post-comment">
         <div className="comment-avatar">
           {" "}
@@ -103,7 +105,17 @@ const Post = ({ post }) => {
             <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
           )}
         </div>
-        <div className="comment-input-bar">Write a comment...</div>
+
+        {toggleCommenting ? (
+          <CommentForm parentCommentId={null} postId={post.id} />
+        ) : (
+          <div className="comment-input-bar" onClick={() => setToggleCommenting(true)}>
+            Write a comment...
+          </div>
+        )}
+
+        {/* <div className="comment-input-bar" onClick={setToggleCommenting(true)}>Write a comment...
+        </div> */}
       </div>
     </div>
   )

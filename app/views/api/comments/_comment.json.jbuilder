@@ -8,7 +8,7 @@ json.parentCommentId comment.parent_comment_id
 json.author do 
   json.id comment.author_id
   json.displayName comment.author.display_name
-  json.profilePhotoUrl post.author.profile_photo_url
+  json.profilePhotoUrl comment.author.profile_photo_url
 end
 
 json.likes comment.likes do |like|
@@ -16,5 +16,5 @@ json.likes comment.likes do |like|
 end
 
 json.replies comment.replies do |reply|
-  json.partial! 'comments/comment', comment: reply
+  json.partial! 'comment', comment: reply
 end

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
-import { fetchPosts } from "../../utils/post"
+import { fetchPosts } from "../../utils/post_and_comments"
 import Post from "./post"
 import { usePosts } from "../../context/posts"
 

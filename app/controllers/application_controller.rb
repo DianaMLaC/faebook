@@ -5,12 +5,6 @@ class ApplicationController < ActionController::Base
     err_obj.reject { |_k, _v| _v == '' }
   end
 
-  # def current_user
-  #   return nil unless session[:session_token]
-
-  #   @current_user ||= User.find_by(session_token: session[:auth_token])
-  # end
-
   def current_user
     @authenticated_user = User.find_by(session_token: session[:auth_token])
     return unless @authenticated_user.nil?

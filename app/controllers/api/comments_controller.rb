@@ -1,18 +1,20 @@
 class Api::CommentsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :must_be_authorized, :post_must_exist, :ensure_relation
 
   def index
     @comments = @post.comments.includes(:likes, replies: :likes).where(parent_comment_id: nil)
-    render json: { 'comments' => [] } if @comments.empty?
+    if @comments.empty?
+      render json: { 'comments' => [] }
+      return
+    end
 
     render :index
   end
 
   def create
-    authorized_user = User.find_by(session_token: session[:auth_token]).id
-    @comment = @post.comments.new(text: params[:text])
-    @comment.author_id = authorized_user
-    @comment.parent_comment_id = params[:parent_comment_id]
+    @comment = @post.comments.new(comment_params)
+    @comment.author_id = @authenticated_user.id
 
     if @comment.save
       render :create
@@ -30,6 +32,10 @@ class Api::CommentsController < ApplicationController
   end
 
   private
+
+  def comment_params
+    params.require(:comment).permit(:text, :parent_comment_id)
+  end
 
   def post_must_exist
     @post = Post.find(params[:post_id])

@@ -1475,6 +1475,61 @@ align-self: center;
   cursor: not-allowed; /* Change cursor to indicate the button is unclickable */
 }
 
+/* Comments */
+
+.new-comment-form {
+  padding: 10px;
+  padding-left: 10px;
+  background-color: var(--secondary-color);
+  border: transparent;
+  border-radius: 25px;
+  width: 90%;
+  margin-left: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.new-comment-form button {
+  background: none;
+  border: none;
+  align-self: center;
+  color: var(--primary-color)
+}
+
+
+.new-comment-form button:disabled {
+  color: (var(--text-color));
+  opacity: 0.7;
+  cursor: not-allowed; /* Change cursor to indicate the button is unclickable */
+}
+
+.new-comment-form button:hover {
+  background-color: var(--shade-background-color);
+  border-radius: 50%;
+}
+
+
+.comment-input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.new-comment-form textarea {
+  color: var(--text-color);
+  font-family: inherit;
+  opacity: 0.7;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: none;
+  resize: none; 
+  overflow: auto; 
+  box-sizing: border-box; 
+}
+
 
 
 

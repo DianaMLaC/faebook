@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useAuth } from "../../context/auth"
 import { FaUserFriends } from "react-icons/fa"
-import { createPost } from "../../utils/post"
+import { createPost } from "../../utils/post_and_comments"
 import { CircleLoader } from "react-spinners"
 import { usePosts } from "../../context/posts"
 
@@ -10,7 +10,7 @@ const PostForm = ({ closeModalContainer }) => {
   const { currentUser, profileUser } = useAuth()
   const [postBody, setPostBody] = useState("")
   const [formErr, setFormErr] = useState("")
-  const [createdPost, setCreatedPost] = useState(null)
+  // const [createdPost, setCreatedPost] = useState(null)
   const [isUploading, setIsUploading] = useState(false)
 
   const handleInput = (e) => {
@@ -21,7 +21,7 @@ const PostForm = ({ closeModalContainer }) => {
     e.preventDefault()
     setIsUploading(true)
     let postResponse = null
-    setIsUploading(true)
+
     try {
       const postResponse = await createPost(postBody, profileUser.id)
       if (postResponse) {
