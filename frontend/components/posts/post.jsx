@@ -6,6 +6,7 @@ import { useAuth } from "../../context/auth"
 import { toggleLike } from "../../utils/post"
 import { usePosts } from "../../context/posts"
 import Likes from "./likes"
+import Comments from "./comments_index"
 
 const Post = ({ post }) => {
   const { currentUser } = useAuth()
@@ -14,6 +15,7 @@ const Post = ({ post }) => {
   const [likedByCurrentUser, setLikedByCurrentUser] = useState(
     post.likes.some((like) => like.liker.id === currentUser.id)
   )
+  const [comments, setComments] = useState(post.comments || [])
 
   const formatDate = (dateString) => {
     const options = {
@@ -30,7 +32,9 @@ const Post = ({ post }) => {
   useEffect(() => {
     setLikedByCurrentUser(post.likes.some((like) => like.liker.id === currentUser.id))
     setLikes(post.likes)
+    setComments(post.comments)
     console.log("likes:", { likes })
+    console.log("comments:", { comments })
     console.log("likedByCurrentUser:", likedByCurrentUser)
   }, [post])
 
@@ -73,7 +77,9 @@ const Post = ({ post }) => {
 
       <div className="post-content">{post.body}</div>
 
-      <div className="likes-container">{likes.length > 0 && <Likes likes={likes} />}</div>
+      <div className="likes-container">
+        {likes.length > 0 && <Likes likes={likes} position={"post"} />}
+      </div>
 
       <div className="post-action-buttons">
         <div className={likedByCurrentUser ? "liked" : "like"} onClick={handlePostLike}>
@@ -89,6 +95,7 @@ const Post = ({ post }) => {
           <div className="action-name">Share</div>
         </div>
       </div>
+      {comments && <Comments comments={comments} />}
       <div className="post-comment">
         <div className="comment-avatar">
           {" "}
