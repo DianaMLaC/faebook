@@ -1,18 +1,14 @@
-import React from "react"
+import React, { useState } from "react"
+import { BiLike } from "react-icons/bi"
 
 const Likes = ({ likes }) => {
+  const [likesNumber, setLikesNumber] = useState(likes.length)
   return (
     <div className="likes-details">
-      {likes.map((like) => (
-        <span key={like.id}>
-          <img
-            src={like.user.profilePhotoUrl}
-            alt={like.user.name}
-            style={{ width: "20px", height: "20px", borderRadius: "50%" }}
-          />
-          {like.user.name}
-        </span>
-      ))}
+      <span className="like-details-icon">
+        <BiLike />
+      </span>
+      <span className="like-details-count">{likesNumber}</span>
     </div>
   )
 }

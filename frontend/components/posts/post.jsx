@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { FaUserFriends, FaRegComment } from "react-icons/fa"
 import { AiOutlineLike } from "react-icons/ai"
-import { BiSolidLike } from "react-icons/bi"
+import { BiSolidLike, BiLike } from "react-icons/bi"
 import { PiShareFat } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
 import { toggleLike } from "../../utils/post"
@@ -29,11 +29,10 @@ const Post = ({ post }) => {
   const postTimeStamp = formatDate(post.createdAt)
 
   useEffect(() => {
-    if (post) {
-      setLikes(post.likes)
-      console.log("likes:", { likes })
-      console.log("likedByCurrentUser:", likedByCurrentUser)
-    }
+    setLikedByCurrentUser(post.likes.some((like) => like.liker.id === currentUser.id))
+    setLikes(post.likes)
+    console.log("likes:", { likes })
+    console.log("likedByCurrentUser:", likedByCurrentUser)
   }, [post])
 
   const handlePostLike = async (e) => {
@@ -44,10 +43,11 @@ const Post = ({ post }) => {
     if (likeResponse) {
       if (likedByCurrentUser) {
         deleteLikeFromPost(post.id, likeResponse.id)
+        setLikes(likes.filter((like) => like.id !== likeResponse.id))
       } else {
         addLikeToPost(post.id, likeResponse)
+        setLikes([...likes, likeResponse])
       }
-
       setLikedByCurrentUser(!likedByCurrentUser)
     }
   }
@@ -73,10 +73,12 @@ const Post = ({ post }) => {
       </header>
 
       <div className="post-content">{post.body}</div>
-      {/* <Likes likes={likes} /> */}
+
+      <div className="likes-container">{likes.length > 0 && <Likes likes={likes} />}</div>
+
       <div className="post-action-buttons">
         <div className={likedByCurrentUser ? "liked" : "like"} onClick={handlePostLike}>
-          {likedByCurrentUser ? <BiSolidLike /> : <AiOutlineLike />}
+          {likedByCurrentUser ? <BiSolidLike /> : <BiLike />}
           <div className="action-name">Like</div>
         </div>
         <div className="comment">
