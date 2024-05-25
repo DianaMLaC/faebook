@@ -1258,6 +1258,26 @@ ul.photos-display-grid {
   align-items: center;
 }
 
+.likes-details {
+  display: flex;
+  flex-direction: row;
+}
+
+.likes-details-icon img {
+  object-fit: cover;
+  width: 18px;
+  height: 18px;
+  align-self: center
+}
+
+
+
+.likes-details-count {
+  padding-left: 4px;
+  align-self: center;
+  opacity: 0.7;
+}
+
 .post-comment {
   display: flex;
   flex-direction: row;
@@ -1364,13 +1384,12 @@ align-self: center;
 .post-form-visibility span {
   margin-left: 10px;
 }
-
+/* 
 .avatar {
   width: 40px; 
   height: 40px;
   border-radius: 50%; 
   overflow: hidden;
-  /* background: transparent;  */
   background-color: var(--secondary-color); 
   border-color: var(--primary-color);
   object-fit: fill; 
@@ -1381,7 +1400,7 @@ align-self: center;
   height: 100%;
   object-fit: fill;
   display: block;
-}
+} */
 
 .post-user-display-name {
   padding-left: 16px;

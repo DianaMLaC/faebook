@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { FaUserFriends, FaRegComment } from "react-icons/fa"
-import { AiOutlineLike } from "react-icons/ai"
 import { BiSolidLike, BiLike } from "react-icons/bi"
 import { PiShareFat } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
