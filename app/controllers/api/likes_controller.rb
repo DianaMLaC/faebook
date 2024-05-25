@@ -9,40 +9,21 @@ class Api::LikesController < ApplicationController
     render :index
   end
 
-  def create
-    like = Like.find_by(liker_id: @authenticated_user.id, likeable_id: @likeable.id)
-    if like.present?
-      render json: {
-        'errors' => {
-          'like' => 'User already liked this'
-        }
-      }, status: 422
-      return
-    end
+  def toggle_like
+    existing_like = Like.find_by(liker_id: @authenticated_user.id, likeable_id: @likeable.id)
 
-    @like = @likeable.likes.new
-    @like.liker_id = @authenticated_user.id
-
-    if @like.save
-      render :create
-
-    else
-      render json: {}, status: 422
-    end
-  end
-
-  def destroy
-    @like = Like.find_by(id: params[:id])
-
-    if @like && @like.liker_id == @authenticated_user.id
-      @like.destroy
+    if existing_like
+      existing_like.destroy
       render json: {}, status: 200
     else
-      render json: {
-        'errors' => {
-          'like' => 'Like by this user not found'
-        }
-      }, status: 404
+      @like = @likeable.likes.new
+      @like.liker_id = @authenticated_user.id
+
+      if @like.save
+        render :create
+      else
+        render json: {}, status: 422
+      end
     end
   end
 
@@ -52,7 +33,7 @@ class Api::LikesController < ApplicationController
     likeable_types = {
       'post_id' => Post,
       'comment_id' => Comment
-      # Add more mappings here as your application grows
+      # Add more mappings here as application grows
     }
 
     likeable_type = likeable_types.find { |param_key, _class| params[param_key].present? }

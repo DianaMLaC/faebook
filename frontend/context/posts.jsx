@@ -9,7 +9,31 @@ export const PostsProvider = ({ children }) => {
     setPosts((prevPosts) => [newPost, ...prevPosts])
   }
 
-  return <PostsContext.Provider value={{ posts, addPost }}>{children}</PostsContext.Provider>
+  // Add a like to a specific post
+  const addLikeToPost = (postId, like) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId ? { ...post, likes: [...post.likes, like] } : post
+      )
+    )
+  }
+
+  // Remove a like from a specific post
+  const deleteLikeFromPost = (postId, likeId) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId
+          ? { ...post, likes: post.likes.filter((like) => like.id !== likeId) }
+          : post
+      )
+    )
+  }
+
+  return (
+    <PostsContext.Provider value={{ posts, addPost, addLikeToPost, deleteLikeFromPost }}>
+      {children}
+    </PostsContext.Provider>
+  )
 }
 
 export const usePosts = () => useContext(PostsContext)

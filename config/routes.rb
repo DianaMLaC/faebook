@@ -19,11 +19,15 @@ Rails.application.routes.draw do
 
     resources :posts, only: [] do
       resources :comments, only: %i[create index]
-      resources :likes, only: %i[create index destroy]
+      resources :likes, only: [:index] do
+        post 'toggle_like', on: :collection
+      end
     end
 
     resources :comments, only: [] do
-      resources :likes, only: %i[create index destroy]
+      resources :likes, only: [:index] do
+        post 'toggle_like', on: :collection
+      end
     end
 
     resources :friendships, only: [] do

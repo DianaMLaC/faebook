@@ -1,13 +1,16 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { FaUserFriends, FaRegComment } from "react-icons/fa"
 import { AiOutlineLike } from "react-icons/ai"
 import { PiShareFat } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
 import { createLike } from "../../utils/post"
+import { usePosts } from "../../context/posts"
+import Likes from "./likes"
 
 const Post = ({ post }) => {
   const { currentUser } = useAuth()
-  const [likes, setLikes] = useState(null)
+  const [likes, setLikes] = useState(post.likes || [])
+  const { addLikeToPost } = usePosts()
 
   const formatDate = (dateString) => {
     const options = {
@@ -29,9 +32,17 @@ const Post = ({ post }) => {
 
     if (likeResponse) {
       console.log("post liked successfully")
-      setLikes(likeResponse)
+      addLikeToPost(post.id, likeResponse)
+      setLikes([...likes, likeResponse])
     }
   }
+
+  useEffect(() => {
+    if (post) {
+      setLikes(post.likes)
+      console.log("likes:", { likes })
+    }
+  }, [post])
 
   return (
     <div className="post-container">
@@ -56,6 +67,7 @@ const Post = ({ post }) => {
       </header>
 
       <div className="post-content">{post.body}</div>
+      {/* <Likes likes={likes} /> */}
       <div className="post-action-buttons">
         <div className="like" onClick={handleLike}>
           <AiOutlineLike />

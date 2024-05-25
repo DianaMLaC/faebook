@@ -42,20 +42,13 @@ def create_friendship(user_one, user_two)
   Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
 end
 
-def like_item(likeable, user = nil)
+def toggle_like(likeable, user = nil)
   likeable_type = likeable.class.to_s.underscore.pluralize
   headers = {}
   headers['Authorization'] = "Token #{user.session_token}" if user.present?
 
-  post("/api/#{likeable_type}/#{likeable.id}/likes")
-end
-
-def unlike_item(likeable, like, user = nil)
-  likeable_type = likeable.class.to_s.underscore.pluralize
-  headers = {}
-  headers['Authorization'] = "Token #{user.session_token}" if user.present?
-
-  delete("/api/#{likeable_type}/#{likeable.id}/likes/#{like.id}")
+  # Assuming the toggle_like action uses a POST method
+  post("/api/#{likeable_type}/#{likeable.id}/likes/toggle_like", headers:)
 end
 
 def fetch_likes(likeable)
@@ -74,7 +67,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     post_obj = create_post(user)
 
     # Act
-    like_item(post_obj)
+    toggle_like(post_obj)
 
     # Assert
     assert_response :success
@@ -112,7 +105,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
 
     # Act
 
-    like_item(post_obj, user)
+    toggle_like(post_obj, user)
     # Assert
 
     assert_response 401
@@ -133,32 +126,11 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     post_obj.delete
 
     # Act
-    like_item(post_obj, liker)
+    toggle_like(post_obj, liker)
 
     # Assert
     assert_response 404
     assert_equal([], Like.all)
-  end
-
-  test 'when a user tries to like a post that he already liked then response is 422' do
-    # Arrange
-    post_author = create_and_sign_in_user(user_params)
-    post_obj = create_post(post_author)
-    create_like(post_obj, post_author)
-
-    # Act
-    like_item(post_obj)
-
-    # Assert
-
-    assert_response 422
-    res = JSON.parse(@response.body)
-    assert_equal({
-                   'errors' => {
-                     'like' => 'User already liked this'
-                   }
-                 }, res)
-    assert_equal(1, Like.all.length)
   end
 
   test 'when a user tries to like another friends post, then response is 200' do
@@ -171,7 +143,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     user_two = create_and_sign_in_user(user_params)
     create_friendship(user_two, post_author)
     # Act
-    like_item(post_obj)
+    toggle_like(post_obj)
 
     # Assert
 
@@ -186,7 +158,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     reset!
     user_two = create_and_sign_in_user(user_params)
     # Act
-    like_item(post_obj)
+    toggle_like(post_obj)
 
     # Assert
 
@@ -194,64 +166,37 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_equal(1, Like.count)
   end
 
-  test 'when a user unlikes a post he likes then response is 200' do
-    # Arrange
-    post_author = create_and_sign_in_user(user_params)
-    post_obj = create_post(post_author)
-    like = create_like(post_obj, post_author)
-    # Act
-    unlike_item(post_obj, like)
-
-    # Assert
-    assert_response :success
-    assert_equal([], Like.all)
-  end
-
   test 'when an unauthenticated user unlikes a post he likes then response is 401' do
     # Arrange
     post_author = create_and_sign_in_user(user_params)
     post_obj = create_post(post_author)
-    like = create_like(post_obj, post_author)
+    create_like(post_obj, post_author)
 
     reset!
     # Act
-    unlike_item(post_obj, like, post_author)
+    toggle_like(post_obj, post_author)
 
     # Assert
     assert_response 401
     assert_equal(1, Like.all.length)
   end
 
-  test 'when a user tries to unlike a post twice then response is 404' do
+  test 'toggling a like on and off' do
     # Arrange
-    post_author = create_and_sign_in_user(user_params)
-    post_obj = create_post(post_author)
-    like = create_like(post_obj, post_author)
-    like.destroy
-    # Act
-    unlike_item(post_obj, like)
+    user = create_and_sign_in_user(user_params)
+    post = create_post(user)
 
-    # Assert
-    assert_response 404
-    assert_equal([], Like.all)
-  end
+    # Act (like post)
+    toggle_like(post, user)
+    assert_equal(1, Like.count)
 
-  test 'when a user tries to unlike a post he has not liked yet then response is 404' do
-    # Arrange
-    post_author = create_and_sign_in_user(user_params)
-    post_obj = create_post(post_author)
-    like = create_like(post_obj, post_author)
+    # Act (unlike post)
+    toggle_like(post, user)
+    assert_equal(0, Like.count)
 
-    reset!
-
-    new_user = create_and_sign_in_user(user_params)
-
-    # Act
-    unlike_item(post_obj, like)
-
-    # Assert
-    assert_response 404
-    assert_equal(1, Like.all.length)
+    # Act (like post again)
+    toggle_like(post, user)
+    assert_equal(1, Like.count)
   end
 
   test 'when there are no likes on a post we return []' do
@@ -301,7 +246,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     comment = create_comment(user, post)
 
     # Act
-    like_item(comment, user)
+    toggle_like(comment, user)
 
     # Assert
     assert_not_nil(user)
@@ -341,7 +286,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     reset!
 
     # Act
-    like_item(comment, user)
+    toggle_like(comment, user)
 
     # Assert
     assert_response 401
@@ -363,33 +308,11 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     comment.delete
 
     # Act
-    like_item(comment, liker)
+    toggle_like(comment, liker)
 
     # Assert
     assert_response 404
     assert_equal([], Like.all)
-  end
-
-  test 'when a user tries to like a comment that he already liked then response is 422' do
-    # Arrange
-    user = create_and_sign_in_user(user_params)
-    post = create_post(user)
-    comment = create_comment(user, post)
-    create_like(comment, user)
-
-    # Act
-    like_item(comment, user)
-
-    # Assert
-
-    assert_response 422
-    res = JSON.parse(@response.body)
-    assert_equal({
-                   'errors' => {
-                     'like' => 'User already liked this'
-                   }
-                 }, res)
-    assert_equal(1, Like.all.length)
   end
 
   test 'when a user tries to like another friends comment, then response is 200' do
@@ -402,7 +325,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     user_two = create_and_sign_in_user(user_params)
     create_friendship(user_two, user_one)
     # Act
-    like_item(comment)
+    toggle_like(comment)
 
     # Assert
 
@@ -417,28 +340,14 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     comment = create_comment(user_one, post)
     reset!
 
-    user_two = create_and_sign_in_user(user_params)
+    create_and_sign_in_user(user_params)
     # Act
-    like_item(comment)
+    toggle_like(comment)
 
     # Assert
 
     assert_response :success
     assert_equal(1, Like.count)
-  end
-
-  test 'when a user unlikes a comment he likes then response is 200' do
-    # Arrange
-    user = create_and_sign_in_user(user_params)
-    post = create_post(user)
-    comment = create_comment(user, post)
-    like = create_like(comment, user)
-    # Act
-    unlike_item(comment, like)
-
-    # Assert
-    assert_response :success
-    assert_equal([], Like.all)
   end
 
   test 'when an unauthenticated user unlikes a comment he likes then response is 401' do
@@ -450,44 +359,10 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
 
     reset!
     # Act
-    unlike_item(comment, like, user)
+    toggle_like(comment, user)
 
     # Assert
     assert_response 401
-    assert_equal(1, Like.all.length)
-  end
-
-  test 'when a user tries to unlike a comment twice then response is 404' do
-    # Arrange
-    user = create_and_sign_in_user(user_params)
-    post = create_post(user)
-    comment = create_comment(user, post)
-    like = create_like(comment, user)
-    like.destroy
-    # Act
-    unlike_item(comment, like)
-
-    # Assert
-    assert_response 404
-    assert_equal([], Like.all)
-  end
-
-  test 'when a user tries to unlike a comment he has not liked yet then response is 404' do
-    # Arrange
-    user = create_and_sign_in_user(user_params)
-    post = create_post(user)
-    comment = create_comment(user, post)
-    like = create_like(comment, user)
-
-    reset!
-
-    new_user = create_and_sign_in_user(user_params)
-
-    # Act
-    unlike_item(comment, like)
-
-    # Assert
-    assert_response 404
     assert_equal(1, Like.all.length)
   end
 
@@ -539,7 +414,7 @@ class Api::LikesControllerTest < ActionDispatch::IntegrationTest
     reply = create_comment(user, post, comment.id)
 
     # Act
-    like_item(reply, user)
+    toggle_like(reply, user)
 
     # Assert
     assert_not_nil(user)
