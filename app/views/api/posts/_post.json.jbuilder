@@ -6,3 +6,7 @@ json.author do
   json.displayName post.author.display_name
   json.profilePhotoUrl post.author.profile_photo_url
 end
+
+json.likes post.likes do |like|
+  json.partial! 'api/likes/like', like: like
+end

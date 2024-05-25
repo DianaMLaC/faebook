@@ -38,12 +38,15 @@ export const fetchPosts = async (userID) => {
   }
 }
 
-export const createLike = async (likeable, likeableId) => {
+export const toggleLike = async (likeable, likeableId) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/${likeable}/${likeableId}/likes`, {
-      method: "POST",
-      headers: customHeaders,
-    })
+    const response = await fetch(
+      `http://localhost:3000/api/${likeable}/${likeableId}/likes/toggle_like`,
+      {
+        method: "POST",
+        headers: customHeaders,
+      }
+    )
     await checkResponse(response)
     const likeData = await response.json()
     console.log("LOG: API POST 'api/likes/")

@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react"
 import { FaUserFriends, FaRegComment } from "react-icons/fa"
 import { AiOutlineLike } from "react-icons/ai"
+import { BiSolidLike } from "react-icons/bi"
 import { PiShareFat } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
-import { createLike } from "../../utils/post"
+import { toggleLike } from "../../utils/post"
 import { usePosts } from "../../context/posts"
 import Likes from "./likes"
 
 const Post = ({ post }) => {
   const { currentUser } = useAuth()
   const [likes, setLikes] = useState(post.likes || [])
-  const { addLikeToPost } = usePosts()
+  const { addLikeToPost, deleteLikeFromPost } = usePosts()
+  const [likedByCurrentUser, setLikedByCurrentUser] = useState(
+    post.likes.some((like) => like.liker.id === currentUser.id)
+  )
 
   const formatDate = (dateString) => {
     const options = {
@@ -24,25 +28,29 @@ const Post = ({ post }) => {
   }
   const postTimeStamp = formatDate(post.createdAt)
 
-  const handleLike = async (e) => {
-    e.preventDefault()
-    const likeable = "posts"
-
-    const likeResponse = await createLike(likeable, post.id)
-
-    if (likeResponse) {
-      console.log("post liked successfully")
-      addLikeToPost(post.id, likeResponse)
-      setLikes([...likes, likeResponse])
-    }
-  }
-
   useEffect(() => {
     if (post) {
       setLikes(post.likes)
       console.log("likes:", { likes })
+      console.log("likedByCurrentUser:", likedByCurrentUser)
     }
   }, [post])
+
+  const handlePostLike = async (e) => {
+    e.preventDefault()
+    const likeable = "posts"
+    const likeResponse = await toggleLike(likeable, post.id)
+
+    if (likeResponse) {
+      if (likedByCurrentUser) {
+        deleteLikeFromPost(post.id, likeResponse.id)
+      } else {
+        addLikeToPost(post.id, likeResponse)
+      }
+
+      setLikedByCurrentUser(!likedByCurrentUser)
+    }
+  }
 
   return (
     <div className="post-container">
@@ -56,9 +64,7 @@ const Post = ({ post }) => {
           <div className="post-details">
             <div className="post-user-display-name">{post.author.displayName}</div>
             <div className="post-visibility">
-              {/* <div className="post-created-at">May 8 at 2:08PM</div> */}
               <div className="post-created-at">{postTimeStamp}</div>
-
               <FaUserFriends />
             </div>
           </div>
@@ -69,8 +75,8 @@ const Post = ({ post }) => {
       <div className="post-content">{post.body}</div>
       {/* <Likes likes={likes} /> */}
       <div className="post-action-buttons">
-        <div className="like" onClick={handleLike}>
-          <AiOutlineLike />
+        <div className={likedByCurrentUser ? "liked" : "like"} onClick={handlePostLike}>
+          {likedByCurrentUser ? <BiSolidLike /> : <AiOutlineLike />}
           <div className="action-name">Like</div>
         </div>
         <div className="comment">

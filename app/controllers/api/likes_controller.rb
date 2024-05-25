@@ -14,7 +14,7 @@ class Api::LikesController < ApplicationController
 
     if existing_like
       existing_like.destroy
-      render json: {}, status: 200
+      render json: { 'id' => existing_like.id }, status: 200
     else
       @like = @likeable.likes.new
       @like.liker_id = @authenticated_user.id
