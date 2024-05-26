@@ -14,7 +14,7 @@ export const createPost = async (postBody, profileId) => {
     })
     await checkResponse(response)
     const postData = await response.json()
-    console.log("API create POST response:", postData)
+    // console.log("API create POST response:", postData)
     return postData
   } catch (err) {
     console.error("Error in create a Post api:", err.message)
@@ -30,7 +30,7 @@ export const fetchPosts = async (userID) => {
     })
     await checkResponse(response)
     const postsData = await response.json()
-    console.log("LOG: API GET 'api/users/user_id/posts")
+    // console.log("LOG: API GET 'api/users/user_id/posts")
     return postsData
   } catch (err) {
     console.error("Error in get Posts api:", err.message)
@@ -49,7 +49,7 @@ export const toggleLike = async (likeable, likeableId) => {
     )
     await checkResponse(response)
     const likeData = await response.json()
-    console.log("LOG: API POST 'api/likes/")
+    // console.log("LOG: API POST 'api/likes/")
     return likeData
   } catch (err) {
     console.error("Error in create like api:", err.message)
@@ -66,7 +66,7 @@ export const createComment = async (formData, postId) => {
     })
     await checkResponse(response)
     const commentData = await response.json()
-    console.log("API create Comment response:", commentData)
+    // console.log("API create Comment response:", commentData)
     return commentData
   } catch (err) {
     console.error("Error in create a Comment api:", err.message)

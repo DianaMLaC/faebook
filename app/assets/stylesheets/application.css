@@ -1179,7 +1179,7 @@ ul.photos-display-grid {
 }
 
 .post-user-display-name {
-  padding-left: 16px;
+  /* padding-left: 10px; */
   font-size: 16px;
   font-weight: 600;
 }
@@ -1209,7 +1209,7 @@ ul.photos-display-grid {
   flex-direction: row;
   justify-content: space-evenly;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-color);
   opacity: 0.7;
   background-color: transparent;
@@ -1232,6 +1232,8 @@ ul.photos-display-grid {
   justify-content: center;
   align-items: center;
   padding: 10px;
+  font-weight: 600;
+
 }
 
 .liked {
@@ -1286,12 +1288,13 @@ ul.photos-display-grid {
 }
 
 .comment-avatar {
-  align-self: center;
+  /* align-self: center; */
   width: 32px; 
   height: 32px;
   border-radius: 50%; 
   overflow: hidden;
   object-fit: fill; 
+  margin-top: 4px;
 }
 
 
@@ -1402,11 +1405,11 @@ align-self: center;
   display: block;
 } */
 
-.post-user-display-name {
+/* .post-user-display-name {
   padding-left: 16px;
   font-size: 16px;
   font-weight: 600;
-}
+} */
 
 
 .post-form-body-input {
@@ -1514,6 +1517,7 @@ align-self: center;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%
 }
 
 .new-comment-form textarea {
@@ -1529,6 +1533,62 @@ align-self: center;
   overflow: auto; 
   box-sizing: border-box; 
 }
+
+.comment-container {
+  display: flex;
+  flex-direction: row;
+  padding: 6px;
+}
+
+.comment-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 10px;
+}
+
+.comment-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: stretch;
+  background-color: var(--secondary-color);
+  border: none;
+  border-radius: 20px;
+  padding: 12px;
+}
+
+.comment-user-display-name {
+  font-weight: 600;
+  padding-bottom: 4px;
+}
+
+.comment-footer {
+  background: transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.comment-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  opacity: 0.7;
+}
+
+.reply {
+  font-weight: 600;
+}
+
+.timestamp {
+  padding-left: 6px;
+}
+
+
+
+
+
 
 
 

@@ -33,7 +33,7 @@ export const uploadProfilePhoto = async (formData) => {
     })
     await checkResponse(response)
     const photoData = await response.json()
-    console.log("LOG: API POST 'api/photos/")
+    // console.log("LOG: API POST 'api/photos/")
     return photoData
   } catch (err) {
     console.error("Error in uploadProfilePhoto api:", err.message)
@@ -48,7 +48,7 @@ export const fetchAlbums = async (userID) => {
     })
     await checkResponse(response)
     const albumData = await response.json()
-    console.log("LOG: API GET 'api/users/user_id/albums")
+    // console.log("LOG: API GET 'api/users/user_id/albums")
     return albumData
   } catch (err) {
     console.error("Error in get Albums api:", err.message)
@@ -64,7 +64,7 @@ export const fetchUserPhotos = async (userID) => {
     })
     await checkResponse(response)
     const photoData = await response.json()
-    console.log("LOG: API GET 'api/users/user_id/albums")
+    // console.log("LOG: API GET 'api/users/user_id/albums")
     return photoData
   } catch (err) {
     console.error("Error in get Photos api:", err.message)
@@ -82,7 +82,7 @@ export const createIntro = async (userID, intro) => {
     })
     await checkResponse(response)
     const introData = await response.json()
-    console.log("API POST 'api/users/user_id/intro")
+    // console.log("API POST 'api/users/user_id/intro")
     return introData
   } catch (err) {
     console.error("Error in get Intro api:", err.message)

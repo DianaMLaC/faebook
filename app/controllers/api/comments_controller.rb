@@ -3,7 +3,7 @@ class Api::CommentsController < ApplicationController
   before_action :must_be_authorized, :post_must_exist, :ensure_relation
 
   def index
-    @comments = @post.comments.includes(:likes, replies: :likes).where(parent_comment_id: nil)
+    @comments = @post.comments.includes(:likes, replies: :likes).where(parent_comment_id: nil).order(created_at: :desc)
     if @comments.empty?
       render json: { 'comments' => [] }
       return

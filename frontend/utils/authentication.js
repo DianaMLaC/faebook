@@ -34,7 +34,7 @@ export const postUser = async (userData) => {
     const user = await response.json()
     return user
   } catch (err) {
-    console.error(err.message)
+    // console.error(err.message)
     console.error("Error with response code or parsing response in API POST User", err)
     throw err
   }
@@ -50,7 +50,7 @@ export const postSession = async (sessionData) => {
       body: JSON.stringify(sessionData),
     })
     await checkResponse(response)
-    console.log(response)
+    // console.log(response)
     const session = await response.json()
     return session
   } catch (err) {

@@ -15,9 +15,9 @@ const Albums = () => {
 
     async function fetchAlbumsData() {
       const albumsData = await fetchAlbums(profileUser.id)
-      console.log("albumsData:", { albumsData })
+      // console.log("albumsData:", { albumsData })
       setAlbums(albumsData)
-      console.log("albums-state:", albums)
+      // console.log("albums-state:", albums)
     }
 
     fetchAlbumsData()

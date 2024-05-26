@@ -15,15 +15,15 @@ const ProfileHeader = () => {
         case "Profile": {
           newUserData = { ...currentUser, profilePhotoUrl: url }
 
-          console.log("currentUser:", currentUser)
-          console.log("url has been set for ProfilePhoto")
+          // console.log("currentUser:", currentUser)
+          // console.log("url has been set for ProfilePhoto")
           break
         }
         case "Cover": {
           newUserData = { ...currentUser, coverPhotoUrl: url }
 
-          console.log("currentUser:", currentUser)
-          console.log("url has been set for CoverPhoto")
+          // console.log("currentUser:", currentUser)
+          // console.log("url has been set for CoverPhoto")
           break
         }
         default:
@@ -38,7 +38,7 @@ const ProfileHeader = () => {
 
   const openProfileModal = () => {
     setProfileModalIsOpen(true)
-    console.log("Modal opened")
+    // console.log("Modal opened")
   }
 
   const openCoverModal = () => {

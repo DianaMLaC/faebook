@@ -17,12 +17,12 @@ const PostsIndex = () => {
 
     async function fetchPostsData() {
       const postsData = await fetchPosts(profileUser.id)
-      console.log("postsData from fetched posts:", postsData)
+      // console.log("postsData from fetched posts:", postsData)
       setPostsDb(postsData["posts"])
     }
 
     fetchPostsData()
-    console.log("posts-state:", posts)
+    // console.log("posts-state:", posts)
   }, [profileUser, setPostsDb, posts])
 
   return (

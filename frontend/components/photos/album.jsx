@@ -1,7 +1,7 @@
 import React from "react"
 
 const Album = ({ album }) => {
-  console.log("album:", album)
+  // console.log("album:", album)
   return (
     <div className="album-cover">
       <div>

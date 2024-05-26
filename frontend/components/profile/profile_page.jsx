@@ -26,9 +26,9 @@ const UserProfile = ({ profileId }) => {
     async function fetchProfile() {
       try {
         const profileUserData = await fetchUserProfile(profileId)
-        console.log("profileUserData", { profileUserData })
+        // console.log("profileUserData", { profileUserData })
         setProfileUser(profileUserData)
-        console.log("profileUserState:", profileUser)
+        // console.log("profileUserState:", profileUser)
       } catch (err) {
         console.error("Error in fetching the User Profile", err)
       }
@@ -38,7 +38,7 @@ const UserProfile = ({ profileId }) => {
   }, [profileId, setProfileUser])
 
   useEffect(() => {
-    console.log("Updated profileUser state:", profileUser)
+    // console.log("Updated profileUser state:", profileUser)
   }, [profileUser])
 
   if (!profileUser) {
