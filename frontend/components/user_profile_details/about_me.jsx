@@ -37,6 +37,9 @@ const AboutMe = () => {
   }
   return (
     <div className="about-me-container">
+      {/* <div className="about-me-header">
+        <h4>About</h4>
+      </div> */}
       <nav className="about-me-nav">
         <div className="about-me-title">About</div>
         {categories.map((category) => (
