@@ -4,7 +4,7 @@ import { useAuth } from "../../context/auth"
 import { createComment } from "../../utils/post_and_comments"
 import { CircleLoader } from "react-spinners"
 
-const CommentForm = ({ onCommentSubmit, parentCommentId, postId }) => {
+const CommentForm = ({ onCommentSubmit, toggle, parentCommentId, postId }) => {
   const { currentUser } = useAuth()
   const commentAs = `Comment as ${currentUser.displayName}`
   const [text, setText] = useState("")
@@ -35,6 +35,7 @@ const CommentForm = ({ onCommentSubmit, parentCommentId, postId }) => {
         setFormErr("")
         setIsUploading(false)
         onCommentSubmit(commentResponse)
+        toggle(false)
       }
     } catch (err) {
       setFormErr(err.message)

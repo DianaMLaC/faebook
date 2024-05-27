@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import Comment from "./comment"
 
 const Comments = ({ comments }) => {
+  console.log("comments:", comments)
   const [showAll, setShowAll] = useState(false)
   // console.log("comments list:", comments)
   const displayedComments = showAll ? comments : comments.slice(-2).reverse()

@@ -1,40 +1,63 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { useAuth } from "../../context/auth"
 import Likes from "../posts/likes"
 import { formatCommentDate } from "../../utils/helpers"
 import { usePosts } from "../../context/posts"
 import { toggleLike } from "../../utils/post_and_comments"
+import Comments from "./comments_index"
+import CommentForm from "./comment_form"
 
 const Comment = ({ comment }) => {
   const { currentUser } = useAuth()
-  const { deleteLikeFromComment, addLikeToComment } = usePosts()
+  const { deleteLikeFromComment, addLikeToComment, addReplyToComment } = usePosts()
   const [likes, setLikes] = useState(comment.likes || [])
-  const [repliesNumber, setRepliesNumber] = useState(comment.replies.length || [])
+  const [repliesList, setRepliesList] = useState(comment.replies || [])
+  const [repliesNumber, setRepliesNumber] = useState(comment.replies.length || 0)
   const [author, setAuthor] = useState(comment.author || [])
+  const [toggleReplyForm, setToggleReplyForm] = useState(false)
+  const [toggleReplies, setToggleReplies] = useState(false)
   const [likedByCurrentUser, setLikedByCurrentUser] = useState(
     comment.likes.some((like) => like.liker.id === currentUser.id)
   )
+
+  const toggleRepliesVisibility = () => {
+    setToggleReplies((prev) => !prev)
+  }
 
   useEffect(() => {
     setLikedByCurrentUser(comment.likes.some((like) => like.liker.id === currentUser.id))
     setRepliesNumber(comment.replies.length)
     setLikes(comment.likes)
+    setRepliesList(comment.replies)
     // setReplyLikes(comment.replies.likes)
     setAuthor(comment.author)
   }, [comment])
 
-  const replies = (count) => {
-    if (count === 1) {
-      return <div className="view-replies-link">View 1 reply</div>
-    } else {
-      return <div className="view-replies-link">View all {count} replies</div>
-    }
+  // const replies = (count) => {
+  //   if (count === 1) {
+  //     return (
+  //       <div className="view-replies-link" onClick={() => setToggleReplies(true)}>
+  //         View 1 reply
+  //       </div>
+  //     )
+  //   } else {
+  //     return <div className="view-replies-link">View all {count} replies</div>
+  //   }
+  // }
+
+  const repliesLink = (count) => {
+    const replyText = count === 1 ? "View 1 reply" : `View all ${count} replies`
+    return toggleReplies ? null : (
+      <div className="view-replies-link" onClick={toggleRepliesVisibility}>
+        {replyText}
+      </div>
+    )
   }
 
   const handleCommentLike = async (e) => {
     e.preventDefault()
     const likeable = "comments"
-    const likeResponse = await toggleLike(likeable, post.id)
+    const likeResponse = await toggleLike(likeable, comment.id)
 
     if (likeResponse) {
       if (likedByCurrentUser) {
@@ -47,6 +70,14 @@ const Comment = ({ comment }) => {
       setLikedByCurrentUser(!likedByCurrentUser)
     }
   }
+
+  const handleNewReply = useCallback(
+    (newReply) => {
+      addReplyToComment(comment.postId, comment.id, newReply)
+      setRepliesList((prevReplies) => [...prevReplies, newReply])
+    },
+    [comment.postId, comment.id, addReplyToComment]
+  )
 
   return (
     <div className="comment-container">
@@ -66,11 +97,33 @@ const Comment = ({ comment }) => {
             <div className={likedByCurrentUser ? "liked" : "like"} onClick={handleCommentLike}>
               <div className="action-name">Like</div>
             </div>
-            <div className="reply">Reply</div>
+            <div className="reply" onClick={() => setToggleReplyForm(true)}>
+              Reply
+            </div>
           </div>
           <div>{likes.length > 0 && <Likes likes={likes} position={"comment"} />}</div>
         </div>
-        {repliesNumber > 0 && replies(repliesNumber)}
+
+        <div className="replies-number"> {repliesNumber > 0 && repliesLink(repliesNumber)}</div>
+
+        <div>
+          {toggleReplyForm && (
+            <div className="reply-form">
+              <div className="comment-avatar">
+                {currentUser.profilePhotoUrl && (
+                  <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
+                )}
+              </div>
+              <CommentForm
+                onCommentSubmit={handleNewReply}
+                toggle={setToggleReplyForm}
+                parentCommentId={comment.id}
+                postId={comment.postId}
+              />
+            </div>
+          )}
+        </div>
+        {toggleReplies && <Comments comments={repliesList} />}
       </div>
     </div>
   )

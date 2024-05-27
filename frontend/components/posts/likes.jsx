@@ -4,34 +4,34 @@ import React, { useState } from "react"
 const Likes = ({ likes, position }) => {
   const [likesNumber, setLikesNumber] = useState(likes.length)
 
-  if (position === "post") {
-    return (
-      <div className="likes-details">
-        <div className="likes-details-icon">
-          <img
-            className="like"
-            src={require("../../../app/assets/images/like.png").default}
-            alt="Like"
-          />
-        </div>
-        <span className="likes-details-count">Likes: {likesNumber}</span>
+  // if (position === "post") {
+  return (
+    <div className="likes-details">
+      <div className="likes-details-icon">
+        <img
+          className="like"
+          src={require("../../../app/assets/images/like.png").default}
+          alt="Like"
+        />
       </div>
-    )
-  } else if (position === "comment") {
-    return (
-      <div className="likes-details">
-        <span className="likes-details-count">Likes: {likesNumber}</span>
-        <div className="likes-details-icon">
-          <img
-            className="like"
-            src={require("../../../app/assets/images/like.png").default}
-            alt="Like"
-          />
-        </div>
-        <span className="likes-details-count">Likes: {likesNumber}</span>
-      </div>
-    )
-  }
+      <span className="likes-details-count">Likes: {likesNumber}</span>
+    </div>
+  )
+  //   } else if (position === "comment") {
+  //     return (
+  //       <div className="likes-details">
+  //         <span className="likes-details-count">Likes: {likesNumber}</span>
+  //         <div className="likes-details-icon">
+  //           <img
+  //             className="like"
+  //             src={require("../../../app/assets/images/like.png").default}
+  //             alt="Like"
+  //           />
+  //         </div>
+  //         <span className="likes-details-count">Likes: {likesNumber}</span>
+  //       </div>
+  //     )
+  //   }
 }
 
 export default Likes

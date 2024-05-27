@@ -22,9 +22,9 @@ export const createPost = async (postBody, profileId) => {
   }
 }
 
-export const fetchPosts = async (userID) => {
+export const fetchPosts = async (userId) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/users/${userID}/posts`, {
+    const response = await fetch(`http://localhost:3000/api/users/${userId}/posts`, {
       method: "GET",
       headers: customHeaders,
     })
@@ -70,6 +70,22 @@ export const createComment = async (formData, postId) => {
     return commentData
   } catch (err) {
     console.error("Error in create a Comment api:", err.message)
+    throw err
+  }
+}
+
+export const fetchTopLevelComments = async (postId) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/posts/${postId}/comments`, {
+      method: "GET",
+      headers: customHeaders,
+    })
+    await checkResponse(response)
+    const commentsData = await response.json()
+    // console.log("LOG: API GET 'api/users/user_id/posts")
+    return commentsData
+  } catch (err) {
+    console.error("Error in get top level comments api:", err.message)
     throw err
   }
 }

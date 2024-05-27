@@ -3,7 +3,7 @@ import { FaUserFriends, FaRegComment } from "react-icons/fa"
 import { BiSolidLike, BiLike } from "react-icons/bi"
 import { PiShareFat, PiPaperPlaneRightFill } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
-import { toggleLike } from "../../utils/post_and_comments"
+import { toggleLike, fetchTopLevelComments } from "../../utils/post_and_comments"
 import { usePosts } from "../../context/posts"
 import Likes from "./likes"
 import Comments from "../comments/comments_index"
@@ -22,22 +22,17 @@ const Post = ({ post }) => {
 
   const postTimeStamp = formatPostDate(post.createdAt)
 
-  const handleNewComment = useCallback(
-    (newComment) => {
-      addCommentToPost(post.id, newComment)
-      setComments((prevComments) => [...prevComments, newComment])
-    },
-    [post.id, addCommentToPost]
-  )
-
   useEffect(() => {
+    async function fetchCommentsData() {
+      const commentsData = await fetchTopLevelComments(post.id)
+      // console.log("Fetched comments data:", commentsData)
+      setComments(commentsData.comments)
+    }
+
+    fetchCommentsData()
     setLikedByCurrentUser(post.likes.some((like) => like.liker.id === currentUser.id))
     setLikes(post.likes)
-    setComments(post.comments)
-    // console.log("likes:", { likes })
-    // console.log("comments:", { comments })
-    // console.log("likedByCurrentUser:", likedByCurrentUser)
-  }, [post])
+  }, [post.id])
 
   const handlePostLike = async (e) => {
     e.preventDefault()
@@ -55,6 +50,14 @@ const Post = ({ post }) => {
       setLikedByCurrentUser(!likedByCurrentUser)
     }
   }
+
+  const handleNewComment = useCallback(
+    (newComment) => {
+      addCommentToPost(post.id, newComment)
+      setComments((prevComments) => [...prevComments, newComment])
+    },
+    [post.id, addCommentToPost]
+  )
 
   return (
     <div className="post-container">
@@ -99,14 +102,18 @@ const Post = ({ post }) => {
       {comments && <Comments comments={comments} />}
       <div className="post-comment">
         <div className="comment-avatar">
-          {" "}
           {currentUser.profilePhotoUrl && (
             <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
           )}
         </div>
 
         {toggleCommenting ? (
-          <CommentForm onCommentSubmit={handleNewComment} parentCommentId={null} postId={post.id} />
+          <CommentForm
+            onCommentSubmit={handleNewComment}
+            toggle={setToggleCommenting}
+            parentCommentId={null}
+            postId={post.id}
+          />
         ) : (
           <div className="comment-input-bar" onClick={() => setToggleCommenting(true)}>
             Write a comment...

@@ -16,5 +16,5 @@ json.likes comment.likes do |like|
 end
 
 json.replies comment.replies do |reply|
-  json.partial! 'comment', comment: reply
+  json.partial! 'api/comments/comment', comment: reply
 end

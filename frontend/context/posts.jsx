@@ -83,6 +83,23 @@ export const PostsProvider = ({ children }) => {
     )
   }
 
+  const addReplyToComment = (postId, commentId, reply) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId
+          ? {
+              ...post,
+              comments: post.comments.map((comment) =>
+                comment.id === commentId
+                  ? { ...comment, replies: [...comment.replies, reply] }
+                  : comment
+              ),
+            }
+          : post
+      )
+    )
+  }
+
   return (
     <PostsContext.Provider
       value={{
@@ -94,6 +111,7 @@ export const PostsProvider = ({ children }) => {
         deleteCommentFromPost,
         addLikeToComment,
         deleteLikeFromComment,
+        addReplyToComment,
       }}
     >
       {children}
