@@ -8,7 +8,7 @@ class Api::PhotosController < ApplicationController
     @photos = @user.photos.order(created_at: :desc)
 
     if @photos.empty?
-      render json: { errors: ['No photos found for this user.'] }, status: :not_found
+      render json: { 'photos' => [] }
     else
       render :index
     end
