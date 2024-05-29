@@ -89,3 +89,24 @@ export const createIntro = async (userID, intro) => {
     throw err
   }
 }
+
+export const fetchUserSuggestions = async (searchTerm) => {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/api/users/search?q=${encodeURIComponent(searchTerm)}`,
+      {
+        method: "GET",
+        headers: customHeaders,
+      }
+    )
+
+    await checkResponse(response)
+    const users = await response.json()
+    console.log("api:", users)
+    return users
+  } catch (err) {
+    console.error(err.message)
+    console.error("Error fetching user suggestions", err)
+    throw err
+  }
+}

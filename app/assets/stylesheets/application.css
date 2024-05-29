@@ -16,6 +16,21 @@
 
 
  /* Overall body styling */
+
+ html, body, section, article, h1, h2, p, strong, em, a {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: inherit;
+  font: inherit;
+  text-decoration: inherit;
+  text-align: inherit;
+  color: inherit;
+  background: transparent;
+}
+
+
  :root {
   --primary-color: #5ce1e6;
   --accent-color: #A280E3;
@@ -244,6 +259,9 @@ body {
   padding: 5px 15px;
   font-size: 15px;
   width: 220px;
+  margin-top:10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .nav-search input[type="search"]:hover {
@@ -253,6 +271,60 @@ body {
 .nav-search input[type="search"]::placeholder {
   color: var(--primary-color);
 }
+
+
+.nav-search {
+  position: relative; 
+}
+  
+
+.visible {
+  position: absolute;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc; 
+  max-height: 900px; 
+  overflow-y: auto; 
+  z-index: 1000; 
+  margin-block-start: 0.1em;  
+  padding-inline-start: 0;  
+  border: transparent;  
+  margin-right: 10px;  
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+
+.visible li {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid #eee; 
+}
+  
+    
+  
+.visible li img {
+  width: 40px; 
+  height: 40px; 
+  border-radius: 50%; 
+  margin-right: 12px; 
+
+}
+  
+    
+
+.visible li:last-child {
+  border-bottom: none; 
+}
+
+  
+
+.visible li:hover {
+  background-color: var(--shade-background-color);
+}
+
+    
 
 .nav-center {
   flex-grow: 1; 

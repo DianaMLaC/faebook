@@ -1,7 +1,33 @@
-import React from "react"
+import React, { useState } from "react"
 import { Outlet } from "react-router-dom"
+import { fetchUserSuggestions } from "../utils/profile"
 
 const NavBar = () => {
+  const [searchTerm, setSearchTerm] = useState("")
+  const [suggestions, setSuggestions] = useState([])
+
+  const handleSearchChange = async (event) => {
+    const value = event.target.value
+
+    setSearchTerm(value)
+
+    if (value.trim()) {
+      try {
+        const dbData = await fetchUserSuggestions(value)
+
+        console.log("API response:", dbData.users)
+
+        setSuggestions(dbData.users)
+
+        console.log("suggestions:", suggestions)
+      } catch (error) {
+        console.error("Failed to fetch user suggestions:", error)
+      }
+    } else {
+      setSuggestions([])
+    }
+  }
+
   return (
     <div>
       <header className="nav-bar">
@@ -14,7 +40,21 @@ const NavBar = () => {
             ></img>
           </div>
           <div className="nav-search">
-            <input type="search" placeholder="Find fae folk" />
+            <input
+              type="search"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              placeholder="Find fae folk"
+            />
+            <ul className={`suggestions ${suggestions.length > 0 ? "visible" : ""}`}>
+              {suggestions.map((user) => (
+                <li key={user.id}>
+                  <img src={user.profilePhotoUrl} alt={user.displayName} />
+
+                  <span>{user.displayName}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 

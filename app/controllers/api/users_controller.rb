@@ -37,6 +37,15 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def search
+    if params[:q].present?
+      @users = User.where('first_name ILIKE :q OR last_name ILIKE :q', q: "%#{params[:q]}%")
+      render :search
+    else
+      render json: { error: 'No query provided' }, status: :bad_request
+    end
+  end
+
   private
 
   def user_params
