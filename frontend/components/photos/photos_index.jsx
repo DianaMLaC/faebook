@@ -15,9 +15,9 @@ const PhotosIndex = () => {
 
     async function fetchAllPhotosUrls() {
       const photosData = await fetchUserPhotos(profileUser.id)
-      // console.log("photos-urls:", { photosData })
-      // console.log(photosData.length)
-      setPhotos(photosData)
+      console.log("photos-urls:", photosData)
+      console.log(photosData.length)
+      photosData.length > 0 ? setPhotos(photosData) : setPhotos(null)
     }
 
     fetchAllPhotosUrls()

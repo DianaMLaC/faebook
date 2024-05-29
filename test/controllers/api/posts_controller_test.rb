@@ -22,7 +22,7 @@ def create_unauthenticated_user
 end
 
 def create_and_sign_in_user(user_info)
-  post '/api/users', params: user_info
+  post '/api/users', params: { user: user_info }
 
   user_response = JSON.parse(@response.body)
   User.find_by(id: user_response['id'])

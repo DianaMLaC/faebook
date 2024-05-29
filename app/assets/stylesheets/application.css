@@ -423,6 +423,86 @@ body {
   cursor: pointer;
 }
 
+.account-menu-container {
+  position: absolute;
+  width: 400;
+  right: 0px;
+  background: white;
+  border: 1px solid #ccc; 
+  max-height: 900px; 
+  overflow-y: auto; 
+  z-index: 1000; 
+  margin-block-start: 0.1em;  
+  padding-inline-start: 0;  
+  border: transparent;  
+  margin-right: 10px;  
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.account-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.menu-banner {
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(8, 5, 5, 0.1);
+  display: flex;
+  flex-direction: column;
+
+}
+
+.menu-account-profile {
+  padding: 10px;
+  align-self: flex-start;
+  display:flex;
+  flex-direction: row;
+}
+
+.menu-see-all-profiles {
+  border-radius: 5px;
+  border: none;
+  background-color: var(--secondary-color);
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  padding: 6px;
+  margin:10px;
+  border-top-color: rgb(206, 208, 212);
+  border-top-style: solid;
+  border-top-width: 0.555556px;
+}
+
+.menu-user-display-name {
+  font-weight: 600;
+  padding-left: 10px;
+  align-self: center;
+}
+
+.menu-see-all-profiles span {
+  padding-left: 6px;
+
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 10px;
+}
+.menu-item span {
+  align-self: flex-start;
+}
+
+
+.menu-footer {
+  font-size: 10px;
+  opacity: 0.7;
+  padding: 4px;
+}
+
 
 /* Profile Header */
 
@@ -536,6 +616,8 @@ body {
   position: relative;
   margin-left: 160px;
   margin-top: 10px;
+  font-size: 23px;
+  font-weight: 800;
   color: var(--text-color)
 }
 
@@ -569,7 +651,7 @@ body {
 }
 
 .profile-header-nav a {
-  color: var(--accent-color);
+  color: var(--primary-color);
   padding: 5px 10px;
   text-decoration: none;
 }
@@ -636,7 +718,9 @@ body {
 
 .profile-photos-container {
   background-color: var(--secondary-color);
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
 }
 
 
@@ -810,7 +894,9 @@ body {
 
 .profile-about-me-container {
   background-color: var(--secondary-color);
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+
 }
 
 .about-me-container {
@@ -926,7 +1012,9 @@ body {
 .profile-videos-container,
 .profile-check-ins-container  {
   background-color: var(--secondary-color);
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
 }
 
 .sports-container, 
@@ -1404,6 +1492,9 @@ align-self: center;
 .posts-index-container {
   height: 100%;
   padding-top: 10px;
+  background-color: white;
+  margin-top: 10px;
+  border-radius: 10px;
 }
 
 .posts-index-container ul {

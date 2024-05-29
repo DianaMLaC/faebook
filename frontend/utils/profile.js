@@ -64,7 +64,7 @@ export const fetchUserPhotos = async (userID) => {
     })
     await checkResponse(response)
     const photoData = await response.json()
-    // console.log("LOG: API GET 'api/users/user_id/albums")
+    // console.log("LOG API GET photos:", photoData)
     return photoData
   } catch (err) {
     console.error("Error in get Photos api:", err.message)

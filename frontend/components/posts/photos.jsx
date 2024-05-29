@@ -16,7 +16,7 @@ const Photos = () => {
     async function fetchAllPhotosUrls() {
       const photosData = await fetchUserPhotos(profileUser.id)
       const displayPhotos = photosData.length > 9 ? photosData.slice(0, 9) : photosData
-      setPhotos(displayPhotos)
+      setPhotos(displayPhotos.length > 0 ? displayPhotos : null)
     }
 
     fetchAllPhotosUrls()

@@ -1,9 +1,10 @@
 class Api::PostsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :must_be_authorized
-  before_action :set_user_profile, :ensure_relation, only: %i[create index]
+  before_action :must_be_authorized, :set_user_profile
+  before_action :ensure_relation, only: %i[create]
 
   def index
+    Rails.logger.info 'In PhotosController#index'
     @posts = @user.profile_posts.includes(:likes, comments: { replies: :likes }).order(created_at: :desc)
 
     if @posts.empty?
@@ -36,7 +37,7 @@ class Api::PostsController < ApplicationController
                         Friendship.find_by(receiver_id: @user.id, sender_id: @authenticated_user.id,
                                            is_accepted: true)
 
-    return unless @authenticated_user.id != @user.id && existing_relation.nil?
+    return if @authenticated_user.id == @user.id || existing_relation.present?
 
     render json: {
       'errors' => {

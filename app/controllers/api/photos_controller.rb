@@ -4,7 +4,8 @@ class Api::PhotosController < ApplicationController
   # before_action :resize_before_save, only: [:create]
 
   def index
-    @user = User.find(params[:user_id])
+    Rails.logger.info 'In PhotosController#index'
+    @user = User.find_by(id: params[:user_id])
     @photos = @user.photos.order(created_at: :desc)
 
     if @photos.empty?

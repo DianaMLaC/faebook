@@ -3,10 +3,12 @@ import { Outlet } from "react-router-dom"
 import { fetchUserSuggestions } from "../utils/profile"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/auth"
+import AccountMenu from "./profile/account_menu"
 
 const NavBar = () => {
   const { setProfileUser } = useAuth()
   const [searchTerm, setSearchTerm] = useState("")
+  const [toggleUserMenu, setToggleUserMenu] = useState(false)
   const [suggestions, setSuggestions] = useState([])
   const navigate = useNavigate()
 
@@ -22,10 +24,7 @@ const NavBar = () => {
     if (value.trim()) {
       try {
         const dbData = await fetchUserSuggestions(value)
-        console.log("API response:", dbData.users)
-
         setSuggestions(dbData.users)
-        console.log("suggestions:", suggestions)
       } catch (error) {
         console.error("Failed to fetch user suggestions:", error)
       }
@@ -117,12 +116,21 @@ const NavBar = () => {
               alt="Notifications"
             ></img>
           </div>
-          <div>
+          <div
+            onClick={() => {
+              setToggleUserMenu(!{ toggleUserMenu })
+            }}
+          >
             <img
               className="nav-account-button"
               src={require("../../app/assets/images/account.png").default}
               alt="Account"
             ></img>
+            {toggleUserMenu && (
+              <div className="account-menu-container">
+                <AccountMenu />
+              </div>
+            )}
           </div>
         </div>
       </header>

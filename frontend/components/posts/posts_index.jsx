@@ -18,7 +18,7 @@ const PostsIndex = () => {
     async function fetchPostsData() {
       const postsData = await fetchPosts(profileUser.id)
       // console.log("postsData from fetched posts:", postsData)
-      setPostsDb(postsData["posts"])
+      postsData.posts.length > 0 ? setPostsDb(postsData.posts) : setPostsDb(null)
     }
 
     fetchPostsData()

@@ -7,15 +7,16 @@ import NavBar from "./nav"
 import PhotosPage from "./photos/photos_page"
 
 const App = () => {
-  const { currentUser } = useAuth()
+  const { currentUser, profileUser, setProfileUser } = useAuth()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (currentUser) {
-      // navigate(`/profile-page/${currentUser.id}`, { replace: true })
-      console.log("currentUser:", currentUser)
-    }
-  }, [currentUser, navigate])
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     setProfileUser(currentUser)
+  //     navigate(`/profile-page/${profileUser.id}`, { replace: true })
+  //     // console.log("currentUser:", currentUser)
+  //   }
+  // }, [currentUser, navigate])
 
   return (
     <Routes>

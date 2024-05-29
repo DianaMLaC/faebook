@@ -84,8 +84,8 @@ const ProfileHeader = () => {
       </section>
       <section className="profile-photo-background"></section>
       <section className="profile-photo-container">
-        {currentUser.profilePhotoUrl && (
-          <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
+        {profileUser.profilePhotoUrl && (
+          <img className="profile-photo" src={profileUser.profilePhotoUrl} alt="Profile" />
         )}
       </section>
 
