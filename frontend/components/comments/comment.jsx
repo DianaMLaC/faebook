@@ -33,18 +33,6 @@ const Comment = ({ comment }) => {
     setAuthor(comment.author)
   }, [comment])
 
-  // const replies = (count) => {
-  //   if (count === 1) {
-  //     return (
-  //       <div className="view-replies-link" onClick={() => setToggleReplies(true)}>
-  //         View 1 reply
-  //       </div>
-  //     )
-  //   } else {
-  //     return <div className="view-replies-link">View all {count} replies</div>
-  //   }
-  // }
-
   const repliesLink = (count) => {
     const replyText = count === 1 ? "View 1 reply" : `View all ${count} replies`
     return toggleReplies ? null : (

@@ -13,13 +13,7 @@ class Api::UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(
-      first_name: params[:first_name],
-      last_name: params[:last_name],
-      password: params[:password],
-      date_of_birth: params[:date_of_birth],
-      email: params[:email]
-    )
+    @user = User.new(user_params)
 
     if @user.save
 
@@ -41,5 +35,11 @@ class Api::UsersController < ApplicationController
       }, status: 422
 
     end
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :password, :date_of_birth, :email)
   end
 end

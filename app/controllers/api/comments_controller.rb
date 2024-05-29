@@ -56,7 +56,7 @@ class Api::CommentsController < ApplicationController
                         Friendship.find_by(receiver_id: @post.profile_id, sender_id: @authenticated_user.id,
                                            is_accepted: true)
 
-    return unless @authenticated_user.id != @post.profile_id && existing_relation.nil?
+    return if @authenticated_user.id == @post.profile_id || existing_relation.present?
 
     render json: {
       'errors' => {

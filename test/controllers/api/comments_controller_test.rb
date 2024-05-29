@@ -48,10 +48,14 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     # ACT
     post(
       "/api/posts/#{post_obj.id}/comments",
-      params: { text: comment_text }
+      params: {
+        comment: { text: comment_text }
+      },
+      headers: { Authorization: "Bearer #{post_author.session_token}" }
     )
 
     # ASSERT
+    # assert_equal(session[:auth_token], post_author.session_token)
     assert_response :success
 
     # check response body
@@ -102,9 +106,13 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     comment_text = faker_text
 
     # ACT
+
     post(
       "/api/posts/#{post_obj.id}/comments",
-      params: {}
+      params: {
+        comment: { text: '' }
+      },
+      headers: { Authorization: "Bearer #{post_author.session_token}" }
     )
 
     # ASSERT
@@ -189,9 +197,13 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     )
 
     # Act
+
     post(
       "/api/posts/#{post_obj.id}/comments",
-      params: { text: faker_text }
+      params: {
+        comment: { text: faker_text }
+      },
+      headers: { Authorization: "Bearer #{post_author.session_token}" }
     )
 
     # Assert
@@ -235,11 +247,16 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     )
 
     # ACT
+
     post(
-      "/api/posts/#{post_obj.id}/comments", params: {
-        text: faker_text,
-        parent_comment_id: parent_comment.id
-      }
+      "/api/posts/#{post_obj.id}/comments",
+      params: {
+        comment: {
+          text: faker_text,
+          parent_comment_id: parent_comment.id
+        }
+      },
+      headers: { Authorization: "Bearer #{post_author.session_token}" }
     )
 
     # ASSERT
@@ -328,10 +345,14 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     # ACT
 
     post(
-      "/api/posts/#{post_obj.id}/comments", params: {
-        text: faker_text,
-        parent_comment_id: reply.id
-      }
+      "/api/posts/#{post_obj.id}/comments",
+      params: {
+        comment: {
+          text: faker_text,
+          parent_comment_id: reply.id
+        }
+      },
+      headers: { Authorization: "Bearer #{post_author.session_token}" }
     )
 
     # ASSERT
