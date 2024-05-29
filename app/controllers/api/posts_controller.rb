@@ -6,7 +6,7 @@ class Api::PostsController < ApplicationController
   def index
     @posts = @user.profile_posts.includes(:likes, comments: { replies: :likes }).order(created_at: :desc)
 
-    if @posts.nil?
+    if @posts.empty?
       render json: { 'posts' => [] }
     else
       render :index
@@ -27,7 +27,7 @@ class Api::PostsController < ApplicationController
   private
 
   def set_user_profile
-    @user = User.find(params[:user_id])
+    @user = User.find_by(id: params[:user_id])
   end
 
   def ensure_relation

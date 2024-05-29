@@ -13,9 +13,11 @@ import PostsPage from "../posts/posts_page"
 import { fetchUserProfile } from "../../utils/profile"
 import { useAuth } from "../../context/auth"
 import { PostsProvider } from "../../context/posts"
+import { useParams } from "react-router-dom"
 
-const UserProfile = ({ profileId }) => {
+const UserProfile = () => {
   const { profileUser, setProfileUser } = useAuth()
+  const { profileId } = useParams()
 
   useEffect(() => {
     if (profileId === null) {
@@ -26,7 +28,7 @@ const UserProfile = ({ profileId }) => {
     async function fetchProfile() {
       try {
         const profileUserData = await fetchUserProfile(profileId)
-        // console.log("profileUserData", { profileUserData })
+        console.log("profileUserData", { profileUserData })
         setProfileUser(profileUserData)
         // console.log("profileUserState:", profileUser)
       } catch (err) {
@@ -38,8 +40,8 @@ const UserProfile = ({ profileId }) => {
   }, [profileId, setProfileUser])
 
   useEffect(() => {
-    // console.log("Updated profileUser state:", profileUser)
-  }, [profileUser])
+    console.log("Updated profileUser state:", profileUser)
+  }, [profileId])
 
   if (!profileUser) {
     return <div>Loading profile...</div>
