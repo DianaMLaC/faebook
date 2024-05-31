@@ -483,7 +483,17 @@ body {
 
 .menu-see-all-profiles span {
   padding-left: 6px;
+}
 
+.menu-icon {
+  padding-right: 10px;
+}
+
+.menu-icon img {
+  object-fit: cover;
+  width: 24px;
+  height: 24px;
+  align-self: center
 }
 
 .menu-item {
@@ -492,6 +502,20 @@ body {
   align-items: stretch;
   padding: 10px;
 }
+
+.menu-log-out {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 10px;
+  cursor: pointer;
+
+}
+
+.menu-item:hover, .menu-log-out:hover {
+  background-color: var(--secondary-color);
+}
+
 .menu-item span {
   align-self: flex-start;
 }

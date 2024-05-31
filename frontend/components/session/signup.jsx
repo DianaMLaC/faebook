@@ -21,10 +21,12 @@ const Signup = () => {
     setPassword("")
     setDateOfBirth("")
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       const userData = { firstName, lastName, password, dateOfBirth, email }
+      console.log("form-user:", userData)
       await signup(userData)
       clearForm()
     } catch (err) {

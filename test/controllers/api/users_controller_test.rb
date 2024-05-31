@@ -56,6 +56,18 @@ class Api::UsersControllerTest < ActionDispatch::IntegrationTest
     )
     assert_response 422
 
+    post(
+      '/api/users',
+      params: {
+        user: { firstName: 'Geta',
+                lastName: 'Marga',
+                password: 'Cuzdrioara4',
+                dateOfBirth: '1994-09-18',
+                email: 'geta@marga.com' }
+      }
+    )
+    assert_response 200
+
     # not mixed cased
     post(
       '/api/users',

@@ -33,6 +33,11 @@ const NavBar = () => {
     }
   }
 
+  const handleMenuButton = () => {
+    setToggleUserMenu(!toggleUserMenu)
+    console.log("toggleMenu:", toggleUserMenu)
+  }
+
   return (
     <div>
       <header className="nav-bar">
@@ -116,11 +121,7 @@ const NavBar = () => {
               alt="Notifications"
             ></img>
           </div>
-          <div
-            onClick={() => {
-              setToggleUserMenu(!{ toggleUserMenu })
-            }}
-          >
+          <div onClick={handleMenuButton}>
             <img
               className="nav-account-button"
               src={require("../../app/assets/images/account.png").default}

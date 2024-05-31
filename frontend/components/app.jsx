@@ -10,13 +10,13 @@ const App = () => {
   const { currentUser, profileUser, setProfileUser } = useAuth()
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     setProfileUser(currentUser)
-  //     navigate(`/profile-page/${profileUser.id}`, { replace: true })
-  //     // console.log("currentUser:", currentUser)
-  //   }
-  // }, [currentUser, navigate])
+  useEffect(() => {
+    if (currentUser) {
+      setProfileUser(currentUser)
+      navigate(`/profile-page/${currentUser.id}`, { replace: true })
+      // console.log("currentUser:", currentUser)
+    }
+  }, [currentUser, navigate])
 
   return (
     <Routes>

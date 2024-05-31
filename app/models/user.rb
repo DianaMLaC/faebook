@@ -17,7 +17,7 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :password_digest, :date_of_birth, :email, presence: true
   validates :date_of_birth, comparison: { less_than: 14.years.ago.to_date }
   validates :email, uniqueness: true, email: { mode: :strict }
-  validates :password, length: { minimum: 6 }
+  # validates :password, length: { minimum: 6 }
   validate :password_must_be_of_mix_case
 
   before_create :create_session_token

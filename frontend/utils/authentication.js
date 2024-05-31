@@ -23,7 +23,7 @@ export async function checkResponse(response) {
 // POST USER
 
 export const postUser = async (userData) => {
-  console.log(userData)
+  console.log("user data in api:", userData)
   try {
     const response = await fetch("http://localhost:3000/api/users", {
       method: "POST",
