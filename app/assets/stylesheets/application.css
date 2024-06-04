@@ -241,7 +241,7 @@ body {
   justify-content: space-between;
   padding: 6px; 
   box-shadow: 0 2px 4px rgba(8, 5, 5, 0.1);
-  height: 40px;
+  height: 60px;
 }
 
 .nav-left, .nav-center, .nav-right {
@@ -252,9 +252,8 @@ body {
 .nav-logo {
   height: 36px;
   width: 36px;
-  font-size: 24px; 
   font-weight: bold;
-  padding-right: 20px;
+  padding-left: 16px;
   color: var(--primary-color);
 }
 
@@ -267,11 +266,13 @@ body {
 
 .nav-search input[type="search"] {
   background-color: var(--secondary-color);
-  border: 1px solid #ccd0d5;
+  color: var(--text-color);
+  border: transparent;
   border-radius: 18px;
-  padding: 5px 15px;
+  padding-left: 12px;
   font-size: 15px;
-  width: 220px;
+  width: 250px;
+  height: 40px;
   margin-top:10px;
   margin-left: 10px;
   margin-right: 10px;
@@ -282,7 +283,7 @@ body {
   cursor:auto;
 }
 .nav-search input[type="search"]::placeholder {
-  color: var(--primary-color);
+  color: var(--text-color);
 }
 
 
@@ -342,91 +343,42 @@ body {
 .nav-center {
   flex-grow: 1; 
   justify-content: center; 
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-right: 200px;
+  padding-left: 100px;
 }
 
-.nav-friends-button {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+
+.nav-home-button, .nav-video-button, .nav-groups-button, .nav-games-button, .nav-create-button, .nav-messenger-button, .nav-notifications-button {
+  min-width: 50px;
+  max-width: 110px;
+  height: 55px;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  font-weight: 800;
 }
 
-.nav-home-button {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.nav-groups-button {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.nav-more-button {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  bottom: 6px;
-  top: 6px;
-}
-
-/* Nav right */
-
-.nav-create-button {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  bottom: 6px;
-  top: 6px;
-}
-
-.nav-messenger-button {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  bottom: 6px;
-  top: 6px;
-}
-
-.nav-notifications-button {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  bottom: 6px;
-  top: 6px;
-}
-
-.nav-account-button {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  bottom: 6px;
-  top: 6px;
-}
-
+/* 
 .nav-home-button, .nav-friends-button, .nav-more-button, .nav-groups-button,
 .nav-create-button, .nav-menu-button, .nav-messenger-button,
 .nav-notifications-button, .nav-account-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* border-radius: 50%;  */
   width: 36px; 
   height: 36px; 
-  margin: 0 4px;
-}
+  margin: 0 4px; */
+/* } */
 
-.nav-home-button:hover, .nav-friends-button:hover, .nav-groups-button:hover, .nav-more-button:hover {
-  border-bottom: 5px solid var(--accent-color);
-  cursor: pointer;
+.nav-home-button:hover, .nav-video-button:hover, .nav-groups-button:hover, .nav-games-button:hover {
+  background-color: var(--shade-background-color);
+  border-radius: 2px;
+  /* cursor: pointer; */
 }
 
 .nav-create-button:hover, .nav-messenger-button:hover, .nav-notifications-button:hover, .nav-messenger-button:hover,

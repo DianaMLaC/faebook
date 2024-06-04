@@ -4,9 +4,16 @@ import { fetchUserSuggestions } from "../utils/profile"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/auth"
 import AccountMenu from "./profile/account_menu"
+import { BiHomeAlt } from "react-icons/bi"
+import { MdOutlineOndemandVideo } from "react-icons/md"
+import { HiOutlineUserGroup } from "react-icons/hi2"
+import { CgGames } from "react-icons/cg"
+import { TbGridDots } from "react-icons/tb"
+import { FaFacebookMessenger } from "react-icons/fa6"
+import { IoNotificationsCircle, IoSearchOutline } from "react-icons/io5"
 
 const NavBar = () => {
-  const { setProfileUser } = useAuth()
+  const { currentUser, setProfileUser } = useAuth()
   const [searchTerm, setSearchTerm] = useState("")
   const [toggleUserMenu, setToggleUserMenu] = useState(false)
   const [suggestions, setSuggestions] = useState([])
@@ -68,48 +75,36 @@ const NavBar = () => {
         </div>
 
         <div className="nav-center">
-          <div>
-            <img className="nav-home-button" src="/assets/images/home.png" alt="Home"></img>
+          <div className="nav-home-button">
+            <BiHomeAlt />
           </div>
-          <div>
-            <img
-              className="nav-friends-button"
-              src="/assets/images/friends.png"
-              alt="Friends"
-            ></img>
+          <div className="nav-video-button">
+            <MdOutlineOndemandVideo />
           </div>
-          <div>
-            <img className="nav-groups-button" src="/assets/images/groups.png" alt="Groups"></img>
+          <div className="nav-groups-button">
+            <HiOutlineUserGroup />
           </div>
-          <div>
-            <img className="nav-more-button" src="/assets/images/more.png" alt="More"></img>
+          <div className="nav-games-button">
+            <CgGames />
           </div>
         </div>
 
         <div className="nav-right">
-          <div>
-            <img className="nav-create-button" src="/assets/images/create.png" alt="Create"></img>
+          <div className="nav-create-button">
+            <TbGridDots />
           </div>
-          <div>
-            <img
-              className="nav-messenger-button"
-              src="/assets/images/messenger.png"
-              alt="Messenger"
-            ></img>
+          <div className="nav-messenger-button">
+            <FaFacebookMessenger />
           </div>
-          <div>
-            <img
-              className="nav-notifications-button"
-              src="/assets/images/notifications.png"
-              alt="Notifications"
-            ></img>
+          <div className="nav-notifications-button">
+            <IoNotificationsCircle />
           </div>
-          <div onClick={handleMenuButton}>
-            <img
-              className="nav-account-button"
-              src="/assets/images/account.png"
-              alt="Account"
-            ></img>
+          <div className="nav-account-button" onClick={handleMenuButton}>
+            <div className="avatar">
+              {currentUser.profilePhotoUrl && (
+                <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
+              )}
+            </div>
             {toggleUserMenu && (
               <div className="account-menu-container">
                 <AccountMenu />
