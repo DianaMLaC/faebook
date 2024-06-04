@@ -8,11 +8,7 @@ const Likes = ({ likes, position }) => {
   return (
     <div className="likes-details">
       <div className="likes-details-icon">
-        <img
-          className="like"
-          src={require("../../../app/assets/images/like.png").default}
-          alt="Like"
-        />
+        <img className="like" src={"/assets/images/like.png"} alt="Like" />
       </div>
       <span className="likes-details-count">Likes: {likesNumber}</span>
     </div>
@@ -24,7 +20,7 @@ const Likes = ({ likes, position }) => {
   //         <div className="likes-details-icon">
   //           <img
   //             className="like"
-  //             src={require("../../../app/assets/images/like.png").default}
+  //                       src={"/assets/images/like.png"}
   //             alt="Like"
   //           />
   //         </div>

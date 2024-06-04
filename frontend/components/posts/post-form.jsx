@@ -41,11 +41,7 @@ const PostForm = ({ closeModalContainer }) => {
       <header className="post-form-header">
         <h3>Create post</h3>
         <button className="close-post-form" onClick={closeModalContainer}>
-          <img
-            className="close"
-            src={require("../../../app/assets/images/close.png").default}
-            alt="close"
-          />
+          <img className="close" src="/assets/images/close.png" alt="close" />
         </button>
       </header>
       <div className="post-form-user-details">

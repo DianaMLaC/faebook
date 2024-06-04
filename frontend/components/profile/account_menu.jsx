@@ -31,31 +31,19 @@ const AccountMenu = () => {
 
       <div className="menu-item">
         <div className="menu-icon">
-          <img
-            className="settings"
-            src={require("../../../app/assets/images/settings.png").default}
-            alt="Settings"
-          ></img>
+          <img className="settings" src="/assets/images/settings.png" alt="Settings"></img>
         </div>
         <span>Settings & Privacy</span>
       </div>
       <div className="menu-item">
         <div className="menu-icon">
-          <img
-            className="help"
-            src={require("../../../app/assets/images/help.png").default}
-            alt="Help"
-          ></img>
+          <img className="help" src="/assets/images/help.png" alt="Help"></img>
         </div>
         <span>Help & Support</span>
       </div>
       <div className="menu-item">
         <div className="menu-icon">
-          <img
-            className="display"
-            src={require("../../../app/assets/images/display.png").default}
-            alt="Display"
-          ></img>
+          <img className="display" src="/assets/images/display.png" alt="Display"></img>
         </div>
         <span>Display & Accessibility</span>
         <span>
@@ -64,21 +52,13 @@ const AccountMenu = () => {
       </div>
       <div className="menu-item">
         <div className="menu-icon">
-          <img
-            className="feedback"
-            src={require("../../../app/assets/images/feedback.png").default}
-            alt="Feedback"
-          ></img>
+          <img className="feedback" src="/assets/images/feedback.png" alt="Feedback"></img>
         </div>
         <span>Give feedback</span>
       </div>
       <div className="menu-log-out" onClick={handleLogOut}>
         <div className="menu-icon">
-          <img
-            className="logout"
-            src={require("../../../app/assets/images/logout.png").default}
-            alt="Log Out"
-          ></img>
+          <img className="logout" src="/assets/images/logout.png" alt="Log Out"></img>
         </div>
         <span className="">Log out</span>
       </div>

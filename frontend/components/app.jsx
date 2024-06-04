@@ -16,42 +16,67 @@ const App = () => {
       navigate(`/profile-page/${currentUser.id}`, { replace: true })
       // console.log("currentUser:", currentUser)
     }
-  }, [currentUser, navigate])
+  }, [currentUser])
 
+  console.dir({ currentUser })
   return (
     <Routes>
-      <Route path="/start" element={<StartPage />} />
+      <Route
+        path="/start"
+        element={
+          <EnforceLoggedOut user={currentUser}>
+            <StartPage />
+          </EnforceLoggedOut>
+        }
+      />
       <Route path="/" element={<Navigate to="/start" replace />} />
 
-      {/* <Route
-        path="/login"
-        element={currentUser ? <Navigate to="/profile-page/" replace /> : <StartPage />}
-      />
-      <Route
-        path="/signup"
-        element={currentUser ? <Navigate to="/profile-page" replace /> : <StartPage />}
-      /> */}
-
       <Route
         path="/login"
         element={
-          currentUser ? <Navigate to={`/profile-page/${currentUser.id}`} replace /> : <StartPage />
+          <EnforceLoggedOut user={currentUser}>
+            <StartPage />
+          </EnforceLoggedOut>
         }
       />
       <Route
         path="/signup"
         element={
-          currentUser ? <Navigate to={`/profile-page/${currentUser.id}`} replace /> : <StartPage />
+          <EnforceLoggedOut user={currentUser}>
+            <StartPage />
+          </EnforceLoggedOut>
         }
       />
 
-      <Route element={currentUser ? <NavBar /> : <Navigate to="/start" replace />}>
-        <Route path="/profile-page/:profileId" element={<UserProfile />} />
-      </Route>
+      {/* <Route element={currentUser ? <NavBar /> : <Navigate to="/start" replace />}> */}
+      <Route
+        path="/profile-page/:profileId"
+        element={
+          <EnforceLoggedIn user={currentUser}>
+            {currentUser && <NavBar />}
+            <UserProfile />
+          </EnforceLoggedIn>
+        }
+      />
 
       <Route path="*" element={<Navigate to="/start" replace />} />
     </Routes>
   )
+}
+const EnforceLoggedOut = ({ user, children }) => {
+  if (user) {
+    return <Navigate to={`/profile-page/${user.id}`} replace />
+  }
+
+  return children
+}
+
+const EnforceLoggedIn = ({ user, children }) => {
+  if (!user) {
+    return <Navigate to="/start" replace />
+  }
+
+  return children
 }
 
 export default App

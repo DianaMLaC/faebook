@@ -11,7 +11,7 @@ const PlacesLived = () => {
       <div className="section">
         <img
           className="about-me-location-icon"
-          src={require("../../../app/assets/images/location.png").default}
+          src="assets/images/location.png"
           alt="location"
         ></img>
         {currentUser.location ? (
