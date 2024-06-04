@@ -43,11 +43,7 @@ const NavBar = () => {
       <header className="nav-bar">
         <div className="nav-left">
           <div className="nav-logo">
-            <img
-              className="nav-logo-img"
-              src={require("../../app/assets/images/logo.png").default}
-              alt="Faebook"
-            ></img>
+            <img className="nav-logo-img" src="/assets/images/logo.png" alt="Faebook"></img>
           </div>
           <div className="nav-search">
             <input
@@ -70,61 +66,45 @@ const NavBar = () => {
 
         <div className="nav-center">
           <div>
-            <img
-              className="nav-home-button"
-              src={require("../../app/assets/images/home.png").default}
-              alt="Home"
-            ></img>
+            <img className="nav-home-button" src="/assets/images/home.png" alt="Home"></img>
           </div>
           <div>
             <img
               className="nav-friends-button"
-              src={require("../../app/assets/images/friends.png").default}
+              src="/assets/images/friends.png"
               alt="Friends"
             ></img>
           </div>
           <div>
-            <img
-              className="nav-groups-button"
-              src={require("../../app/assets/images/groups.png").default}
-              alt="Groups"
-            ></img>
+            <img className="nav-groups-button" src="/assets/images/groups.png" alt="Groups"></img>
           </div>
           <div>
-            <img
-              className="nav-more-button"
-              src={require("../../app/assets/images/more.png").default}
-              alt="More"
-            ></img>
+            <img className="nav-more-button" src="/assets/images/more.png" alt="More"></img>
           </div>
         </div>
 
         <div className="nav-right">
           <div>
-            <img
-              className="nav-create-button"
-              src={require("../../app/assets/images/create.png").default}
-              alt="Create"
-            ></img>
+            <img className="nav-create-button" src="/assets/images/create.png" alt="Create"></img>
           </div>
           <div>
             <img
               className="nav-messenger-button"
-              src={require("../../app/assets/images/messenger.png").default}
+              src="/assets/images/messenger.png"
               alt="Messenger"
             ></img>
           </div>
           <div>
             <img
               className="nav-notifications-button"
-              src={require("../../app/assets/images/notifications.png").default}
+              src="/assets/images/notifications.png"
               alt="Notifications"
             ></img>
           </div>
           <div onClick={handleMenuButton}>
             <img
               className="nav-account-button"
-              src={require("../../app/assets/images/account.png").default}
+              src="/assets/images/account.png"
               alt="Account"
             ></img>
             {toggleUserMenu && (

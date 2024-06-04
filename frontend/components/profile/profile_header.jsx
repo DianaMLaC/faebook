@@ -95,7 +95,7 @@ const ProfileHeader = () => {
             <button className="profile-photo-button" onClick={openProfileModal}>
               <img
                 className="nav-button-icon"
-                src={require("../../../app/assets/images/camera.png").default}
+                src={"/assets/images/camera.png"}
                 alt="Edit profile picture"
               />
             </button>
