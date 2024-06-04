@@ -14,6 +14,7 @@ const NavBar = () => {
 
   const handleSuggestionClick = (userId) => {
     setProfileUser(null)
+    setSuggestions([])
     navigate(`/profile-page/${userId}`)
   }
 
@@ -52,15 +53,17 @@ const NavBar = () => {
               onChange={handleSearchChange}
               placeholder="Find fae folk"
             />
-            <ul className={`suggestions ${suggestions.length > 0 ? "visible" : ""}`}>
-              {suggestions.map((user) => (
-                <li key={user.id} onClick={() => handleSuggestionClick(user.id)}>
-                  <img src={user.profilePhotoUrl} alt={user.displayName} />
+            {suggestions && (
+              <ul className={`suggestions ${suggestions.length > 0 ? "visible" : ""}`}>
+                {suggestions.map((user) => (
+                  <li key={user.id} onClick={() => handleSuggestionClick(user.id)}>
+                    <img src={user.profilePhotoUrl} alt={user.displayName} />
 
-                  <span>{user.displayName}</span>
-                </li>
-              ))}
-            </ul>
+                    <span>{user.displayName}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
 

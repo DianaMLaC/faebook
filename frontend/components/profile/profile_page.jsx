@@ -37,7 +37,7 @@ const UserProfile = () => {
     }
 
     fetchProfile()
-  }, [profileId, setProfileUser])
+  }, [profileId])
 
   useEffect(() => {
     console.log("Updated profileUser state:", profileUser)
