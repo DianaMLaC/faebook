@@ -48,7 +48,6 @@ const App = () => {
         }
       />
 
-      {/* <Route element={currentUser ? <NavBar /> : <Navigate to="/start" replace />}> */}
       <Route
         path="/profile-page/:profileId"
         element={

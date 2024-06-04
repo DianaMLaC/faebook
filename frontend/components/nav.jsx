@@ -13,7 +13,7 @@ const NavBar = () => {
   const navigate = useNavigate()
 
   const handleSuggestionClick = (userId) => {
-    // setProfileUser(null)
+    setProfileUser(null)
     navigate(`/profile-page/${userId}`)
   }
 

@@ -19,29 +19,29 @@ const UserProfile = () => {
   const { profileUser, setProfileUser } = useAuth()
   const { profileId } = useParams()
 
-  // useEffect(() => {
-  //   if (profileId === null) {
-  //     console.log("no profile id")
-  //     return
-  //   }
+  useEffect(() => {
+    if (profileId === null) {
+      console.log("no profile id")
+      return
+    }
 
-  //   async function fetchProfile() {
-  //     try {
-  //       const profileUserData = await fetchUserProfile(profileId)
-  //       console.log("profileUserData", { profileUserData })
-  //       setProfileUser(profileUserData)
-  //       // console.log("profileUserState:", profileUser)
-  //     } catch (err) {
-  //       console.error("Error in fetching the User Profile", err)
-  //     }
-  //   }
+    async function fetchProfile() {
+      try {
+        const profileUserData = await fetchUserProfile(profileId)
+        console.log("profileUserData", { profileUserData })
+        setProfileUser(profileUserData)
+        // console.log("profileUserState:", profileUser)
+      } catch (err) {
+        console.error("Error in fetching the User Profile", err)
+      }
+    }
 
-  //   fetchProfile()
-  // }, [profileId, setProfileUser])
+    fetchProfile()
+  }, [profileId, setProfileUser])
 
-  // useEffect(() => {
-  //   console.log("Updated profileUser state:", profileUser)
-  // }, [profileId])
+  useEffect(() => {
+    console.log("Updated profileUser state:", profileUser)
+  }, [profileId])
 
   if (!profileUser) {
     return <div>Loading profile...</div>
