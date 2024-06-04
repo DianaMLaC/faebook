@@ -26,7 +26,7 @@ const Photos = () => {
     <div className="photos-container">
       <header className="photos-header">
         <h4>Photos</h4>
-        <div className="see-photos">See all photos</div>
+        <div className="see-photos">See All Photos</div>
       </header>
       <ul className="photos-display-grid">
         {photos && photos.map((photo) => <Photo key={photo.id} photo={photo} />)}

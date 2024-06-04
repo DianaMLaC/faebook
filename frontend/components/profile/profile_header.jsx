@@ -2,6 +2,12 @@ import React, { useCallback, useState, useEffect, useContext } from "react"
 import { useAuth } from "../../context/auth"
 import PhotoUpload from "./photo_uploader"
 import ReactModal from "react-modal"
+import { FaPlus } from "react-icons/fa6"
+import { MdModeEditOutline } from "react-icons/md"
+import { RiMessengerLine } from "react-icons/ri"
+import { IoPersonAddSharp } from "react-icons/io5"
+import { FaCamera } from "react-icons/fa"
+import { TbDots } from "react-icons/tb"
 
 const ProfileHeader = () => {
   const { currentUser, setCurrentUser, profileUser } = useAuth()
@@ -65,9 +71,10 @@ const ProfileHeader = () => {
           <img className="cover-photo" src={profileUser.coverPhotoUrl} alt="Cover" />
         )}
         {currentUser.id === profileUser.id && (
-          <button className="cover-photo-button" onClick={openCoverModal}>
-            Add cover photo
-          </button>
+          <div className="cover-photo-button" onClick={openCoverModal}>
+            <FaCamera />
+            <span>Edit cover photo</span>
+          </div>
         )}
         <ReactModal
           isOpen={coverModalIsOpen}
@@ -82,76 +89,85 @@ const ProfileHeader = () => {
           />
         </ReactModal>
       </section>
-      <section className="profile-photo-background"></section>
-      <section className="profile-photo-container">
-        {profileUser.profilePhotoUrl && (
-          <img className="profile-photo" src={profileUser.profilePhotoUrl} alt="Profile" />
-        )}
-      </section>
-
-      <div className="profile-display-name-container">
-        <div>
-          {currentUser.id === profileUser.id && (
-            <button className="profile-photo-button" onClick={openProfileModal}>
-              <img
-                className="nav-button-icon"
-                src={"/assets/images/camera.png"}
-                alt="Edit profile picture"
+      <section className="profile-details-banner">
+        <div className="profile-photo-background">
+          <div className="profile-photo-container">
+            {profileUser.profilePhotoUrl && (
+              <img className="profile-photo" src={profileUser.profilePhotoUrl} alt="Profile" />
+            )}
+          </div>
+          <div className="profile-photo-button-container" onClick={openProfileModal}>
+            {currentUser.id === profileUser.id && <FaCamera />}
+            <ReactModal
+              isOpen={profileModalIsOpen}
+              onRequestClose={closeProfileModal}
+              contentLabel="Profile"
+              className="Modal"
+            >
+              <PhotoUpload
+                updatePhoto={updatePhoto}
+                closeModalContainer={closeProfileModal}
+                albumName={"Profile"}
               />
-            </button>
-          )}
-
+            </ReactModal>
+          </div>
+        </div>
+        <div className="profile-display-name-container">
           <h1 className="profile-display-name">{profileUser.displayName}</h1>
         </div>
-
-        <ReactModal
-          isOpen={profileModalIsOpen}
-          onRequestClose={closeProfileModal}
-          contentLabel="Profile"
-          className="Modal"
-        >
-          <PhotoUpload
-            updatePhoto={updatePhoto}
-            closeModalContainer={closeProfileModal}
-            albumName={"Profile"}
-          />
-        </ReactModal>
-
         <div className="profile-header-nav-buttons">
-          {currentUser.id === profileUser.id && (
-            <button className="add-to-story-button"> + Add to story</button>
-          )}
-          {currentUser.id === profileUser.id && (
-            <button className="edit-profile-button">Edit profile</button>
+          {currentUser.id === profileUser.id ? (
+            <>
+              <div className="add-to-story-button">
+                <FaPlus />
+                <span>Add to story</span>
+              </div>
+              <div className="edit-profile-button">
+                <MdModeEditOutline />
+                <span>Edit profile</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="messenger-button">
+                <RiMessengerLine />
+                <span>Messenger</span>
+              </div>
+              <div className="add-friend-button">
+                <IoPersonAddSharp />
+                <span>Add Friend</span>
+              </div>
+            </>
           )}
         </div>
-      </div>
+      </section>
 
       <nav className="profile-header-nav">
         <div className="profile-header-nav-links">
-          <a className="posts-link" href="#posts">
+          <a className="selected" href="#posts">
             Posts
           </a>
-          <a className="about-link" href="#about">
+          <a className="" href="#about">
             About
           </a>
-          <a className="friends-link" href="#friends">
+          <a className="" href="#friends">
             Friends
           </a>
-          <a className="photos-link" href="#photos">
+          <a className="" href="#photos">
             Photos
           </a>
-          <a className="videos-link" href="#videos">
+          <a className="" href="#videos">
             Videos
           </a>
-          <a className="check-ins-link" href="#checkins">
+          <a className="" href="#checkins">
             Check-ins
           </a>
-          <a className="more-link" href="#more">
-            More
-          </a>
         </div>
-        <button className="nav-profile-header-button">...</button>
+        <div className="nav-profile-header-button">
+          <span>
+            <TbDots />
+          </span>
+        </div>
       </nav>
     </header>
   )

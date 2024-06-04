@@ -97,7 +97,7 @@ const Comment = ({ comment }) => {
         <div>
           {toggleReplyForm && (
             <div className="reply-form">
-              <div className="comment-avatar">
+              <div className="reply-avatar">
                 {currentUser.profilePhotoUrl && (
                   <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
                 )}

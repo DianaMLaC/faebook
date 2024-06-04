@@ -41,15 +41,15 @@ const CreatePost = () => {
       </div>
       <div className="create-post-bottom">
         <div>
-          <img className="live-video" src={"/assets/images/live-video.png"} alt="Live-Video" />
+          <img className="live-video" src="/assets/images/live-video.png" alt="Live-Video" />
           <p>Live Video</p>
         </div>
         <div>
-          <img className="photo-video" src={"/assets/images/photo-video.png"} alt="Photo-Video" />
+          <img className="photo-video" src="/assets/images/photo-video.png" alt="Photo-Video" />
           <p>Photo/Video</p>
         </div>
         <div>
-          <img className="life-event" src={"/assets/images/life-event.png"} alt="Life-Event" />
+          <img className="life-event" src="/assets/images/life-event.png" alt="Life-Event" />
           <p>Life Event</p>
         </div>
       </div>

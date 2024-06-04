@@ -4,6 +4,8 @@ import { FaUserFriends } from "react-icons/fa"
 import { createPost } from "../../utils/post_and_comments"
 import { CircleLoader } from "react-spinners"
 import { usePosts } from "../../context/posts"
+import { RxCross2 } from "react-icons/rx"
+import { IoMdArrowDropdown } from "react-icons/io"
 
 const PostForm = ({ closeModalContainer }) => {
   const { addPost } = usePosts()
@@ -41,7 +43,7 @@ const PostForm = ({ closeModalContainer }) => {
       <header className="post-form-header">
         <h3>Create post</h3>
         <button className="close-post-form" onClick={closeModalContainer}>
-          <img className="close" src="/assets/images/close.png" alt="close" />
+          <RxCross2 />
         </button>
       </header>
       <div className="post-form-user-details">
@@ -55,6 +57,7 @@ const PostForm = ({ closeModalContainer }) => {
           <div className="post-form-visibility">
             <FaUserFriends />
             <span>Friends</span>
+            <IoMdArrowDropdown />
           </div>
         </div>
       </div>
@@ -63,7 +66,7 @@ const PostForm = ({ closeModalContainer }) => {
           value={postBody}
           onChange={handleInput}
           placeholder="What's on your mind?"
-          rows="3"
+          rows="5"
         />
       </div>
       <div className="post-form-add-on-banner">

@@ -26,9 +26,17 @@ const PostsIndex = () => {
   }, [profileUser, setPostsDb, posts])
 
   return (
-    <ul className="posts-list">
-      {postsDb && postsDb.map((post) => <Post key={post.id} post={post} />)}
-    </ul>
+    <>
+      {postsDb ? (
+        <ul className="posts-list">
+          {postsDb && postsDb.map((post) => <Post key={post.id} post={post} />)}
+        </ul>
+      ) : (
+        <div className="no-posts-data">
+          <span>No posts to show</span>
+        </div>
+      )}
+    </>
   )
 }
 

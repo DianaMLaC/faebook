@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-// import { BiLike, BiSolidLike } from "react-icons/bi"
+import { BiSolidLike } from "react-icons/bi"
 
 const Likes = ({ likes, position }) => {
   const [likesNumber, setLikesNumber] = useState(likes.length)
@@ -8,9 +8,9 @@ const Likes = ({ likes, position }) => {
   return (
     <div className="likes-details">
       <div className="likes-details-icon">
-        <img className="like" src={"/assets/images/like.png"} alt="Like" />
+        <BiSolidLike />
       </div>
-      <span className="likes-details-count">Likes: {likesNumber}</span>
+      <span className="likes-details-count">{likesNumber}</span>
     </div>
   )
   //   } else if (position === "comment") {
