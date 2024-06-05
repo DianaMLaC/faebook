@@ -19,13 +19,16 @@ const ProfileHeader = () => {
   const [existingRelation, setExistingRelation] = useState(true)
 
   useEffect(() => {
-    console.log("checking friendship between current_user and :", profileUser.displayName)
+    if (currentUser.id === profileUser.id) {
+      console.log("User is viewing their own profile, no need to check for friendship.")
+      return
+    }
+
     async function checkFriendshipStatus() {
       try {
+        console.log("fetching data from backend")
         const friendshipData = await fetchFriendships(profileUser.id)
         if (friendshipData.existing_relation) {
-          console.log("friendship:", friendshipData)
-          console.log("friendship accepted?", friendshipData.existing_relation.friendship_accepted)
           setFriendshipAccepted(friendshipData.existing_relation.friendship_accepted)
           setFriendshipRequested(true)
         } else {
@@ -39,7 +42,7 @@ const ProfileHeader = () => {
     if (profileUser.id) {
       checkFriendshipStatus()
     }
-  }, [currentUser, profileUser])
+  }, [profileUser])
 
   const updatePhoto = useCallback(
     (albumName, url) => {
