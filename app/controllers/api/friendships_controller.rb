@@ -1,27 +1,33 @@
 class Api::FriendshipsController < ApplicationController
   before_action :must_be_authorized
+  skip_before_action :verify_authenticity_token
+
   def index
-    if @authenticated_user.id == params[:user_id]
-      accepted_friendships = @authenticated_user.sent_friendships.where(is_accepted: true) +
-                             @authenticated_user.received_friendships.where(is_accepted: true)
-      pending_friendships = @authenticated_user.received_friendships.where(is_accepted: false)
-      render json: {
-        'friendships' => {
-          'accepted' => accepted_friendships,
-          'pending' => pending_friendships
-        }
-      }, status: 200
-    else
-      render json: {
-        'errors' => {
-          'authentication' => 'Unauthorized! User need to sign in/ log in'
-        }
-      }, status: 401 and return
-    end
+    friend = User.find_by(id: params[:user_id])
+    friendship = find_friendship(friend, @authenticated_user)
+
+    accepted_friendships = friend.sent_friendships.where(is_accepted: true) +
+                           friend.received_friendships.where(is_accepted: true)
+    pending_friendships = friend.received_friendships.where(is_accepted: false)
+
+    render json: {
+      'friendships' => {
+        'accepted' => accepted_friendships,
+        'pending' => pending_friendships
+      },
+      'existing_relation' => friendship
+    }, status: 200
   end
 
   def create
-    receiver = User.find(params[:user_id])
+    receiver = User.find_by(id: params[:user_id])
+    unless receiver
+      render json: {
+        'errors' => {
+          'friendship' => 'No such user exists'
+        }
+      }, status: 404 and return
+    end
 
     return unless ensure_no_existing_friendship(receiver, @authenticated_user)
 
@@ -108,5 +114,17 @@ class Api::FriendshipsController < ApplicationController
     end
 
     true
+  end
+
+  def find_friendship(profile_user, auth_user)
+    friendship = Friendship.find_by(receiver_id: profile_user.id,
+                                    sender_id: auth_user.id) || Friendship.find_by(
+                                      receiver_id: auth_user.id, sender_id: profile_user.id
+                                    )
+    return nil unless friendship
+
+    {
+      'friendship_accepted' => friendship.is_accepted
+    }
   end
 end

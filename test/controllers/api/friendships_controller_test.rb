@@ -9,7 +9,7 @@ def user_params
 end
 
 def create_and_sign_in_user(user_info)
-  post '/api/users', params: user_info
+  post '/api/users', params: { user: user_info }
 
   user_response = JSON.parse(@response.body)
   User.find_by(id: user_response['id'])
@@ -186,7 +186,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(false, Friendship.all.first.is_accepted)
   end
 
-  # DELETE
+  # # DELETE
 
   test 'when a user rejects a pending friend request, then response is 200' do
     # Arrange
@@ -195,7 +195,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     user_two = create_and_sign_in_user(user_params)
     friendship = Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: false)
 
-    # A ct
+    # Act
     delete "/api/friendships/#{friendship.id}"
 
     # Assert
@@ -210,7 +210,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     user_two = create_and_sign_in_user(user_params)
     friendship = Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: false)
 
-    # A ct
+    # Act
     delete "/api/friendships/#{friendship.id}"
 
     # Assert
@@ -225,7 +225,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     user_two = create_and_sign_in_user(user_params)
     friendship = Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: true)
 
-    # A ct
+    # Act
     delete "/api/friendships/#{friendship.id}"
 
     # Assert
@@ -240,7 +240,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     user_two = create_and_sign_in_user(user_params)
     friendship = Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: true)
 
-    # A ct
+    # Act
     delete "/api/friendships/#{friendship.id}err"
 
     # Assert
@@ -254,7 +254,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     reset!
     friendship = Friendship.create!(sender_id: user_two.id, receiver_id: user_one.id, is_accepted: true)
 
-    # A ct
+    # Act
     delete "/api/friendships/#{friendship.id}err"
 
     # Assert
@@ -279,7 +279,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(friendship.id, Friendship.all.first.id)
   end
 
-  # GET
+  # # GET
 
   test 'when a user tries to retrieve all his friends with no data, then response 200' do
     # Arrange
@@ -309,7 +309,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     user_two = create_and_sign_in_user(user_params)
     reset!
     user_three = create_and_sign_in_user(user_params)
-
+    reset!
     Friendship.create!(sender_id: user_one.id, receiver_id: user_two.id, is_accepted: true)
     Friendship.create!(sender_id: user_one.id, receiver_id: user_three.id, is_accepted: true)
 

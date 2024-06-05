@@ -30,7 +30,7 @@ export const fetchPosts = async (userId) => {
     })
     await checkResponse(response)
     const postsData = await response.json()
-    console.log("LOG API GET posts response:", postsData)
+    // console.log("LOG API GET posts response:", postsData)
     return postsData
   } catch (err) {
     console.error("Error in get Posts api:", err.message)

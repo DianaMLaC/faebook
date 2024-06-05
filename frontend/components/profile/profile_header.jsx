@@ -8,11 +8,38 @@ import { RiMessengerLine } from "react-icons/ri"
 import { IoPersonAddSharp } from "react-icons/io5"
 import { FaCamera } from "react-icons/fa"
 import { TbDots } from "react-icons/tb"
+import { deleteFriendship, fetchFriendships, requestFriendship } from "../../utils/profile"
 
 const ProfileHeader = () => {
   const { currentUser, setCurrentUser, profileUser } = useAuth()
   const [profileModalIsOpen, setProfileModalIsOpen] = useState(false)
   const [coverModalIsOpen, setCoverModalIsOpen] = useState(false)
+  const [friendshipRequested, setFriendshipRequested] = useState(false)
+  const [friendshipAccepted, setFriendshipAccepted] = useState(false)
+  const [existingRelation, setExistingRelation] = useState(true)
+
+  useEffect(() => {
+    console.log("checking friendship between current_user and :", profileUser.displayName)
+    async function checkFriendshipStatus() {
+      try {
+        const friendshipData = await fetchFriendships(profileUser.id)
+        if (friendshipData.existing_relation) {
+          console.log("friendship:", friendshipData)
+          console.log("friendship accepted?", friendshipData.existing_relation.friendship_accepted)
+          setFriendshipAccepted(friendshipData.existing_relation.friendship_accepted)
+          setFriendshipRequested(true)
+        } else {
+          setExistingRelation(false)
+        }
+      } catch (error) {
+        console.error("Error fetching friendship data:", error)
+      }
+    }
+
+    if (profileUser.id) {
+      checkFriendshipStatus()
+    }
+  }, [currentUser, profileUser])
 
   const updatePhoto = useCallback(
     (albumName, url) => {
@@ -41,6 +68,66 @@ const ProfileHeader = () => {
     },
     [currentUser, setCurrentUser]
   )
+  const handleFriendRequest = async (e) => {
+    e.preventDefault()
+    try {
+      const friendshipRequest = await requestFriendship(profileUser.id)
+      if (friendshipRequest) {
+        setFriendshipRequested(true)
+        console.log("friend-request:", friendshipRequest)
+      }
+    } catch (err) {
+      console.error("error caught pHeader from api:", err)
+    }
+  }
+
+  const cancelFriendship = async (e) => {
+    e.preventDefault()
+    try {
+      const friendshipResp = await deleteFriendship(friendship.id)
+      if (friendshipResp) {
+        setFriendshipRequested(false)
+        setFriendshipAccepted(false)
+      }
+    } catch (err) {
+      console.error("error caught pHeader from api:", err)
+    }
+  }
+
+  let friendshipButton
+
+  switch (true) {
+    case friendshipAccepted:
+      friendshipButton = (
+        <>
+          <div className="already-friends-button">
+            <IoPersonAddSharp />
+            <span>Friends</span>
+          </div>
+        </>
+      )
+      break
+    case friendshipRequested:
+      friendshipButton = (
+        <>
+          <div className="cancel-friendship-button" onClick={cancelFriendship}>
+            <IoPersonAddSharp />
+            <span>Cancel request</span>
+          </div>
+        </>
+      )
+      break
+    default:
+      friendshipButton = (
+        <>
+          <div className="add-friend-button" onClick={handleFriendRequest}>
+            <IoPersonAddSharp />
+            <span>Add Friend</span>
+          </div>
+        </>
+      )
+      break
+  }
 
   const openProfileModal = () => {
     setProfileModalIsOpen(true)
@@ -96,21 +183,23 @@ const ProfileHeader = () => {
               <img className="profile-photo" src={profileUser.profilePhotoUrl} alt="Profile" />
             )}
           </div>
-          <div className="profile-photo-button-container" onClick={openProfileModal}>
-            {currentUser.id === profileUser.id && <FaCamera />}
-            <ReactModal
-              isOpen={profileModalIsOpen}
-              onRequestClose={closeProfileModal}
-              contentLabel="Profile"
-              className="Modal"
-            >
-              <PhotoUpload
-                updatePhoto={updatePhoto}
-                closeModalContainer={closeProfileModal}
-                albumName={"Profile"}
-              />
-            </ReactModal>
-          </div>
+          {currentUser.id === profileUser.id && (
+            <div className="profile-photo-button-container" onClick={openProfileModal}>
+              <FaCamera />
+              <ReactModal
+                isOpen={profileModalIsOpen}
+                onRequestClose={closeProfileModal}
+                contentLabel="Profile"
+                className="Modal"
+              >
+                <PhotoUpload
+                  updatePhoto={updatePhoto}
+                  closeModalContainer={closeProfileModal}
+                  albumName={"Profile"}
+                />
+              </ReactModal>
+            </div>
+          )}
         </div>
         <div className="profile-display-name-container">
           <h1 className="profile-display-name">{profileUser.displayName}</h1>
@@ -133,10 +222,7 @@ const ProfileHeader = () => {
                 <RiMessengerLine />
                 <span>Messenger</span>
               </div>
-              <div className="add-friend-button">
-                <IoPersonAddSharp />
-                <span>Add Friend</span>
-              </div>
+              {friendshipButton}
             </>
           )}
         </div>

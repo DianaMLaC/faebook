@@ -699,26 +699,27 @@ body {
   padding-left: 4px;
 }
 
-.add-to-story-button {
+.add-to-story-button, .messenger-button, .already-friends-button, .cancel-friendship-button {
   background-color: var(--primary-color);
   color: var(--text-contrast);
 }
 
-.add-to-story-button:hover {
+.add-to-story-button:hover, .messenger-button:hover, .already-friends-button:hover, .cancel-friendship-button:hover {
   background-color: var(--primary-button-hover);
   color: var(--primary-button-text);
 }
 
-.edit-profile-button {
+.edit-profile-button, .add-friend-button {
   background-color: var(--secondary-button-background);
   color: (var(--text-color));
 }
 
-.edit-profile-button:hover {
+.edit-profile-button:hover, .add-friend-button:hover {
   background-color: var(--secondary-button-hover);
+  cursor: pointer;
 }
 
-.add-to-story-button, .edit-profile-button {
+.add-to-story-button, .edit-profile-button, .messenger-button, .add-friend-button, .cancel-friendship-button, .already-friends-button {
   padding: 8px 12px;
   font-size: 12px; 
   border-radius: 5px;

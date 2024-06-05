@@ -12,8 +12,8 @@ Rails.application.routes.draw do
       collection do
         get 'search'
       end
-      resources :posts, only: %i[create index]
-      resources :friendships, only: %i[create index]
+      resources :posts, only: %i[create index show]
+      resources :friendships, only: %i[create index show]
       resources :albums, only: [:index]
       resources :photos, only: [:index]
       resources :intros, only: %i[create update]

@@ -32,6 +32,7 @@ const AuthProvider = ({ children }) => {
 
   const loadUserProfile = async (userId) => {
     const profileData = await fetchUserProfile(userId)
+    console.log("Profile Data:", profileData)
     setProfileUser(profileData)
   }
 
@@ -43,6 +44,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (userData) => {
     const dbUser = await postSession(userData)
+    console.log("Logged in user:", dbUser)
     setCurrentUser(dbUser)
     navigate("/profile-page")
   }

@@ -110,3 +110,54 @@ export const fetchUserSuggestions = async (searchTerm) => {
     throw err
   }
 }
+
+export const requestFriendship = async (userId) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/users/${userId}/friendships`, {
+      method: "POST",
+      headers: customHeaders,
+    })
+
+    await checkResponse(response)
+    const friendship = await response.json()
+    return friendship
+  } catch (err) {
+    console.error(err.message)
+    console.error("Error in requesting friendship api", err)
+    throw err
+  }
+}
+
+export const deleteFriendship = async (friendshipId) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/friendship/${friendshipId}`, {
+      method: "DELETE",
+      headers: customHeaders,
+    })
+
+    await checkResponse(response)
+    const friendship = await response.json()
+    return friendship
+  } catch (err) {
+    console.error(err.message)
+    console.error("Error in deleting friendship api", err)
+    throw err
+  }
+}
+
+export const fetchFriendships = async (profileId) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/users/${profileId}/friendships`, {
+      method: "GET",
+      headers: customHeaders,
+    })
+
+    await checkResponse(response)
+    const friendships = await response.json()
+    return friendships
+  } catch (err) {
+    console.error(err.message)
+    console.error("Error in fetching friendships api", err)
+    throw err
+  }
+}

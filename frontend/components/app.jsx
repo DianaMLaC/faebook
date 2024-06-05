@@ -18,7 +18,7 @@ const App = () => {
     }
   }, [currentUser])
 
-  console.dir({ currentUser })
+  // console.dir({ currentUser })
   return (
     <Routes>
       <Route

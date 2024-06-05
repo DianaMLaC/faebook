@@ -28,7 +28,7 @@ const UserProfile = () => {
     async function fetchProfile() {
       try {
         const profileUserData = await fetchUserProfile(profileId)
-        console.log("profileUserData", { profileUserData })
+        // console.log("profileUserData", { profileUserData })
         setProfileUser(profileUserData)
         // console.log("profileUserState:", profileUser)
       } catch (err) {
@@ -37,7 +37,7 @@ const UserProfile = () => {
     }
 
     fetchProfile()
-  }, [profileId])
+  }, [profileId, setProfileUser])
 
   useEffect(() => {
     console.log("Updated profileUser state:", profileUser)

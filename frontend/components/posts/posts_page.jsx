@@ -1,7 +1,6 @@
 import React from "react"
 import Intro from "./intro"
 import Photos from "./photos"
-import Post from "./post"
 import CreatePost from "./create-post-container"
 import PostsIndex from "./posts_index"
 
