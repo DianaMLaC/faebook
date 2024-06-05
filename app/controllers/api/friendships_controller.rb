@@ -6,9 +6,9 @@ class Api::FriendshipsController < ApplicationController
     friend = User.find_by(id: params[:user_id])
     friendship = find_friendship(friend, @authenticated_user)
 
-    accepted_friendships = friend.sent_friendships.where(is_accepted: true) +
-                           friend.received_friendships.where(is_accepted: true)
-    pending_friendships = friend.received_friendships.where(is_accepted: false)
+    @accepted_friendships = friend.sent_friendships.where(is_accepted: true) +
+                            friend.received_friendships.where(is_accepted: true)
+    @pending_friendships = friend.received_friendships.where(is_accepted: false)
 
     render json: {
       'friendships' => {

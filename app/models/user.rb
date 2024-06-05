@@ -81,11 +81,45 @@ class User < ApplicationRecord
   end
 
   def friends
-    sent_friendships.where(is_accepted: true)
+    friendships = Friendship.includes(:sender, :receiver)
+                            .where('(sender_id = :user_id OR receiver_id = :user_id) AND is_accepted = true', user_id: id)
+                            .order(created_at: :desc)
+
+    friendships.map do |friendship|
+      friend = friendship.sender_id == id ? friendship.receiver : friendship.sender
+      {
+        friend:,
+        friendship_status: { accepted_status: friendship.is_accepted }
+      }
+    end
   end
 
-  def friend_requests
-    received_friendships.where(is_accepted: false)
+  def friend_requests_pending
+    friendships = Friendship.includes(:sender, :receiver)
+                            .where('(receiver_id = :user_id) AND is_accepted = false', user_id: id)
+                            .order(created_at: :desc)
+
+    friendships.map do |friendship|
+      friend = friendship.sender_id == id ? friendship.receiver : friendship.sender
+      {
+        friend:,
+        friendship_status: { accepted_status: friendship.is_accepted }
+      }
+    end
+  end
+
+  def requested_friendships_pending
+    friendships = Friendship.includes(:sender, :receiver)
+                            .where('(sender_id = :user_id) AND is_accepted = false', user_id: id)
+                            .order(created_at: :desc)
+
+    friendships.map do |friendship|
+      friend = friendship.sender_id == id ? friendship.receiver : friendship.sender
+      {
+        friend:,
+        friendship_status: { accepted_status: friendship.is_accepted }
+      }
+    end
   end
 
   def has_password?(password)
