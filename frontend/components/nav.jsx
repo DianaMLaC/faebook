@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/auth"
 import AccountMenu from "./profile/account_menu"
 import { BiHomeAlt } from "react-icons/bi"
-import { MdOutlineOndemandVideo } from "react-icons/md"
+import { MdOutlineOndemandVideo, MdKeyboardArrowDown } from "react-icons/md"
 import { HiOutlineUserGroup } from "react-icons/hi2"
 import { CgGames } from "react-icons/cg"
 import { TbGridDots } from "react-icons/tb"
 import { FaFacebookMessenger } from "react-icons/fa6"
-import { IoNotificationsCircle, IoSearchOutline } from "react-icons/io5"
+import { IoMdNotifications } from "react-icons/io"
 
 const NavBar = () => {
   const { currentUser, setProfileUser } = useAuth()
@@ -97,13 +97,16 @@ const NavBar = () => {
             <FaFacebookMessenger />
           </div>
           <div className="nav-notifications-button">
-            <IoNotificationsCircle />
+            <IoMdNotifications />
           </div>
           <div className="nav-account-button" onClick={handleMenuButton}>
             <div className="avatar">
               {currentUser.profilePhotoUrl && (
                 <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
               )}
+            </div>
+            <div className="account-menu-toggle">
+              <MdKeyboardArrowDown />
             </div>
             {toggleUserMenu && (
               <div className="account-menu-container">

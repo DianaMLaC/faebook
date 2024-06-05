@@ -250,8 +250,8 @@ body {
 }
 
 .nav-logo {
-  height: 36px;
-  width: 36px;
+  height: 50px;
+  width: 50px;
   font-weight: bold;
   padding-left: 16px;
   color: var(--primary-color);
@@ -280,6 +280,7 @@ body {
 
 .nav-search input[type="search"]:hover {
   background-color: var(--accent-color);
+  color: var(--text-contrast);
   cursor:auto;
 }
 .nav-search input[type="search"]::placeholder {
@@ -351,8 +352,8 @@ body {
 }
 
 
-.nav-home-button, .nav-video-button, .nav-groups-button, .nav-games-button, .nav-create-button, .nav-messenger-button, .nav-notifications-button {
-  min-width: 50px;
+.nav-home-button, .nav-video-button, .nav-groups-button, .nav-games-button {
+  min-width: 40px;
   max-width: 110px;
   height: 55px;
   margin: 10px;
@@ -361,19 +362,42 @@ body {
   align-items: center;
   font-size: 32px;
   font-weight: 800;
+  color: var(--text-secondary);
 }
 
-/* 
-.nav-home-button, .nav-friends-button, .nav-more-button, .nav-groups-button,
-.nav-create-button, .nav-menu-button, .nav-messenger-button,
-.nav-notifications-button, .nav-account-button {
-  display: flex;
-  align-items: center;
+.nav-create-button, .nav-messenger-button, .nav-notifications-button {
+  border: transparent;
+  border-radius: 50%;
+  background-color: var(--secondary-button-background);
+  height: 40px;
+  margin-right: 8px;
+  display: flex; 
   justify-content: center;
-  width: 36px; 
-  height: 36px; 
-  margin: 0 4px; */
-/* } */
+  align-items: center;
+  font-size: 26px;
+  min-width: 40px;
+  /* font-weight: 800; */
+}
+
+.nav-account-button {
+  cursor: pointer;
+  position: relative;
+}
+
+.account-menu-toggle {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--secondary-button-background);
+  border: 1px solid white;
+  border-radius: 50%;
+  z-index: 9;
+  top: 26px;
+  right: 10px;
+  font-size: 14px;
+}
+
 
 .nav-home-button:hover, .nav-video-button:hover, .nav-groups-button:hover, .nav-games-button:hover {
   background-color: var(--shade-background-color);
@@ -381,16 +405,13 @@ body {
   /* cursor: pointer; */
 }
 
-.nav-create-button:hover, .nav-messenger-button:hover, .nav-notifications-button:hover, .nav-messenger-button:hover,
- .nav-account-button:hover {
-  border: 3px solid var(--accent-color);
-  border-radius: 50%;
-  cursor: pointer;
+.nav-create-button:hover, .nav-messenger-button:hover, .nav-notifications-button:hover, .nav-account-button:hover {
+  background-color: var(--secondary-button-hover);
 }
 
 .account-menu-container {
   position: absolute;
-  width: 400;
+  width: 360px;
   right: 0px;
   background: white;
   border: 1px solid #ccc; 
@@ -401,26 +422,35 @@ body {
   padding-inline-start: 0;  
   border: transparent;  
   margin-right: 10px;  
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px;
 }
 
 .account-menu {
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  /* padding: 10px; */
+  margin-top: 5px;
 }
 
+
 .menu-banner {
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(8, 5, 5, 0.1);
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px 0;
   display: flex;
   flex-direction: column;
-
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 4px;
+  margin-bottom: 16px;
+  padding: 8px;
 }
 
 .menu-account-profile {
-  padding: 10px;
+  margin-left: 4px;
+  margin-right: 4px;
+  margin-top: 8px;
+  margin-bottom: 8px;
   align-self: flex-start;
   display:flex;
   flex-direction: row;
@@ -429,7 +459,7 @@ body {
 .menu-see-all-profiles {
   border-radius: 5px;
   border: none;
-  background-color: var(--secondary-color);
+  background-color: var(--secondary-button-background);
   display: flex;
   justify-content: center;
   align-items:center;
@@ -440,41 +470,64 @@ body {
   border-top-width: 0.555556px;
 }
 
+.menu-see-all-profiles:hover {
+  background-color: var(--secondary-button-hover);
+}
+
 .menu-user-display-name {
+  font-size: 16px;
   font-weight: 600;
-  padding-left: 10px;
+  padding-left: 4px;
   align-self: center;
 }
 
 .menu-see-all-profiles span {
-  padding-left: 6px;
+  padding: 12px;
+  margin-left: 3px;
+  margin-right: 3px;
+
 }
 
 .menu-icon {
-  padding-right: 10px;
-}
-
-.menu-icon img {
-  object-fit: cover;
-  width: 24px;
-  height: 24px;
-  align-self: center
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 12px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: transparent;
+  background-color: var(--secondary-button-background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
 }
 
 .menu-item {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  padding: 10px;
+  padding-right: 16px;
+  padding-left: 16px;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.menu-item:hover {
+  background-color: var(--shade-background-color);
+  border-radius: 8px;
 }
 
 .menu-log-out {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  padding: 10px;
-  cursor: pointer;
-
+  padding-right: 16px;
+  padding-left: 16px;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .menu-item:hover, .menu-log-out:hover {
@@ -482,7 +535,7 @@ body {
 }
 
 .menu-item span {
-  align-self: flex-start;
+  align-self: flex-end;
 }
 
 

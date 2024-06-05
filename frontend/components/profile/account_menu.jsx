@@ -1,7 +1,9 @@
 import React from "react"
 import { useAuth } from "../../context/auth"
 import { PiUserSwitchFill } from "react-icons/pi"
-import { IoIosArrowForward } from "react-icons/io"
+import { IoIosArrowForward, IoMdHelpCircle, IoMdSettings } from "react-icons/io"
+import { MdNightlight, MdFeedback } from "react-icons/md"
+import { IoLogOut } from "react-icons/io5"
 
 const AccountMenu = () => {
   const { currentUser, logout } = useAuth()
@@ -31,36 +33,42 @@ const AccountMenu = () => {
 
       <div className="menu-item">
         <div className="menu-icon">
-          <img className="settings" src="/assets/images/settings.png" alt="Settings"></img>
+          <IoMdSettings />
         </div>
-        <span>Settings & Privacy</span>
-      </div>
-      <div className="menu-item">
-        <div className="menu-icon">
-          <img className="help" src="/assets/images/help.png" alt="Help"></img>
-        </div>
-        <span>Help & Support</span>
-      </div>
-      <div className="menu-item">
-        <div className="menu-icon">
-          <img className="display" src="/assets/images/display.png" alt="Display"></img>
-        </div>
-        <span>Display & Accessibility</span>
-        <span>
+        <div>Settings & Privacy</div>
+        {/* <span>
           <IoIosArrowForward />
-        </span>
+        </span> */}
       </div>
       <div className="menu-item">
         <div className="menu-icon">
-          <img className="feedback" src="/assets/images/feedback.png" alt="Feedback"></img>
+          <IoMdHelpCircle />
         </div>
-        <span>Give feedback</span>
+        <div>Help & Support</div>
+        {/* <span>
+          <IoIosArrowForward />
+        </span> */}
+      </div>
+      <div className="menu-item">
+        <div className="menu-icon">
+          <MdNightlight />
+        </div>
+        <div>Display & Accessibility</div>
+        {/* <span>
+          <IoIosArrowForward />
+        </span> */}
+      </div>
+      <div className="menu-item">
+        <div className="menu-icon">
+          <MdFeedback />
+        </div>
+        <div>Give feedback</div>
       </div>
       <div className="menu-log-out" onClick={handleLogOut}>
         <div className="menu-icon">
-          <img className="logout" src="/assets/images/logout.png" alt="Log Out"></img>
+          <IoLogOut />
         </div>
-        <span className="">Log out</span>
+        <div className="">Log out</div>
       </div>
       <div className="menu-footer">
         <span>Privacy · Terms · Advertising · Ad choices · Cookies · Cookies · Meta © 2024</span>
