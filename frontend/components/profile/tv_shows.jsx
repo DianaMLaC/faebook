@@ -24,7 +24,7 @@ const TvShows = () => {
   return (
     <div className="tv-shows-container">
       <header className="tv-shows-header">
-        <h4>Tv Shows</h4>
+        <h2>Tv Shows</h2>
         <div className="tv-shows-header-more-button">...</div>
       </header>
       <nav className="tv-shows-nav">

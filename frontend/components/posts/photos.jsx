@@ -25,7 +25,7 @@ const Photos = () => {
   return (
     <div className="photos-container">
       <header className="photos-header">
-        <h4>Photos</h4>
+        <h2>Photos</h2>
         <div className="see-photos">See All Photos</div>
       </header>
       <ul className="photos-display-grid">

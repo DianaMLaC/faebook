@@ -5,7 +5,11 @@ const PostsFriend = ({ friend }) => {
     <div className="posts-friend-container">
       <div className="posts-friend-photo">
         {friend.profilePhotoUrl ? (
-          <img className="photo-cover-image" src={friend.profilePhotoUrl} alt={photo.description} />
+          <img
+            className="photo-cover-image"
+            src={friend.profilePhotoUrl}
+            alt={friend.displayName}
+          />
         ) : (
           <div>No photo to show</div>
         )}

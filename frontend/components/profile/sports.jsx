@@ -24,7 +24,7 @@ const Sports = () => {
   return (
     <div className="sports-container">
       <header className="sports-header">
-        <h4>Sports</h4>
+        <h2>Sports</h2>
         <div className="sports-header-more-button">...</div>
       </header>
       <nav className="sports-nav">

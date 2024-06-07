@@ -24,7 +24,7 @@ const Movies = () => {
   return (
     <div className="movies-container">
       <header className="movies-header">
-        <h4>Movies</h4>
+        <h2>Movies</h2>
         <div className="movies-header-more-button">...</div>
       </header>
       <nav className="movies-nav">

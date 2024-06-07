@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
 import { fetchFriendships } from "../../utils/profile"
-import Friend from "../friends/friend"
+import PostsFriend from "./posts_friend"
 
 const PostsFriends = () => {
   const { profileUser } = useAuth()
@@ -29,14 +29,13 @@ const PostsFriends = () => {
   return (
     <div className="posts-friends-container">
       <header className="posts-friends-header">
-        <div className="post-friends-title">
-          <h4>Friends</h4>
-          {friends && <div className="posts-friends-number">{friends.count} friends</div>}
-        </div>
+        <h2>Friends</h2>
+        {friends && <div className="posts-friends-number">{friends.count} friends</div>}
+
         <div className="see-friends">See All Friends</div>
       </header>
-      <ul className="photos-display-grid">
-        {friends && friends.map((friend) => <Friend key={friend.id} friend={friend} />)}
+      <ul className="friends-display-grid">
+        {friends && friends.map((friend) => <PostsFriend key={friend.id} friend={friend} />)}
       </ul>
     </div>
   )

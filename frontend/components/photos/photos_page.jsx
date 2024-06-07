@@ -30,9 +30,8 @@ const PhotosPage = () => {
   return (
     <div className="photos-container">
       <header className="photos-header">
-        <div>
-          <h4>Photos</h4>
-        </div>
+        <h2>Photos</h2>
+
         <div>
           <button className="add-photo-button">Add photos/video</button>
           <div className="photo-header-more-button">...</div>

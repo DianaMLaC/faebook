@@ -17,17 +17,49 @@
 
  /* Overall body styling */
 
- html, body, section, article, h1, h2, p, strong, em, a {
-  margin: 0;
-  border: 0;
-  padding: 0;
-  outline: 0;
-  box-sizing: inherit;
-  font: inherit;
-  text-decoration: inherit;
-  text-align: inherit;
-  color: inherit;
-  background: transparent;
+html, body, div, span, applet, object, iframe,
+h1, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 
@@ -62,6 +94,11 @@ body {
   min-height: 100vh;
   cursor:auto; 
 }
+
+/* h4 {
+  font-size: 20px;
+  font-weight: 700px;
+} */
 
 /* START PAGE */
 
@@ -407,6 +444,11 @@ body {
 
 .nav-create-button:hover, .nav-messenger-button:hover, .nav-notifications-button:hover, .nav-account-button:hover {
   background-color: var(--secondary-button-hover);
+}
+
+.nav-account-button:hover {
+  background-color: var(--secondary-button-hover);
+  cursor: pointer;
 }
 
 .account-menu-container {
@@ -855,8 +897,8 @@ body {
 
 .profile-photos-container {
   background-color: var(--secondary-color);
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
   padding-top: 10px;
 }
 
@@ -875,9 +917,18 @@ body {
   align-items: center;
   margin: 6px;
   font-size: 18px;
-  padding-left: 10px;
+  /* padding-left: 10px; */
   padding-right: 10px;
 
+}
+
+.photos-header h2{
+  font-size: 20px;
+  font-weight: 700px;
+  margin-bottom: 6px;
+  margin-top: 6px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .see-photos {
@@ -912,13 +963,13 @@ body {
 
 .photo-header-more-button {
   padding: 8px 12px;
-  background-color: var(--shade-background-color);
+  background-color: var(--secondary-button-background);
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bolder; 
   border-radius: 5px;
   border-color: transparent;
-  cursor: pointer;
+  cursor: not-allowed;
   margin-right: 9px; 
 }
 
@@ -1054,8 +1105,8 @@ body {
 
 
 .about-me-title {
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 20px;
+  font-weight: 700;
   padding-bottom: 10px;
   margin: 6px;
 
@@ -1190,19 +1241,30 @@ body {
   padding-left: 10px;
 }
 
+.sports-header h2, 
+.music-header h2, 
+.movies-header h2, 
+.tv-shows-header h2, 
+.books-header h2,
+.videos-header h2,
+.check-ins-header h2{
+  font-size: 20px;
+  font-weight: 700;
+}
+
 .sports-header-more-button, 
 .music-header-more-button, 
 .movies-header-more-button, 
 .tv-shows-header-more-button, 
 .books-header-more-button {
   padding: 8px 12px;
-  background-color: var(--shade-background-color);
+  background-color: var(--secondary-button-background);
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bolder; 
   border-radius: 5px;
   border-color: transparent;
-  /* cursor: pointer; */
+  cursor: not-allowed;
   margin-right: 9px; 
 }
 
@@ -1259,6 +1321,181 @@ body {
   opacity: 0.7;
   margin: 10px;
 }
+/* Friends */
+
+.profile-friends-container {
+  background-color: var(--secondary-color);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+
+.friends-page-container {
+  position: relative;
+  background-color: white;
+  box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.friends-page-container header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 6px;
+  font-size: 18px;
+  /* padding-left: 10px; */
+  padding-right: 10px;
+}
+
+.friends-page-header-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.friends-page-search-bar {
+  background-color: var(--shade-background-color);
+  border-radius: 25px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  width: 150px;
+  margin-right: 10px;
+  padding: 10px;
+}
+
+
+
+.friends-page-more-button {
+  padding: 8px 12px;
+  background-color: var(--secondary-button-background);
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: bolder; 
+  border-radius: 5px;
+  border-color: transparent;
+  cursor: not-allowed;
+  margin-right: 9px; 
+}
+
+.friends-page-container h2 {
+  font-size: 20px;
+  font-weight: 700px;
+  margin-bottom: 6px;
+  margin-top: 6px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.friends-page-container nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 6px;
+}
+
+.friends-nav span {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-color);
+  opacity: 0.7;
+  padding: 10px;
+}
+
+.friends-nav span:hover {
+  background-color: var(--shade-background-color);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.friends-nav span.active, .friends-nav span.active:hover {
+  color: var(--primary-color);
+  background-color: transparent;
+  border-bottom: 4px solid var(--primary-color);
+}
+
+.friend-requests-display {
+  display: flex;
+  justify-content: start;
+  padding-inline-start: 5px;
+}
+
+.friend-requests-display > li {
+  width: 150px;
+  height: 200px;
+  margin: 10px;
+  padding: 4px;
+  box-sizing: border-box;
+  border: 1px solid var(--shade-background-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.friend-request-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 10px;
+  border-radius: 8px;
+}
+
+.friend-request-container:hover {
+  text-decoration: underline;
+}
+
+.friend-request-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  border-color: transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.friend-cover-photo {
+  width: inherit;
+  height: inherit;
+  object-fit: cover;
+  overflow: hidden;
+  display: block;
+  border-radius: 5px;
+}
+
+.friend-request-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.friend-request-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.friend-request-accept {
+  background-color: var(--primary-button-background);
+  
+}
+
+.friend-request-accept:hover {
+  background-color: var(--primary-button-hover);
+  cursor: pointer;
+}
+
+.friend-request-remove {
+  background-color: var(--secondary-button-background);
+}
+
+.friend-request-remove:hover {
+  background-color: var(--secondary-button-hover);
+  cursor: pointer;
+}
+
+
 
 /* Posts page */
 
@@ -1324,11 +1561,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 4px;
-  padding-top: 20px;
+  margin: 6px;
+  font-size: 18px;
+  /* padding-left: 10px; */
+  padding-right: 10px;
 }
 
-.intro-header h4 {
+.intro-header h2 {
   font-size: 20px;
   font-weight: 700px;
   margin-bottom: 6px;
@@ -1402,7 +1641,11 @@ ul.photos-display-grid {
   font-size: 18px;
   padding-left: 10px;
   padding-right: 10px;
+}
 
+.posts-friends-header h2 {
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .see-friends {
@@ -1540,13 +1783,13 @@ ul.photos-display-grid {
 
 .more-button {
   padding: 8px 12px;
+  background-color: var(--secondary-button-background);
   color: var(--text-color);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bolder; 
-  opacity: 0.7;
   border-radius: 5px;
   border-color: transparent;
-  /* cursor: pointer; */
+  cursor: not-allowed;
   margin-right: 9px; 
 }
 
@@ -2106,12 +2349,7 @@ align-self: center;
 
 
 
-/* NOT IMPLEMENTED YET*/
-/* .nav-home-button, .nav-friends-button, .nav-groups-button,
-.nav-friend-requests-button, .nav-menu-button, .nav-messenger-button,
-.nav-notifications-button, .nav-account-button, .nav-search, .nav-logo {
-  color: red;
-} */
+
 
 
 @media only screen and (max-width: 600px) {

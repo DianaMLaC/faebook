@@ -24,7 +24,7 @@ const Books = () => {
   return (
     <div className="books-container">
       <header className="books-header">
-        <h4>Books</h4>
+        <h2>Books</h2>
         <div className="books-header-more-button">...</div>
       </header>
       <nav className="books-nav">

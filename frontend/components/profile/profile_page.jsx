@@ -10,6 +10,7 @@ import Books from "./books"
 import Videos from "./videos"
 import CheckIns from "./check_ins"
 import PostsPage from "../posts/posts_page"
+import FriendsPage from "../friends/friends_page"
 import { fetchUserProfile } from "../../utils/profile"
 import { useAuth } from "../../context/auth"
 import { PostsProvider } from "../../context/posts"
@@ -59,6 +60,9 @@ const UserProfile = () => {
       </div>
       <div className="profile-about-me-container">
         <AboutMe />
+      </div>
+      <div className="profile-friends-container">
+        <FriendsPage />
       </div>
       <div className="profile-photos-container">
         <PhotosPage />

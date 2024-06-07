@@ -4,7 +4,7 @@ const Music = () => {
   return (
     <div className="music-container">
       <header className="music-header">
-        <h4>Music</h4>
+        <h2>Music</h2>
         <div className="music-header-more-button">...</div>
       </header>
       <nav className="music-nav">
