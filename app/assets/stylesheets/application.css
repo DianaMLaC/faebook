@@ -640,6 +640,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 20px;
 }
 
 .profile-photo-container {
@@ -717,6 +718,10 @@ body {
 .edit-profile-button:hover, .add-friend-button:hover {
   background-color: var(--secondary-button-hover);
   cursor: pointer;
+}
+
+.add-to-story-button {
+  cursor: not-allowed;
 }
 
 .add-to-story-button, .edit-profile-button, .messenger-button, .add-friend-button, .cancel-friendship-button, .already-friends-button {
@@ -883,6 +888,7 @@ body {
 .see-photos:hover {
   background-color: var(--shade-background-color);
   border-radius: 2px;
+  cursor: not-allowed;
 }
 
 .photos-header div:nth-child(2) {
@@ -1369,6 +1375,60 @@ ul.photos-display-grid {
   padding: 6px; /* Optional: Add some spacing between items */
 }
 
+/* Posts Page Friends Container */
+
+/* .posts-friends {
+  background-color: var(--secondary-color);
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 10px;
+} */
+
+
+.posts-friends-container {
+  position: relative;
+  background-color: white;
+  box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.posts-friends-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 6px;
+  font-size: 18px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+}
+
+.see-friends {
+  margin-right: 6px;
+  color: var(--link-color)
+}
+
+.see-friends:hover {
+  background-color: var(--shade-background-color);
+  border-radius: 2px;
+  cursor: not-allowed;
+}
+
+.posts-friends-header div:nth-child(1) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.friends-display-grid li {
+  flex: 1 0 33.33%; /* Basis of 33.33% for 3x3 grid */
+  max-width: 33.33%; /* Ensure no overflow */
+  box-sizing: border-box; /* Include padding in the width */
+  padding: 6px; /* Optional: Add some spacing between items */
+}
 
 
 .create-post-container {
@@ -1865,6 +1925,7 @@ align-self: center;
   border: transparent;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 .post-submit-button:disabled {
