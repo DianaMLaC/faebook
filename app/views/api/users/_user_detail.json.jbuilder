@@ -49,3 +49,66 @@ end
 json.friendRequests user.friend_requests do |friend_request|
   json.partial! 'api/users/user', user: friend_request
 end
+
+
+
+
+if user.friends.present?
+  json.array! user.friends do |friend |
+    json.id friend.id
+    json.displayName friend.display_name
+    if friend.profile_photo_url.present?
+      json.profilePhotoUrl friend.profile_photo_url
+    end
+    if friend.intro.work.present?
+      json.work friend.intro.work
+    end
+    if friend.intro.location.present?
+      json.location friend.intro.location
+    end
+    if friend.intro.education.present?
+      json.education friend.intro.education
+    end
+    json.friendshipStatus friend[:friendship_status]
+  end
+end
+
+if user.friend_requests_pending.present?
+  json.array! user.friend_requests_pending do |friend |
+    json.id friend.id
+    json.displayName friend.display_name
+    if friend.profile_photo_url.present?
+      json.profilePhotoUrl friend.profile_photo_url
+    end
+    if friend.intro.work.present?
+      json.work friend.intro.work
+    end
+    if friend.intro.location.present?
+      json.location friend.intro.location
+    end
+    if friend.intro.education.present?
+      json.education friend.intro.education
+    end
+    json.friendshipStatus friend[:friendship_status]
+  end
+end
+
+if user.requested_friendships_pending.present?
+  json.array! user.requested_friendships_pending do |friend |
+    json.id friend.id
+    json.displayName friend.display_name
+    if friend.profile_photo_url.present?
+      json.profilePhotoUrl friend.profile_photo_url
+    end
+    if friend.intro.work.present?
+      json.work friend.intro.work
+    end
+    if friend.intro.location.present?
+      json.location friend.intro.location
+    end
+    if friend.intro.education.present?
+      json.education friend.intro.education
+    end
+    json.friendshipStatus friend[:friendship_status]
+  end
+end

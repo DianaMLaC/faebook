@@ -11,9 +11,9 @@ if user.cover_photo_url.present?
   json.coverPhotoUrl user.cover_photo_url
 end
 
-if @user.intro.present?
+if user.intro.present?
   json.intro do
-    json.extract! @user.intro, :work, :education, :location, :relationship
+    json.extract! user.intro, :work, :education, :location, :relationship
   end
 else
   json.intro {}

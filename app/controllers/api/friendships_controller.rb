@@ -3,20 +3,24 @@ class Api::FriendshipsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    friend = User.find_by(id: params[:user_id])
-    friendship = find_friendship(friend, @authenticated_user)
+    # params[:user_id] is the profileUser.id
+    profile_user = User.find_by(id: params[:user_id])
+    # and we need to get his friends, but first, friendships
+    accepted_friendships = Friendship.includes(:sender, :receiver)
+                                     .where('(sender_id = :user_id OR receiver_id = :user_id) AND is_accepted = true', user_id: profile_user.id)
+                                     .order(created_at: :desc)
+    @friends = accepted_friendships.map do |friendship|
+      friendship.sender_id == profile_user.id ? friendship.receiver : friendship.sender
+    end.compact
 
-    @accepted_friendships = friend.sent_friendships.where(is_accepted: true) +
-                            friend.received_friendships.where(is_accepted: true)
-    @pending_friendships = friend.received_friendships.where(is_accepted: false)
+    friend_requests = profile_user.received_friendships.where(is_accepted: false)
+    @pending_friends = friend_requests.map do |friendship|
+      friendship.sender_id == profile_user.id ? friendship.receiver : friendship.sender
+    end.compact
 
-    render json: {
-      'friendships' => {
-        'accepted' => accepted_friendships,
-        'pending' => pending_friendships
-      },
-      'existing_relation' => friendship
-    }, status: 200
+    @existing_relation = find_friendship(profile_user, @authenticated_user)
+
+    render :index
   end
 
   def create
@@ -117,14 +121,13 @@ class Api::FriendshipsController < ApplicationController
   end
 
   def find_friendship(profile_user, auth_user)
-    friendship = Friendship.find_by(receiver_id: profile_user.id,
-                                    sender_id: auth_user.id) || Friendship.find_by(
-                                      receiver_id: auth_user.id, sender_id: profile_user.id
-                                    )
+    return { 'friendship_accepted' => true } if profile_user.id == auth_user.id
+
+    friendship = Friendship.find_by(receiver_id: profile_user.id, sender_id: auth_user.id) ||
+                 Friendship.find_by(receiver_id: auth_user.id, sender_id: profile_user.id)
+
     return nil unless friendship
 
-    {
-      'friendship_accepted' => friendship.is_accepted
-    }
+    { 'friendship_accepted' => friendship.is_accepted }
   end
 end
