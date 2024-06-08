@@ -5,13 +5,9 @@ const FriendAccepted = ({ friend }) => {
     <div className="friend-accepted-container">
       <div className="friend-accepted-photo">
         {friend.profilePhotoUrl ? (
-          <img
-            className="photo-cover-image"
-            src={friend.profilePhotoUrl}
-            alt={friend.displayName}
-          />
+          <img className="friend-cover-" src={friend.profilePhotoUrl} alt={friend.displayName} />
         ) : (
-          <div>No photo to show</div>
+          <div className="no-photo">No photo to show</div>
         )}
       </div>
       <div className="friend-accepted-name">{friend.displayName}</div>

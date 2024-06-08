@@ -32,7 +32,7 @@ const PostsFriends = () => {
     <div className="posts-friends-container">
       <header className="posts-friends-header">
         <h2>Friends</h2>
-        {friends && <div className="posts-friends-number">{friends.count} friends</div>}
+        {/* {friends && <div className="posts-friends-number">{friends.count} friends</div>} */}
 
         <div className="see-friends">See All Friends</div>
       </header>

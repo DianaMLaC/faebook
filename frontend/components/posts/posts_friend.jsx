@@ -6,7 +6,7 @@ const PostsFriend = ({ friend }) => {
       <div className="posts-friend-photo">
         {friend.profilePhotoUrl ? (
           <img
-            className="photo-cover-image"
+            className="friend-cover-photo"
             src={friend.profilePhotoUrl}
             alt={friend.displayName}
           />

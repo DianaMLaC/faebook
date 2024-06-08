@@ -696,7 +696,7 @@ body {
 .profile-photo {
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
   display: block;
 }
 
@@ -1442,8 +1442,6 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-
-
 .friend-request-photo {
   /* border-top-left-radius: 8px;
   border-top-right-radius: 8px; */
@@ -1539,6 +1537,86 @@ body {
   cursor: pointer;
 }
 
+
+
+
+.al-friends-display {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  padding-inline-start: 5px;
+
+}
+
+/* .all-friends-display li {
+  padding: 16px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+  width: 150px;
+  height: 200px;
+  margin: 10px;
+} */
+
+.friend-accepted-container {
+  padding: 16px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.friend-accepted-photo {
+  align-items: stretch;
+  margin-right: 16px;
+  box-sizing: border-box;
+  height: 80px;
+  border-radius: 5px;
+  border-color: transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+
+.friend-accepted-photo img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  overflow: hidden;
+  display: block;
+  border-radius: 8px;
+}
+
+
+.friend-accepted-name {
+  font-size: 16px;
+  font-weight: 600;
+  padding-right: 16px;
+}
+
+.friend-accepted-more-button {
+  padding: 6px;
+  font-size: 20px;
+  font-weight: 800px;
+  align-self: flex-end;
+}
+
+.no-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #eee;
+  color: #999;
+}
 
 
 /* Posts page */
@@ -1712,13 +1790,53 @@ ul.photos-display-grid {
   flex-direction: column;
 }
 
+ul.friends-display-grid {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
 .friends-display-grid li {
   flex: 1 0 33.33%; /* Basis of 33.33% for 3x3 grid */
   max-width: 33.33%; /* Ensure no overflow */
   box-sizing: border-box; /* Include padding in the width */
-  padding: 6px; /* Optional: Add some spacing between items */
+  margin: 12px;
 }
 
+.posts-friend-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 10px;
+}
+
+.posts-friend-photo {
+  margin-right: 10px;
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  border-color: transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* margin-bottom: 10px; */
+}
+
+
+.posts-friend-photo img {
+  border-color: transparent;
+  object-fit: cover;
+  overflow: hidden;
+  display: block;
+  border-radius: 5px;
+
+}
+
+.posts-friend-name {
+  margin-top: 8px;
+  min-height: 30px;
+  font-weight: 600;
+}
 
 .create-post-container {
   background-color: white;

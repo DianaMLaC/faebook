@@ -4,7 +4,12 @@ import FriendAccepted from "./friend_accepted"
 const FriendsIndex = ({ friends }) => {
   return (
     <ul className="all-friends-display">
-      {friends && friends.map((friend) => <FriendAccepted key={friend.id} friend={friend} />)}
+      {friends &&
+        friends.map((friend) => (
+          <li key={friend.id}>
+            <FriendAccepted friend={friend} />
+          </li>
+        ))}
     </ul>
   )
 }
