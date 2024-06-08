@@ -1,9 +1,13 @@
 json.friends do
-  json.accepted @friends.map do |friend|
-    json.partial! 'api/users/user', user: friend
+  json.accepted @friendships do |friendship|
+    json.friendshipId friendship[:friendship_id]
+    json.friendshipStatus friendship[:friendship_status]
+    json.partial! 'api/users/user', user: friendship[:user]
   end
-  json.requests @pending_friends do |friend|
-    json.partial! 'api/users/user', user: friend
+  json.requests @pending_friendships do |friendship|
+    json.friendshipId friendship[:friendship_id]
+    json.friendshipStatus friendship[:friendship_status]
+    json.partial! 'api/users/user', user: friendship[:user]
   end
 end
 

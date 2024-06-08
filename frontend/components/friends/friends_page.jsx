@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
+import { useFriends } from "../../context/friends"
 import { fetchFriendships } from "../../utils/profile"
 import FriendsIndex from "./friends_index"
 import FriendRequests from "./friend_requests"
 
 const FriendsPage = () => {
   const { currentUser, profileUser } = useAuth()
+  const { acceptedFriends, pendingFriendships, setAcceptedFriends, setPendingFriendships } =
+    useFriends()
 
   const [activeView, setActiveView] = useState("allFriends")
   const [activeLink, setActiveLink] = useState("allFriends")
-  const [acceptedFriends, setAcceptedFriends] = useState(null)
-  const [pendingFriendships, setPendingFriendships] = useState([])
 
   useEffect(() => {
     async function getFriendshipsData() {
@@ -26,7 +27,7 @@ const FriendsPage = () => {
     if (profileUser.id) {
       getFriendshipsData()
     }
-  }, [profileUser])
+  }, [profileUser, setAcceptedFriends, setPendingFriendships])
 
   const handleViewChange = (e, view) => {
     e.preventDefault()

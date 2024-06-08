@@ -15,6 +15,7 @@ import { fetchUserProfile } from "../../utils/profile"
 import { useAuth } from "../../context/auth"
 import { PostsProvider } from "../../context/posts"
 import { useParams } from "react-router-dom"
+import { FriendsProvider } from "../../context/friends"
 
 const UserProfile = () => {
   const { profileUser, setProfileUser } = useAuth()
@@ -62,7 +63,9 @@ const UserProfile = () => {
         <AboutMe />
       </div>
       <div className="profile-friends-container">
-        <FriendsPage />
+        <FriendsProvider>
+          <FriendsPage />
+        </FriendsProvider>
       </div>
       <div className="profile-photos-container">
         <PhotosPage />

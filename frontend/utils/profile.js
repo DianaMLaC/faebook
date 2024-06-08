@@ -130,7 +130,7 @@ export const requestFriendship = async (userId) => {
 
 export const deleteFriendship = async (friendshipId) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/friendship/${friendshipId}`, {
+    const response = await fetch(`http://localhost:3000/api/friendships/${friendshipId}`, {
       method: "DELETE",
       headers: customHeaders,
     })
@@ -141,6 +141,23 @@ export const deleteFriendship = async (friendshipId) => {
   } catch (err) {
     console.error(err.message)
     console.error("Error in deleting friendship api", err)
+    throw err
+  }
+}
+
+export const updateFriendship = async (friendshipId) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/friendships/${friendshipId}/accept`, {
+      method: "PATCH",
+      headers: customHeaders,
+    })
+
+    await checkResponse(response)
+    const friendship = await response.json()
+    return friendship
+  } catch (err) {
+    console.error(err.message)
+    console.error("Error in accepting friendship api", err)
     throw err
   }
 }

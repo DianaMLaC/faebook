@@ -2,6 +2,27 @@ class Api::FriendshipsController < ApplicationController
   before_action :must_be_authorized
   skip_before_action :verify_authenticity_token
 
+  # def index
+  #   # params[:user_id] is the profileUser.id
+  #   profile_user = User.find_by(id: params[:user_id])
+  #   # and we need to get his friends, but first, friendships
+  #   accepted_friendships = Friendship.includes(:sender, :receiver)
+  #                                    .where('(sender_id = :user_id OR receiver_id = :user_id) AND is_accepted = true', user_id: profile_user.id)
+  #                                    .order(created_at: :desc)
+  #   @friends = accepted_friendships.map do |friendship|
+  #     friendship.sender_id == profile_user.id ? friendship.receiver : friendship.sender
+  #   end.compact
+
+  #   friend_requests = profile_user.received_friendships.where(is_accepted: false)
+  #   @pending_friends = friend_requests.map do |friendship|
+  #     friendship.sender_id == profile_user.id ? friendship.receiver : friendship.sender
+  #   end.compact
+
+  #   @existing_relation = find_friendship(profile_user, @authenticated_user)
+
+  #   render :index
+  # end
+
   def index
     # params[:user_id] is the profileUser.id
     profile_user = User.find_by(id: params[:user_id])
@@ -9,13 +30,22 @@ class Api::FriendshipsController < ApplicationController
     accepted_friendships = Friendship.includes(:sender, :receiver)
                                      .where('(sender_id = :user_id OR receiver_id = :user_id) AND is_accepted = true', user_id: profile_user.id)
                                      .order(created_at: :desc)
-    @friends = accepted_friendships.map do |friendship|
-      friendship.sender_id == profile_user.id ? friendship.receiver : friendship.sender
+
+    @friendships = accepted_friendships.map do |friendship|
+      if friendship.sender_id == profile_user.id
+        { user: friendship.receiver, friendship_id: friendship.id, friendship_status: friendship.is_accepted }
+      else
+        { user: friendship.sender, friendship_id: friendship.id, friendship_status: friendship.is_accepted }
+      end
     end.compact
 
     friend_requests = profile_user.received_friendships.where(is_accepted: false)
-    @pending_friends = friend_requests.map do |friendship|
-      friendship.sender_id == profile_user.id ? friendship.receiver : friendship.sender
+    @pending_friendships = friend_requests.map do |friendship|
+      if friendship.sender_id == profile_user.id
+        { user: friendship.receiver, friendship_id: friendship.id, friendship_status: friendship.is_accepted }
+      else
+        { user: friendship.sender, friendship_id: friendship.id, friendship_status: friendship.is_accepted }
+      end
     end.compact
 
     @existing_relation = find_friendship(profile_user, @authenticated_user)
@@ -77,13 +107,13 @@ class Api::FriendshipsController < ApplicationController
 
     if friendship.is_accepted && friendship.sender_id == @authenticated_user.id
       friendship.delete
-      render json: {}, status: 200 and return
+      render json: { 'friendship' => 'request removed' }, status: 200 and return
     end
 
     return unless ensure_user_is_receiver(friendship)
 
     friendship.delete
-    render json: {}, status: 200
+    render json: { 'friendship' => 'request removed' }, status: 200
   end
 
   # def set_authenticated_user
@@ -121,7 +151,7 @@ class Api::FriendshipsController < ApplicationController
   end
 
   def find_friendship(profile_user, auth_user)
-    return { 'friendship_accepted' => true } if profile_user.id == auth_user.id
+    return { 'friendship_accepted' => nil } if profile_user.id == auth_user.id
 
     friendship = Friendship.find_by(receiver_id: profile_user.id, sender_id: auth_user.id) ||
                  Friendship.find_by(receiver_id: auth_user.id, sender_id: profile_user.id)

@@ -1426,11 +1426,10 @@ body {
 .friend-requests-display > li {
   width: 150px;
   height: 200px;
-  margin: 10px;
+  /* margin: 10px; */
   padding: 4px;
   box-sizing: border-box;
-  border: 1px solid var(--shade-background-color);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
 .friend-request-container {
@@ -1439,19 +1438,27 @@ body {
   justify-content: flex-start;
   margin: 10px;
   border-radius: 8px;
+  border: 1px solid var(--shade-background-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.friend-request-container:hover {
-  text-decoration: underline;
-}
+
 
 .friend-request-photo {
-  width: 150px;
-  height: 150px;
-  border-radius: 5px;
+  /* border-top-left-radius: 8px;
+  border-top-right-radius: 8px; */
   border-color: transparent;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
+}
+
+.friend-request-photo img {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  width: 219px;
+  height: 219px;
+  border-color: transparent;
+  object-fit: cover;
+  align-self: center;
 }
 
 .friend-cover-photo {
@@ -1460,25 +1467,52 @@ body {
   object-fit: cover;
   overflow: hidden;
   display: block;
-  border-radius: 5px;
+}
+
+.friend-request-bottom {
+  padding: 12px;
 }
 
 .friend-request-name {
   font-size: 16px;
   font-weight: 600;
   margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.friend-request-name:hover {
+  text-decoration: underline;
+  cursor: not-allowed;
+}
+
+.friend-request-mutual {
+  padding-bottom: 2px;
+  padding-top: 1px;
+  padding-right: 4px;
+
 }
 
 .friend-request-buttons {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-around;
+  font-size: 14px;
+  font-weight: 600;
+
 }
 
 .friend-request-accept {
   background-color: var(--primary-button-background);
-  
+  color: var(--text-contrast);
+  display: flex;
+  justify-content: center;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 6px;
+  margin-top: 6px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
 }
 
 .friend-request-accept:hover {
@@ -1488,6 +1522,16 @@ body {
 
 .friend-request-remove {
   background-color: var(--secondary-button-background);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 6px;
+  margin-top: 6px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
 }
 
 .friend-request-remove:hover {
@@ -1508,8 +1552,8 @@ body {
   flex-wrap: wrap;
   align-items: stretch;
   justify-content: center;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
 
 }
 
@@ -1524,7 +1568,8 @@ body {
   flex-grow: 18;
   flex-shrink: 1;
   flex-basis: 360px;
-  margin: 8px;
+  margin-left: 8px;
+  margin-right: 8px;
   max-width: 680px;
 }
 
@@ -1538,7 +1583,8 @@ body {
   flex-direction: column;
   flex-grow:25;
   flex-shrink: 1;
-  margin: 8px;
+  margin-right: 8px;
+  margin-left: 6px;
   flex-basis: 500px;
   max-width: 680px;
 
@@ -2001,7 +2047,7 @@ align-self: center;
 .posts-index-container {
   height: 100%;
   /* padding-top: 10px; */
-  /* background-color: white; */
+  background-color: white;
   /* margin-top: 10px; */
   border-radius: 10px;
 }
@@ -2016,8 +2062,8 @@ align-self: center;
   justify-content: center;
   align-items: center;
   font-size: 32px;
-  color: var(--text-color);
-  opacity: 0.7;
+  color: var(--text-secondary);
+  box-sizing: border-box;
 }
 
 .posts-index-container ul {
