@@ -44,3 +44,42 @@ export interface FriendshipData {
 export type ExistingRelation = {
   friendship_accepted: boolean | null
 }
+
+export interface Like {
+  id: number
+  likeableId: number
+  likeableType: string
+  liker: {
+    id: number
+    displayName: string
+    profilePhotoUrl: string
+  }
+}
+
+export interface Comment {
+  id: number
+  text: string
+  createdAt: string
+  postId: number
+  parentCommentId: number | null
+  author: {
+    id: number
+    displayName: string
+    profilePhotoUrl: string
+  }
+  likes: Like[]
+  replies: Comment[]
+}
+
+export interface Post {
+  id: number
+  body: string
+  createdAt: string
+  author: {
+    id: number
+    displayName: string
+    profilePhotoUrl: string
+  }
+  likes: Like[]
+  comments: Comment[]
+}

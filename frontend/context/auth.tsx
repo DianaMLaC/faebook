@@ -2,7 +2,7 @@ import React, { useState, createContext, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { postUser, postSession, deleteSession } from "../utils/authentication"
 import { fetchUserProfile } from "../utils/profile"
-import { User, newUserData, loginData } from "../types/user"
+import { User, newUserData, loginData } from "../utils/types"
 
 interface AuthContextType {
   currentUser: User | null

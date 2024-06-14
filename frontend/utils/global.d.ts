@@ -1,4 +1,4 @@
-import { User } from "./user"
+import { User } from "../types/types"
 
 declare global {
   interface Window {

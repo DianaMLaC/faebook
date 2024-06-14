@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { useAuth } from "../../context/auth"
+import { usePosts } from "../../context/posts"
 import { FaUserFriends } from "react-icons/fa"
 import { createPost } from "../../utils/post_and_comments"
 import { CircleLoader } from "react-spinners"
-import { usePosts } from "../../context/posts"
 import { RxCross2 } from "react-icons/rx"
 import { IoMdArrowDropdown } from "react-icons/io"
 

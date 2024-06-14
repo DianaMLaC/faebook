@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from "react"
-import { Friendship, FriendshipData } from "../types/user"
+import { Friendship, FriendshipData } from "../utils/types"
 
 interface FriendsContextType {
   acceptedFriends: Friendship[]
