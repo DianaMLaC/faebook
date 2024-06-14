@@ -1,17 +1,5 @@
 import React, { createContext, useState, useContext } from "react"
-import { Post, Like, Comment } from "../utils/types"
-
-interface PostsContextType {
-  posts: Post[]
-  addPost: (newPost: Post) => void
-  addLikeToPost: (postId: number, like: Like) => void
-  deleteLikeFromPost: (postId: number, likeId: number) => void
-  addCommentToPost: (postId: number, comment: Comment) => void
-  deleteCommentFromPost: (postId: number, commentId: number) => void
-  addLikeToComment: (postId: number, commentId: number, like: Like) => void
-  deleteLikeFromComment: (postId: number, commentId: number, likeId: number) => void
-  addReplyToComment: (postId: number, commentId: number, reply: Comment) => void
-}
+import { Post, Like, Comment, PostsContextType } from "../utils/types"
 
 interface PostsProviderProps {
   children: React.ReactNode

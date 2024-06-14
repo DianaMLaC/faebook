@@ -1,18 +1,8 @@
 import React, { useState, createContext, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { fetchUserProfile } from "../utils/profile"
-import { User, NewUserData, SessionData } from "../utils/types"
+import { User, NewUserData, SessionData, AuthContextType } from "../utils/types"
 import { postUser, postSession, deleteSession } from "../utils/authentication"
-
-interface AuthContextType {
-  currentUser: User | null
-  profileUser: User | null
-  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>
-  setProfileUser: React.Dispatch<React.SetStateAction<User | null>>
-  signup: (newUserData: any) => Promise<void>
-  login: (userData: any) => Promise<void>
-  logout: () => Promise<void>
-}
 
 interface AuthProviderProps {
   children: React.ReactNode

@@ -105,3 +105,34 @@ export interface Intro {
   location?: string
   relationship?: string
 }
+
+export interface AuthContextType {
+  currentUser: User | null
+  profileUser: User | null
+  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>
+  setProfileUser: React.Dispatch<React.SetStateAction<User | null>>
+  signup: (newUserData: any) => Promise<void>
+  login: (userData: any) => Promise<void>
+  logout: () => Promise<void>
+}
+
+export interface FriendsContextType {
+  acceptedFriends: Friendship[]
+  pendingFriendships: Friendship[]
+  setAcceptedFriends: React.Dispatch<React.SetStateAction<Friendship[]>>
+  setPendingFriendships: React.Dispatch<React.SetStateAction<Friendship[]>>
+  addAcceptedFriend: (friend: Friendship) => void
+  removePendingFriendship: (friendshipId: number) => void
+}
+
+export interface PostsContextType {
+  posts: Post[]
+  addPost: (newPost: Post) => void
+  addLikeToPost: (postId: number, like: Like) => void
+  deleteLikeFromPost: (postId: number, likeId: number) => void
+  addCommentToPost: (postId: number, comment: Comment) => void
+  deleteCommentFromPost: (postId: number, commentId: number) => void
+  addLikeToComment: (postId: number, commentId: number, like: Like) => void
+  deleteLikeFromComment: (postId: number, commentId: number, likeId: number) => void
+  addReplyToComment: (postId: number, commentId: number, reply: Comment) => void
+}

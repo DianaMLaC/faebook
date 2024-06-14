@@ -1,14 +1,5 @@
 import React, { createContext, useState, useContext } from "react"
-import { Friendship, FriendshipData } from "../utils/types"
-
-interface FriendsContextType {
-  acceptedFriends: Friendship[]
-  pendingFriendships: Friendship[]
-  setAcceptedFriends: React.Dispatch<React.SetStateAction<Friendship[]>>
-  setPendingFriendships: React.Dispatch<React.SetStateAction<Friendship[]>>
-  addAcceptedFriend: (friend: Friendship) => void
-  removePendingFriendship: (friendshipId: number) => void
-}
+import { Friendship, FriendsContextType } from "../utils/types"
 
 interface FriendsProviderProps {
   children: React.ReactNode
