@@ -17,7 +17,10 @@ const FriendsPage = () => {
     async function getFriendshipsData() {
       try {
         const friendshipData = await fetchFriendships(profileUser.id)
+        // console.log("acceptedFriendsData:", friendshipData.friends.accepted)
         setAcceptedFriends(friendshipData.friends.accepted)
+        // console.log("requestedFriendsData:", friendshipData.friends.requests)
+
         setPendingFriendships(friendshipData.friends.requests)
       } catch (error) {
         console.error("Error fetching friendship data:", error)

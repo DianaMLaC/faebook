@@ -15,7 +15,7 @@ import { fetchUserProfile } from "../../utils/profile"
 import { useAuth } from "../../context/auth"
 import { PostsProvider } from "../../context/posts"
 import { useParams } from "react-router-dom"
-import { FriendsProvider } from "../../context/friends"
+import FriendsProvider from "../../context/friends"
 
 const UserProfile = () => {
   const { profileUser, setProfileUser } = useAuth()

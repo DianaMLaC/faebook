@@ -27,12 +27,20 @@ export interface loginData {
   password: string
 }
 
-interface AuthContextType {
-  currentUser: User | null
-  profileUser: User | null
-  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>
-  setProfileUser: React.Dispatch<React.SetStateAction<User | null>>
-  signup: (newUserData: any) => Promise<void>
-  login: (userData: any) => Promise<void>
-  logout: () => Promise<void>
+export interface Friendship {
+  friendshipId: number
+  friendshipStatus: string
+  user: User
+}
+
+export interface FriendshipData {
+  friends: {
+    accepted: Friendship[]
+    requests: Friendship[]
+  }
+  existing_relation: ExistingRelation | null
+}
+
+export type ExistingRelation = {
+  friendship_accepted: boolean | null
 }
