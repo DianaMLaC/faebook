@@ -1,7 +1,11 @@
 import React from "react"
 import FriendAccepted from "./friend_accepted"
 
-const FriendsIndex = ({ friends }) => {
+interface FriendsProps {
+  friends: any
+}
+
+const FriendsIndex: React.FC<FriendsProps> = ({ friends }) => {
   return (
     <ul className="all-friends-display">
       {friends &&
@@ -15,3 +19,7 @@ const FriendsIndex = ({ friends }) => {
 }
 
 export default FriendsIndex
+
+function MyComponent({ friends }: FriendsProps) {
+  return <div></div>
+}
