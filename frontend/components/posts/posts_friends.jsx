@@ -12,7 +12,7 @@ const PostsFriends = () => {
     async function getFriendshipsData() {
       try {
         const friendshipData = await fetchFriendships(profileUser.id)
-        console.log(friendshipData)
+        // console.log(friendshipData)
         // console.log(friendshipData.friends.accepted)
         const accepted_friends = friendshipData.friends.accepted
         const displayFriends =

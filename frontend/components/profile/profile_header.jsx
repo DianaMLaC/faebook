@@ -20,7 +20,7 @@ const ProfileHeader = () => {
 
   useEffect(() => {
     if (currentUser.id === profileUser.id) {
-      console.log("User is viewing their own profile, no need to check for friendship.")
+      // console.log("User is viewing their own profile, no need to check for friendship.")
       return
     }
 

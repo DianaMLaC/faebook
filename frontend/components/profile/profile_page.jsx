@@ -42,7 +42,7 @@ const UserProfile = () => {
   }, [profileId, setProfileUser])
 
   useEffect(() => {
-    console.log("Updated profileUser state:", profileUser)
+    // console.log("Updated profileUser state:", profileUser)
   }, [profileId])
 
   if (!profileUser) {

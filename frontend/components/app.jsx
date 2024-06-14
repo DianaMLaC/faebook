@@ -1,14 +1,14 @@
 import React, { useEffect } from "react"
-import { useAuth } from "../context/auth"
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom"
 import UserProfile from "./profile/profile_page"
 import StartPage from "./session/start"
 import NavBar from "./nav"
-import PhotosPage from "./photos/photos_page"
+import { useAuth } from "../context/auth"
 
 const App = () => {
   const { currentUser, profileUser, setProfileUser } = useAuth()
   const navigate = useNavigate()
+  // console.log("currentUser:", { currentUser })
 
   useEffect(() => {
     if (currentUser) {
