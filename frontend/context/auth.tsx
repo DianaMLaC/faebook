@@ -1,8 +1,8 @@
 import React, { useState, createContext, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { postUser, postSession, deleteSession } from "../utils/authentication"
 import { fetchUserProfile } from "../utils/profile"
-import { User, newUserData, loginData } from "../utils/types"
+import { User, NewUserData, SessionData } from "../utils/types"
+import { postUser, postSession, deleteSession } from "../utils/authentication"
 
 interface AuthContextType {
   currentUser: User | null
@@ -39,25 +39,19 @@ function AuthProvider({ children }: AuthProviderProps): React.ReactElement {
     }
   }, [currentUser])
 
-  // useEffect(() => {
-  //   if (currentUser && currentUser.user) {
-  //     loadUserProfile(currentUser.user.id)
-  //   }
-  // }, [currentUser])
-
   async function loadUserProfile(userId: number) {
     const profileData = await fetchUserProfile(userId)
     console.log("loading user profile:", profileData)
     setProfileUser(profileData)
   }
 
-  async function signup(newUserData: newUserData) {
+  async function signup(newUserData: NewUserData) {
     const dbUser = await postUser(newUserData)
     setCurrentUser(dbUser)
     navigate("/")
   }
 
-  async function login(userData: loginData) {
+  async function login(userData: SessionData) {
     const dbUser = await postSession(userData)
     setCurrentUser(dbUser)
     navigate("/profile-page")
@@ -69,16 +63,6 @@ function AuthProvider({ children }: AuthProviderProps): React.ReactElement {
     setProfileUser(null)
     navigate("/")
   }
-
-  // const logout = async () => {
-  //   try {
-  //     await deleteSession()
-  //     setCurrentUser(null)
-  //     navigate("/")
-  //   } catch (err) {
-  //     console.error("Error caught in AuthProvider logout:", err)
-  //   }
-  // }
 
   return (
     <AuthContext.Provider

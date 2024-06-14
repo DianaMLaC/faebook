@@ -1,19 +1,26 @@
+import axios, { AxiosResponse } from "axios"
+import { User, NewUserData, SessionData } from "./types"
+
 export const customHeaders = {
   "content-type": "application/json;charset=UTF-8",
 }
 
-export async function checkResponse(response) {
-  if (!response.ok) {
+interface BackendErrorResponse {
+  errors: {
+    user: { [key: string]: string[] }
+  }
+}
+
+export async function checkResponse(response: AxiosResponse) {
+  if (response.status < 200 || response.status >= 300) {
     console.log("error in response not ok")
-    const backendErrorResponse = await response.json()
+    const backendErrorResponse: BackendErrorResponse = response.data
 
     if (backendErrorResponse && backendErrorResponse.errors && backendErrorResponse.errors.user) {
-      // If the structure is as expected, extract error messages and join them.
       const backendErrorList = backendErrorResponse.errors.user
-      const errorMessages = Object.values(backendErrorList).flat() // Flatten in case it's an array of arrays
+      const errorMessages = Object.values(backendErrorList).flat()
       throw new Error(errorMessages.join("\n"))
     } else {
-      // If the structure is not as expected, throw a generic error or handle as needed
       throw new Error("An error occurred. Please try again.")
     }
   }
@@ -22,19 +29,16 @@ export async function checkResponse(response) {
 
 // POST USER
 
-export const postUser = async (userData) => {
+export const postUser = async (userData: NewUserData) => {
   console.log("user data in api:", userData)
   try {
-    const response = await fetch("http://localhost:3000/api/users", {
-      method: "POST",
+    const response = await axios.post("http://localhost:3000/api/users", userData, {
       headers: customHeaders,
-      body: JSON.stringify(userData),
     })
     await checkResponse(response)
-    const user = await response.json()
+    const user = response.data
     return user
   } catch (err) {
-    // console.error(err.message)
     console.error("Error with response code or parsing response in API POST User", err)
     throw err
   }
@@ -42,16 +46,13 @@ export const postUser = async (userData) => {
 
 // POST SESSION
 
-export const postSession = async (sessionData) => {
+export const postSession = async (sessionData: SessionData) => {
   try {
-    const response = await fetch("http://localhost:3000/api/authentications", {
-      method: "POST",
+    const response = await axios.post("http://localhost:3000/api/authentications", sessionData, {
       headers: customHeaders,
-      body: JSON.stringify(sessionData),
     })
     await checkResponse(response)
-    // console.log(response)
-    const session = await response.json()
+    const session = response.data
     return session
   } catch (err) {
     console.error("Error with response code or parsing response in API POST Session", err)
@@ -63,8 +64,8 @@ export const postSession = async (sessionData) => {
 
 export const deleteSession = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/authentications", {
-      method: "DELETE",
+    const response = await axios.delete("http://localhost:3000/api/authentications", {
+      headers: customHeaders,
     })
     await checkResponse(response)
   } catch (err) {

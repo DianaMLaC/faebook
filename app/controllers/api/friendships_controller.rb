@@ -2,31 +2,8 @@ class Api::FriendshipsController < ApplicationController
   before_action :must_be_authorized
   skip_before_action :verify_authenticity_token
 
-  # def index
-  #   # params[:user_id] is the profileUser.id
-  #   profile_user = User.find_by(id: params[:user_id])
-  #   # and we need to get his friends, but first, friendships
-  #   accepted_friendships = Friendship.includes(:sender, :receiver)
-  #                                    .where('(sender_id = :user_id OR receiver_id = :user_id) AND is_accepted = true', user_id: profile_user.id)
-  #                                    .order(created_at: :desc)
-  #   @friends = accepted_friendships.map do |friendship|
-  #     friendship.sender_id == profile_user.id ? friendship.receiver : friendship.sender
-  #   end.compact
-
-  #   friend_requests = profile_user.received_friendships.where(is_accepted: false)
-  #   @pending_friends = friend_requests.map do |friendship|
-  #     friendship.sender_id == profile_user.id ? friendship.receiver : friendship.sender
-  #   end.compact
-
-  #   @existing_relation = find_friendship(profile_user, @authenticated_user)
-
-  #   render :index
-  # end
-
   def index
-    # params[:user_id] is the profileUser.id
     profile_user = User.find_by(id: params[:user_id])
-    # and we need to get his friends, but first, friendships
     accepted_friendships = Friendship.includes(:sender, :receiver)
                                      .where('(sender_id = :user_id OR receiver_id = :user_id) AND is_accepted = true', user_id: profile_user.id)
                                      .order(created_at: :desc)
@@ -67,7 +44,12 @@ class Api::FriendshipsController < ApplicationController
 
     friendship = Friendship.new(receiver_id: receiver.id, sender_id: @authenticated_user.id)
     if friendship.save
-      render json: { 'friendship' => friendship.is_accepted }, status: 200
+      render json: {
+               'friendshipId' => friendship.id,
+               'friendshipStatus' => friendship.is_accepted,
+               'user' => receiver
+             },
+             status: 200
     else
       render json: { errors: friendship.errors.full_messages }, status: 422
     end
@@ -92,7 +74,12 @@ class Api::FriendshipsController < ApplicationController
 
     friendship.is_accepted = true
     if friendship.save
-      render json: { 'friendship' => friendship.is_accepted }, status: 200
+      render json: {
+               'friendshipId' => friendship.id,
+               'friendshipStatus' => friendship.is_accepted,
+               'user' => receiver
+             },
+             status: 200
     else
       render json: { errors: friendship.errors.full_messages }, status: 422
     end

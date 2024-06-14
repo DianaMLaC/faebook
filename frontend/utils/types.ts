@@ -14,7 +14,7 @@ export interface User {
   }
 }
 
-export interface newUserData {
+export interface NewUserData {
   email: string
   lastName: string
   firstName: string
@@ -22,7 +22,7 @@ export interface newUserData {
   password: string
 }
 
-export interface loginData {
+export interface SessionData {
   email: string
   password: string
 }
@@ -82,4 +82,26 @@ export interface Post {
   }
   likes: Like[]
   comments: Comment[]
+}
+
+export interface Photo {
+  id: number
+  albumName: string
+  url: string
+  description?: string
+}
+
+export interface Album {
+  id: number
+  name: string
+  coverPhotoUrl: string
+  photosCount: number
+}
+
+export interface Intro {
+  id?: number
+  work?: string
+  education?: string
+  location?: string
+  relationship?: string
 }

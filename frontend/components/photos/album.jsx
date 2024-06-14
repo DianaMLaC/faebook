@@ -6,13 +6,13 @@ const Album = ({ album }) => {
     <div className="album-cover">
       <div>
         {/* here a link to the photos of the album */}
-        <img className="album-cover-photo" src={album.cover_photo_url} alt={album.name} />
+        <img className="album-cover-photo" src={album.coverPhotoUrl} alt={album.name} />
       </div>
 
       {/* <div className="more-button-disabled">...</div> */}
 
       <div className="album-cover-title">{album.name}</div>
-      <div className="album-cover-items-number">{album.photos_count} items</div>
+      <div className="album-cover-items-number">{album.photosCount} items</div>
     </div>
     // <div> This is the album container</div>
   )

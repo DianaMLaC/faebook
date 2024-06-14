@@ -1,5 +1,5 @@
 json.array!(@albums) do |album|
   json.extract! album, :id, :name
-  json.cover_photo_url album.cover_photo_url
-  json.photos_count album.photos.count
+  json.coverPhotoUrl album.cover_photo_url
+  json.photosCount album.photos.count
 end
