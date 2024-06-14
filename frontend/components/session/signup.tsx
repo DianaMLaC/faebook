@@ -1,18 +1,18 @@
-import React, { useState } from "react"
+import React, { useState, FormEvent, ChangeEvent } from "react"
 import { useAuth } from "../../context/auth"
 
-const Signup = () => {
+function Signup(): React.ReactElement {
   const tenYearsAgo = new Date(new Date().setFullYear(new Date().getFullYear() - 14))
   const maxDate = tenYearsAgo.toISOString().split("T")[0]
 
   const { signup } = useAuth()
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [dateOfBirth, setDateOfBirth] = useState(maxDate)
+  const [firstName, setFirstName] = useState<string>("")
+  const [lastName, setLastName] = useState<string>("")
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [dateOfBirth, setDateOfBirth] = useState<string>(maxDate)
 
-  const [formErr, setFormErr] = useState("")
+  const [formErr, setFormErr] = useState<string>("")
 
   const clearForm = () => {
     setFirstName("")
@@ -22,7 +22,7 @@ const Signup = () => {
     setDateOfBirth("")
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
     try {
       const userData = { firstName, lastName, password, dateOfBirth, email }
@@ -30,15 +30,15 @@ const Signup = () => {
       await signup(userData)
       clearForm()
     } catch (err) {
-      setFormErr(err.message)
+      setFormErr((err as Error).message)
     }
   }
 
   return (
     <div className="signup-container">
       <div className="signup-header">
-        <h1> Sign Up</h1>
-        <p> It's quick and easy.</p>
+        <h1>Sign Up</h1>
+        <p>It's quick and easy.</p>
       </div>
       <div className="separator"></div>
       <div className="signup-form">
@@ -48,14 +48,14 @@ const Signup = () => {
               type="text"
               placeholder="First name"
               value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setFirstName(e.target.value)}
             />
 
             <input
               type="text"
               placeholder="Last name"
               value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setLastName(e.target.value)}
             />
           </div>
 
@@ -63,21 +63,21 @@ const Signup = () => {
             type="text"
             placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
           />
 
           <input
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
           />
           <div className="dob">Birthday</div>
           <input
             type="date"
             value={dateOfBirth}
             max={maxDate}
-            onChange={(e) => setDateOfBirth(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setDateOfBirth(e.target.value)}
           />
 
           {formErr && <p>{formErr}</p>}

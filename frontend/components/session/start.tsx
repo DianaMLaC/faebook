@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Login from "./login"
-import ReactModal from "react-modal"
 import Signup from "./signup"
+import ReactModal from "react-modal"
 
 function StartPage(): React.ReactElement {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
@@ -15,7 +15,7 @@ function StartPage(): React.ReactElement {
   }
 
   useEffect(() => {
-    ReactModal.setAppElement(".start-page") // Or whatever selector that captures your app's root element
+    ReactModal.setAppElement(".start-page")
   }, [])
 
   return (

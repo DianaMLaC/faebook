@@ -1,14 +1,14 @@
-import React, { useState } from "react"
+import React, { useState, FormEvent, ChangeEvent } from "react"
 import { useAuth } from "../../context/auth"
 
-const Login = () => {
+function Login(): React.ReactElement {
   const { login } = useAuth()
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [formErr, setFormErr] = useState("")
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [formErr, setFormErr] = useState<string>("")
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
 
     try {
@@ -28,13 +28,13 @@ const Login = () => {
           type="text"
           placeholder="Email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
         />
 
         {formErr && <p>{formErr}</p>}
