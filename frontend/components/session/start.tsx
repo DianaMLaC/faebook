@@ -3,14 +3,14 @@ import Login from "./login"
 import ReactModal from "react-modal"
 import Signup from "./signup"
 
-const StartPage = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+function StartPage(): React.ReactElement {
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
 
-  const openModal = () => {
+  const openModal = (): void => {
     setModalIsOpen(true)
   }
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setModalIsOpen(false)
   }
 
