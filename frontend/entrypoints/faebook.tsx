@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const rootEl = document.getElementById("root")
   if (rootEl) {
     console.log("hey this is typescript")
-    const root = createRoot(rootEl)
+    const root = createRoot(rootEl as HTMLElement)
     root.render(<Root />)
   } else {
     console.error("could not find #root div")

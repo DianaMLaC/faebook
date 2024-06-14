@@ -5,7 +5,7 @@ interface FriendsProps {
   friends: any
 }
 
-const FriendsIndex: React.FC<FriendsProps> = ({ friends }) => {
+function FriendsIndex({ friends }: FriendsProps) {
   return (
     <ul className="all-friends-display">
       {friends &&
@@ -19,7 +19,3 @@ const FriendsIndex: React.FC<FriendsProps> = ({ friends }) => {
 }
 
 export default FriendsIndex
-
-function MyComponent({ friends }: FriendsProps) {
-  return <div></div>
-}
