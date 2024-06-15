@@ -9,7 +9,7 @@ def user_params
 end
 
 def create_and_sign_in_user(user_info)
-  post '/api/users', params: user_info
+  post '/api/users', params: { user: user_info }
 
   user_response = JSON.parse(@response.body)
   User.find_by(id: user_response['id'])
@@ -25,14 +25,14 @@ class Api::IntrosControllerTest < ActionDispatch::IntegrationTest
     user = create_and_sign_in_user(user_params)
 
     # Act
-    post "/api/users/#{user.id}/intros", params: { intro: { relationship: 'married' } }
+    post "/api/users/#{user.id}/intros", params: { intro: { house: 'Aer' } }
 
     # Assert
     assert_response 200
-    assert_not_nil(user.intro.relationship)
+    assert_not_nil(user.intro.house)
 
     res = JSON.parse(@response.body)
-    assert_equal(user.intro.relationship, res['intro']['relationship'])
+    assert_equal(user.intro.house, res['house'])
   end
 
   test 'when creating an intro entry with all params, success is 200' do
@@ -42,18 +42,22 @@ class Api::IntrosControllerTest < ActionDispatch::IntegrationTest
     # Act
     post "/api/users/#{user.id}/intros",
          params: { intro: {
-           work: Faker::Job.title,
-           location: Faker::Address.city,
-           education: Faker::Educator.university,
-           relationship: 'single'
+           zodiac_sign: 'Taurus',
+           location: 'Solaria',
+           education: 'Zodiac Academy',
+           house: 'Ignis',
+           elements: 'Fire',
+           order: 'Minotaur'
+
          } }
 
     # Assert
     assert_response 200
-    assert_not_nil(user.intro.work)
+    assert_not_nil(user.intro.zodiac_sign)
     assert_not_nil(user.intro.location)
     assert_not_nil(user.intro.education)
-    assert_not_nil(user.intro.relationship)
+    assert_not_nil(user.intro.house)
+    assert_not_nil(user.intro.elements)
   end
 
   test 'when updating intro with only one param, success is 200' do
@@ -61,25 +65,25 @@ class Api::IntrosControllerTest < ActionDispatch::IntegrationTest
     user = create_and_sign_in_user(user_params)
     post "/api/users/#{user.id}/intros",
          params: { intro: {
-           work: Faker::Job.title,
-           location: Faker::Address.city,
-           education: Faker::Educator.university,
-           relationship: 'single'
+           zodiac_sign: 'Taurus',
+           location: 'Solaria',
+           education: 'Zodiac Academy',
+           house: 'Ignis',
+           elements: 'Fire'
          } }
     res = JSON.parse(@response.body)
-    intro_id = res['intro']['id']
-    assert_equal('single', res['intro']['relationship'])
+    intro_id = res['id']
+    assert_equal('Solaria', res['location'])
 
     # Act
     patch "/api/users/#{user.id}/intros/#{intro_id}",
           params: { intro: {
-            relationship: 'married'
+            zodiac_sign: 'Leo'
           } }
 
     # Assert
     assert_response 200
     resp = JSON.parse(@response.body)
-    intro_id = resp['intro']['id']
-    assert_equal('married', resp['intro']['relationship'])
+    assert_equal('Leo', resp['zodiacSign'])
   end
 end
