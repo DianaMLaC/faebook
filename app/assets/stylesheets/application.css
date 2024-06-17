@@ -677,7 +677,7 @@ body {
   background-color: var(--background-color);
   padding-left: 12px;
   padding-right: 12px;
-  border: transparent;
+  border: 1px solid var(--shade-background-color);
   border-radius: 6px;
   cursor: pointer;
   height: var(--button-height);
@@ -696,8 +696,8 @@ body {
 }
 
 .cover-photo-button:hover {
-  background-color: var(--accent-color);
-  color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--text-contrast);
 }
 
 .profile-details-banner {
@@ -1257,6 +1257,13 @@ body {
   padding: 10px;
 }
 
+.about-me-content h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 4px;
+  margin-bottom: 20px;
+}
+
 .data-missing{
   font-size: 18px;
   color: var(--primary-color);
@@ -1295,13 +1302,19 @@ body {
 .about-me-location-icon {
   height: 35px;
   width: 35px;
-  padding-right: 10px;
+  margin-right: 10px;
   border-radius: 50%;
+  background-color: var(--shade-background-color);
+  color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .data-item {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 /* No INFO containers */

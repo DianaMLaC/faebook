@@ -1,16 +1,19 @@
 import React from "react"
 import { useAuth } from "../../context/auth"
-import { MdContactMail, MdOutlineCake } from "react-icons/md"
-import { IoIosLink } from "react-icons/io"
+import { MdEmail, MdOutlineCake } from "react-icons/md"
+import { GiMagicSwirl } from "react-icons/gi"
 
 const ContactInfo = () => {
   const { currentUser } = useAuth()
   return (
     <div>
       <div>
-        <h4> Contact Info</h4>
+        <h3> Contact Info</h3>
         <div className="section">
-          <MdContactMail className="icon" />
+          <div className="about-me-location-icon">
+            <MdEmail />
+          </div>
+
           {currentUser.email ? (
             <div className="data-item">
               <div>{currentUser.email}</div>
@@ -20,29 +23,38 @@ const ContactInfo = () => {
           )}
         </div>
       </div>
+
       <div>
-        <h4> Websites and social links</h4>
+        <h3> Date Of Birth</h3>
         <div className="section">
-          <IoIosLink className="icon" />
-          {currentUser.website ? (
-            <div className="data-item">
-              <div>{currentUser.website}</div>
-            </div>
-          ) : (
-            <div>No websites to show</div>
-          )}
-        </div>
-      </div>
-      <div>
-        <h4> Basic info</h4>
-        <div className="section">
-          <MdOutlineCake className="icon" />
+          <div className="about-me-location-icon">
+            <MdOutlineCake />
+          </div>
+
           {currentUser.dateOfBirth ? (
             <div className="data-item">
               <div>{currentUser.dateOfBirth}</div>
             </div>
           ) : (
             <div>No info to show</div>
+          )}
+        </div>
+      </div>
+
+      <div>
+        <h3> Zodiac Sign</h3>
+        <div className="section">
+          <div className="about-me-location-icon">
+            <GiMagicSwirl />
+            {/* to put the zodiac sign icon according to the zodiac sign of the user*/}
+          </div>
+
+          {currentUser.intro && currentUser.intro.zodiacSign ? (
+            <div className="data-item">
+              <div>{currentUser.intro.zodiacSign}</div>
+            </div>
+          ) : (
+            <div>No zodiac sign to show</div>
           )}
         </div>
       </div>

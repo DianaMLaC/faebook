@@ -1,36 +1,36 @@
 import React, { useState } from "react"
 import Overview from "./overview"
-import WorkAndEducation from "./work_and_education"
-import PlacesLived from "./placed_lived"
+import LocationAndEducation from "./location_and_education"
+import House from "./house"
 import ContactInfo from "./contact_info"
 import FamilyAndRelationships from "./relationships"
-import LifeEvents from "./life_events"
+import OrderAndElements from "./order_and_elements"
 const AboutMe = () => {
   const [activeCategory, setActiveCategory] = useState("Overview")
 
   const categories = [
     "Overview",
-    "Work and education",
-    "Places lived",
+    "Location and education",
     "Contact and basic info",
-    "Family and relationships",
-    "Life events",
+    // "Family and relationships",
+    "Order and Elements",
+    "House",
   ]
 
   const renderCategory = () => {
     switch (activeCategory) {
       case "Overview":
         return <Overview />
-      case "Work and education":
-        return <WorkAndEducation />
+      case "Location and education":
+        return <LocationAndEducation />
       case "Contact and basic info":
         return <ContactInfo />
-      case "Life events":
-        return <LifeEvents />
-      case "Places lived":
-        return <PlacesLived />
-      case "Family and relationships":
-        return <FamilyAndRelationships />
+      case "Order and Elements":
+        return <OrderAndElements />
+      case "House":
+        return <House />
+      // case "Family and relationships":
+      //   return <FamilyAndRelationships />
       default:
         return <div>Select a category</div>
     }
