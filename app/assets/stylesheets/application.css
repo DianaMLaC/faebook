@@ -73,11 +73,13 @@ table {
   --text-color: #1c1e21;
   --text-secondary: #65676B;
   --text-contrast: whitesmoke;
+
   --secondary-button-background: #E4E6EB;
   --secondary-button-hover: #DADDE1;
   --primary-button-background: #0866FF;
   --primary-button-hover:#1877F2;
   --primary-button-text: #FFFFFF;
+  --secondary-deemphasized-button: #EBF5FF;
   --link-color: #0064d1;
   --selected-background: #77A7FF;
   --button-height: 36px;
@@ -289,6 +291,33 @@ body {
   font-size: 1.5em;
   color: var(--text-color);
 }
+
+.close-photo-modal-button {
+  cursor: pointer;
+  background: var(--secondary-button-background);
+  color: var(--text-secondary);
+  font-size: 20px;
+  font-weight: 700;
+  width: 30px; 
+  height: 30px;
+  border-radius: 50%;
+  border: transparent;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: var(--text-color);
+  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+
+
 
 /* Nav Bar */
 
@@ -895,6 +924,28 @@ body {
   align-items: center;
 }
 
+.photo-uploader section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.photo-uploader header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 60px;
+  padding:0px 60px;
+  margin-bottom: 10px;
+}
+
+.photo-uploader header h2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .photo-uploader input[type="file"] {
   border-radius: 5px;
   padding: 6px;
@@ -917,8 +968,8 @@ body {
 }
 
 .photo-uploader input[type="file"]::-webkit-file-upload-button:hover, .photo-uploader button:hover {
-  background: var(--accent-color);
-  color: var(--primary-color);
+  background: var(--primary-color);
+  color: var(--text-contrast);
 }
 
 .spinner {
@@ -936,11 +987,17 @@ body {
 .photo-uploader button {
   margin-top: 20px; 
   border-radius: 5px;
-  background: var(--secondary-color);
+  background: var(--secondary-deemphasized-button);
   color: var(--primary-color);
   padding: 10px 20px;
   border: none;
   cursor: pointer;
+}
+
+.photo-uploader button:disabled {
+  background: var(--shade-background-color);
+  color: var(--text-secondary);
+  cursor: not-allowed;
 }
 
 /* PROFILE PAGE - PHOTOS*/

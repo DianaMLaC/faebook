@@ -7,6 +7,7 @@ import { MdModeEditOutline } from "react-icons/md"
 import { RiMessengerLine } from "react-icons/ri"
 import { IoPersonAddSharp } from "react-icons/io5"
 import { TbDots } from "react-icons/tb"
+import { RxCross2 } from "react-icons/rx"
 import { deleteFriendship, fetchFriendships, requestFriendship } from "../../utils/profile"
 import PostsPage from "../posts/posts_page"
 import FriendsPage from "../friends/friends_page"
@@ -234,6 +235,9 @@ function ProfileHeader(): React.ReactElement {
                     closeModalContainer={closeProfileModal}
                     albumName="Profile"
                   />
+                  <button onClick={closeProfileModal} className="close-photo-modal-button">
+                    <RxCross2 />
+                  </button>
                 </ReactModal>
               </div>
             )}

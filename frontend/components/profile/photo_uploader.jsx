@@ -6,17 +6,19 @@ const PhotoUpload = ({ updatePhoto, closeModalContainer, albumName }) => {
   const [photoFile, setPhotoFile] = useState(null)
   const [description, setDescription] = useState("")
   const [isUploading, setIsUploading] = useState(false)
+  const title = "Choose " + albumName + " Picture"
 
   const handleFileChange = (e) => {
     setPhotoFile(e.target.files[0])
   }
 
   const handleUpload = async () => {
-    setIsUploading(true)
     if (!photoFile) {
       console.error("No file selected for upload.")
       return
     }
+
+    setIsUploading(true)
 
     const formData = new FormData()
     console.log("photo[image]:", photoFile)
@@ -27,25 +29,37 @@ const PhotoUpload = ({ updatePhoto, closeModalContainer, albumName }) => {
     formData.append("photo[description]", description)
     formData.append("photo[album_name]", albumName)
 
-    const fileData = await uploadProfilePhoto(formData)
-    console.log("PhotoData returned as fileData")
-    console.log("fileData:", fileData)
-    updatePhoto(fileData.albumName, fileData.url)
-    console.log("Data has been sent to parent with updatePhoto callback")
-    closeModalContainer()
-    setIsUploading(false)
+    try {
+      const fileData = await uploadProfilePhoto(formData)
+      console.log("PhotoData returned as fileData")
+      console.log("fileData:", fileData)
+      updatePhoto(fileData.albumName, fileData.url)
+      console.log("Data has been sent to parent with updatePhoto callback")
+      closeModalContainer()
+    } catch (error) {
+      console.error("Error uploading photo:", error)
+    } finally {
+      setIsUploading(false)
+    }
   }
 
   return (
     <div className="photo-uploader">
-      <input
-        type="text"
-        placeholder="Description"
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
-      <div className="spinner">{isUploading && <CircleLoader loading={isUploading} />}</div>
+      <header>
+        <h2>{title}</h2>
+      </header>
+      <section>
+        <input
+          type="text"
+          placeholder="Caption this photo"
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <input type="file" onChange={handleFileChange} />
+        <button onClick={handleUpload} disabled={!photoFile}>
+          Upload
+        </button>
+        <div className="spinner">{isUploading && <CircleLoader loading={isUploading} />}</div>
+      </section>
     </div>
   )
 }
