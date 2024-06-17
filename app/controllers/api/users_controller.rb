@@ -14,9 +14,8 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
+    debugger
     if @user.save
-
       session[:auth_token] = @user.session_token
       render :create
     else
@@ -33,7 +32,6 @@ class Api::UsersController < ApplicationController
           user: omit_empty_strings(mapped_errors)
         }
       }, status: 422
-
     end
   end
 
@@ -49,6 +47,6 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :password, :date_of_birth, :email)
+    params.require(:user).permit(:password, :first_name, :last_name, :password, :date_of_birth, :email)
   end
 end

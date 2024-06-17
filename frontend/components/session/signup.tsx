@@ -25,7 +25,7 @@ function Signup(): React.ReactElement {
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
     try {
-      const userData = { firstName, lastName, password, dateOfBirth, email }
+      const userData = { user: { firstName, lastName, password, dateOfBirth, email } }
       console.log("form-user:", userData)
       await signup(userData)
       clearForm()
