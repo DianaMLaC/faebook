@@ -18,6 +18,7 @@ class Api::PhotosController < ApplicationController
   def create
     album = find_or_create_album
     photo = album.photos.build(photo_params)
+    # debugger
 
     if photo.save
       if photo.image.attached?
@@ -38,7 +39,7 @@ class Api::PhotosController < ApplicationController
   end
 
   def find_or_create_album
-    album_name = params[:photo][:album_name] || 'Default'
+    album_name = params[:album_name] || 'Default'
     @authenticated_user.albums.find_by(name: album_name) || @authenticated_user.albums.create(name: album_name)
   end
 

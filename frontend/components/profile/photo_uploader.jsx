@@ -23,11 +23,12 @@ const PhotoUpload = ({ updatePhoto, closeModalContainer, albumName }) => {
     const formData = new FormData()
     console.log("photo[image]:", photoFile)
     console.log("photo[description]:", description)
-    console.log("photo[album_name]:", albumName)
+    // console.log("photo[album_name]:", albumName)
 
     formData.append("photo[image]", photoFile)
     formData.append("photo[description]", description)
-    formData.append("photo[album_name]", albumName)
+    // formData.append("photo[album_name]", albumName)
+    formData.append("album_name", albumName)
 
     try {
       const fileData = await uploadProfilePhoto(formData)
