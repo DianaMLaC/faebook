@@ -13,7 +13,7 @@ end
 
 if user.intro.present?
   json.intro do
-    json.extract! user.intro, :work, :education, :location, :relationship
+    json.extract! user.intro, :order, :education, :location, :zodiac_sign, :elements, :house
   end
 else
   json.intro {}

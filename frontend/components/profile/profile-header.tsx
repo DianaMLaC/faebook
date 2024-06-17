@@ -268,7 +268,7 @@ function ProfileHeader(): React.ReactElement {
         <nav className="profile-header-nav">
           <div className="profile-header-nav-links">
             <div
-              className={`profile-header-nav-link ${activeLink === "posts" ? "selected" : ""}`}
+              className={activeLink === "posts" ? "selected" : ""}
               onClick={(e) => handleViewChange(e, "posts")}
             >
               Posts

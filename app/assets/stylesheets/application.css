@@ -592,10 +592,13 @@ body {
 
 .profile-header-container {
   padding-bottom: 6px;
+  box-sizing: border-box;
 }
 
 .profile-header {
   position: relative;
+  box-sizing: border-box;
+
 }
 
 .cover-photo-container {
@@ -781,15 +784,14 @@ body {
 .profile-header-nav {
   position: relative;
   height: 60px;
-  margin-left:16px;
-  margin-right:16px;
-  border-top-color: rgb(206, 208, 212);
-  border-top-style: solid;
-  border-top-width: 0.555556px;
+  margin-left: 16px;
+  margin-right: 16px;
+  border-top: 1px solid rgb(206, 208, 212);
   background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .profile-header-nav-links {
@@ -797,44 +799,70 @@ body {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  box-sizing: border-box;
+
 }
 
-.profile-header-nav a {
+.profile-header-nav-links div {
   color: var(--text-secondary);
-  padding: 5px 10px;
-  border-radius: 6px;
   font-size: 14px;
   font-weight: 600;
-  padding-left: 16px;
-  padding-right: 16px;
+  height: 100%;
+  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 6px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: background-color 0.3s, border-radius 0.3s, padding 0.3s;
 }
 
-.profile-header-nave a.selected {
-  color: var(--link-color);
-  border-bottom: 2px solid var(--link-color);
-}
-
-.profile-header-nav a:hover {
+.profile-header-nav-links div:hover {
   background-color: var(--secondary-color);
+  border-radius: 6px;
+  padding-top: 16px; 
+  padding-bottom: 16px; 
 }
+
+
+.profile-header-nav-links div.selected {
+  color: var(--link-color);
+  border-bottom: 3px solid var(--link-color);
+  margin-bottom: -3px; /* To counteract the border width */
+  background-color: white;
+  z-index: 1;
+  padding-top: 16px; 
+  padding-bottom: 16px; 
+
+}
+
+.profile-header-nav-links div.selected:hover {
+  color: var(--link-color);
+  background-color: white;
+  border-radius: 0;
+  border-bottom: 3px solid var(--link-color);
+  margin-bottom: -3px; 
+
+}
+
+
+
 
 .nav-profile-header-button {
   color: var(--text-color);
   background-color: var(--secondary-button-background);
   border: transparent;
   border-radius: 6px;
-  display:flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .nav-profile-header-button span {
-  padding-left: 16px;
-  padding-right: 16px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-left: 3px;
-  margin-right: 3px;
+  padding: 10px 16px;
+  margin: 0 3px;
   font-size: 20px;
   font-weight: 800;
 }
