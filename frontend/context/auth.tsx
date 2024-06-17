@@ -1,8 +1,9 @@
 import React, { useState, createContext, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { fetchUserProfile } from "../utils/profile"
+import { fetchUserProfile, createIntro } from "../utils/profile"
 import { User, NewUserData, SessionData, AuthContextType } from "../utils/types"
 import { postUser, postSession, deleteSession } from "../utils/authentication"
+import { calculateZodiac } from "../utils/helpers"
 
 interface AuthProviderProps {
   children: React.ReactNode
@@ -37,7 +38,21 @@ function AuthProvider({ children }: AuthProviderProps): React.ReactElement {
 
   async function signup(newUserData: NewUserData) {
     const dbUser = await postUser(newUserData)
-    setCurrentUser(dbUser)
+
+    const intro = {
+      location: "Solaria",
+      education: "Zodiac Academy",
+      zodiac_sign: calculateZodiac(dbUser.dateOfBirth),
+    }
+    try {
+      const response = await createIntro(dbUser.id, intro)
+      console.log("Intro created:", response)
+    } catch (err) {
+      console.error("Error in create Intro api:", err.message)
+    }
+
+    const updatedUserData = await fetchUserProfile(dbUser.id)
+    setCurrentUser(updatedUserData)
     navigate("/")
   }
 

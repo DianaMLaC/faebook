@@ -15,6 +15,7 @@ function UserProfile(): React.ReactElement {
       async function fetchProfile() {
         try {
           const profileUserData = await fetchUserProfile(profileId)
+          console.log({ profileUserData })
           setProfileUser(profileUserData)
         } catch (err) {
           console.error("Error in fetching the User Profile", err)

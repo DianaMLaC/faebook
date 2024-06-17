@@ -49,9 +49,9 @@ const ContactInfo = () => {
             {/* to put the zodiac sign icon according to the zodiac sign of the user*/}
           </div>
 
-          {currentUser.intro && currentUser.intro.zodiacSign ? (
+          {currentUser.intro && currentUser.intro.zodiac_sign ? (
             <div className="data-item">
-              <div>{currentUser.intro.zodiacSign}</div>
+              <div>{currentUser.intro.zodiac_sign}</div>
             </div>
           ) : (
             <div>No zodiac sign to show</div>

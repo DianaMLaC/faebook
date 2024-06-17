@@ -1,17 +1,18 @@
-import React, { useState, FormEvent, ChangeEvent } from "react"
+import React, { useState, FormEvent, ChangeEvent, useEffect } from "react"
 import { useAuth } from "../../context/auth"
+import { createIntro } from "../../utils/profile"
+import { calculateZodiac } from "../../utils/helpers"
 
 function Signup(): React.ReactElement {
   const tenYearsAgo = new Date(new Date().setFullYear(new Date().getFullYear() - 14))
   const maxDate = tenYearsAgo.toISOString().split("T")[0]
 
-  const { signup } = useAuth()
+  const { signup, currentUser } = useAuth()
   const [firstName, setFirstName] = useState<string>("")
   const [lastName, setLastName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [dateOfBirth, setDateOfBirth] = useState<string>(maxDate)
-
   const [formErr, setFormErr] = useState<string>("")
 
   const clearForm = () => {

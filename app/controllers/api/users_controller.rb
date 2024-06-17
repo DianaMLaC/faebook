@@ -14,7 +14,7 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    debugger
+    # debugger
     if @user.save
       session[:auth_token] = @user.session_token
       render :create

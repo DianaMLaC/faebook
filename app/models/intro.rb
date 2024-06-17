@@ -16,7 +16,7 @@
 class Intro < ApplicationRecord
   HOUSES = %w[Aer Ignis Terra Aqua]
   validates :user_id, presence: true
-  validates :house, inclusion: { in: HOUSES }
+  # validates :house, inclusion: { in: HOUSES }
 
   belongs_to :user,
              foreign_key: :user_id,

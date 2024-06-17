@@ -100,10 +100,12 @@ export interface Album {
 
 export interface Intro {
   id?: number
-  work?: string
+  house?: string
   education?: string
   location?: string
-  relationship?: string
+  elements?: string
+  zodiacSign?: string
+  order?: string
 }
 
 export interface AuthContextType {
