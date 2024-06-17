@@ -65,7 +65,7 @@ table {
 
  :root {
   --primary-color: #1877F2;
-  --accent-color: #0866FF;
+  --accent-color: #42b72a;
   --secondary-color: #F0F2F5;
   --background-color: white;
   --shade-background-color: #F0F2F5;
@@ -111,6 +111,7 @@ body {
   align-items: center; 
   padding: 20px; 
   box-sizing: border-box; 
+  background-color: var(--shade-background-color);
 }
 
 .faebook-title {
@@ -118,6 +119,8 @@ body {
   font-weight: bold; 
   color: var(--primary-color);
   flex-basis: 50%; 
+  padding-top: 8px;
+  padding-bottom: 16px;
 }
 
 .faebook-motto {
@@ -140,7 +143,7 @@ body {
 .login-form form {
   display: flex;
   flex-direction: column;
-  gap: 15px; 
+  gap: 12px; 
 }
 
 .login-form input[type="text"],
@@ -153,13 +156,16 @@ body {
 }
 
 .login-form button {
-  padding: 10px 0;
+  padding: 10px;
+  margin-bottom: 16px;
   background-color: var(--primary-color);
   color: white;
   font-size: 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: 700;
+  line-height: 38px;
 }
 
 .login-form button:hover {
@@ -171,15 +177,18 @@ body {
   color: white; 
   padding: 10px 0;
   font-size: 17px; 
+  font-weight: 700;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  line-height: 38px;
+  margin-top: 16px;
 }
 
 .separator {
   border-top: 1px solid #dddfe2; 
-  margin-top: 20px; 
-  margin-bottom: 15px; 
+  /* margin-top: 20px;  */
+  /* margin-bottom: 15px;  */
 }
 
 .ReactModal__Overlay {
@@ -210,21 +219,34 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
+  /* padding: 30px; */
+  box-sizing: border-box;
+}
+
+.signup-header {
+  padding: 16px 10px;
 }
 
 .signup-header h1 {
-  color: var(--primary-color);
-  margin-bottom: 0.5em;
+  /* color: var(--primary-color); */
+  /* margin-bottom: 0.5em; */
+  font-size: 32px;
+  line-height: 38px;
+  font-weight: 600;
 }
 
 .signup-header p {
   color: var(--text-color);
-  margin-bottom: 1em;
+  /* margin-bottom: 1em; */
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 24px;
 }
 
 .signup-form form {
   display: flex;
   flex-direction: column;
+  padding: 16px;
 }
 
 .signup-form input[type="text"],

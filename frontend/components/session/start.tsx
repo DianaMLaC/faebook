@@ -25,7 +25,7 @@ function StartPage(): React.ReactElement {
           <p>faebook</p>
         </div>
         <div className="faebook-motto">
-          <p>Connect with friends and the world around you on Faebook.</p>
+          <p>Connect with fae friends and the Zodiac Academy world on Faebook.</p>
         </div>
       </div>
       <div className="login-container">

@@ -43,22 +43,6 @@ function Signup(): React.ReactElement {
       <div className="separator"></div>
       <div className="signup-form">
         <form>
-          <div className="user-name">
-            <input
-              type="text"
-              placeholder="First name"
-              value={firstName}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setFirstName(e.target.value)}
-            />
-
-            <input
-              type="text"
-              placeholder="Last name"
-              value={lastName}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setLastName(e.target.value)}
-            />
-          </div>
-
           <input
             type="text"
             placeholder="Email"
@@ -79,6 +63,22 @@ function Signup(): React.ReactElement {
             max={maxDate}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setDateOfBirth(e.target.value)}
           />
+
+          <div className="user-name">
+            <input
+              type="text"
+              placeholder="First name"
+              value={firstName}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setFirstName(e.target.value)}
+            />
+
+            <input
+              type="text"
+              placeholder="Last name"
+              value={lastName}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setLastName(e.target.value)}
+            />
+          </div>
 
           {formErr && <p>{formErr}</p>}
 
