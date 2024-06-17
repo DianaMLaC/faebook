@@ -1,6 +1,6 @@
 import React from "react"
 
-const Videos = () => {
+function Videos(): React.ReactElement {
   return (
     <div className="videos-container">
       <header className="videos-header">

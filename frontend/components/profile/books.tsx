@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-const Books = () => {
+function Books(): React.ReactElement {
   const [activeView, setActiveView] = useState("read")
   const [activeLink, setActiveLink] = useState("read")
 

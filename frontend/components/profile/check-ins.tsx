@@ -1,6 +1,6 @@
 import React from "react"
 
-const CheckIns = () => {
+function CheckIns(): React.ReactElement {
   return (
     <div className="check-ins-container">
       <header className="check-ins-header">

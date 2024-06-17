@@ -1,6 +1,6 @@
 import React from "react"
 
-const Music = () => {
+function Music(): React.ReactElement {
   return (
     <div className="music-container">
       <header className="music-header">

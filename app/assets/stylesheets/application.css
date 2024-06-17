@@ -1004,8 +1004,6 @@ body {
 
 .profile-photos-container {
   background-color: var(--secondary-color);
-  padding-left: 10px;
-  padding-right: 10px;
   padding-top: 10px;
 }
 
@@ -1193,12 +1191,17 @@ body {
 }
 
 /* About me */
-
-.profile-about-me-container {
+.profile-page-components {
   background-color: var(--secondary-color);
   padding-left: 10px;
   padding-right: 10px;
 
+}
+.profile-about-me-container {
+  background-color: var(--secondary-color);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
 }
 
 .about-me-container {
@@ -1445,8 +1448,8 @@ body {
 
 .profile-friends-container {
   background-color: var(--secondary-color);
-  padding-left: 10px;
-  padding-right: 10px;
+  /* padding-left: 10px;
+  padding-right: 10px; */
   padding-top: 10px;
 }
 
@@ -1740,6 +1743,7 @@ body {
 
 
 /* Posts page */
+
 
 .posts-page {
   background: var(--secondary-color);

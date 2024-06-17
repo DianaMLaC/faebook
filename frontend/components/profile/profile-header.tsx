@@ -13,8 +13,10 @@ import PostsPage from "../posts/posts_page"
 import FriendsPage from "../friends/friends_page"
 import PhotosPage from "../photos/photos_page"
 import AboutMe from "../user_profile_details/about_me"
-import Videos from "../user_profile_details/videos"
-import CheckIns from "../user_profile_details/check_ins"
+import Videos from "./videos"
+import CheckIns from "./check-ins"
+import Books from "./books"
+import Music from "./music"
 import { User } from "../../utils/types"
 import PostsProvider from "../../context/posts"
 import FriendsProvider from "../../context/friends"
@@ -183,6 +185,10 @@ function ProfileHeader(): React.ReactElement {
         return <Videos />
       case "checkins":
         return <CheckIns />
+      case "music":
+        return <Music />
+      case "books":
+        return <Books />
       default:
         return null
     }
@@ -307,6 +313,18 @@ function ProfileHeader(): React.ReactElement {
             >
               Check-ins
             </div>
+            <div
+              className={`profile-header-nav-link ${activeLink === "music" ? "selected" : ""}`}
+              onClick={(e) => handleViewChange(e, "music")}
+            >
+              Music
+            </div>
+            <div
+              className={`profile-header-nav-link ${activeLink === "books" ? "selected" : ""}`}
+              onClick={(e) => handleViewChange(e, "books")}
+            >
+              Books
+            </div>
           </div>
           <div className="nav-profile-header-button">
             <span>
@@ -315,7 +333,7 @@ function ProfileHeader(): React.ReactElement {
           </div>
         </nav>
       </header>
-      <section className="profile-page-component">{getViewComponent()}</section>
+      <section className="profile-page-components">{getViewComponent()}</section>
     </>
   )
 }
