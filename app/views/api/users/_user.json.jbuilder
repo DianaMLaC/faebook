@@ -13,9 +13,6 @@ end
 
 if user.intro.present?
   json.intro do
-    json.extract! user.intro, :order, :education, :location, :zodiac_sign, :elements, :house
+    json.partial! 'api/intros/intro', intro: user.intro
   end
-  
-else
-  json.intro {}
 end

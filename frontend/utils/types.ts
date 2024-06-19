@@ -6,12 +6,7 @@ export interface User {
   dateOfBirth: string
   profilePhotoUrl?: string
   coverPhotoUrl?: string
-  intro?: {
-    work?: string
-    education?: string
-    location?: string
-    relationship?: string
-  }
+  intro?: Intro
 }
 
 export interface NewUserData {
@@ -104,7 +99,7 @@ export interface Intro {
   education?: string
   location?: string
   elements?: string
-  zodiacSign?: string
+  zodiac_sign?: string
   order?: string
 }
 
