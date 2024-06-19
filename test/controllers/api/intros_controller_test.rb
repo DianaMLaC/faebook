@@ -42,7 +42,7 @@ class Api::IntrosControllerTest < ActionDispatch::IntegrationTest
     # Act
     post "/api/users/#{user.id}/intros",
          params: { intro: {
-           zodiac_sign: 'Taurus',
+           zodiac: 'Taurus',
            location: 'Solaria',
            education: 'Zodiac Academy',
            house: 'Ignis',
@@ -65,7 +65,7 @@ class Api::IntrosControllerTest < ActionDispatch::IntegrationTest
     user = create_and_sign_in_user(user_params)
     post "/api/users/#{user.id}/intros",
          params: { intro: {
-           zodiac_sign: 'Taurus',
+           zodiac: 'Taurus',
            location: 'Solaria',
            education: 'Zodiac Academy',
            house: 'Ignis',
@@ -78,7 +78,7 @@ class Api::IntrosControllerTest < ActionDispatch::IntegrationTest
     # Act
     patch "/api/users/#{user.id}/intros/#{intro_id}",
           params: { intro: {
-            zodiac_sign: 'Leo'
+            zodiac: 'Leo'
           } }
 
     # Assert

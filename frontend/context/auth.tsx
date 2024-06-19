@@ -42,7 +42,7 @@ function AuthProvider({ children }: AuthProviderProps): React.ReactElement {
     const intro = {
       location: "Solaria",
       education: "Zodiac Academy",
-      zodiac_sign: calculateZodiac(dbUser.dateOfBirth),
+      zodiac: calculateZodiac(dbUser.dateOfBirth),
     }
     try {
       const response = await createIntro(dbUser.id, intro)

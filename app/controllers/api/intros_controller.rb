@@ -31,6 +31,6 @@ class Api::IntrosController < ApplicationController
   end
 
   def intro_params
-    params.require(:intro).permit(:order, :location, :education, :house, :elements, :zodiac_sign)
+    params.require(:intro).permit(:order, :location, :education, :house, :elements, :zodiac)
   end
 end

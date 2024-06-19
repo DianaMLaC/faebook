@@ -99,7 +99,7 @@ export interface Intro {
   education?: string
   location?: string
   elements?: string
-  zodiac_sign?: string
+  zodiac?: string
   order?: string
 }
 

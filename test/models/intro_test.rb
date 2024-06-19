@@ -2,16 +2,16 @@
 #
 # Table name: intros
 #
-#  id          :uuid             not null, primary key
-#  house       :string
-#  location    :string
-#  education   :string
-#  elements    :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  user_id     :uuid
-#  zodiac_sign :string
-#  order       :string
+#  id         :uuid             not null, primary key
+#  house      :string
+#  location   :string
+#  education  :string
+#  elements   :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :uuid
+#  zodiac     :string
+#  order      :string
 #
 require "test_helper"
 
