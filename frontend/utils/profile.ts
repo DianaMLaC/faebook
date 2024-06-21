@@ -71,6 +71,27 @@ export const createIntro = async (userID: number, intro: Intro): Promise<Intro> 
   }
 }
 
+export const updateIntro = async (
+  userId: number,
+  introId: number,
+  intro: Intro
+): Promise<Intro> => {
+  try {
+    const response = await axios.patch(
+      `http://localhost:3000/api/users/${userId}/intros/${introId}`,
+      intro,
+      {
+        headers: customHeaders,
+      }
+    )
+    await checkResponse(response)
+    return response.data
+  } catch (err) {
+    console.error("Error in update Intro api:", err.message)
+    throw err
+  }
+}
+
 export const fetchUserSuggestions = async (searchTerm: string): Promise<User[]> => {
   try {
     const response = await axios.get(

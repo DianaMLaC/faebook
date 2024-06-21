@@ -1,5 +1,6 @@
 import React, { useState } from "react"
-import Overview from "./overview"
+// import Overview from "./overview"
+import Overview from "./overview-ts"
 import LocationAndEducation from "./location_and_education"
 import House from "./house"
 import ContactInfo from "./contact_info"
