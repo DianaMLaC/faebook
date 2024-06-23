@@ -10,7 +10,7 @@ export async function fileChecksum(file: File): Promise<string> {
     .join("")
 }
 
-export const fetchUserProfile = async (userId: number): Promise<User> => {
+export const fetchUserProfile = async (userId: string): Promise<User> => {
   try {
     const response = await axios.get(`http://localhost:3000/api/users/${userId}`, {
       headers: customHeaders,

@@ -30,7 +30,7 @@ function AuthProvider({ children }: AuthProviderProps): React.ReactElement {
     }
   }, [currentUser])
 
-  async function loadUserProfile(userId: number) {
+  async function loadUserProfile(userId: string) {
     const profileData = await fetchUserProfile(userId)
     console.log("loading user profile:", profileData)
     setProfileUser(profileData)

@@ -49,7 +49,7 @@ const App = () => {
       />
 
       <Route
-        path="/profile-page/:profileId"
+        path="/profile-page/:profileIdParam"
         element={
           <EnforceLoggedIn user={currentUser}>
             {currentUser && <NavBar />}

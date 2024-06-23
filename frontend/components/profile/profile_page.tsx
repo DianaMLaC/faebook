@@ -6,23 +6,22 @@ import { useAuth } from "../../context/auth"
 
 function UserProfile(): React.ReactElement {
   const { profileUser, setProfileUser } = useAuth()
-  const { profileIdParam } = useParams()
+  const { profileIdParam } = useParams<{ profileIdParam: string }>()
+
+  console.log({ profileIdParam })
 
   useEffect(() => {
-    if (profileIdParam !== undefined) {
-      const profileId = parseInt(profileIdParam, 10)
-
-      async function fetchProfile() {
-        try {
-          const profileUserData = await fetchUserProfile(profileId)
-          console.log({ profileUserData })
-          setProfileUser(profileUserData)
-        } catch (err) {
-          console.error("Error in fetching the User Profile", err)
-        }
+    const fetchProfile = async (profileId: string) => {
+      try {
+        const profileUserData = await fetchUserProfile(profileId)
+        console.log("Fetched profileUserData:", profileUserData) // Log fetched data
+        setProfileUser(profileUserData)
+      } catch (err) {
+        console.error("Error in fetching the User Profile", err)
       }
-
-      fetchProfile()
+    }
+    if (profileIdParam) {
+      fetchProfile(profileIdParam)
     }
   }, [profileIdParam, setProfileUser])
 
