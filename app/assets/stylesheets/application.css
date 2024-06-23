@@ -1202,6 +1202,8 @@ body {
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 10px;
+  position: relative;
+
 }
 
 .about-me-container {
@@ -1258,6 +1260,7 @@ body {
 .about-me-content {
   border-left: 2px solid var(--shade-background-color);
   padding: 10px;
+
 }
 
 .about-me-content h3 {
@@ -1272,6 +1275,7 @@ body {
   color: var(--primary-color);
   display: flex;
   flex-direction: row;
+  align-items: center;
   padding: 10px;
   cursor: pointer;
 }
@@ -1279,6 +1283,30 @@ body {
 .data-missing-icon{
   font-size: 30px;
   padding-right: 10px;
+  display: flex;
+  align-items: center;
+
+  /* padding: 5px; */
+}
+
+.data-present{
+  font-size: 18px;
+  color: var(--primary-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: var(--text-color);
+  padding: 10px;
+  cursor: pointer;
+}
+
+.data-present-icon{
+  font-size: 30px;
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+  color: var(--primary-color);
+
   /* padding: 5px; */
 }
 
@@ -1289,6 +1317,76 @@ body {
   justify-content: space-evenly;
   align-items: flex-start;
 }
+
+.overview button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border-color: transparent;
+  margin-right: 9px; 
+  font-size: 14px;
+  font-weight: 600;
+  background-color: var(--primary-color);
+  color: var(--text-contrast);
+  cursor: pointer;
+  position: absolute;
+  right: 30px;
+  bottom: 40px;
+}
+.house-input {
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.house-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.overview input[type="text"] {
+  padding-bottom: 8px;
+  padding-top: 8px;
+  padding-right: 10px;
+  padding-left: 10px;
+  background-color: var(--secondary-button-background);
+  border: transparent;
+  border-radius: 25px;
+  width: 90%;
+  /* margin-left: 6px; */
+  align-self: center;
+  font-size: 17px;
+  color: var(--text-color);
+  font-weight: 200;
+}
+
+.overview input[type="text"]:hover {
+  background-color: var(--secondary-button-hover);
+  cursor:auto;
+}
+
+.overview input[type="text"]::placeholder {
+  font-style: italic;
+}
+
+.create-post-input-bar {
+  padding-bottom: 8px;
+  padding-top: 8px;
+  padding-right: 10px;
+  padding-left: 10px;
+  background-color: var(--secondary-color);
+  border: transparent;
+  border-radius: 25px;
+  width: 90%;
+  /* margin-left: 6px; */
+  align-self: center;
+  font-size: 17px;
+  color: #65676B;
+  font-weight: 200;
+}
+
+
+
 
 .section {
   display: flex;

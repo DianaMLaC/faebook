@@ -22,6 +22,7 @@ function Overview(): React.ReactElement {
 
   useEffect(() => {
     if (currentUser) {
+      console.log({ currentUser })
       const dob = currentUser.dateOfBirth
       setZodiac(calculateZodiac(dob))
     }
@@ -31,24 +32,48 @@ function Overview(): React.ReactElement {
     switch (field) {
       case "education":
         return (
-          <input type="text" value={education} onChange={(e) => setEducation(e.target.value)} />
+          <input
+            type="text"
+            value={education}
+            onChange={(e) => setEducation(e.target.value)}
+            placeholder="Type your education"
+          />
         )
       case "location":
-        return <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
+        return (
+          <input
+            type="text"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            placeholder="Type your location"
+          />
+        )
       case "order":
-        return <input type="text" value={order} onChange={(e) => setOrder(e.target.value)} />
+        return (
+          <input
+            type="text"
+            value={order}
+            onChange={(e) => setOrder(e.target.value)}
+            placeholder="Type your oder"
+          />
+        )
       case "elements":
         return (
           <input
             type="text"
             value={elements}
             onChange={(e) => setElements(e.target.value)}
-            placeholder="type elements separated by a comma"
+            placeholder="Type your elements"
           />
         )
       case "house":
         return (
-          <select name={field} value={house} onChange={(e) => setHouse(e.target.value)}>
+          <select
+            className="house-input"
+            name={field}
+            value={house}
+            onChange={(e) => setHouse(e.target.value)}
+          >
             <option value="" disabled>
               --Please choose an option--
             </option>
@@ -132,6 +157,11 @@ function Overview(): React.ReactElement {
             ...updatedData,
           },
         })
+        if (updatedData.education) setEducation(updatedData.education)
+        if (updatedData.location) setLocation(updatedData.location)
+        if (updatedData.order) setOrder(updatedData.order)
+        if (updatedData.elements) setElements(updatedData.elements)
+        if (updatedData.house) setHouse(updatedData.house)
         setEditingField(null)
       } catch (err) {
         console.error("Error updating intro:", err.message)
@@ -142,35 +172,35 @@ function Overview(): React.ReactElement {
   return (
     <div className="overview">
       <div className="education">
-        {currentUser?.intro?.education !== ""
+        {currentUser?.intro?.education
           ? dataPresent("education")
           : editingField === "education"
           ? renderFieldInput("education")
           : dataMissing("education")}
       </div>
       <div className="location">
-        {currentUser?.intro?.location !== ""
+        {currentUser?.intro?.location
           ? dataPresent("location")
           : editingField === "location"
           ? renderFieldInput("location")
           : dataMissing("location")}
       </div>
       <div className="order">
-        {currentUser?.intro?.order !== ""
+        {currentUser?.intro?.order
           ? dataPresent("order")
           : editingField === "order"
           ? renderFieldInput("order")
           : dataMissing("order")}
       </div>
       <div className="elements">
-        {currentUser?.intro?.elements !== ""
+        {currentUser?.intro?.elements
           ? dataPresent("elements")
           : editingField === "elements"
           ? renderFieldInput("elements")
           : dataMissing("elements")}
       </div>
       <div className="house">
-        {currentUser?.intro?.house !== ""
+        {currentUser?.intro?.house
           ? dataPresent("house")
           : editingField === "house"
           ? renderFieldInput("house")

@@ -4,4 +4,4 @@ json.education intro.education
 json.house intro.house
 json.zodiac intro.zodiac
 json.elements intro.elements
-json.oder intro.order
+json.order intro.order
