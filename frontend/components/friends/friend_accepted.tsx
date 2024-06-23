@@ -1,6 +1,6 @@
 import React from "react"
 
-const FriendAccepted = ({ friend }) => {
+function FriendAccepted({ friend }): React.ReactElement {
   return (
     <div className="friend-accepted-container">
       <div className="friend-accepted-photo">

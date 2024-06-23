@@ -2,30 +2,31 @@ import React, { useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
 import { fetchFriendships } from "../../utils/profile"
 import PostsFriend from "./posts_friend"
+import { Friendship } from "../../utils/types"
 
-const PostsFriends = () => {
+function PostsFriends(): React.ReactElement {
   const { profileUser } = useAuth()
-  const [friends, setFriends] = useState(null)
+  const [friends, setFriends] = useState<Friendship[] | null>(null)
   // const [pendingFriendships, setPendingFriendships] = useState([])
 
   useEffect(() => {
     async function getFriendshipsData() {
       try {
-        const friendshipData = await fetchFriendships(profileUser.id)
-        // console.log(friendshipData)
-        // console.log(friendshipData.friends.accepted)
-        const accepted_friends = friendshipData.friends.accepted
-        const displayFriends =
-          accepted_friends.length > 9 ? accepted_friends.slice(0, 9) : accepted_friends
-        setFriends(displayFriends.length > 0 ? displayFriends : null)
+        if (profileUser) {
+          const friendshipData = await fetchFriendships(profileUser.id)
+          // console.log(friendshipData)
+          // console.log(friendshipData.friends.accepted)
+          const accepted_friends = friendshipData.friends.accepted
+          const displayFriends =
+            accepted_friends.length > 9 ? accepted_friends.slice(0, 9) : accepted_friends
+          setFriends(displayFriends.length > 0 ? displayFriends : null)
+        }
       } catch (error) {
         console.error("Error fetching friendship data:", error)
       }
     }
 
-    if (profileUser.id) {
-      getFriendshipsData()
-    }
+    getFriendshipsData()
   }, [profileUser])
 
   return (

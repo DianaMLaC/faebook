@@ -8,7 +8,7 @@ function UserProfile(): React.ReactElement {
   const { profileUser, setProfileUser } = useAuth()
   const { profileIdParam } = useParams<{ profileIdParam: string }>()
 
-  console.log({ profileIdParam })
+  // console.log({ profileIdParam })
 
   useEffect(() => {
     const fetchProfile = async (profileId: string) => {

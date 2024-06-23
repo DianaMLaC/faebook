@@ -5,7 +5,7 @@ import { fetchFriendships } from "../../utils/profile"
 import FriendsIndex from "./friends_index"
 import FriendRequests from "./friend_requests"
 
-const FriendsPage = () => {
+function FriendsPage(): React.ReactElement {
   const { currentUser, profileUser } = useAuth()
   const { acceptedFriends, pendingFriendships, setAcceptedFriends, setPendingFriendships } =
     useFriends()
@@ -16,23 +16,23 @@ const FriendsPage = () => {
   useEffect(() => {
     async function getFriendshipsData() {
       try {
-        const friendshipData = await fetchFriendships(profileUser.id)
-        // console.log("acceptedFriendsData:", friendshipData.friends.accepted)
-        setAcceptedFriends(friendshipData.friends.accepted)
-        // console.log("requestedFriendsData:", friendshipData.friends.requests)
+        if (profileUser) {
+          const friendshipData = await fetchFriendships(profileUser.id)
+          // console.log("acceptedFriendsData:", friendshipData.friends.accepted)
+          setAcceptedFriends(friendshipData.friends.accepted)
+          // console.log("requestedFriendsData:", friendshipData.friends.requests)
 
-        setPendingFriendships(friendshipData.friends.requests)
+          setPendingFriendships(friendshipData.friends.requests)
+        }
       } catch (error) {
         console.error("Error fetching friendship data:", error)
       }
     }
 
-    if (profileUser.id) {
-      getFriendshipsData()
-    }
+    getFriendshipsData()
   }, [profileUser, setAcceptedFriends, setPendingFriendships])
 
-  const handleViewChange = (e, view) => {
+  const handleViewChange = (e, view: string) => {
     e.preventDefault()
     setActiveView(view)
     setActiveLink(view)

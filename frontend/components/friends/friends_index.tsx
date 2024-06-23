@@ -1,11 +1,7 @@
 import React from "react"
 import FriendAccepted from "./friend_accepted"
 
-interface FriendsProps {
-  friends: any
-}
-
-function FriendsIndex({ friends }: FriendsProps) {
+function FriendsIndex({ friends }): React.ReactElement {
   return (
     <ul className="all-friends-display">
       {friends &&

@@ -1,6 +1,6 @@
 import React from "react"
 
-const PostsFriend = ({ friend }) => {
+function PostsFriend({ friend }): React.ReactElement {
   return (
     <div className="posts-friend-container">
       <div className="posts-friend-photo">

@@ -124,16 +124,16 @@ export const requestFriendship = async (userId: number): Promise<Friendship> => 
     throw err
   }
 }
-
-export const deleteFriendship = async (friendshipId: number): Promise<void> => {
+export const deleteFriendship = async (friendshipId: number): Promise<boolean> => {
   try {
     const response = await axios.delete(`http://localhost:3000/api/friendships/${friendshipId}`, {
       headers: customHeaders,
     })
     await checkResponse(response)
+    return true
   } catch (err) {
     console.error("Error in deleting friendship api", err)
-    throw err
+    return false
   }
 }
 

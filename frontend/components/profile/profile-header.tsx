@@ -17,7 +17,7 @@ import Videos from "./videos"
 import CheckIns from "./check-ins"
 import Books from "./books"
 import Music from "./music"
-import { User } from "../../utils/types"
+import { FriendshipData, User } from "../../utils/types"
 import PostsProvider from "../../context/posts"
 import FriendsProvider from "../../context/friends"
 
@@ -26,7 +26,7 @@ function ProfileHeader(): React.ReactElement {
   const [profileModalIsOpen, setProfileModalIsOpen] = useState<boolean>(false)
   const [coverModalIsOpen, setCoverModalIsOpen] = useState<boolean>(false)
   const [friendshipRequested, setFriendshipRequested] = useState<boolean>(false)
-  const [friendshipAccepted, setFriendshipAccepted] = useState<boolean>(false)
+  const [friendshipAccepted, setFriendshipAccepted] = useState<boolean | null>(false)
   const [existingRelation, setExistingRelation] = useState<boolean>(true)
   const [activeView, setActiveView] = useState<string>("posts")
   const [activeLink, setActiveLink] = useState<string>("posts")
@@ -40,15 +40,16 @@ function ProfileHeader(): React.ReactElement {
     async function checkFriendshipStatus() {
       try {
         const friendshipData = await fetchFriendships(profileUser!.id)
+        console.log({ friendshipData })
         if (friendshipData.existing_relation) {
-          setFriendshipAccepted(!!friendshipData.existing_relation.friendship_accepted)
+          setFriendshipAccepted(friendshipData.existing_relation.friendship_accepted)
           setFriendshipRequested(true)
 
           const acceptedFriendship = friendshipData.friends.accepted.find(
-            (friendship) => friendship.user.id === profileUser?.id
+            (friendship): boolean => friendship.user.id === profileUser?.id
           )
           const requestedFriendship = friendshipData.friends.requests.find(
-            (friendship) => friendship.user.id === profileUser?.id
+            (friendship): boolean => friendship.user.id === profileUser?.id
           )
 
           if (acceptedFriendship) {

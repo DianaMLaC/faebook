@@ -1,19 +1,22 @@
 import React, { useState } from "react"
 import { updateFriendship, deleteFriendship } from "../../utils/profile"
 import { useFriends } from "../../context/friends"
+import { Friendship } from "../../utils/types"
 
-const Request = ({ friend }) => {
+function Request({ friend }): React.ReactElement {
   const [friendshipStatus, setFriendshipStatus] = useState(friend.friendshipStatus)
   const { addAcceptedFriend, removePendingFriendship } = useFriends()
-  console.log("friend:", friend)
+
+  // console.log("friend:", friend)
+
   const acceptFriendship = async (e) => {
     e.preventDefault()
 
     try {
       const acceptFriendship = await updateFriendship(friend.friendshipId)
-      if (acceptFriendship.friendship) {
+      if (acceptFriendship.friendshipStatus) {
         console.log("friendship accepted")
-        setFriendshipStatus(acceptFriendship.friendship)
+        setFriendshipStatus(acceptFriendship.friendshipStatus)
         addAcceptedFriend(friend)
       }
     } catch (err) {
@@ -25,8 +28,7 @@ const Request = ({ friend }) => {
     e.preventDefault()
     try {
       const deleteFriendshipResp = await deleteFriendship(friend.friendshipId)
-      console.log(deleteFriendshipResp)
-      if (deleteFriendshipResp.success) {
+      if (deleteFriendshipResp) {
         removePendingFriendship(friend.friendshipId)
       }
     } catch (err) {
@@ -54,7 +56,7 @@ const Request = ({ friend }) => {
           <div className="friend-request-accept" onClick={acceptFriendship}>
             Confirm
           </div>
-          <div className="friend-request-remove" onClick={acceptFriendship}>
+          <div className="friend-request-remove" onClick={removeFriendship}>
             Remove
           </div>
         </div>
