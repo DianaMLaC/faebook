@@ -7,7 +7,7 @@ import { CircleLoader } from "react-spinners"
 import { RxCross2 } from "react-icons/rx"
 import { IoMdArrowDropdown } from "react-icons/io"
 
-const PostForm = ({ closeModalContainer }) => {
+function PostForm({ closeModalContainer }): React.ReactElement {
   const { addPost } = usePosts()
   const { currentUser, profileUser } = useAuth()
   const [postBody, setPostBody] = useState("")
@@ -22,14 +22,16 @@ const PostForm = ({ closeModalContainer }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsUploading(true)
-    let postResponse = null
+    // let postResponse = null
 
     try {
-      const postResponse = await createPost(postBody, profileUser.id)
-      if (postResponse) {
-        addPost(postResponse)
-        setPostBody("")
-        closeModalContainer()
+      if (profileUser) {
+        const postResponse = await createPost(postBody, profileUser.id)
+        if (postResponse) {
+          addPost(postResponse)
+          setPostBody("")
+          closeModalContainer()
+        }
       }
     } catch (err) {
       setFormErr(err.message)
@@ -48,12 +50,12 @@ const PostForm = ({ closeModalContainer }) => {
       </header>
       <div className="post-form-user-details">
         <div className="avatar">
-          {currentUser.profilePhotoUrl && (
-            <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
+          {currentUser?.profilePhotoUrl && (
+            <img className="profile-photo" src={currentUser?.profilePhotoUrl} alt="Profile" />
           )}
         </div>
         <div>
-          <div className="post-user-display-name">{currentUser.displayName}</div>
+          <div className="post-user-display-name">{currentUser?.displayName}</div>
           <div className="post-form-visibility">
             <FaUserFriends />
             <span>Friends</span>
@@ -66,7 +68,7 @@ const PostForm = ({ closeModalContainer }) => {
           value={postBody}
           onChange={handleInput}
           placeholder="What's on your mind?"
-          rows="5"
+          rows={5}
         />
       </div>
       <div className="post-form-add-on-banner">

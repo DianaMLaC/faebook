@@ -5,7 +5,7 @@ import CreatePost from "./create-post-container"
 import PostsIndex from "./posts_index"
 import PostsFriends from "./posts_friends"
 
-const PostsPage = () => {
+function PostsPage(): React.ReactElement {
   return (
     <div className="posts-page">
       <div className="posts-left">

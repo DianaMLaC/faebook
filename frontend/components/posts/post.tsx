@@ -10,12 +10,12 @@ import Comments from "../comments/comments_index"
 import CommentForm from "../comments/comment_form"
 import { formatPostDate } from "../../utils/helpers"
 
-const Post = ({ post }) => {
+function PostContainer({ post }): React.ReactElement {
   const { currentUser } = useAuth()
   const [likes, setLikes] = useState(post.likes || [])
   const { addLikeToPost, deleteLikeFromPost, addCommentToPost } = usePosts()
   const [likedByCurrentUser, setLikedByCurrentUser] = useState(
-    post.likes.some((like) => like.liker.id === currentUser.id)
+    post.likes.some((like) => like.liker.id === currentUser?.id)
   )
   const [comments, setComments] = useState(post.comments || [])
   const [toggleCommenting, setToggleCommenting] = useState(false)
@@ -30,7 +30,7 @@ const Post = ({ post }) => {
     }
 
     fetchCommentsData()
-    setLikedByCurrentUser(post.likes.some((like) => like.liker.id === currentUser.id))
+    setLikedByCurrentUser(post.likes.some((like) => like.liker.id === currentUser?.id))
     setLikes(post.likes)
   }, [post.id])
 
@@ -54,7 +54,7 @@ const Post = ({ post }) => {
   const handleNewComment = useCallback(
     (newComment) => {
       addCommentToPost(post.id, newComment)
-      setComments((prevComments) => [...prevComments, newComment])
+      setComments((prevComments): Comment[] => [...prevComments, newComment])
     },
     [post.id, addCommentToPost]
   )
@@ -102,7 +102,7 @@ const Post = ({ post }) => {
       {comments && <Comments comments={comments} />}
       <div className="post-comment">
         <div className="comment-avatar">
-          {currentUser.profilePhotoUrl && (
+          {currentUser?.profilePhotoUrl && (
             <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
           )}
         </div>
@@ -124,4 +124,4 @@ const Post = ({ post }) => {
   )
 }
 
-export default Post
+export default PostContainer

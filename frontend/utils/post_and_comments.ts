@@ -27,9 +27,9 @@ export const createPost = async (postBody: string, profileId: number): Promise<P
   }
 }
 
-export const fetchPosts = async (userId: number): Promise<Post[]> => {
+export const fetchPosts = async (userId: number): Promise<{ posts: Post[] }> => {
   try {
-    const response: AxiosResponse<Post[]> = await axios.get(
+    const response: AxiosResponse<{ posts: Post[] }> = await axios.get(
       `http://localhost:3000/api/users/${userId}/posts`,
       {
         headers: customHeaders,
@@ -60,7 +60,10 @@ export const toggleLike = async (likeable: string, likeableId: number): Promise<
   }
 }
 
-export const createComment = async (formData: FormData, postId: string): Promise<Comment> => {
+export const createComment = async (
+  formData: Partial<Comment>,
+  postId: string
+): Promise<Comment> => {
   try {
     const response: AxiosResponse<Comment> = await axios.post(
       `http://localhost:3000/api/posts/${postId}/comments`,
@@ -77,9 +80,9 @@ export const createComment = async (formData: FormData, postId: string): Promise
   }
 }
 
-export const fetchTopLevelComments = async (postId: string): Promise<Comment[]> => {
+export const fetchTopLevelComments = async (postId: string): Promise<{ comments: Comment[] }> => {
   try {
-    const response: AxiosResponse<Comment[]> = await axios.get(
+    const response: AxiosResponse<{ comments: Comment[] }> = await axios.get(
       `http://localhost:3000/api/posts/${postId}/comments`,
       {
         headers: customHeaders,

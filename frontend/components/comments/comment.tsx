@@ -7,7 +7,7 @@ import { formatCommentDate } from "../../utils/helpers"
 import Comments from "./comments_index"
 import CommentForm from "./comment_form"
 
-const Comment = ({ comment }) => {
+function CommentContainer({ comment }): React.ReactElement {
   const { currentUser } = useAuth()
   const { deleteLikeFromComment, addLikeToComment, addReplyToComment } = usePosts()
   const [likes, setLikes] = useState(comment.likes || [])
@@ -17,7 +17,7 @@ const Comment = ({ comment }) => {
   const [toggleReplyForm, setToggleReplyForm] = useState(false)
   const [toggleReplies, setToggleReplies] = useState(false)
   const [likedByCurrentUser, setLikedByCurrentUser] = useState(
-    comment.likes.some((like) => like.liker.id === currentUser.id)
+    comment.likes.some((like) => like.liker.id === currentUser?.id)
   )
 
   const toggleRepliesVisibility = () => {
@@ -25,7 +25,7 @@ const Comment = ({ comment }) => {
   }
 
   useEffect(() => {
-    setLikedByCurrentUser(comment.likes.some((like) => like.liker.id === currentUser.id))
+    setLikedByCurrentUser(comment.likes.some((like) => like.liker.id === currentUser?.id))
     setRepliesNumber(comment.replies.length)
     setLikes(comment.likes)
     setRepliesList(comment.replies)
@@ -33,7 +33,7 @@ const Comment = ({ comment }) => {
     setAuthor(comment.author)
   }, [comment])
 
-  const repliesLink = (count) => {
+  const repliesLink = (count: number): React.ReactNode => {
     const replyText = count === 1 ? "View 1 reply" : `View all ${count} replies`
     return toggleReplies ? null : (
       <div className="view-replies-link" onClick={toggleRepliesVisibility}>
@@ -52,7 +52,7 @@ const Comment = ({ comment }) => {
         deleteLikeFromComment(comment.postId, comment.id, likeResponse.id)
         setLikes(likes.filter((like) => like.id !== likeResponse.id))
       } else {
-        addLikeToComment(comment.postId, comment.id, likeResponse.id)
+        addLikeToComment(comment.postId, comment.id, likeResponse)
         setLikes([...likes, likeResponse])
       }
       setLikedByCurrentUser(!likedByCurrentUser)
@@ -62,7 +62,7 @@ const Comment = ({ comment }) => {
   const handleNewReply = useCallback(
     (newReply) => {
       addReplyToComment(comment.postId, comment.id, newReply)
-      setRepliesList((prevReplies) => [...prevReplies, newReply])
+      setRepliesList((prevReplies): Comment[] => [...prevReplies, newReply])
     },
     [comment.postId, comment.id, addReplyToComment]
   )
@@ -98,7 +98,7 @@ const Comment = ({ comment }) => {
           {toggleReplyForm && (
             <div className="reply-form">
               <div className="reply-avatar">
-                {currentUser.profilePhotoUrl && (
+                {currentUser?.profilePhotoUrl && (
                   <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
                 )}
               </div>
@@ -117,4 +117,4 @@ const Comment = ({ comment }) => {
   )
 }
 
-export default Comment
+export default CommentContainer

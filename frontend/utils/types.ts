@@ -52,18 +52,18 @@ export interface Like {
 }
 
 export interface Comment {
-  id: number
+  id?: number
   text: string
-  createdAt: string
-  postId: number
-  parentCommentId: number | null
-  author: {
+  createdAt?: string
+  postId?: number
+  parentCommentId?: number | null
+  author?: {
     id: number
     displayName: string
     profilePhotoUrl: string
   }
-  likes: Like[]
-  replies: Comment[]
+  likes?: Like[]
+  replies?: Comment[]
 }
 
 export interface Post {

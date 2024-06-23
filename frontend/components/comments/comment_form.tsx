@@ -1,17 +1,18 @@
-import React, { useState } from "react"
+import React, { FormEvent, useState } from "react"
 import { PiPaperPlaneRightFill } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
 import { createComment } from "../../utils/post_and_comments"
 import { CircleLoader } from "react-spinners"
+import { Comment } from "../../utils/types"
 
-const CommentForm = ({ onCommentSubmit, toggle, parentCommentId, postId }) => {
+function CommentForm({ onCommentSubmit, toggle, parentCommentId, postId }): React.ReactElement {
   const { currentUser } = useAuth()
-  const commentAs = `Comment as ${currentUser.displayName}`
+  const commentAs = `Comment as ${currentUser?.displayName}`
   const [text, setText] = useState("")
   const [formErr, setFormErr] = useState("")
   const [isUploading, setIsUploading] = useState(false)
 
-  const formData = () => {
+  const newCommentData = (): Partial<Comment> => {
     if (parentCommentId === null) {
       return {
         text,
@@ -19,7 +20,7 @@ const CommentForm = ({ onCommentSubmit, toggle, parentCommentId, postId }) => {
     } else {
       return {
         text,
-        parent_comment_id: parentCommentId,
+        parentCommentId: parentCommentId,
       }
     }
   }
@@ -27,7 +28,7 @@ const CommentForm = ({ onCommentSubmit, toggle, parentCommentId, postId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsUploading(true)
-    const commentData = formData()
+    const commentData = newCommentData()
     try {
       const commentResponse = await createComment(commentData, postId)
       if (commentResponse) {
@@ -49,7 +50,7 @@ const CommentForm = ({ onCommentSubmit, toggle, parentCommentId, postId }) => {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={commentAs}
-          rows="2"
+          rows={2}
         />
         {formErr ? (
           <div className="form-errors">{formErr}</div>

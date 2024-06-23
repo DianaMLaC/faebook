@@ -1,6 +1,6 @@
 import React from "react"
 
-const Intro = () => {
+function Intro(): React.ReactElement {
   return (
     <div className="intro-container">
       <header className="intro-header">

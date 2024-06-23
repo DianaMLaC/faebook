@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import Comment from "./comment"
+import CommentContainer from "./comment"
 
-const Comments = ({ comments }) => {
+function Comments({ comments }): React.ReactElement {
   // console.log("comments:", comments)
   const [showAll, setShowAll] = useState(false)
   // console.log("comments list:", comments)
@@ -15,7 +15,7 @@ const Comments = ({ comments }) => {
       )}
       <ul className="posts-list">
         {displayedComments.map((comment) => (
-          <Comment key={comment.id} comment={comment} />
+          <CommentContainer key={comment.id} comment={comment} />
         ))}
       </ul>
     </div>

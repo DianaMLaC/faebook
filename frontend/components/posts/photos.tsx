@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
-// import Photo from "../photos/photo"
-import Photo from "../photos/photo-ts"
+import PhotoSmall from "../photos/photo-ts"
 import { fetchUserPhotos } from "../../utils/profile"
+import { Photo } from "../../utils/types"
 
-const Photos = () => {
+function Photos(): React.ReactElement {
   const { profileUser } = useAuth()
-  const [photos, setPhotos] = useState(null)
+  const [photos, setPhotos] = useState<Photo[] | null>(null)
 
   useEffect(() => {
-    if (!profileUser.id) {
-      console.log("no current user id")
-      return
-    }
-
     async function fetchAllPhotosUrls() {
-      const photosData = await fetchUserPhotos(profileUser.id)
-      const displayPhotos = photosData.length > 9 ? photosData.slice(0, 9) : photosData
-      setPhotos(displayPhotos.length > 0 ? displayPhotos : null)
+      if (profileUser) {
+        const photosData = await fetchUserPhotos(profileUser.id)
+        const displayPhotos = photosData.length > 9 ? photosData.slice(0, 9) : photosData
+        setPhotos(displayPhotos.length > 0 ? displayPhotos : null)
+      }
     }
 
     fetchAllPhotosUrls()
@@ -30,7 +27,7 @@ const Photos = () => {
         <div className="see-photos">See All Photos</div>
       </header>
       <ul className="photos-display-grid">
-        {photos && photos.map((photo) => <Photo key={photo.id} photo={photo} />)}
+        {photos && photos.map((photo) => <PhotoSmall key={photo.id} photo={photo} />)}
       </ul>
     </div>
   )

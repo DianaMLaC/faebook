@@ -3,7 +3,7 @@ import ReactModal from "react-modal"
 import PostForm from "./post-form"
 import { useAuth } from "../../context/auth"
 
-const CreatePost = () => {
+function CreatePost(): React.ReactElement {
   const { currentUser } = useAuth()
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
@@ -23,7 +23,7 @@ const CreatePost = () => {
     <div className="create-post">
       <div className="create-post-top">
         <div className="avatar">
-          {currentUser.profilePhotoUrl && (
+          {currentUser?.profilePhotoUrl && (
             <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
           )}
         </div>
