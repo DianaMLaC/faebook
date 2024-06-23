@@ -5,7 +5,7 @@ import { IoIosArrowForward, IoMdHelpCircle, IoMdSettings } from "react-icons/io"
 import { MdNightlight, MdFeedback } from "react-icons/md"
 import { IoLogOut } from "react-icons/io5"
 
-const AccountMenu = () => {
+function AccountMenu(): React.ReactElement {
   const { currentUser, logout } = useAuth()
 
   const handleLogOut = () => {
@@ -19,11 +19,11 @@ const AccountMenu = () => {
       <div className="menu-banner">
         <div className="menu-account-profile">
           <div className="comment-avatar">
-            {currentUser.profilePhotoUrl && (
+            {currentUser?.profilePhotoUrl && (
               <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
             )}
           </div>
-          <div className="menu-user-display-name">{currentUser.displayName}</div>
+          <div className="menu-user-display-name">{currentUser?.displayName}</div>
         </div>
         <div className="menu-see-all-profiles">
           <PiUserSwitchFill />

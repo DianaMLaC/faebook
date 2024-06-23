@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect, MouseEvent } from "react"
 import { useAuth } from "../../context/auth"
-import PhotoUpload from "./photo_uploader"
+import PhotoUpload from "./photo-uploader"
 import ReactModal from "react-modal"
 import { FaPlus, FaCamera } from "react-icons/fa"
 import { MdModeEditOutline } from "react-icons/md"

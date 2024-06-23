@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { uploadProfilePhoto } from "../../utils/profile"
 import { CircleLoader } from "react-spinners"
 
-const PhotoUpload = ({ updatePhoto, closeModalContainer, albumName }) => {
+function PhotoUpload({ updatePhoto, closeModalContainer, albumName }): React.ReactElement {
   const [photoFile, setPhotoFile] = useState(null)
   const [description, setDescription] = useState("")
   const [isUploading, setIsUploading] = useState(false)

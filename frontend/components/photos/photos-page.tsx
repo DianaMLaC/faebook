@@ -1,8 +1,6 @@
 import React, { useState } from "react"
 import Albums from "./album-index"
 import PhotosIndex from "./photos-index"
-import PhotoUpload from "../profile/photo_uploader"
-import { useAuth } from "../../context/auth"
 
 function PhotosPage(): React.ReactElement {
   const [activeView, setActiveView] = useState("allPhotos")

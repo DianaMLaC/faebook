@@ -84,6 +84,7 @@ export interface Photo {
   createdAt: string
   url: string
   description?: string
+  albumName?: string
 }
 
 export interface Album {
