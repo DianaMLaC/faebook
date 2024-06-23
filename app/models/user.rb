@@ -25,46 +25,57 @@ class User < ApplicationRecord
   before_create :create_session_token
 
   has_many :authored_posts,
+           dependent: :destroy,
            foreign_key: :author_id,
            class_name: 'Post'
 
   has_many :profile_posts,
+           dependent: :destroy,
            foreign_key: :profile_id,
            class_name: 'Post'
 
   has_many :comments,
+           dependent: :destroy,
            foreign_key: :author_id,
            class_name: 'Comment'
 
   has_many :likes,
+           dependent: :destroy,
            foreign_key: :liker_id,
            class_name: 'Like'
 
   has_many :received_friendships,
+           dependent: :destroy,
            foreign_key: :receiver_id,
            class_name: 'Friendship'
 
   has_many :sent_friendships,
+           dependent: :destroy,
            foreign_key: :sender_id,
            class_name: 'Friendship'
 
   has_many :received_friends,
+           dependent: :destroy,
            through: :received_friendships,
            source: :receiver
 
   has_many :sent_friends,
+           dependent: :destroy,
            through: :sent_friendships,
            source: :sender
 
   has_many :albums,
+           dependent: :destroy,
            foreign_key: :user_id,
            class_name: 'Album'
 
   has_one :intro,
+          dependent: :destroy,
           foreign_key: :user_id,
           class_name: 'Intro'
 
   has_many :photos,
+           dependent: :destroy,
            through: :albums,
            source: :photos
 

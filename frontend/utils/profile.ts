@@ -92,7 +92,7 @@ export const updateIntro = async (
   }
 }
 
-export const fetchUserSuggestions = async (searchTerm: string): Promise<User[]> => {
+export const fetchUserSuggestions = async (searchTerm: string): Promise<{ users: User[] }> => {
   try {
     const response = await axios.get(
       `http://localhost:3000/api/users/search?q=${encodeURIComponent(searchTerm)}`,

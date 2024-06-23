@@ -6,7 +6,7 @@ class Api::IntrosController < ApplicationController
     @intro = Intro.new(intro_params)
     @intro.user_id = @authenticated_user.id
     # intro = @user.intro.new(work: params[:work])
-    debugger
+    # debugger
     if @intro.save
       render :create
     else

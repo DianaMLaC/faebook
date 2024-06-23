@@ -33,8 +33,11 @@ function NavBar(): React.ReactElement {
     if (value.trim()) {
       try {
         const dbData = await fetchUserSuggestions(value)
-        console.log({ dbData })
-        setSuggestions(dbData)
+        if (dbData && Array.isArray(dbData.users)) {
+          setSuggestions(dbData.users)
+        } else {
+          setSuggestions([])
+        }
       } catch (error) {
         console.error("Failed to fetch user suggestions:", error)
       }
