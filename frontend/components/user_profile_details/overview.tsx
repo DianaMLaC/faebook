@@ -11,22 +11,24 @@ import { calculateZodiac } from "../../utils/helpers"
 import { updateIntro } from "../../utils/profile"
 
 function Overview(): React.ReactElement {
-  const { currentUser, setCurrentUser } = useAuth()
-  const [education, setEducation] = useState(currentUser?.intro?.education || "")
-  const [location, setLocation] = useState(currentUser?.intro?.location || "")
-  const [house, setHouse] = useState(currentUser?.intro?.house || "")
-  const [elements, setElements] = useState(currentUser?.intro?.elements || "")
-  const [order, setOrder] = useState(currentUser?.intro?.order || "")
-  const [zodiac, setZodiac] = useState(currentUser?.intro?.zodiac || "")
+  const { currentUser, profileUser, setCurrentUser } = useAuth()
+  const [education, setEducation] = useState(profileUser?.intro?.education || "")
+  const [location, setLocation] = useState(profileUser?.intro?.location || "")
+  const [house, setHouse] = useState(profileUser?.intro?.house || "")
+  const [elements, setElements] = useState(profileUser?.intro?.elements || "")
+  const [order, setOrder] = useState(profileUser?.intro?.order || "")
+  // const [zodiac, setZodiac] = useState(profileUser?.intro?.zodiac || "")
   const [editingField, setEditingField] = useState<string | null>(null)
 
-  useEffect(() => {
-    if (currentUser) {
-      console.log({ currentUser })
-      const dob = currentUser.dateOfBirth
-      setZodiac(calculateZodiac(dob))
-    }
-  }, [currentUser])
+  const isCurrentUser = currentUser?.id === profileUser?.id
+
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     console.log({ currentUser })
+  //     const dob = currentUser.dateOfBirth
+  //     setZodiac(calculateZodiac(dob))
+  //   }
+  // }, [currentUser])
 
   const renderFieldInput = (field: keyof Intro) => {
     switch (field) {
@@ -120,7 +122,16 @@ function Overview(): React.ReactElement {
     return (
       <div className="data-present">
         <div className="data-present-icon">{icon(field)}</div>
-        <div>{currentUser?.intro?.[field]}</div>
+        <div>{profileUser?.intro?.[field]}</div>
+      </div>
+    )
+  }
+
+  const dataMissingForProfileUser = (field: keyof Intro) => {
+    return (
+      <div className="data-present">
+        <div className="data-present-icon">{icon(field)}</div>
+        <div>{`No ${field} to show`}</div>
       </div>
     )
   }
@@ -172,41 +183,51 @@ function Overview(): React.ReactElement {
   return (
     <div className="overview">
       <div className="education">
-        {currentUser?.intro?.education
+        {profileUser?.intro?.education
           ? dataPresent("education")
-          : editingField === "education"
+          : isCurrentUser && editingField === "education"
           ? renderFieldInput("education")
-          : dataMissing("education")}
+          : isCurrentUser
+          ? dataMissing("education")
+          : dataMissingForProfileUser("education")}
       </div>
       <div className="location">
-        {currentUser?.intro?.location
+        {profileUser?.intro?.location
           ? dataPresent("location")
-          : editingField === "location"
+          : isCurrentUser && editingField === "location"
           ? renderFieldInput("location")
-          : dataMissing("location")}
+          : isCurrentUser
+          ? dataMissing("location")
+          : dataMissingForProfileUser("location")}
       </div>
       <div className="order">
-        {currentUser?.intro?.order
+        {profileUser?.intro?.order
           ? dataPresent("order")
-          : editingField === "order"
+          : isCurrentUser && editingField === "order"
           ? renderFieldInput("order")
-          : dataMissing("order")}
+          : isCurrentUser
+          ? dataMissing("order")
+          : dataMissingForProfileUser("order")}
       </div>
       <div className="elements">
-        {currentUser?.intro?.elements
+        {profileUser?.intro?.elements
           ? dataPresent("elements")
-          : editingField === "elements"
+          : isCurrentUser && editingField === "elements"
           ? renderFieldInput("elements")
-          : dataMissing("elements")}
+          : isCurrentUser
+          ? dataMissing("elements")
+          : dataMissingForProfileUser("elements")}
       </div>
       <div className="house">
-        {currentUser?.intro?.house
+        {profileUser?.intro?.house
           ? dataPresent("house")
-          : editingField === "house"
+          : isCurrentUser && editingField === "house"
           ? renderFieldInput("house")
-          : dataMissing("house")}
+          : isCurrentUser
+          ? dataMissing("house")
+          : dataMissingForProfileUser("house")}
       </div>
-      {editingField && <button onClick={handleSave}>Save</button>}
+      {isCurrentUser && editingField && <button onClick={handleSave}>Save</button>}
     </div>
   )
 }

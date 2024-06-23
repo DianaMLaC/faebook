@@ -4,7 +4,7 @@ import { MdEmail, MdOutlineCake } from "react-icons/md"
 import { GiMagicSwirl } from "react-icons/gi"
 
 function ContactInfo(): React.ReactElement {
-  const { currentUser } = useAuth()
+  const { profileUser } = useAuth()
   return (
     <div>
       <div>
@@ -14,9 +14,9 @@ function ContactInfo(): React.ReactElement {
             <MdEmail />
           </div>
 
-          {currentUser?.email ? (
+          {profileUser?.email ? (
             <div className="data-item">
-              <div>{currentUser.email}</div>
+              <div>{profileUser.email}</div>
             </div>
           ) : (
             <div>No email to show</div>
@@ -31,9 +31,9 @@ function ContactInfo(): React.ReactElement {
             <MdOutlineCake />
           </div>
 
-          {currentUser?.dateOfBirth ? (
+          {profileUser?.dateOfBirth ? (
             <div className="data-item">
-              <div>{currentUser.dateOfBirth}</div>
+              <div>{profileUser.dateOfBirth}</div>
             </div>
           ) : (
             <div>No info to show</div>
@@ -49,9 +49,9 @@ function ContactInfo(): React.ReactElement {
             {/* to put the zodiac sign icon according to the zodiac sign of the user*/}
           </div>
 
-          {currentUser?.intro && currentUser.intro.zodiac ? (
+          {profileUser?.intro && profileUser.intro.zodiac ? (
             <div className="data-item">
-              <div>{currentUser.intro.zodiac}</div>
+              <div>{profileUser.intro.zodiac}</div>
             </div>
           ) : (
             <div>No zodiac sign to show</div>

@@ -4,7 +4,7 @@ import { LiaJediOrder } from "react-icons/lia"
 import { TbCircleTriangle } from "react-icons/tb"
 
 function OrderAndElements(): React.ReactElement {
-  const { currentUser } = useAuth()
+  const { profileUser } = useAuth()
 
   return (
     <div>
@@ -14,9 +14,9 @@ function OrderAndElements(): React.ReactElement {
           <div className="section-icon">
             <LiaJediOrder />
           </div>
-          {currentUser?.intro && currentUser.intro.order ? (
+          {profileUser?.intro && profileUser.intro.order ? (
             <div className="data-item">
-              <div>{currentUser.intro.order}</div>
+              <div>{profileUser.intro.order}</div>
             </div>
           ) : (
             <div>No order to show</div>
@@ -30,9 +30,9 @@ function OrderAndElements(): React.ReactElement {
             <TbCircleTriangle />
           </div>
 
-          {currentUser?.intro && currentUser.intro.elements ? (
+          {profileUser?.intro && profileUser.intro.elements ? (
             <div className="data-item">
-              <div>{currentUser.intro.elements}</div>
+              <div>{profileUser.intro.elements}</div>
             </div>
           ) : (
             <div>No order to show</div>

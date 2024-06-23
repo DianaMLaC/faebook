@@ -4,7 +4,7 @@ import { BsFillMortarboardFill } from "react-icons/bs"
 import { IoLocationSharp } from "react-icons/io5"
 
 function LocationAndEducation(): React.ReactElement {
-  const { currentUser } = useAuth()
+  const { profileUser } = useAuth()
 
   return (
     <div>
@@ -14,9 +14,9 @@ function LocationAndEducation(): React.ReactElement {
           <div className="section-icon">
             <IoLocationSharp />
           </div>
-          {currentUser?.intro && currentUser.intro.location ? (
+          {profileUser?.intro && profileUser.intro.location ? (
             <div className="data-item">
-              <div>{currentUser.intro.location}</div>
+              <div>{profileUser.intro.location}</div>
             </div>
           ) : (
             <div className="data-item">No places to show</div>
@@ -29,9 +29,9 @@ function LocationAndEducation(): React.ReactElement {
           <div className="section-icon">
             <BsFillMortarboardFill />
           </div>
-          {currentUser?.intro && currentUser.intro.education ? (
+          {profileUser?.intro && profileUser.intro.education ? (
             <div className="data-item">
-              <div>{currentUser.intro.education}</div>
+              <div>{profileUser.intro.education}</div>
             </div>
           ) : (
             <div>No Academy to show</div>
