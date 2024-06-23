@@ -2,7 +2,7 @@ import React from "react"
 import { useAuth } from "../../context/auth"
 import { HiHome } from "react-icons/hi"
 
-const House = () => {
+function House(): React.ReactElement {
   const { currentUser } = useAuth()
 
   return (
@@ -10,10 +10,10 @@ const House = () => {
       <h3>House</h3>
 
       <div className="section">
-        <div className="about-me-location-icon">
+        <div className="section-icon">
           <HiHome />
         </div>
-        {currentUser.intro && currentUser.intro.house ? (
+        {currentUser?.intro && currentUser.intro.house ? (
           <div className="data-item">
             <div>{currentUser.intro.house}</div>
           </div>

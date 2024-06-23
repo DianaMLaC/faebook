@@ -1,15 +1,14 @@
 import React, { useState } from "react"
-// import Overview from "./overview"
-import Overview from "./overview-ts"
-import LocationAndEducation from "./location_and_education"
+import Overview from "./overview"
+import LocationAndEducation from "./location-and-education"
+import OrderAndElements from "./order-and-elements"
 import House from "./house"
-import ContactInfo from "./contact_info"
-import FamilyAndRelationships from "./relationships"
-import OrderAndElements from "./order_and_elements"
+import ContactInfo from "./contact-info"
 import FriendsPage from "../friends/friends_page"
 import FriendsProvider from "../../context/friends"
 import Photos from "../posts/photos"
-const AboutMe = () => {
+
+function AboutMe(): React.ReactElement {
   const [activeCategory, setActiveCategory] = useState("Overview")
 
   const categories = [

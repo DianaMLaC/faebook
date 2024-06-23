@@ -1,9 +1,9 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useAuth } from "../../context/auth"
 import { LiaJediOrder } from "react-icons/lia"
-import { GiMagicSwirl } from "react-icons/gi"
+import { TbCircleTriangle } from "react-icons/tb"
 
-const OrderAndElements = () => {
+function OrderAndElements(): React.ReactElement {
   const { currentUser } = useAuth()
 
   return (
@@ -11,10 +11,10 @@ const OrderAndElements = () => {
       <div>
         <h3> Order</h3>
         <div className="section">
-          <div className="about-me-location-icon">
+          <div className="section-icon">
             <LiaJediOrder />
           </div>
-          {currentUser.intro && currentUser.intro.order ? (
+          {currentUser?.intro && currentUser.intro.order ? (
             <div className="data-item">
               <div>{currentUser.intro.order}</div>
             </div>
@@ -26,11 +26,11 @@ const OrderAndElements = () => {
       <div>
         <h3> Elements</h3>
         <div className="section">
-          <div className="about-me-location-icon">
-            <GiMagicSwirl />
+          <div className="section-icon">
+            <TbCircleTriangle />
           </div>
 
-          {currentUser.intro && currentUser.intro.elements ? (
+          {currentUser?.intro && currentUser.intro.elements ? (
             <div className="data-item">
               <div>{currentUser.intro.elements}</div>
             </div>

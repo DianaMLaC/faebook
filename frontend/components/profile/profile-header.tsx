@@ -12,7 +12,7 @@ import { deleteFriendship, fetchFriendships, requestFriendship } from "../../uti
 import PostsPage from "../posts/posts_page"
 import FriendsPage from "../friends/friends_page"
 import PhotosPage from "../photos/photos_page"
-import AboutMe from "../user_profile_details/about_me"
+import AboutMe from "../user_profile_details/about-me"
 import Videos from "./videos"
 import CheckIns from "./check-ins"
 import Books from "./books"

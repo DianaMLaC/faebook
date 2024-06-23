@@ -1369,23 +1369,6 @@ body {
   font-style: italic;
 }
 
-.create-post-input-bar {
-  padding-bottom: 8px;
-  padding-top: 8px;
-  padding-right: 10px;
-  padding-left: 10px;
-  background-color: var(--secondary-color);
-  border: transparent;
-  border-radius: 25px;
-  width: 90%;
-  /* margin-left: 6px; */
-  align-self: center;
-  font-size: 17px;
-  color: #65676B;
-  font-weight: 200;
-}
-
-
 
 
 .section {
@@ -1393,6 +1376,19 @@ body {
   flex-direction: row;
   font-size: 20px;
   padding-bottom: 10px;
+  align-items: center
+}
+
+.section-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  width: 35px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-color: var(--shade-background-color);
+  color: var(--primary-color);
 }
 
 .icon {
@@ -1400,17 +1396,6 @@ body {
   font-size: 26px;
 }
 
-.about-me-location-icon {
-  height: 35px;
-  width: 35px;
-  margin-right: 10px;
-  border-radius: 50%;
-  background-color: var(--shade-background-color);
-  color: var(--primary-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .data-item {
   display: flex;
