@@ -45,11 +45,38 @@ export const fetchAlbums = async (userID: number): Promise<Album[]> => {
   }
 }
 
+export const fetchAlbum = async (userID: number, albumId: string): Promise<Album> => {
+  try {
+    const response = await axios.get(`http://localhost:3000/api/users/${userID}/albums/${albumId}`)
+    await checkResponse(response)
+    return response.data
+  } catch (err) {
+    console.error("Error in get Albums api:", err.message)
+    throw err
+  }
+}
+
 export const fetchUserPhotos = async (userId: number): Promise<Photo[]> => {
   try {
     const response = await axios.get(`http://localhost:3000/api/users/${userId}/photos`, {
       headers: customHeaders,
     })
+    await checkResponse(response)
+    return response.data
+  } catch (err) {
+    console.error("Error in get Photos api:", err.message)
+    throw err
+  }
+}
+
+export const fetchPhoto = async (userId: number, photoId: string): Promise<Photo> => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/api/users/${userId}/photos/${photoId}`,
+      {
+        headers: customHeaders,
+      }
+    )
     await checkResponse(response)
     return response.data
   } catch (err) {

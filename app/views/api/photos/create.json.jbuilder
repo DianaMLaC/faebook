@@ -1,3 +1,3 @@
-json.id @photo.id
-json.url @photo.image
-json.description @photo.description
+json.id photo.id
+json.url photo.photo_url
+json.description photo.description

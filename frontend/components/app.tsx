@@ -4,6 +4,7 @@ import UserProfile from "./profile/profile_page"
 import StartPage from "./session/start"
 import NavBar from "./nav"
 import { useAuth } from "../context/auth"
+import PhotoViewer from "./photos/photo-viewer"
 
 const App = () => {
   const { currentUser, profileUser, setProfileUser } = useAuth()
@@ -57,6 +58,8 @@ const App = () => {
           </EnforceLoggedIn>
         }
       />
+
+      <Route path="/photo/:photoId" element={<PhotoViewer />} />
 
       <Route path="*" element={<Navigate to="/start" replace />} />
     </Routes>

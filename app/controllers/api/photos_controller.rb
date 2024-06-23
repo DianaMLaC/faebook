@@ -15,6 +15,15 @@ class Api::PhotosController < ApplicationController
     end
   end
 
+  def show
+    @photo = Photo.includes(:likes, :comments).find_by(id: params[:id])
+    if @photo
+      render :show
+    else
+      render json: { 'Photos' => 'Photo not found' }, status: 404
+    end
+  end
+
   def create
     album = find_or_create_album
     photo = album.photos.build(photo_params)

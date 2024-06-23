@@ -1,10 +1,15 @@
 import React from "react"
-import { Photo } from "../../utils/types"
+import { useNavigate } from "react-router-dom"
 
 function PhotoSmall({ photo }): React.ReactElement {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate(`/photo/${photo.id}`)
+  }
   // console.log({ photo })
   return (
-    <div className="photo-container">
+    <div className="photo-container" onClick={handleClick}>
       {photo.url ? (
         <img className="photo-cover-image" src={photo.url} alt={photo.description} />
       ) : (

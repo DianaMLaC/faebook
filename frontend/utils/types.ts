@@ -80,11 +80,14 @@ export interface Post {
 }
 
 export interface Photo {
-  id: number
+  id: string
+  albumId: string
+  description?: string
   createdAt: string
   url: string
-  description?: string
   albumName?: string
+  likes: Like[]
+  comments: Comment[]
 }
 
 export interface Album {
@@ -92,6 +95,7 @@ export interface Album {
   name: string
   coverPhotoUrl: string
   photosCount: number
+  photos: Photo[]
 }
 
 export interface Intro {

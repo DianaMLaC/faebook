@@ -14,8 +14,8 @@ Rails.application.routes.draw do
       end
       resources :posts, only: %i[create index show]
       resources :friendships, only: %i[create index show]
-      resources :albums, only: [:index]
-      resources :photos, only: [:index]
+      resources :albums, only: %i[index show create]
+      resources :photos, only: %i[index show]
       resources :intros, only: %i[create update]
     end
     resources :photos, only: [:create]

@@ -9,4 +9,18 @@ class Api::AlbumsController < ApplicationController
       render json: { 'albums' => [] }
     end
   end
+
+  def show
+    @album = Album.includes(:photos).find_by(user_id: params[:user_id], id: params[:id])
+    if @album
+      render :show
+    else
+      render json: { 'albums' => 'Album not found' }, status: 404
+    end
+  end
+
+  # def create
+  #   user = User.find_by(id: params[:id])
+  #   @album = user.albums.new(a)
+  # end
 end
