@@ -1,10 +1,10 @@
 import React, { useState } from "react"
-import { useAuth } from "../../context/auth"
-import Albums from "./albums_index"
+import Albums from "./album-index"
+import PhotosIndex from "./photos-index"
 import PhotoUpload from "../profile/photo_uploader"
-import PhotosIndex from "./photos_index"
+import { useAuth } from "../../context/auth"
 
-const PhotosPage = () => {
+function PhotosPage(): React.ReactElement {
   const [activeView, setActiveView] = useState("allPhotos")
   const [activeLink, setActiveLink] = useState("allPhotos")
 
@@ -14,14 +14,14 @@ const PhotosPage = () => {
     setActiveLink(view)
   }
 
-  const getViewComponent = () => {
+  const getViewComponent = (): React.ReactElement | null => {
     switch (activeView) {
       case "albums":
         return <Albums />
       case "allPhotos":
         return <PhotosIndex />
-      case "taggedPhotos":
-        return <Photos tagged />
+      // case "taggedPhotos":
+      //   return <Photos tagged />
       default:
         return null
     }

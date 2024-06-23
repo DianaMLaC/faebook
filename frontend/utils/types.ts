@@ -81,7 +81,7 @@ export interface Post {
 
 export interface Photo {
   id: number
-  albumName: string
+  createdAt: string
   url: string
   description?: string
 }

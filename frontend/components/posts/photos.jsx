@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
-import Photo from "../photos/photo"
+// import Photo from "../photos/photo"
+import Photo from "../photos/photo-ts"
 import { fetchUserPhotos } from "../../utils/profile"
 
 const Photos = () => {

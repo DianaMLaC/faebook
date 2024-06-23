@@ -1,6 +1,6 @@
 import React from "react"
 
-const Album = ({ album }) => {
+function AlbumContainer({ album }): React.ReactElement {
   // console.log("album:", album)
   return (
     <div className="album-cover">
@@ -18,4 +18,4 @@ const Album = ({ album }) => {
   )
 }
 
-export default Album
+export default AlbumContainer

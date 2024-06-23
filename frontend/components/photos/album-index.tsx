@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from "react"
 import { useAuth } from "../../context/auth"
-import Album from "./album"
+import AlbumContainer from "./album"
 import { fetchAlbums } from "../../utils/profile"
+import { Album } from "../../utils/types"
 
-const Albums = () => {
+function Albums(): React.ReactElement {
   const { profileUser } = useAuth()
-  const [albums, setAlbums] = useState(null)
+  const [albums, setAlbums] = useState<Album[] | null>(null)
 
   useEffect(() => {
-    if (profileUser.id === null) {
+    if (profileUser?.id === null) {
       console.log("no current user id")
       return
     }
 
     async function fetchAlbumsData() {
-      const albumsData = await fetchAlbums(profileUser.id)
-      // console.log("albumsData:", { albumsData })
-      setAlbums(albumsData)
+      if (profileUser) {
+        const albumsData = await fetchAlbums(profileUser.id)
+        // console.log("albumsData:", { albumsData })
+        setAlbums(albumsData)
+      }
       // console.log("albums-state:", albums)
     }
 
@@ -30,7 +33,10 @@ const Albums = () => {
         <div className="album-cover-title">Create Album</div>
         <div></div>
       </li>
-      {albums && albums.map((album) => <Album key={album.id} album={album} />)}
+      {albums &&
+        albums.map(
+          (album: Album): React.ReactElement => <AlbumContainer key={album.id} album={album} />
+        )}
     </ul>
   )
 }

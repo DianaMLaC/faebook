@@ -1,6 +1,8 @@
 import React from "react"
+import { Photo } from "../../utils/types"
 
-const Photo = ({ photo }) => {
+function PhotoSmall({ photo }): React.ReactElement {
+  // console.log({ photo })
   return (
     <div className="photo-container">
       {photo.url ? (
@@ -12,4 +14,4 @@ const Photo = ({ photo }) => {
   )
 }
 
-export default Photo
+export default PhotoSmall
