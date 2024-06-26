@@ -32,7 +32,8 @@ class Api::LikesController < ApplicationController
   def set_likeable
     likeable_types = {
       'post_id' => Post,
-      'comment_id' => Comment
+      'comment_id' => Comment,
+      'photo_id' => Photo
       # Add more mappings here as application grows
     }
 
