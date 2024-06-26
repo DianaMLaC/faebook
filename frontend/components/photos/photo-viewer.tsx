@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from "react-icons/io"
-import { AiOutlineClose } from "react-icons/ai"
+import { IoClose } from "react-icons/io5"
+import { HiOutlineZoomOut, HiOutlineZoomIn } from "react-icons/hi"
+import { BsArrowsAngleContract, BsArrowsAngleExpand } from "react-icons/bs"
+import { FaTag } from "react-icons/fa6"
 import { useAuth } from "../../context/auth"
 import { Comment, Like, Photo } from "../../utils/types"
 import { fetchAlbum, fetchPhoto } from "../../utils/profile"
@@ -33,15 +36,16 @@ function PhotoViewer(): React.ReactElement {
 
   const handleNextPhoto = () => {
     const currentIndex = albumPhotos.findIndex((photo) => photo.id === photoId)
-    if (currentIndex < albumPhotos.length - 1) {
-      navigate(`/photo/${albumPhotos[currentIndex + 1].id}`)
+    if (currentIndex > 0) {
+      navigate(`/photo/${albumPhotos[currentIndex - 1].id}`)
     }
   }
 
   const handlePrevPhoto = () => {
     const currentIndex = albumPhotos.findIndex((photo) => photo.id === photoId)
-    if (currentIndex > 0) {
-      navigate(`/photo/${albumPhotos[currentIndex - 1].id}`)
+    console.log("currentIndex:", currentIndex)
+    if (currentIndex < albumPhotos.length - 1) {
+      navigate(`/photo/${albumPhotos[currentIndex + 1].id}`)
     }
   }
 
@@ -49,28 +53,55 @@ function PhotoViewer(): React.ReactElement {
     return <div>Loading photo...</div>
   }
 
+  const currentIndex = albumPhotos.findIndex((photo) => photo.id === photoId)
+  const isPrevDisabled = currentIndex >= albumPhotos.length - 1
+  const isNextDisabled = currentIndex <= 0
+
   return (
     <div className="photo-viewer-modal">
       <div className="photo-viewer-content">
-        <div className="photo-viewer-header">
-          <button className="close-button" onClick={() => navigate(-1)}>
-            <AiOutlineClose />
-          </button>
-        </div>
         <div className="photo-viewer-main">
-          <div className="photo-viewer-left">
-            <button className="nav-arrow left-arrow" onClick={handlePrevPhoto}>
+          <div className="main-header">
+            <div className="main-header-left">
+              <div className="close-button" onClick={() => navigate(-1)}>
+                <IoClose />
+              </div>
+              <img
+                className="photo-viewer-logo-img"
+                src="/assets/images/dark-logo.png"
+                alt="Faebook"
+              />
+            </div>
+            <div className="main-header-right">
+              <HiOutlineZoomIn />
+              <HiOutlineZoomOut />
+              <FaTag />
+              <BsArrowsAngleExpand />
+            </div>
+          </div>
+          <div className="photo-viewer-display">
+            <button
+              className="nav-arrow left-arrow"
+              onClick={handlePrevPhoto}
+              disabled={isPrevDisabled}
+            >
               <IoMdArrowRoundBack />
             </button>
             <img src={photoDetails.url} alt={photoDetails.description} />
-            <button className="nav-arrow right-arrow" onClick={handleNextPhoto}>
+            <button
+              className="nav-arrow right-arrow"
+              onClick={handleNextPhoto}
+              disabled={isNextDisabled}
+            >
               <IoMdArrowRoundForward />
             </button>
           </div>
-          <div className="photo-viewer-right">
-            <div className="photo-details">
-              <p>{photoDetails.description}</p>
-              {/* <div className="comments-section">
+        </div>
+        <div className="photo-viewer-details">
+          <div className="details-header">Nav right menu here</div>
+          <div className="photo-details">
+            <p>{photoDetails.description}</p>
+            {/* <div className="comments-section">
                 {photoDetails.comments.map((comment) => (
                   <div key={comment.id} className="comment">
                     <p>
@@ -79,7 +110,6 @@ function PhotoViewer(): React.ReactElement {
                   </div>
                 ))}
               </div> */}
-            </div>
           </div>
         </div>
       </div>

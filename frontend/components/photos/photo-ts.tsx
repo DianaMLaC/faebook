@@ -1,5 +1,6 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
+import ReactModal from "react-modal"
 
 function PhotoSmall({ photo }): React.ReactElement {
   const navigate = useNavigate()
