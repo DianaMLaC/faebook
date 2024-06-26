@@ -64,20 +64,20 @@ function PhotoDetails({ photo }) {
               <img className="profile-photo" src={profileUser.profilePhotoUrl} alt="Profile" />
             )}
           </div>
-          <div className="photo-details">
+          <div className="photo-details-div">
             <div className="photo-user-display-name">{profileUser?.displayName}</div>
             <div className="photo-visibility">
               <div className="photo-created-at">{photoTimeStamp}</div>
             </div>
           </div>
         </div>
-        <div className="more-button">...</div>
+        {/* <div className="more-button">...</div> */}
       </header>
 
       <div className="photo-description">{photo.description}</div>
 
       <div className="likes-container">
-        {likes.length > 0 ? <Likes likes={likes} position={"photo"} /> : <p>No likes yet.</p>}
+        {likes.length > 0 ? <Likes likes={likes} position={"photo"} /> : <p></p>}
       </div>
 
       <div className="photo-action-buttons">
@@ -95,7 +95,7 @@ function PhotoDetails({ photo }) {
         </div>
       </div>
 
-      {comments.length > 0 ? <Comments comments={comments} /> : <p>No comments yet.</p>}
+      {comments.length > 0 ? <Comments comments={comments} /> : <p></p>}
 
       <div className="photo-comment">
         <div className="comment-avatar">
