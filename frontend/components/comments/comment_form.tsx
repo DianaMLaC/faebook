@@ -5,7 +5,21 @@ import { createComment } from "../../utils/post_and_comments"
 import { CircleLoader } from "react-spinners"
 import { Comment } from "../../utils/types"
 
-function CommentForm({ onCommentSubmit, toggle, parentCommentId, postId }): React.ReactElement {
+interface CommentFormProps {
+  onCommentSubmit: (comment: Comment) => void
+  toggle: (value: boolean) => void
+  parentCommentId: string | null
+  itemId: string // can be either postId or photoId
+  itemType: "post" | "photo" // indicates whether it's a post or a photo
+}
+
+function CommentForm({
+  onCommentSubmit,
+  toggle,
+  parentCommentId,
+  itemId,
+  itemType,
+}: CommentFormProps): React.ReactElement {
   const { currentUser } = useAuth()
   const commentAs = `Comment as ${currentUser?.displayName}`
   const [text, setText] = useState("")
@@ -25,12 +39,12 @@ function CommentForm({ onCommentSubmit, toggle, parentCommentId, postId }): Reac
     }
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setIsUploading(true)
     const commentData = newCommentData()
     try {
-      const commentResponse = await createComment(commentData, postId)
+      const commentResponse = await createComment(commentData, itemId, itemType)
       if (commentResponse) {
         setText("")
         setFormErr("")
@@ -40,6 +54,7 @@ function CommentForm({ onCommentSubmit, toggle, parentCommentId, postId }): Reac
       }
     } catch (err) {
       setFormErr(err.message)
+      setIsUploading(false)
     }
   }
 

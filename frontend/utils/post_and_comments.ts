@@ -62,32 +62,39 @@ export const toggleLike = async (likeable: string, likeableId: number): Promise<
 
 export const createComment = async (
   formData: Partial<Comment>,
-  postId: string
+  itemId: string,
+  itemType: "post" | "photo"
 ): Promise<Comment> => {
   try {
-    const response: AxiosResponse<Comment> = await axios.post(
-      `http://localhost:3000/api/posts/${postId}/comments`,
-      formData,
-      {
-        headers: customHeaders,
-      }
-    )
+    const endpoint =
+      itemType === "post"
+        ? `http://localhost:3000/api/posts/${itemId}/comments`
+        : `http://localhost:3000/api/photos/${itemId}/comments`
+
+    const response: AxiosResponse<Comment> = await axios.post(endpoint, formData, {
+      headers: customHeaders,
+    })
     await checkResponse(response)
     return response.data
   } catch (err) {
-    console.error("Error in create a Comment api:", err.message)
+    console.error("Error in create a comment api:", err.message)
     throw err
   }
 }
 
-export const fetchTopLevelComments = async (postId: string): Promise<{ comments: Comment[] }> => {
+export const fetchTopLevelComments = async (
+  itemId: string,
+  itemType: "post" | "photo"
+): Promise<{ comments: Comment[] }> => {
   try {
-    const response: AxiosResponse<{ comments: Comment[] }> = await axios.get(
-      `http://localhost:3000/api/posts/${postId}/comments`,
-      {
-        headers: customHeaders,
-      }
-    )
+    const endpoint =
+      itemType === "post"
+        ? `http://localhost:3000/api/posts/${itemId}/comments`
+        : `http://localhost:3000/api/photos/${itemId}/comments`
+
+    const response: AxiosResponse<{ comments: Comment[] }> = await axios.get(endpoint, {
+      headers: customHeaders,
+    })
     await checkResponse(response)
     return response.data
   } catch (err) {
@@ -95,3 +102,19 @@ export const fetchTopLevelComments = async (postId: string): Promise<{ comments:
     throw err
   }
 }
+
+// export const fetchPhotoComments = async (photoId: string): Promise<{ comments: Comment[] }> => {
+//   try {
+//     const response: AxiosResponse<{ comments: Comment[] }> = await axios.get(
+//       `http://localhost:3000/api/photos/${photoId}/comments`,
+//       {
+//         headers: customHeaders,
+//       }
+//     )
+//     await checkResponse(response)
+//     return response.data
+//   } catch (err) {
+//     console.error("Error in get photo comments api:", err.message)
+//     throw err
+//   }
+// }

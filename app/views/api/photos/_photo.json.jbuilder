@@ -2,6 +2,7 @@ json.id photo.id
 json.url photo.photo_url
 json.description photo.description
 json.albumId photo.album_id
+json.createdAt photo.created_at
 
 if photo.likes.present?
   json.likes photo.likes do |like|

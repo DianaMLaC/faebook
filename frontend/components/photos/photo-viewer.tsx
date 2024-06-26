@@ -8,13 +8,14 @@ import { FaTag } from "react-icons/fa6"
 import { useAuth } from "../../context/auth"
 import { Comment, Like, Photo } from "../../utils/types"
 import { fetchAlbum, fetchPhoto } from "../../utils/profile"
+import NavRight from "../user_profile_details/nav-right"
+import PhotoDetails from "./photo-details"
 
 function PhotoViewer(): React.ReactElement {
   const { profileUser } = useAuth()
   const { photoId } = useParams<{ photoId: string }>()
   const [photoDetails, setPhotoDetails] = useState<Photo | null>(null)
   const [photoLikes, setPhotoLikes] = useState<Like[] | null>(null)
-  // const [photoComments, setPhotoComments] = useState<Comment[] | null>(null)
   const [albumPhotos, setAlbumPhotos] = useState<Photo[] | []>([])
   const navigate = useNavigate()
 
@@ -24,9 +25,7 @@ function PhotoViewer(): React.ReactElement {
         const details = await fetchPhoto(profileUser.id, photoId)
         setPhotoDetails(details)
         setPhotoLikes(details.likes)
-        // setPhotoComments(details.Comments)
         const album = await fetchAlbum(profileUser.id, details.albumId)
-        console.log({ album })
         setAlbumPhotos(album.photos)
       }
     }
@@ -36,16 +35,15 @@ function PhotoViewer(): React.ReactElement {
 
   const handleNextPhoto = () => {
     const currentIndex = albumPhotos.findIndex((photo) => photo.id === photoId)
-    if (currentIndex > 0) {
-      navigate(`/photo/${albumPhotos[currentIndex - 1].id}`)
+    if (currentIndex < albumPhotos.length - 1) {
+      navigate(`/photo/${albumPhotos[currentIndex + 1].id}`)
     }
   }
 
   const handlePrevPhoto = () => {
     const currentIndex = albumPhotos.findIndex((photo) => photo.id === photoId)
-    console.log("currentIndex:", currentIndex)
-    if (currentIndex < albumPhotos.length - 1) {
-      navigate(`/photo/${albumPhotos[currentIndex + 1].id}`)
+    if (currentIndex > 0) {
+      navigate(`/photo/${albumPhotos[currentIndex - 1].id}`)
     }
   }
 
@@ -54,8 +52,8 @@ function PhotoViewer(): React.ReactElement {
   }
 
   const currentIndex = albumPhotos.findIndex((photo) => photo.id === photoId)
-  const isPrevDisabled = currentIndex >= albumPhotos.length - 1
-  const isNextDisabled = currentIndex <= 0
+  const isPrevDisabled = currentIndex <= 0
+  const isNextDisabled = currentIndex >= albumPhotos.length - 1
 
   return (
     <div className="photo-viewer-modal">
@@ -69,7 +67,7 @@ function PhotoViewer(): React.ReactElement {
               <img
                 className="photo-viewer-logo-img"
                 src="/assets/images/dark-logo.png"
-                alt="Faebook"
+                alt="Facebook"
               />
             </div>
             <div className="main-header-right">
@@ -98,18 +96,11 @@ function PhotoViewer(): React.ReactElement {
           </div>
         </div>
         <div className="photo-viewer-details">
-          <div className="details-header">Nav right menu here</div>
+          <div className="details-header">
+            <NavRight />
+          </div>
           <div className="photo-details">
-            <p>{photoDetails.description}</p>
-            {/* <div className="comments-section">
-                {photoDetails.comments.map((comment) => (
-                  <div key={comment.id} className="comment">
-                    <p>
-                      <strong>{comment.user}</strong>: {comment.text}
-                    </p>
-                  </div>
-                ))}
-              </div> */}
+            <PhotoDetails photo={photoDetails} /> {/* Integrate PhotoDetails */}
           </div>
         </div>
       </div>

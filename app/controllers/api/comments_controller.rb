@@ -1,9 +1,12 @@
 class Api::CommentsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :must_be_authorized, :post_must_exist, :ensure_relation
+  before_action :must_be_authorized
+  before_action :set_commentable, only: %i[index create]
+  before_action :ensure_relation, only: [:create]
 
   def index
-    @comments = @post.comments.includes(:likes, replies: :likes).where(parent_comment_id: nil).order(created_at: :desc)
+    @comments = @commentable.comments.includes(:likes,
+                                               replies: :likes).where(parent_comment_id: nil).order(created_at: :desc)
     if @comments.empty?
       render json: { 'comments' => [] }
       return
@@ -13,7 +16,7 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
-    @comment = @post.comments.new(comment_params)
+    @comment = @commentable.comments.new(comment_params)
     @comment.author_id = @authenticated_user.id
 
     if @comment.save
@@ -37,30 +40,33 @@ class Api::CommentsController < ApplicationController
     params.require(:comment).permit(:text, :parent_comment_id)
   end
 
-  def post_must_exist
-    @post = Post.find(params[:post_id])
-
-    return unless @post.nil?
-
-    render json: {
-      'errors' => {
-        'posts' => 'Post not found'
-      }
-    }, status: 404
-    nil
+  def set_commentable
+    if params[:post_id]
+      @commentable = Post.find(params[:post_id])
+    elsif params[:photo_id]
+      @commentable = Photo.find(params[:photo_id])
+    else
+      render json: { errors: { commentable: 'Not found' } }, status: 404
+    end
   end
 
   def ensure_relation
-    existing_relation = Friendship.find_by(receiver_id: @authenticated_user.id, sender_id: @post.profile_id,
+    profile_id = if @commentable.is_a?(Post)
+                   @commentable.profile_id
+                 elsif @commentable.is_a?(Photo)
+                   @commentable.user_id # Adjust as necessary
+                 end
+
+    existing_relation = Friendship.find_by(receiver_id: @authenticated_user.id, sender_id: profile_id,
                                            is_accepted: true) ||
-                        Friendship.find_by(receiver_id: @post.profile_id, sender_id: @authenticated_user.id,
+                        Friendship.find_by(receiver_id: profile_id, sender_id: @authenticated_user.id,
                                            is_accepted: true)
 
-    return if @authenticated_user.id == @post.profile_id || existing_relation.present?
+    return if @authenticated_user.id == profile_id || existing_relation.present?
 
     render json: {
-      'errors' => {
-        'friendship' => 'No relation between users'
+      errors: {
+        friendship: 'No relation between users'
       }
     }, status: 422 and false
   end

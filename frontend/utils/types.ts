@@ -55,8 +55,8 @@ export interface Comment {
   id?: number
   text: string
   createdAt?: string
-  postId?: number
-  parentCommentId?: number | null
+  postId?: string
+  parentCommentId?: string | null
   author?: {
     id: number
     displayName: string

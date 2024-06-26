@@ -24,7 +24,7 @@ function PostContainer({ post }): React.ReactElement {
 
   useEffect(() => {
     async function fetchCommentsData() {
-      const commentsData = await fetchTopLevelComments(post.id)
+      const commentsData = await fetchTopLevelComments(post.id, "post")
       // console.log("Fetched comments data:", commentsData)
       setComments(commentsData.comments)
     }
@@ -112,7 +112,8 @@ function PostContainer({ post }): React.ReactElement {
             onCommentSubmit={handleNewComment}
             toggle={setToggleCommenting}
             parentCommentId={null}
-            postId={post.id}
+            itemId={post.id}
+            itemType="post" // Updated prop
           />
         ) : (
           <div className="comment-input-bar" onClick={() => setToggleCommenting(true)}>

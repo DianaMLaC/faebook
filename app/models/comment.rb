@@ -18,6 +18,10 @@ class Comment < ApplicationRecord
              foreign_key: :post_id,
              class_name: 'Post'
 
+  belongs_to :photo,
+             foreign_key: :photo_id,
+             class_name: 'Photo'
+
   belongs_to :author,
              foreign_key: :author_id,
              class_name: 'User'

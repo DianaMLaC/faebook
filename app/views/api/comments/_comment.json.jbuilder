@@ -1,9 +1,15 @@
-
 json.id comment.id
 json.text comment.text
 json.createdAt comment.created_at.iso8601
-json.postId comment.post_id
 json.parentCommentId comment.parent_comment_id
+
+if comment.respond_to?(:post_id) && comment.post_id.present?
+  json.postId comment.post_id
+end
+
+if comment.respond_to?(:photo_id) && comment.photo_id.present?
+  json.photoId comment.photo_id
+end
 
 json.author do 
   json.id comment.author_id
@@ -12,7 +18,7 @@ json.author do
 end
 
 json.likes comment.likes do |like|
-   json.partial! 'api/likes/like', like: like
+  json.partial! 'api/likes/like', like: like
 end
 
 json.replies comment.replies do |reply|
