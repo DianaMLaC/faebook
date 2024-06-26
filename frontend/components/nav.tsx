@@ -2,18 +2,13 @@ import React, { useState, ChangeEvent } from "react"
 import { Outlet } from "react-router-dom"
 import { fetchUserSuggestions } from "../utils/profile"
 import { useNavigate } from "react-router-dom"
-import AccountMenu from "./profile/account-menu"
 import { useAuth } from "../context/auth"
-import { MdKeyboardArrowDown, MdGroups, MdOutlineGroups } from "react-icons/md"
-import { TbGridDots } from "react-icons/tb"
-import { FaFacebookMessenger } from "react-icons/fa6"
-import { IoMdNotifications } from "react-icons/io"
 import { User } from "../utils/types"
+import NavRight from "./user_profile_details/nav-right"
 
 function NavBar(): React.ReactElement {
-  const { currentUser, setProfileUser } = useAuth()
+  const { setProfileUser } = useAuth()
   const [searchTerm, setSearchTerm] = useState<string>("")
-  const [toggleUserMenu, setToggleUserMenu] = useState<boolean>(false)
   const [suggestions, setSuggestions] = useState<User[]>([])
   const navigate = useNavigate()
 
@@ -43,11 +38,6 @@ function NavBar(): React.ReactElement {
     }
   }
 
-  const handleMenuButton = () => {
-    setToggleUserMenu(!toggleUserMenu)
-    console.log("toggleMenu:", toggleUserMenu)
-  }
-
   return (
     <div>
       <header className="nav-bar">
@@ -75,47 +65,8 @@ function NavBar(): React.ReactElement {
           </div>
         </div>
 
-        <div className="nav-center">
-          {/* <div className="nav-home-button">
-            <BiHomeAlt />
-          </div> */}
-          {/* <div className="nav-video-button">
-            <PiVideoLight />
-          </div> */}
-          {/* <div className="nav-groups-button">
-            <MdOutlineGroups />
-          </div> */}
-          {/* <div className="nav-games-button">
-            <CgGames />
-          </div> */}
-        </div>
-
-        <div className="nav-right">
-          <div className="nav-create-button">
-            <TbGridDots />
-          </div>
-          <div className="nav-messenger-button">
-            <FaFacebookMessenger />
-          </div>
-          <div className="nav-notifications-button">
-            <IoMdNotifications />
-          </div>
-          <div className="nav-account-button" onClick={handleMenuButton}>
-            <div className="avatar">
-              {currentUser?.profilePhotoUrl && (
-                <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
-              )}
-            </div>
-            <div className="account-menu-toggle">
-              <MdKeyboardArrowDown />
-            </div>
-            {toggleUserMenu && (
-              <div className="account-menu-container">
-                <AccountMenu />
-              </div>
-            )}
-          </div>
-        </div>
+        <div className="nav-center"></div>
+        <NavRight />
       </header>
 
       <Outlet />
