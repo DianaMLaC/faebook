@@ -22,6 +22,7 @@ class Api::CommentsController < ApplicationController
     if @comment.save
       render :create
     else
+      logger.debug "Comment creation failed: #{@comment.errors.full_messages.join(', ')}"
       mapped_errors = {
         text: @comment.errors.where(:text).map(&:full_message).join(', '),
         parentCommentId: @comment.errors.where(:parent_comment_id).map(&:full_message).join(', ')
@@ -54,7 +55,7 @@ class Api::CommentsController < ApplicationController
     profile_id = if @commentable.is_a?(Post)
                    @commentable.profile_id
                  elsif @commentable.is_a?(Photo)
-                   @commentable.user_id # Adjust as necessary
+                   @commentable.album.user_id
                  end
 
     existing_relation = Friendship.find_by(receiver_id: @authenticated_user.id, sender_id: profile_id,

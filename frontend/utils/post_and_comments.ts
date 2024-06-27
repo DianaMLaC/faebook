@@ -6,7 +6,7 @@ interface PostPayload {
   body: string
 }
 
-export const createPost = async (postBody: string, profileId: number): Promise<Post> => {
+export const createPost = async (postBody: string, profileId: string): Promise<Post> => {
   try {
     const payload: PostPayload = {
       body: postBody,
@@ -27,7 +27,7 @@ export const createPost = async (postBody: string, profileId: number): Promise<P
   }
 }
 
-export const fetchPosts = async (userId: number): Promise<{ posts: Post[] }> => {
+export const fetchPosts = async (userId: string): Promise<{ posts: Post[] }> => {
   try {
     const response: AxiosResponse<{ posts: Post[] }> = await axios.get(
       `http://localhost:3000/api/users/${userId}/posts`,
@@ -43,7 +43,7 @@ export const fetchPosts = async (userId: number): Promise<{ posts: Post[] }> => 
   }
 }
 
-export const toggleLike = async (likeable: string, likeableId: number): Promise<Like> => {
+export const toggleLike = async (likeable: string, likeableId: string): Promise<Like> => {
   try {
     const response: AxiosResponse<Like> = await axios.post(
       `http://localhost:3000/api/${likeable}/${likeableId}/likes/toggle_like`,

@@ -17,9 +17,10 @@ import Videos from "./videos"
 import CheckIns from "./check-ins"
 import Books from "./books"
 import Music from "./music"
-import { FriendshipData, User } from "../../utils/types"
+import { User } from "../../utils/types"
 import PostsProvider from "../../context/posts"
 import FriendsProvider from "../../context/friends"
+import PhotosProvider from "../../context/photos"
 
 function ProfileHeader(): React.ReactElement {
   const { currentUser, setCurrentUser, profileUser } = useAuth()
@@ -30,7 +31,7 @@ function ProfileHeader(): React.ReactElement {
   const [existingRelation, setExistingRelation] = useState<boolean>(true)
   const [activeView, setActiveView] = useState<string>("posts")
   const [activeLink, setActiveLink] = useState<string>("posts")
-  const [friendshipId, setFriendshipId] = useState<number | null>(null)
+  const [friendshipId, setFriendshipId] = useState<string | null>(null)
 
   useEffect(() => {
     if (currentUser?.id === profileUser?.id) {
@@ -181,7 +182,11 @@ function ProfileHeader(): React.ReactElement {
           </FriendsProvider>
         )
       case "photos":
-        return <PhotosPage />
+        return (
+          <PhotosProvider>
+            <PhotosPage />
+          </PhotosProvider>
+        )
       case "videos":
         return <Videos />
       case "checkins":

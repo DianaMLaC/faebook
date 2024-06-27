@@ -51,15 +51,4 @@ class Api::PhotosController < ApplicationController
     album_name = params[:album_name] || 'Default'
     @authenticated_user.albums.find_by(name: album_name) || @authenticated_user.albums.create(name: album_name)
   end
-
-  # def resize_image(photo)
-  #   return unless photo.image.attached?
-
-  #   processed_image = ImageProcessing::MiniMagick
-  #                     .source(photo.image.download)
-  #                     .resize_to_fit(130, 130)
-  #                     .call
-  #   photo.image.attach(io: File.open(processed_image.path), filename: photo.image.filename,
-  #                      content_type: photo.image.content_type)
-  # end
 end

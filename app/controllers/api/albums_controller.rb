@@ -18,9 +18,4 @@ class Api::AlbumsController < ApplicationController
       render json: { 'albums' => 'Album not found' }, status: 404
     end
   end
-
-  # def create
-  #   user = User.find_by(id: params[:id])
-  #   @album = user.albums.new(a)
-  # end
 end

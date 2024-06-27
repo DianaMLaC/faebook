@@ -2711,7 +2711,7 @@ align-self: center;
 .post-submit-button:disabled {
   background-color: var(--shade-background-color);
   color: var(--secondary-button-hover);
-  cursor: not-allowed; /* Change cursor to indicate the button is unclickable */
+  cursor: not-allowed; /* Change cursor to indicate the button is un-clickable */
 }
 
 /* Comments */
@@ -2740,7 +2740,7 @@ align-self: center;
 .new-comment-form button:disabled {
   color: (var(--text-color));
   opacity: 0.7;
-  cursor: not-allowed; /* Change cursor to indicate the button is unclickable */
+  cursor: not-allowed; /* Change cursor to indicate the button is un-clickable */
 }
 
 .new-comment-form button:hover {

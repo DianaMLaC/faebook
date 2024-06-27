@@ -10,6 +10,7 @@ import { Comment, Like, Photo } from "../../utils/types"
 import { fetchAlbum, fetchPhoto } from "../../utils/profile"
 import NavRight from "../user_profile_details/nav-right"
 import PhotoDetails from "./photo-details"
+import PhotosProvider from "../../context/photos"
 
 function PhotoViewer(): React.ReactElement {
   const { profileUser } = useAuth()
@@ -100,7 +101,9 @@ function PhotoViewer(): React.ReactElement {
             <NavRight />
           </div>
           <div className="photo-details">
-            <PhotoDetails photo={photoDetails} /> {/* Integrate PhotoDetails */}
+            <PhotosProvider>
+              <PhotoDetails photo={photoDetails} /> {/* Integrate PhotoDetails */}
+            </PhotosProvider>
           </div>
         </div>
       </div>

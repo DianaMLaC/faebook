@@ -15,7 +15,7 @@ function PostsProvider({ children }: PostsProviderProps): React.ReactElement {
   }
 
   // Add a like to a specific post
-  function addLikeToPost(postId: number, like: Like): void {
+  function addLikeToPost(postId: string, like: Like): void {
     setPosts((prevPosts): Post[] =>
       prevPosts.map(
         (post): Post => (post.id === postId ? { ...post, likes: [...post.likes, like] } : post)
@@ -24,7 +24,7 @@ function PostsProvider({ children }: PostsProviderProps): React.ReactElement {
   }
 
   // Remove a like from a specific post
-  function deleteLikeFromPost(postId: number, likeId: number): void {
+  function deleteLikeFromPost(postId: string, likeId: string): void {
     setPosts((prevPosts): Post[] =>
       prevPosts.map(
         (post): Post =>
@@ -36,7 +36,7 @@ function PostsProvider({ children }: PostsProviderProps): React.ReactElement {
   }
 
   // Add a comment to a specific post
-  function addCommentToPost(postId: number, comment: Comment): void {
+  function addCommentToPost(postId: string, comment: Comment): void {
     setPosts((prevPosts): Post[] =>
       prevPosts.map(
         (post): Post =>
@@ -46,7 +46,7 @@ function PostsProvider({ children }: PostsProviderProps): React.ReactElement {
   }
 
   // Remove a like from a specific post
-  function deleteCommentFromPost(postId: number, commentId: number): void {
+  function deleteCommentFromPost(postId: string, commentId: string): void {
     setPosts((prevPosts): Post[] =>
       prevPosts.map(
         (post): Post =>
@@ -58,7 +58,7 @@ function PostsProvider({ children }: PostsProviderProps): React.ReactElement {
   }
 
   // Add a like to a comment on a specific post
-  function addLikeToComment(postId: number, commentId: number, like: Like): void {
+  function addLikeToComment(postId: string, commentId: string, like: Like): void {
     setPosts((prevPosts): Post[] =>
       prevPosts.map(
         (post): Post =>
@@ -78,7 +78,7 @@ function PostsProvider({ children }: PostsProviderProps): React.ReactElement {
   }
 
   // Remove a like from a comment on a specific post
-  function deleteLikeFromComment(postId: number, commentId: number, likeId: number): void {
+  function deleteLikeFromComment(postId: string, commentId: string, likeId: string): void {
     setPosts((prevPosts): Post[] =>
       prevPosts.map(
         (post): Post =>
@@ -88,7 +88,7 @@ function PostsProvider({ children }: PostsProviderProps): React.ReactElement {
                 comments: post.comments.map(
                   (comment): Comment =>
                     comment.id === commentId
-                      ? { ...comment, likes: comment.likes.filter((like) => like.id !== likeId) }
+                      ? { ...comment, likes: comment.likes?.filter((like) => like.id !== likeId) }
                       : comment
                 ),
               }
@@ -97,7 +97,7 @@ function PostsProvider({ children }: PostsProviderProps): React.ReactElement {
     )
   }
 
-  function addReplyToComment(postId: number, commentId: number, reply: Comment): void {
+  function addReplyToComment(postId: string, commentId: string, reply: Comment): void {
     setPosts((prevPosts): Post[] =>
       prevPosts.map(
         (post): Post =>

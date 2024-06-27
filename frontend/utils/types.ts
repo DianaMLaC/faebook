@@ -1,6 +1,6 @@
 // Define the types for user and profile data
 export interface User {
-  id: number
+  id: string
   email: string
   displayName: string
   dateOfBirth: string
@@ -23,7 +23,7 @@ export interface SessionData {
 }
 
 export interface Friendship {
-  friendshipId: number
+  friendshipId: string
   friendshipStatus: string
   user: User
 }
@@ -41,37 +41,37 @@ export type ExistingRelation = {
 }
 
 export interface Like {
-  id: number
+  id: string
   likeableId: number
   likeableType: string
   liker: {
-    id: number
+    id: string
     displayName: string
     profilePhotoUrl: string
   }
 }
 
 export interface Comment {
-  id?: number
+  id?: string
   text: string
   createdAt?: string
   postId?: string
   parentCommentId?: string | null
   author?: {
-    id: number
+    id: string
     displayName: string
     profilePhotoUrl: string
   }
-  likes?: Like[]
-  replies?: Comment[]
+  likes: Like[]
+  replies: Comment[]
 }
 
 export interface Post {
-  id: number
+  id: string
   body: string
   createdAt: string
   author: {
-    id: number
+    id: string
     displayName: string
     profilePhotoUrl: string
   }
@@ -91,7 +91,7 @@ export interface Photo {
 }
 
 export interface Album {
-  id: number
+  id: string
   name: string
   coverPhotoUrl: string
   photosCount: number
@@ -99,7 +99,7 @@ export interface Album {
 }
 
 export interface Intro {
-  id?: number
+  id?: string
   house?: string
   education?: string
   location?: string
@@ -130,11 +130,23 @@ export interface FriendsContextType {
 export interface PostsContextType {
   posts: Post[]
   addPost: (newPost: Post) => void
-  addLikeToPost: (postId: number, like: Like) => void
-  deleteLikeFromPost: (postId: number, likeId: number) => void
-  addCommentToPost: (postId: number, comment: Comment) => void
-  deleteCommentFromPost: (postId: number, commentId: number) => void
-  addLikeToComment: (postId: number, commentId: number, like: Like) => void
-  deleteLikeFromComment: (postId: number, commentId: number, likeId: number) => void
-  addReplyToComment: (postId: number, commentId: number, reply: Comment) => void
+  addLikeToPost: (postId: string, like: Like) => void
+  deleteLikeFromPost: (postId: string, likeId: string) => void
+  addCommentToPost: (postId: string, comment: Comment) => void
+  deleteCommentFromPost: (postId: string, commentId: string) => void
+  addLikeToComment: (postId: string, commentId: string, like: Like) => void
+  deleteLikeFromComment: (postId: string, commentId: string, likeId: string) => void
+  addReplyToComment: (postId: string, commentId: string, reply: Comment) => void
+}
+
+export interface PhotosContextType {
+  photos: Photo[]
+  addPhoto: (newPhoto: Photo) => void
+  addLikeToPhoto: (photoId: string, like: Like) => void
+  deleteLikeFromPhoto: (photoId: string, likeId: string) => void
+  addCommentToPhoto: (photoId: string, comment: Comment) => void
+  deleteCommentFromPhoto: (photoId: string, commentId: string) => void
+  addLikeToComment: (photoId: string, commentId: string, like: Like) => void
+  deleteLikeFromComment: (photoId: string, commentId: string, likeId: string) => void
+  addReplyToComment: (photoId: string, commentId: string, reply: Comment) => void
 }

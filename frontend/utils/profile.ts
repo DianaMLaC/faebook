@@ -34,7 +34,7 @@ export const uploadProfilePhoto = async (formData: FormData): Promise<Photo> => 
   }
 }
 
-export const fetchAlbums = async (userID: number): Promise<Album[]> => {
+export const fetchAlbums = async (userID: string): Promise<Album[]> => {
   try {
     const response = await axios.get(`http://localhost:3000/api/users/${userID}/albums`)
     await checkResponse(response)
@@ -45,7 +45,7 @@ export const fetchAlbums = async (userID: number): Promise<Album[]> => {
   }
 }
 
-export const fetchAlbum = async (userID: number, albumId: string): Promise<Album> => {
+export const fetchAlbum = async (userID: string, albumId: string): Promise<Album> => {
   try {
     const response = await axios.get(`http://localhost:3000/api/users/${userID}/albums/${albumId}`)
     await checkResponse(response)
@@ -56,7 +56,7 @@ export const fetchAlbum = async (userID: number, albumId: string): Promise<Album
   }
 }
 
-export const fetchUserPhotos = async (userId: number): Promise<Photo[]> => {
+export const fetchUserPhotos = async (userId: string): Promise<Photo[]> => {
   try {
     const response = await axios.get(`http://localhost:3000/api/users/${userId}/photos`, {
       headers: customHeaders,
@@ -69,7 +69,7 @@ export const fetchUserPhotos = async (userId: number): Promise<Photo[]> => {
   }
 }
 
-export const fetchPhoto = async (userId: number, photoId: string): Promise<Photo> => {
+export const fetchPhoto = async (userId: string, photoId: string): Promise<Photo> => {
   try {
     const response = await axios.get(
       `http://localhost:3000/api/users/${userId}/photos/${photoId}`,
@@ -85,7 +85,7 @@ export const fetchPhoto = async (userId: number, photoId: string): Promise<Photo
   }
 }
 
-export const createIntro = async (userID: number, intro: Intro): Promise<Intro> => {
+export const createIntro = async (userID: string, intro: Intro): Promise<Intro> => {
   try {
     const response = await axios.post(`http://localhost:3000/api/users/${userID}/intros`, intro, {
       headers: customHeaders,
@@ -99,8 +99,8 @@ export const createIntro = async (userID: number, intro: Intro): Promise<Intro> 
 }
 
 export const updateIntro = async (
-  userId: number,
-  introId: number,
+  userId: string,
+  introId: string,
   intro: Intro
 ): Promise<Intro> => {
   try {
@@ -135,7 +135,7 @@ export const fetchUserSuggestions = async (searchTerm: string): Promise<{ users:
   }
 }
 
-export const requestFriendship = async (userId: number): Promise<Friendship> => {
+export const requestFriendship = async (userId: string): Promise<Friendship> => {
   try {
     const response = await axios.post(
       `http://localhost:3000/api/users/${userId}/friendships`,
@@ -151,7 +151,7 @@ export const requestFriendship = async (userId: number): Promise<Friendship> => 
     throw err
   }
 }
-export const deleteFriendship = async (friendshipId: number): Promise<boolean> => {
+export const deleteFriendship = async (friendshipId: string): Promise<boolean> => {
   try {
     const response = await axios.delete(`http://localhost:3000/api/friendships/${friendshipId}`, {
       headers: customHeaders,
@@ -164,7 +164,7 @@ export const deleteFriendship = async (friendshipId: number): Promise<boolean> =
   }
 }
 
-export const updateFriendship = async (friendshipId: number): Promise<Friendship> => {
+export const updateFriendship = async (friendshipId: string): Promise<Friendship> => {
   try {
     const response = await axios.patch(
       `http://localhost:3000/api/friendships/${friendshipId}/accept`,
@@ -181,7 +181,7 @@ export const updateFriendship = async (friendshipId: number): Promise<Friendship
   }
 }
 
-export const fetchFriendships = async (profileId: number): Promise<FriendshipData> => {
+export const fetchFriendships = async (profileId: string): Promise<FriendshipData> => {
   try {
     const response = await axios.get(`http://localhost:3000/api/users/${profileId}/friendships`, {
       headers: customHeaders,

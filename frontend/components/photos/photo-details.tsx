@@ -3,6 +3,8 @@ import { FaRegComment } from "react-icons/fa"
 import { BiSolidLike, BiLike } from "react-icons/bi"
 import { PiShareFat } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
+import { usePhotos } from "../../context/photos"
+
 import { toggleLike, fetchTopLevelComments } from "../../utils/post_and_comments"
 import Likes from "../posts/likes"
 import Comments from "../comments/comments_index"
@@ -11,6 +13,7 @@ import { formatPostDate } from "../../utils/helpers"
 
 function PhotoDetails({ photo }) {
   const { currentUser, profileUser } = useAuth()
+  const { addLikeToPhoto, deleteLikeFromPhoto, addCommentToPhoto } = usePhotos()
   const [likes, setLikes] = useState(photo.likes || [])
   const [likedByCurrentUser, setLikedByCurrentUser] = useState(
     (photo.likes && photo.likes.some((like) => like.liker.id === currentUser?.id)) || false
@@ -41,8 +44,10 @@ function PhotoDetails({ photo }) {
     if (likeResponse) {
       if (likedByCurrentUser) {
         setLikes(likes.filter((like) => like.id !== likeResponse.id))
+        deleteLikeFromPhoto(photo.id, likeResponse.id)
       } else {
         setLikes([...likes, likeResponse])
+        addLikeToPhoto(photo.id, likeResponse)
       }
       setLikedByCurrentUser(!likedByCurrentUser)
     }
@@ -51,8 +56,9 @@ function PhotoDetails({ photo }) {
   const handleNewComment = useCallback(
     (newComment) => {
       setComments((prevComments) => [...prevComments, newComment])
+      addCommentToPhoto(photo.id, newComment)
     },
-    [photo.id]
+    [photo.id, addCommentToPhoto]
   )
 
   return (

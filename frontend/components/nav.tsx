@@ -12,7 +12,7 @@ function NavBar(): React.ReactElement {
   const [suggestions, setSuggestions] = useState<User[]>([])
   const navigate = useNavigate()
 
-  const handleSuggestionClick = (userId: number) => {
+  const handleSuggestionClick = (userId: string) => {
     setProfileUser(null)
     setSuggestions([])
     navigate(`/profile-page/${userId}`)
