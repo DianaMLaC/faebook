@@ -1,19 +1,27 @@
 import React, { useState, useEffect, useCallback } from "react"
 import { useAuth } from "../../context/auth"
 import { usePosts } from "../../context/posts"
+import { usePhotos } from "../../context/photos"
 import Likes from "../posts/likes"
 import { toggleLike } from "../../utils/post_and_comments"
 import { formatCommentDate } from "../../utils/helpers"
 import Comments from "./comments_index"
 import CommentForm from "./comment_form"
+import { Comment, User } from "../../utils/types"
 
-function CommentContainer({ comment }): React.ReactElement {
+interface CommentContainerProps {
+  comment: Comment
+  parentType: "post" | "photo"
+}
+
+function CommentContainer({ comment, parentType }: CommentContainerProps): React.ReactElement {
   const { currentUser } = useAuth()
-  const { deleteLikeFromComment, addLikeToComment, addReplyToComment } = usePosts()
+  const postsContext = usePosts()
+  const photosContext = usePhotos()
   const [likes, setLikes] = useState(comment.likes || [])
   const [repliesList, setRepliesList] = useState(comment.replies || [])
   const [repliesNumber, setRepliesNumber] = useState(comment.replies.length || 0)
-  const [author, setAuthor] = useState(comment.author || [])
+  const [author, setAuthor] = useState(comment.author || null)
   const [toggleReplyForm, setToggleReplyForm] = useState(false)
   const [toggleReplies, setToggleReplies] = useState(false)
   const [likedByCurrentUser, setLikedByCurrentUser] = useState(
@@ -29,8 +37,7 @@ function CommentContainer({ comment }): React.ReactElement {
     setRepliesNumber(comment.replies.length)
     setLikes(comment.likes)
     setRepliesList(comment.replies)
-    // setReplyLikes(comment.replies.likes)
-    setAuthor(comment.author)
+    setAuthor(comment.author!)
   }, [comment])
 
   const repliesLink = (count: number): React.ReactNode => {
@@ -45,14 +52,22 @@ function CommentContainer({ comment }): React.ReactElement {
   const handleCommentLike = async (e) => {
     e.preventDefault()
     const likeable = "comments"
-    const likeResponse = await toggleLike(likeable, comment.id)
+    const likeResponse = await toggleLike(likeable, comment.id!)
 
     if (likeResponse) {
       if (likedByCurrentUser) {
-        deleteLikeFromComment(comment.postId, comment.id, likeResponse.id)
+        if (parentType === "post") {
+          postsContext.deleteLikeFromComment(comment.postId!, comment.id!, likeResponse.id)
+        } else {
+          photosContext.deleteLikeFromComment(comment.photoId!, comment.id!, likeResponse.id)
+        }
         setLikes(likes.filter((like) => like.id !== likeResponse.id))
       } else {
-        addLikeToComment(comment.postId, comment.id, likeResponse)
+        if (parentType === "post") {
+          postsContext.addLikeToComment(comment.postId!, comment.id!, likeResponse)
+        } else {
+          photosContext.addLikeToComment(comment.photoId!, comment.id!, likeResponse)
+        }
         setLikes([...likes, likeResponse])
       }
       setLikedByCurrentUser(!likedByCurrentUser)
@@ -61,27 +76,30 @@ function CommentContainer({ comment }): React.ReactElement {
 
   const handleNewReply = useCallback(
     (newReply) => {
-      addReplyToComment(comment.postId, comment.id, newReply)
+      if (parentType === "post") {
+        postsContext.addReplyToComment(comment.postId!, comment.id!, newReply)
+      } else {
+        photosContext.addReplyToComment(comment.photoId!, comment.id!, newReply)
+      }
       setRepliesList((prevReplies): Comment[] => [...prevReplies, newReply])
     },
-    [comment.postId, comment.id, addReplyToComment]
+    [comment.postId, comment.photoId, comment.id, parentType, postsContext, photosContext]
   )
-
   return (
     <div className="comment-container">
       <div className="comment-avatar">
-        {author.profilePhotoUrl && (
+        {author?.profilePhotoUrl && (
           <img className="profile-photo" src={author.profilePhotoUrl} alt="Profile" />
         )}
       </div>
       <div className="comment-details">
         <div className="comment-banner">
-          <div className="comment-user-display-name">{author.displayName}</div>
+          <div className="comment-user-display-name">{author?.displayName}</div>
           <div className="comment-text">{comment.text}</div>
         </div>
         <div className="comment-footer">
           <div className="comment-actions">
-            <div className="timestamp">{formatCommentDate(comment.createdAt)}</div>
+            <div className="timestamp">{formatCommentDate(comment.createdAt!)}</div>
             <div className={likedByCurrentUser ? "liked" : "like"} onClick={handleCommentLike}>
               <div className="action-name">Like</div>
             </div>
@@ -105,13 +123,14 @@ function CommentContainer({ comment }): React.ReactElement {
               <CommentForm
                 onCommentSubmit={handleNewReply}
                 toggle={setToggleReplyForm}
-                parentCommentId={comment.id}
-                postId={comment.postId}
+                parentCommentId={comment.id!}
+                itemId={parentType === "post" ? comment.postId! : comment.photoId!}
+                itemType={parentType}
               />
             </div>
           )}
         </div>
-        {toggleReplies && <Comments comments={repliesList} />}
+        {toggleReplies && <Comments comments={repliesList} parentType={parentType} />}
       </div>
     </div>
   )

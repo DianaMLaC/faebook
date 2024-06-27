@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import CommentContainer from "./comment"
 
-function Comments({ comments }): React.ReactElement {
+function Comments({ comments, parentType }): React.ReactElement {
   // console.log("comments:", comments)
   const [showAll, setShowAll] = useState(false)
   // console.log("comments list:", comments)
@@ -13,9 +13,9 @@ function Comments({ comments }): React.ReactElement {
           {showAll ? "Show Less" : "View More Comments"}
         </button>
       )}
-      <ul className="posts-list">
+      <ul className="comments-list">
         {displayedComments.map((comment) => (
-          <CommentContainer key={comment.id} comment={comment} />
+          <CommentContainer key={comment.id} comment={comment} parentType={parentType} />
         ))}
       </ul>
     </div>

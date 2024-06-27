@@ -101,7 +101,7 @@ function PhotoDetails({ photo }) {
         </div>
       </div>
 
-      {comments.length > 0 ? <Comments comments={comments} /> : <p></p>}
+      {comments.length > 0 ? <Comments comments={comments} parentType={"photo"} /> : <p></p>}
 
       <div className="photo-comment">
         <div className="comment-avatar">

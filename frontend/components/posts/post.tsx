@@ -99,7 +99,7 @@ function PostContainer({ post }): React.ReactElement {
           <div className="action-name">Share</div>
         </div>
       </div>
-      {comments && <Comments comments={comments} />}
+      {comments && <Comments comments={comments} parentType={"post"} />}
       <div className="post-comment">
         <div className="comment-avatar">
           {currentUser?.profilePhotoUrl && (
