@@ -62,7 +62,10 @@ function PhotoViewer(): React.ReactElement {
         <div className="photo-viewer-main">
           <div className="main-header">
             <div className="main-header-left">
-              <div className="close-button" onClick={() => navigate(-1)}>
+              <div
+                className="close-button"
+                onClick={() => navigate(`/profile-page/${profileUser?.id}`)}
+              >
                 <IoClose />
               </div>
               <img
