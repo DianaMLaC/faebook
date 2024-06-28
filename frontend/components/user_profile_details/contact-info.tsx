@@ -1,16 +1,61 @@
 import React from "react"
 import { useAuth } from "../../context/auth"
 import { MdEmail, MdOutlineCake } from "react-icons/md"
-import { GiMagicSwirl } from "react-icons/gi"
+import {
+  TbZodiacAries,
+  TbZodiacTaurus,
+  TbZodiacGemini,
+  TbZodiacCancer,
+  TbZodiacLeo,
+  TbZodiacVirgo,
+  TbZodiacLibra,
+  TbZodiacScorpio,
+  TbZodiacSagittarius,
+  TbZodiacCapricorn,
+  TbZodiacAquarius,
+  TbZodiacPisces,
+} from "react-icons/tb"
 
 function ContactInfo(): React.ReactElement {
   const { profileUser } = useAuth()
+
+  const getZodiacIcon = (zodiacSign: string): React.ReactElement | null => {
+    switch (zodiacSign.toLowerCase()) {
+      case "aries":
+        return <TbZodiacAries />
+      case "taurus":
+        return <TbZodiacTaurus />
+      case "gemini":
+        return <TbZodiacGemini />
+      case "cancer":
+        return <TbZodiacCancer />
+      case "leo":
+        return <TbZodiacLeo />
+      case "virgo":
+        return <TbZodiacVirgo />
+      case "libra":
+        return <TbZodiacLibra />
+      case "scorpio":
+        return <TbZodiacScorpio />
+      case "sagittarius":
+        return <TbZodiacSagittarius />
+      case "capricorn":
+        return <TbZodiacCapricorn />
+      case "aquarius":
+        return <TbZodiacAquarius />
+      case "pisces":
+        return <TbZodiacPisces />
+      default:
+        return null
+    }
+  }
+
   return (
     <div>
       <div>
         <h3> Contact Info</h3>
         <div className="section">
-          <div className="about-me-location-icon">
+          <div className="section-icon">
             <MdEmail />
           </div>
 
@@ -27,7 +72,7 @@ function ContactInfo(): React.ReactElement {
       <div>
         <h3> Date Of Birth</h3>
         <div className="section">
-          <div className="about-me-location-icon">
+          <div className="section-icon">
             <MdOutlineCake />
           </div>
 
@@ -44,10 +89,7 @@ function ContactInfo(): React.ReactElement {
       <div>
         <h3> Zodiac Sign</h3>
         <div className="section">
-          <div className="section-icon">
-            <GiMagicSwirl />
-            {/* to put the zodiac sign icon according to the zodiac sign of the user*/}
-          </div>
+          <div className="section-icon">{getZodiacIcon(profileUser?.intro!.zodiac!)}</div>
 
           {profileUser?.intro && profileUser.intro.zodiac ? (
             <div className="data-item">

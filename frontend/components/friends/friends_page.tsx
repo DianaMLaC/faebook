@@ -4,6 +4,8 @@ import { useFriends } from "../../context/friends"
 import { fetchFriendships } from "../../utils/profile"
 import FriendsIndex from "./friends_index"
 import FriendRequests from "./friend_requests"
+import PhotosPage from "../photos/photos-page"
+import PhotosProvider from "../../context/photos"
 
 function FriendsPage(): React.ReactElement {
   const { currentUser, profileUser } = useAuth()
@@ -50,34 +52,39 @@ function FriendsPage(): React.ReactElement {
   }
 
   return (
-    <div className="friends-page-container">
-      <header>
-        <h2> Friends </h2>
-        <div className="friends-page-header-right">
-          <div className="friends-page-search-bar">
-            <span>Search</span>
+    <>
+      <div className="friends-page-container">
+        <header>
+          <h2> Friends </h2>
+          <div className="friends-page-header-right">
+            <div className="friends-page-search-bar">
+              <span>Search</span>
+            </div>
+            <div className="friends-page-more-button">...</div>
           </div>
-          <div className="friends-page-more-button">...</div>
-        </div>
-      </header>
-      <nav className="friends-nav">
-        <span
-          className={activeLink === "allFriends" ? "active" : ""}
-          onClick={(e) => handleViewChange(e, "allFriends")}
-        >
-          All Friends
-        </span>
-        <span
-          className={activeLink === "friendRequests" ? "active" : ""}
-          onClick={(e) => handleViewChange(e, "friendRequests")}
-        >
-          Friend Requests
-        </span>
-        {/* <div>Birthdays</div>
-        <div>House Friends</div> */}
-      </nav>
-      <div className="friends-displayed">{getViewComponent()}</div>
-    </div>
+        </header>
+        <nav className="friends-nav">
+          <span
+            className={activeLink === "allFriends" ? "active" : ""}
+            onClick={(e) => handleViewChange(e, "allFriends")}
+          >
+            All Friends
+          </span>
+          <span
+            className={activeLink === "friendRequests" ? "active" : ""}
+            onClick={(e) => handleViewChange(e, "friendRequests")}
+          >
+            Friend Requests
+          </span>
+        </nav>
+        <div className="friends-displayed">{getViewComponent()}</div>
+      </div>
+      <div className="profile-photos-container">
+        <PhotosProvider>
+          <PhotosPage />
+        </PhotosProvider>
+      </div>
+    </>
   )
 }
 

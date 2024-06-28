@@ -5,6 +5,7 @@ import { IoMdNotifications } from "react-icons/io"
 import { MdKeyboardArrowDown } from "react-icons/md"
 import { useAuth } from "../../context/auth"
 import AccountMenu from "../profile/account-menu"
+import { useNavigate } from "react-router-dom"
 
 function NavRight(): React.ReactElement {
   const { currentUser } = useAuth()

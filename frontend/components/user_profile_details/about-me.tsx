@@ -6,7 +6,6 @@ import House from "./house"
 import ContactInfo from "./contact-info"
 import FriendsPage from "../friends/friends_page"
 import FriendsProvider from "../../context/friends"
-import Photos from "../posts/photos"
 
 function AboutMe(): React.ReactElement {
   const [activeCategory, setActiveCategory] = useState("Overview")
@@ -62,9 +61,6 @@ function AboutMe(): React.ReactElement {
         <FriendsProvider>
           <FriendsPage />
         </FriendsProvider>
-      </div>
-      <div className="profile-photos-container">
-        <Photos />
       </div>
     </>
   )

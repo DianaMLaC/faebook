@@ -37,10 +37,9 @@ function PhotoUpload({ updatePhoto, closeModalContainer, albumName }): React.Rea
       updatePhoto(fileData.albumName, fileData.url)
       console.log("Data has been sent to parent with updatePhoto callback")
       closeModalContainer()
+      setIsUploading(false)
     } catch (error) {
       console.error("Error uploading photo:", error)
-    } finally {
-      setIsUploading(false)
     }
   }
 

@@ -4,9 +4,11 @@ import { PiUserSwitchFill } from "react-icons/pi"
 import { IoIosArrowForward, IoMdHelpCircle, IoMdSettings } from "react-icons/io"
 import { MdNightlight, MdFeedback } from "react-icons/md"
 import { IoLogOut } from "react-icons/io5"
+import { useNavigate } from "react-router-dom"
 
 function AccountMenu(): React.ReactElement {
   const { currentUser, logout } = useAuth()
+  const navigate = useNavigate()
 
   const handleLogOut = () => {
     logout()
@@ -17,7 +19,10 @@ function AccountMenu(): React.ReactElement {
   return (
     <div className="account-menu">
       <div className="menu-banner">
-        <div className="menu-account-profile">
+        <div
+          className="menu-account-profile"
+          onClick={() => navigate(`/profile-page/${currentUser?.id}`)}
+        >
           <div className="comment-avatar">
             {currentUser?.profilePhotoUrl && (
               <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
