@@ -13,7 +13,7 @@ function Signup(): React.ReactElement {
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [dateOfBirth, setDateOfBirth] = useState<string>(maxDate)
-  const [formErr, setFormErr] = useState<string>("")
+  const [formErr, setFormErr] = useState<{ [key: string]: string }>({})
 
   const clearForm = () => {
     setFirstName("")
@@ -31,7 +31,9 @@ function Signup(): React.ReactElement {
       await signup(userData)
       clearForm()
     } catch (err) {
-      setFormErr((err as Error).message)
+      if (err instanceof Object) {
+        setFormErr(err)
+      }
     }
   }
 
@@ -81,7 +83,7 @@ function Signup(): React.ReactElement {
             />
           </div>
 
-          {formErr && <p>{formErr}</p>}
+          {formErr.general && <p>{formErr.general}</p>}
 
           <button onClick={handleSubmit}>Sign Up</button>
         </form>

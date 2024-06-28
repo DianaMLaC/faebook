@@ -579,7 +579,7 @@ body {
   padding: 12px;
   margin-left: 3px;
   margin-right: 3px;
-
+  cursor: not-allowed;
 }
 
 .menu-icon {
@@ -606,6 +606,7 @@ body {
   align-items: center;
   font-size: 14px;
   font-weight: 500;
+  cursor: not-allowed;
 }
 
 .menu-item:hover {
@@ -626,6 +627,7 @@ body {
 
 .menu-item:hover, .menu-log-out:hover {
   background-color: var(--secondary-color);
+  cursor: pointer;
 }
 
 .menu-item span {
@@ -1181,6 +1183,7 @@ body {
   width: 150px;
   height: 150px;
   margin: 10px;
+  cursor: pointer;
 }
 
 .photo-cover-image {

@@ -7,21 +7,20 @@ export const customHeaders = {
 
 interface BackendErrorResponse {
   errors: {
-    user: { [key: string]: string[] }
+    user: { [key: string]: string }
   }
 }
 
 export async function checkResponse(response: AxiosResponse) {
   if (response.status < 200 || response.status >= 300) {
-    console.log("error in response not ok")
     const backendErrorResponse: BackendErrorResponse = response.data
 
     if (backendErrorResponse && backendErrorResponse.errors && backendErrorResponse.errors.user) {
       const backendErrorList = backendErrorResponse.errors.user
-      const errorMessages = Object.values(backendErrorList).flat()
-      throw new Error(errorMessages.join("\n"))
+      const errorMessages = Object.values(backendErrorList)
+      throw new Error(errorMessages.join('\n'))
     } else {
-      throw new Error("An error occurred. Please try again.")
+      throw new Error('An error occurred. Please try again.')
     }
   }
   return response
@@ -30,17 +29,22 @@ export async function checkResponse(response: AxiosResponse) {
 // POST USER
 
 export const postUser = async (userData: NewUserData) => {
-  console.log("user data in api:", userData)
   try {
-    const response = await axios.post("http://localhost:3000/api/users", userData, {
+    const response = await axios.post('http://localhost:3000/api/users', userData, {
       headers: customHeaders,
-    })
-    await checkResponse(response)
-    const user = response.data
-    return user
+    });
+    await checkResponse(response);
+    const user = response.data;
+    return user;
   } catch (err) {
-    console.error("Error with response code or parsing response in API POST User", err)
-    throw err
+    if (axios.isAxiosError(err) && err.response) {
+      console.error('API error:', err.response.data);
+      const backendErrorResponse: BackendErrorResponse = err.response.data;
+      throw backendErrorResponse.errors.user;
+    } else {
+      console.error('Error with response code or parsing response in API POST User', err);
+      throw err;
+    }
   }
 }
 
