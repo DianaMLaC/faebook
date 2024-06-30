@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import ProfileHeader from "./profile-header"
 import { fetchUserProfile } from "../../utils/profile"
-import { useParams } from "react-router-dom"
+import { Outlet, useParams, useRoutes } from "react-router-dom"
 import { useAuth } from "../../context/auth"
 
 function UserProfile(): React.ReactElement {
@@ -34,6 +34,9 @@ function UserProfile(): React.ReactElement {
       <div className="profile-header-container">
         <ProfileHeader />
       </div>
+      <section className="profile-page-components">
+        <Outlet />
+      </section>
     </div>
   )
 }

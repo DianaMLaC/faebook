@@ -21,6 +21,7 @@ import { User } from "../../utils/types"
 import PostsProvider from "../../context/posts"
 import FriendsProvider from "../../context/friends"
 import PhotosProvider from "../../context/photos"
+import { Link, NavLink, Outlet } from "react-router-dom"
 
 function ProfileHeader(): React.ReactElement {
   const { currentUser, setCurrentUser, profileUser } = useAuth()
@@ -291,18 +292,12 @@ function ProfileHeader(): React.ReactElement {
 
         <nav className="profile-header-nav">
           <div className="profile-header-nav-links">
-            <div
-              className={activeLink === "posts" ? "selected" : ""}
-              onClick={(e) => handleViewChange(e, "posts")}
-            >
+            <NavLink className="profile-header-nav-link" to="posts">
               Posts
-            </div>
-            <div
-              className={`profile-header-nav-link ${activeLink === "about" ? "selected" : ""}`}
-              onClick={(e) => handleViewChange(e, "about")}
-            >
+            </NavLink>
+            <NavLink className="profile-header-nav-link" to="about">
               About
-            </div>
+            </NavLink>
             <div
               className={`profile-header-nav-link ${activeLink === "friends" ? "selected" : ""}`}
               onClick={(e) => handleViewChange(e, "friends")}
@@ -347,7 +342,6 @@ function ProfileHeader(): React.ReactElement {
           </div>
         </nav>
       </header>
-      <section className="profile-page-components">{getViewComponent()}</section>
     </>
   )
 }

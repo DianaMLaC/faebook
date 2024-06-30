@@ -846,7 +846,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 
 }
 
-.profile-header-nav-links div {
+.profile-header-nav-links > * {
   color: var(--text-secondary);
   font-size: 14px;
   font-weight: 600;
@@ -860,6 +860,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   box-sizing: border-box;
   cursor: pointer;
   transition: background-color 0.3s, border-radius 0.3s, padding 0.3s;
+  text-decoration: none;
 }
 
 .profile-header-nav-links div:hover {
@@ -870,7 +871,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 }
 
 
-.profile-header-nav-links div.selected {
+.profile-header-nav-links a.active {
   color: var(--link-color);
   border-bottom: 3px solid var(--link-color);
   margin-bottom: -3px; /* To counteract the border width */
