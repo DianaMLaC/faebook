@@ -1,7 +1,5 @@
 import React, { useState, FormEvent, ChangeEvent, useEffect } from "react"
 import { useAuth } from "../../context/auth"
-import { createIntro } from "../../utils/profile"
-import { calculateZodiac } from "../../utils/helpers"
 
 function Signup(): React.ReactElement {
   const tenYearsAgo = new Date(new Date().setFullYear(new Date().getFullYear() - 14))

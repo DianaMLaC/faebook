@@ -88,8 +88,14 @@ function CommentContainer({ comment, parentType }: CommentContainerProps): React
   return (
     <div className="comment-container">
       <div className="comment-avatar">
-        {author?.profilePhotoUrl && (
+        {author?.profilePhotoUrl ? (
           <img className="profile-photo" src={author.profilePhotoUrl} alt="Profile" />
+        ) : (
+          <img
+            className="missing-profile-photo"
+            src="/assets/images/missing-profile-pic.png"
+            alt="Faebook"
+          />
         )}
       </div>
       <div className="comment-details">
@@ -116,8 +122,14 @@ function CommentContainer({ comment, parentType }: CommentContainerProps): React
           {toggleReplyForm && (
             <div className="reply-form">
               <div className="reply-avatar">
-                {currentUser?.profilePhotoUrl && (
+                {currentUser?.profilePhotoUrl ? (
                   <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
+                ) : (
+                  <img
+                    className="missing-profile-photo"
+                    src="/assets/images/missing-profile-pic.png"
+                    alt="Faebook"
+                  />
                 )}
               </div>
               <CommentForm

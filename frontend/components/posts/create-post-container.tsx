@@ -23,8 +23,14 @@ function CreatePost(): React.ReactElement {
     <div className="create-post">
       <div className="create-post-top">
         <div className="avatar">
-          {currentUser?.profilePhotoUrl && (
+          {currentUser?.profilePhotoUrl ? (
             <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
+          ) : (
+            <img
+              className="missing-profile-photo"
+              src="/assets/images/missing-profile-pic.png"
+              alt="Faebook"
+            />
           )}
         </div>
         <div className="create-post-input-bar" onClick={openModal}>

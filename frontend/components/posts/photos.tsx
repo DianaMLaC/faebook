@@ -12,6 +12,7 @@ function Photos(): React.ReactElement {
     async function fetchAllPhotosUrls() {
       if (profileUser) {
         const photosData = await fetchUserPhotos(profileUser.id)
+        console.log("photos of profileUser")
         const displayPhotos = photosData.length > 9 ? photosData.slice(0, 9) : photosData
         setPhotos(displayPhotos.length > 0 ? displayPhotos : null)
       }

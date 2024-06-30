@@ -204,8 +204,10 @@ function ProfileHeader(): React.ReactElement {
     <>
       <header className="profile-header">
         <section className="cover-photo-container">
-          {profileUser?.coverPhotoUrl && (
+          {profileUser?.coverPhotoUrl ? (
             <img className="cover-photo" src={profileUser.coverPhotoUrl} alt="Cover" />
+          ) : (
+            <div className="missing-cover-photo"></div>
           )}
           {currentUser?.id === profileUser?.id && (
             <div className="cover-photo-button" onClick={openCoverModal}>
@@ -229,8 +231,14 @@ function ProfileHeader(): React.ReactElement {
         <section className="profile-details-banner">
           <div className="profile-photo-background">
             <div className="profile-photo-container">
-              {profileUser?.profilePhotoUrl && (
+              {profileUser?.profilePhotoUrl ? (
                 <img className="profile-photo" src={profileUser.profilePhotoUrl} alt="Profile" />
+              ) : (
+                <img
+                  className="missing-profile-photo"
+                  src="/assets/images/missing-profile-pic.png"
+                  alt="Faebook"
+                />
               )}
             </div>
             {currentUser?.id === profileUser?.id && (

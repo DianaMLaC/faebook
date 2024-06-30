@@ -11,7 +11,11 @@ function PostsFriend({ friend }): React.ReactElement {
             alt={friend.displayName}
           />
         ) : (
-          <div>No photo to show</div>
+          <img
+            className="missing-profile-photo"
+            src="/assets/images/missing-profile-pic.png"
+            alt="Faebook"
+          />
         )}
       </div>
       <div className="posts-friend-name">{friend.displayName}</div>

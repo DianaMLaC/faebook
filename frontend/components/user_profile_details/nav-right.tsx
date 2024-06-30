@@ -29,8 +29,14 @@ function NavRight(): React.ReactElement {
       </div>
       <div className="nav-account-button" onClick={handleMenuButton}>
         <div className="avatar">
-          {currentUser?.profilePhotoUrl && (
+          {currentUser?.profilePhotoUrl ? (
             <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
+          ) : (
+            <img
+              className="missing-profile-photo"
+              src="/assets/images/missing-profile-pic.png"
+              alt="Faebook"
+            />
           )}
         </div>
         <div className="account-menu-toggle">

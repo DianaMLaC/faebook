@@ -64,8 +64,14 @@ function PostContainer({ post }): React.ReactElement {
       <header className="post-header">
         <div className="post-header-left">
           <div className="avatar">
-            {post.author.profilePhotoUrl && (
+            {post.author.profilePhotoUrl ? (
               <img className="profile-photo" src={post.author.profilePhotoUrl} alt="Profile" />
+            ) : (
+              <img
+                className="missing-profile-photo"
+                src="/assets/images/missing-profile-pic.png"
+                alt="Faebook"
+              />
             )}
           </div>
           <div className="post-details">

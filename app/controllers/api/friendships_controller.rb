@@ -57,6 +57,7 @@ class Api::FriendshipsController < ApplicationController
 
   def accept
     friendship = Friendship.find_by(id: params[:id])
+    receiver = User.find_by(id: friendship.receiver_id)
     if friendship.nil?
       render json: {}, status: 404
       return

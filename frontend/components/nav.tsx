@@ -56,7 +56,15 @@ function NavBar(): React.ReactElement {
               <ul className={`suggestions ${suggestions.length > 0 ? "visible" : ""}`}>
                 {suggestions.map((user) => (
                   <li key={user.id} onClick={() => handleSuggestionClick(user.id)}>
-                    <img src={user.profilePhotoUrl} alt={user.displayName} />
+                    {user.profilePhotoUrl ? (
+                      <img src={user.profilePhotoUrl} alt={user.displayName} />
+                    ) : (
+                      <img
+                        className="missing-profile-photo"
+                        src="/assets/images/missing-profile-pic.png"
+                        alt="Faebook"
+                      />
+                    )}
                     <span>{user.displayName}</span>
                   </li>
                 ))}

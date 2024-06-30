@@ -50,8 +50,14 @@ function PostForm({ closeModalContainer }): React.ReactElement {
       </header>
       <div className="post-form-user-details">
         <div className="avatar">
-          {currentUser?.profilePhotoUrl && (
+          {currentUser?.profilePhotoUrl ? (
             <img className="profile-photo" src={currentUser?.profilePhotoUrl} alt="Profile" />
+          ) : (
+            <img
+              className="missing-profile-photo"
+              src="/assets/images/missing-profile-pic.png"
+              alt="Faebook"
+            />
           )}
         </div>
         <div>
