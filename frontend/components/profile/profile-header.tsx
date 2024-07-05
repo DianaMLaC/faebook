@@ -89,9 +89,8 @@ function ProfileHeader(): React.ReactElement {
       }
 
       setCurrentUser(newUserData)
-      sessionStorage.setItem("currentUser", JSON.stringify(newUserData))
     },
-    [currentUser, setCurrentUser]
+    [currentUser]
   )
 
   const handleFriendRequest = async (e: MouseEvent<HTMLDivElement>) => {
@@ -298,42 +297,24 @@ function ProfileHeader(): React.ReactElement {
             <NavLink className="profile-header-nav-link" to="about">
               About
             </NavLink>
-            <div
-              className={`profile-header-nav-link ${activeLink === "friends" ? "selected" : ""}`}
-              onClick={(e) => handleViewChange(e, "friends")}
-            >
+            <NavLink className="profile-header-nav-link" to="friends">
               Friends
-            </div>
-            <div
-              className={`profile-header-nav-link ${activeLink === "photos" ? "selected" : ""}`}
-              onClick={(e) => handleViewChange(e, "photos")}
-            >
+            </NavLink>
+            <NavLink className="profile-header-nav-link" to="photos">
               Photos
-            </div>
-            <div
-              className={`profile-header-nav-link ${activeLink === "videos" ? "selected" : ""}`}
-              onClick={(e) => handleViewChange(e, "videos")}
-            >
+            </NavLink>
+            <NavLink className="profile-header-nav-link" to="videos">
               Videos
-            </div>
-            <div
-              className={`profile-header-nav-link ${activeLink === "checkins" ? "selected" : ""}`}
-              onClick={(e) => handleViewChange(e, "checkins")}
-            >
+            </NavLink>
+            <NavLink className="profile-header-nav-link" to="checkins">
               Check-ins
-            </div>
-            <div
-              className={`profile-header-nav-link ${activeLink === "music" ? "selected" : ""}`}
-              onClick={(e) => handleViewChange(e, "music")}
-            >
+            </NavLink>
+            <NavLink className="profile-header-nav-link" to="music">
               Music
-            </div>
-            <div
-              className={`profile-header-nav-link ${activeLink === "books" ? "selected" : ""}`}
-              onClick={(e) => handleViewChange(e, "books")}
-            >
+            </NavLink>
+            <NavLink className="profile-header-nav-link" to="books">
               Books
-            </div>
+            </NavLink>
           </div>
           <div className="nav-profile-header-button">
             <span>

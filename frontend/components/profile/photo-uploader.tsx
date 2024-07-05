@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react"
 import { uploadProfilePhoto } from "../../utils/profile"
 import { CircleLoader } from "react-spinners"
+import { useAuth } from "../../context/auth"
 
 function PhotoUpload({ updatePhoto, closeModalContainer, albumName }): React.ReactElement {
+  const { currentUser, setCurrentUser } = useAuth()
   const [photoFile, setPhotoFile] = useState(null)
   const [description, setDescription] = useState("")
   const [isUploading, setIsUploading] = useState(false)
@@ -35,7 +37,20 @@ function PhotoUpload({ updatePhoto, closeModalContainer, albumName }): React.Rea
       console.log("PhotoData returned as fileData")
       console.log("fileData:", fileData)
       updatePhoto(fileData.albumName, fileData.url)
+
+      if (currentUser) {
+        let newUserData = { ...currentUser }
+        if (albumName === "Profile") {
+          newUserData.profilePhotoUrl = fileData.url
+        } else if (albumName === "Cover") {
+          newUserData.coverPhotoUrl = fileData.url
+        }
+        setCurrentUser(newUserData)
+        sessionStorage.setItem("currentUser", JSON.stringify(newUserData))
+      }
+
       console.log("Data has been sent to parent with updatePhoto callback")
+
       closeModalContainer()
       setIsUploading(false)
     } catch (error) {

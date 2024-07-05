@@ -8,6 +8,14 @@ import PhotoViewer from "./photos/photo-viewer"
 import PostsProvider from "../context/posts"
 import PostsPage from "./posts/posts_page"
 import AboutMe from "./user_profile_details/about-me"
+import FriendsProvider from "../context/friends"
+import FriendsPage from "./friends/friends_page"
+import PhotosProvider from "../context/photos"
+import PhotosPage from "./photos/photos-page"
+import Videos from "./profile/videos"
+import CheckIns from "./profile/check-ins"
+import Music from "./profile/music"
+import Books from "./profile/books"
 
 const App = () => {
   const { currentUser, profileUser, setProfileUser } = useAuth()
@@ -15,11 +23,12 @@ const App = () => {
   // console.log("currentUser:", { currentUser })
 
   useEffect(() => {
+    console.log("currentUser:", currentUser)
     if (currentUser) {
       setProfileUser(currentUser)
       navigate(`/profile-page/${currentUser.id}/posts`, { replace: true })
-      // console.log("currentUser:", currentUser)
     }
+    // navigate("/start")
   }, [currentUser])
 
   // console.dir({ currentUser })
@@ -62,9 +71,15 @@ const App = () => {
         }
       >
         <Route path="profile-page/:profileIdParam" element={<UserProfile />}>
-          <Route path="test" element={<BasicComponent />} />
+          {/* <Route path="test" element={<BasicComponent />} /> */}
 
           <Route path="about" element={<AboutMe />} />
+          <Route path="videos" element={<Videos />} />
+          <Route path="checkins" element={<CheckIns />} />
+          <Route path="music" element={<Music />} />
+          <Route path="books" element={<Books />} />
+          {/* <Route path="groups" element={<Groups />} /> */}
+
           <Route
             index
             path="posts"
@@ -72,6 +87,24 @@ const App = () => {
               <PostsProvider>
                 <PostsPage />
               </PostsProvider>
+            }
+          />
+          <Route
+            index
+            path="friends"
+            element={
+              <FriendsProvider>
+                <FriendsPage />
+              </FriendsProvider>
+            }
+          />
+          <Route
+            index
+            path="photos"
+            element={
+              <PhotosProvider>
+                <PhotosPage />
+              </PhotosProvider>
             }
           />
         </Route>
@@ -85,16 +118,16 @@ const App = () => {
 }
 const EnforceLoggedOut = ({ user, children }) => {
   if (user) {
-    return <Navigate to={`/profile-page/${user.id}`} replace />
+    return <Navigate to={`/profile-page/${user.id}/posts`} replace />
   }
 
   return children
 }
 
-function BasicComponent() {
-  console.log("basic rendered")
-  return <div>some text</div>
-}
+// function BasicComponent() {
+//   console.log("basic rendered")
+//   return <div>some text</div>
+// }
 
 const EnforceLoggedIn = ({ user, children }) => {
   if (!user) {

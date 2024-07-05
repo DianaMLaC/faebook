@@ -1979,6 +1979,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   flex-basis: 360px;
   margin-left: 8px;
   margin-right: 8px;
+  max-width: 600px;
 }
 
 .posts-right {
@@ -1991,7 +1992,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   margin-right: 8px;
   margin-left: 6px;
   flex-basis: 500px;
-  max-width: 900px;
+  /* max-width: 900px; */
 
 }
 
@@ -2191,7 +2192,7 @@ ul.friends-display-grid {
   background-color: var(--secondary-color);
   border: transparent;
   border-radius: 25px;
-  width: 90%;
+  width: 100%;
   align-self: center;
   font-size: 17px;
   color: #65676B;
@@ -2436,7 +2437,7 @@ ul.friends-display-grid {
 .post-comment, .photo-comment {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  /* width: 100%; */
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 8px;
@@ -2470,7 +2471,7 @@ padding-top: 8px;
 background-color: var(--secondary-color);
 border: transparent;
 border-radius: 25px;
-width: 82%;
+width: 100%;
 margin-left: 6px;
 align-self: center;
 }

@@ -16,10 +16,7 @@ function AuthProvider({ children }: AuthProviderProps): React.ReactElement {
   const [profileUser, setProfileUser] = useState<User | null>(null)
   const [currentUser, setCurrentUser] = useState<User | null>(() => {
     const savedUser = sessionStorage.getItem("currentUser")
-    const initialUser = savedUser
-      ? JSON.parse(savedUser)
-      : { ...window.currentUser, profilePhotoUrl: null, coverPhotoUrl: null }
-    return initialUser
+    return savedUser ? JSON.parse(savedUser) : null
   })
 
   useEffect(() => {
