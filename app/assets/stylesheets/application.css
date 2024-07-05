@@ -1024,13 +1024,14 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 .see-photos {
   margin-right: 6px;
   color: var(--link-color);
-  cursor: not-allowed;
+  cursor: pointer
 }
 
 .see-photos:hover {
   background-color: var(--shade-background-color);
   border-radius: 2px;
-  cursor: not-allowed;
+  font-weight: 600;
+  /* cursor: not-allowed; */
 }
 
 .photos-header div:nth-child(2) {
@@ -2094,13 +2095,13 @@ ul.photos-display-grid {
 .see-friends {
   margin-right: 6px;
   color: var(--link-color);
-  cursor: not-allowed;
+  cursor: pointer;
 }
 
 .see-friends:hover {
   background-color: var(--shade-background-color);
   border-radius: 2px;
-  cursor: not-allowed;
+  font-weight: 600;
 }
 
 .posts-friends-header div:nth-child(1) {

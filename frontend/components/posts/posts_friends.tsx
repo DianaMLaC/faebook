@@ -3,11 +3,12 @@ import { useAuth } from "../../context/auth"
 import { fetchFriendships } from "../../utils/profile"
 import PostsFriend from "./posts_friend"
 import { Friendship } from "../../utils/types"
+import { useNavigate } from "react-router-dom"
 
 function PostsFriends(): React.ReactElement {
   const { profileUser } = useAuth()
   const [friends, setFriends] = useState<Friendship[] | null>(null)
-  // const [pendingFriendships, setPendingFriendships] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function getFriendshipsData() {
@@ -29,13 +30,21 @@ function PostsFriends(): React.ReactElement {
     getFriendshipsData()
   }, [profileUser])
 
+  const handleSeeAllFriendsClick = () => {
+    if (profileUser) {
+      navigate(`/profile-page/${profileUser.id}/friends`)
+    }
+  }
+
   return (
     <div className="posts-friends-container">
       <header className="posts-friends-header">
         <h2>Friends</h2>
         {/* {friends && <div className="posts-friends-number">{friends.count} friends</div>} */}
 
-        <div className="see-friends">See All Friends</div>
+        <div className="see-friends" onClick={handleSeeAllFriendsClick}>
+          See All Friends
+        </div>
       </header>
       <ul className="friends-display-grid">
         {friends &&

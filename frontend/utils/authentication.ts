@@ -12,7 +12,7 @@ interface BackendErrorResponse {
 }
 
 export async function checkResponse(response: AxiosResponse) {
-  console.log("CALLED", { response })
+  // console.log("CALLED", { response })
   if (response.status < 200 || response.status >= 300) {
     const backendErrorResponse: BackendErrorResponse = response.data
 
@@ -71,7 +71,7 @@ type AuthErrorResponse = KnownServerError<AuthServerError>
 
 export const postSession = async (sessionData: SessionData) => {
   try {
-    const response = await axios.post<SessionData>(
+    const response = await axios.post<User>(
       "http://localhost:3000/api/authentications",
       sessionData,
       {
