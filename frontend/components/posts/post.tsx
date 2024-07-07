@@ -9,8 +9,10 @@ import Likes from "./likes"
 import Comments from "../comments/comments_index"
 import CommentForm from "../comments/comment_form"
 import { formatPostDate } from "../../utils/helpers"
+import { useNavigate } from "react-router-dom"
 
 function PostContainer({ post }): React.ReactElement {
+  const navigate = useNavigate()
   const { currentUser } = useAuth()
   const [likes, setLikes] = useState(post.likes || [])
   const { addLikeToPost, deleteLikeFromPost, addCommentToPost } = usePosts()
@@ -59,11 +61,15 @@ function PostContainer({ post }): React.ReactElement {
     [post.id, addCommentToPost]
   )
 
+  const handleFriendClick = () => {
+    navigate(`/profile-page/${post.author.id}/posts`)
+  }
+
   return (
     <div className="post-container">
       <header className="post-header">
         <div className="post-header-left">
-          <div className="avatar">
+          <div className="avatar" onClick={handleFriendClick}>
             {post.author.profilePhotoUrl ? (
               <img className="profile-photo" src={post.author.profilePhotoUrl} alt="Profile" />
             ) : (
@@ -75,7 +81,9 @@ function PostContainer({ post }): React.ReactElement {
             )}
           </div>
           <div className="post-details">
-            <div className="post-user-display-name">{post.author.displayName}</div>
+            <div className="post-user-display-name" onClick={handleFriendClick}>
+              {post.author.displayName}
+            </div>
             <div className="post-visibility">
               <div className="post-created-at">{postTimeStamp}</div>
               <FaUserFriends />

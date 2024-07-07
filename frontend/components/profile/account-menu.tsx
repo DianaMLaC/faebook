@@ -21,7 +21,7 @@ function AccountMenu(): React.ReactElement {
       <div className="menu-banner">
         <div
           className="menu-account-profile"
-          onClick={() => navigate(`/profile-page/${currentUser?.id}`)}
+          onClick={() => navigate(`/profile-page/${currentUser?.id}/posts`)}
         >
           <div className="comment-avatar">
             {currentUser?.profilePhotoUrl && (

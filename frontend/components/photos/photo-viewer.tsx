@@ -64,15 +64,15 @@ function PhotoViewer(): React.ReactElement {
             <div className="main-header-left">
               <div
                 className="close-button"
-                onClick={() => navigate(`/profile-page/${profileUser?.id}`)}
+                onClick={() => navigate(`/profile-page/${profileUser?.id}/posts`)}
               >
                 <IoClose />
               </div>
-              <img
+              {/* <img
                 className="photo-viewer-logo-img"
                 src="/assets/images/dark-logo.png"
                 alt="Facebook"
-              />
+              /> */}
             </div>
             <div className="main-header-right">
               <HiOutlineZoomIn />
@@ -100,9 +100,9 @@ function PhotoViewer(): React.ReactElement {
           </div>
         </div>
         <div className="photo-viewer-details">
-          <div className="details-header">
+          {/* <div className="details-header">
             <NavRight />
-          </div>
+          </div> */}
           <div className="photo-details">
             <PhotosProvider>
               <PhotoDetails photo={photoDetails} /> {/* Integrate PhotoDetails */}

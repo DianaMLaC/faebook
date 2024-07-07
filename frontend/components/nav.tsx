@@ -15,7 +15,8 @@ function NavBar(): React.ReactElement {
   const handleSuggestionClick = (userId: string) => {
     setProfileUser(null)
     setSuggestions([])
-    navigate(`/profile-page/${userId}`)
+    setSearchTerm("")
+    navigate(`/profile-page/${userId}/posts`)
   }
 
   const handleSearchChange = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {

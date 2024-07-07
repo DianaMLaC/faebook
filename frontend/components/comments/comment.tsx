@@ -8,6 +8,7 @@ import { formatCommentDate } from "../../utils/helpers"
 import Comments from "./comments_index"
 import CommentForm from "./comment_form"
 import { Comment, User } from "../../utils/types"
+import { useNavigate } from "react-router-dom"
 
 interface CommentContainerProps {
   comment: Comment
@@ -15,6 +16,7 @@ interface CommentContainerProps {
 }
 
 function CommentContainer({ comment, parentType }: CommentContainerProps): React.ReactElement {
+  const navigate = useNavigate()
   const { currentUser } = useAuth()
   const postsContext = usePosts()
   const photosContext = usePhotos()
@@ -85,9 +87,14 @@ function CommentContainer({ comment, parentType }: CommentContainerProps): React
     },
     [comment.postId, comment.photoId, comment.id, parentType, postsContext, photosContext]
   )
+
+  const handleFriendClick = () => {
+    navigate(`/profile-page/${author?.id}/posts`)
+  }
+
   return (
     <div className="comment-container">
-      <div className="comment-avatar">
+      <div className="comment-avatar" onClick={handleFriendClick}>
         {author?.profilePhotoUrl ? (
           <img className="profile-photo" src={author.profilePhotoUrl} alt="Profile" />
         ) : (
@@ -100,7 +107,9 @@ function CommentContainer({ comment, parentType }: CommentContainerProps): React
       </div>
       <div className="comment-details">
         <div className="comment-banner">
-          <div className="comment-user-display-name">{author?.displayName}</div>
+          <div className="comment-user-display-name" onClick={handleFriendClick}>
+            {author?.displayName}
+          </div>
           <div className="comment-text">{comment.text}</div>
         </div>
         <div className="comment-footer">

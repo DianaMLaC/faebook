@@ -46,7 +46,11 @@ function Request({ friend }): React.ReactElement {
             alt={friend.displayName}
           />
         ) : (
-          <div>No photo to show</div>
+          <img
+            className="missing-profile-photo"
+            src="/assets/images/missing-profile-pic.png"
+            alt="Faebook"
+          />
         )}
       </div>
       <div className="friend-request-bottom">

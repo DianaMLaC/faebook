@@ -2290,6 +2290,7 @@ ul.friends-display-grid {
   border-color: var(--primary-color);
   object-fit: fill; 
   margin-right: 11px;
+  cursor: pointer;
 }
 
 .avatar img {
@@ -2309,6 +2310,11 @@ ul.friends-display-grid {
 .post-user-display-name, .photo-user-display-name{
   font-size: 16px;
   font-weight: 600;
+}
+
+.post-user-display-name:hover, .photo-user-display-name:hover{
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .post-visibility, .photo-visibility {
@@ -2453,6 +2459,7 @@ ul.friends-display-grid {
   overflow: hidden;
   object-fit: fill; 
   margin-top: 4px;
+  cursor: pointer;
 }
 
 
@@ -2720,6 +2727,7 @@ align-self: center;
   flex-direction: column;
   align-items: flex-start;
   padding-left: 10px;
+  width: 100%;
 }
 
 .comment-banner {
@@ -2739,6 +2747,11 @@ align-self: center;
 .comment-user-display-name {
   font-weight: 600;
   padding-bottom: 4px;
+}
+
+.comment-user-display-name:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .comment-footer {
@@ -2781,6 +2794,7 @@ align-self: center;
   border-radius: 50%; 
   overflow: hidden;
   object-fit: fill; 
+  cursor: pointer;
 }
 
 

@@ -1,8 +1,13 @@
 import React from "react"
-
+import { useNavigate } from "react-router-dom"
 function PostsFriend({ friend }): React.ReactElement {
+  const navigate = useNavigate()
+
+  const handleFriendClick = () => {
+    navigate(`/profile-page/${friend.id}/posts`)
+  }
   return (
-    <div className="posts-friend-container">
+    <div className="posts-friend-container" onClick={handleFriendClick}>
       <div className="posts-friend-photo">
         {friend.profilePhotoUrl ? (
           <img

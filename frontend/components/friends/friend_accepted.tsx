@@ -7,7 +7,11 @@ function FriendAccepted({ friend }): React.ReactElement {
         {friend.profilePhotoUrl ? (
           <img className="friend-cover-" src={friend.profilePhotoUrl} alt={friend.displayName} />
         ) : (
-          <div className="no-photo">No photo to show</div>
+          <img
+            className="missing-profile-photo"
+            src="/assets/images/missing-profile-pic.png"
+            alt="Faebook"
+          />
         )}
       </div>
       <div className="friend-accepted-name">{friend.displayName}</div>

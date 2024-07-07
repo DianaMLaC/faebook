@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useEffect, MouseEvent } from "react"
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/auth"
 import PhotoUpload from "./photo-uploader"
 import ReactModal from "react-modal"
@@ -9,29 +10,16 @@ import { IoPersonAddSharp } from "react-icons/io5"
 import { TbDots } from "react-icons/tb"
 import { RxCross2 } from "react-icons/rx"
 import { deleteFriendship, fetchFriendships, requestFriendship } from "../../utils/profile"
-import PostsPage from "../posts/posts_page"
-import FriendsPage from "../friends/friends_page"
-import PhotosPage from "../photos/photos-page"
-import AboutMe from "../user_profile_details/about-me"
-import Videos from "./videos"
-import CheckIns from "./check-ins"
-import Books from "./books"
-import Music from "./music"
 import { User } from "../../utils/types"
-import PostsProvider from "../../context/posts"
-import FriendsProvider from "../../context/friends"
-import PhotosProvider from "../../context/photos"
-import { Link, NavLink, Outlet } from "react-router-dom"
 
 function ProfileHeader(): React.ReactElement {
+  const navigate = useNavigate()
   const { currentUser, setCurrentUser, profileUser } = useAuth()
   const [profileModalIsOpen, setProfileModalIsOpen] = useState<boolean>(false)
   const [coverModalIsOpen, setCoverModalIsOpen] = useState<boolean>(false)
   const [friendshipRequested, setFriendshipRequested] = useState<boolean>(false)
   const [friendshipAccepted, setFriendshipAccepted] = useState<boolean | null>(false)
   const [existingRelation, setExistingRelation] = useState<boolean>(true)
-  const [activeView, setActiveView] = useState<string>("posts")
-  const [activeLink, setActiveLink] = useState<string>("posts")
   const [friendshipId, setFriendshipId] = useState<string | null>(null)
 
   useEffect(() => {
@@ -158,47 +146,6 @@ function ProfileHeader(): React.ReactElement {
   useEffect(() => {
     ReactModal.setAppElement(".profile-header")
   }, [])
-
-  const handleViewChange = (e: MouseEvent<HTMLDivElement>, view: string) => {
-    e.preventDefault()
-    setActiveView(view)
-    setActiveLink(view)
-  }
-
-  const getViewComponent = () => {
-    switch (activeView) {
-      case "posts":
-        return (
-          <PostsProvider>
-            <PostsPage />
-          </PostsProvider>
-        )
-      case "about":
-        return <AboutMe />
-      case "friends":
-        return (
-          <FriendsProvider>
-            <FriendsPage />
-          </FriendsProvider>
-        )
-      case "photos":
-        return (
-          <PhotosProvider>
-            <PhotosPage />
-          </PhotosProvider>
-        )
-      case "videos":
-        return <Videos />
-      case "checkins":
-        return <CheckIns />
-      case "music":
-        return <Music />
-      case "books":
-        return <Books />
-      default:
-        return null
-    }
-  }
 
   return (
     <>
