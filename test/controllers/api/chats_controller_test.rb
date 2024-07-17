@@ -35,35 +35,31 @@
 
 #   test 'when an authenticated user tries to create a room with valid params, then response is 201' do
 #     # Arrange
-#     user = create_and_sign_in_user(user_params)
+#     create_and_sign_in_user(user_params)
 
 #     # Act
-#     post "/api/users/#{user.id}/rooms", params: { room: room_params }
+#     post '/api/rooms', params: { room: room_params }
 
 #     # Assert
 #     assert_response :created
 #     room_response = JSON.parse(@response.body)
-#     assert_not_nil(room_response['name'])
-#     assert_equal(room_params[:name], room_response['name'])
+#     assert_not_nil(room_response['description'])
 #   end
 
 #   test 'when an authenticated user tries to create a room with invalid params, then response is 422' do
 #     # Arrange
-#     user = create_and_sign_in_user(user_params)
+#     create_and_sign_in_user(user_params)
 
 #     # Act
-#     post "/api/users/#{user.id}/rooms", params: { room: { description: '' } }
+#     post '/api/rooms', params: { room: { description: '' } }
 
 #     # Assert
 #     assert_response :unprocessable_entity
 #   end
 
 #   test 'when an unauthenticated user tries to create a room, then response is 401' do
-#     # Arrange
-#     user = create_unauthenticated_user
-
 #     # Act
-#     post "/api/users/#{user.id}/rooms", params: { room: room_params }
+#     post '/api/rooms', params: { room: room_params }
 
 #     # Assert
 #     assert_response :unauthorized
@@ -72,11 +68,11 @@
 #   test 'should get all the rooms for a specific user' do
 #     # Arrange
 #     user = create_and_sign_in_user(user_params)
-#     post "/api/users/#{user.id}/rooms", params: { room: room_params }
-#     post "/api/users/#{user.id}/rooms", params: { room: room_params }
+#     post '/api/rooms', params: { room: room_params }
+#     post '/api/rooms', params: { room: room_params }
 
 #     # Act
-#     get "/api/users/#{user.id}/rooms"
+#     get '/api/rooms'
 
 #     # Assert
 #     assert_response :success

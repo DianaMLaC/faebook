@@ -1,18 +1,18 @@
 class Api::MessagesController < ApplicationController
   before_action :must_be_authorized
-  before_action :set_room
+  before_action :set_chat_room
 
   def index
-    @messages = @room.messages.includes(:sender)
+    @messages = @chat.messages.includes(:sender)
     render :index
   end
 
   def create
-    @message = @room.messages.new(message_params)
+    @message = @chat.messages.new(message_params)
     @message.sender = @authenticated_user
 
     if @message.save
-      ActionCable.server.broadcast "messaging_#{@room.id}", message: render_message(@message)
+      ActionCable.server.broadcast "messaging_#{@chat.id}", message: render_message(@message)
       render :show, status: :created
     else
       render json: @message.errors, status: :unprocessable_entity
@@ -21,8 +21,8 @@ class Api::MessagesController < ApplicationController
 
   private
 
-  def set_room
-    @room = Room.find(params[:room_id])
+  def set_chat_room
+    @chat = Chat.find(params[:chat_id])
   end
 
   def message_params

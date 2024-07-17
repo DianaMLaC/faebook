@@ -83,14 +83,14 @@ class User < ApplicationRecord
            class_name: 'Message',
            foreign_key: :sender_id
 
-  has_many :room_subscriptions,
-           class_name: 'RoomSubscription',
+  has_many :chat_subscriptions,
+           class_name: 'ChatSubscription',
            foreign_key: :participant_id,
            dependent: :destroy
 
-  has_many :rooms,
-           through: :room_subscriptions,
-           source: :room
+  has_many :chats,
+           through: :chat_subscriptions,
+           source: :chat
 
   attr_reader :password
 

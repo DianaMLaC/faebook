@@ -8,16 +8,16 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
-class RoomSubscription < ApplicationRecord
+class ChatSubscription < ApplicationRecord
   belongs_to :participant,
              class_name: 'User',
              foreign_key: :participant_id
 
-  belongs_to :room,
-             class_name: 'Room',
-             foreign_key: :room_id
+  belongs_to :chat,
+             class_name: 'Chat',
+             foreign_key: :chat_id
 
-  validates :participant_id, uniqueness: { scope: :room_id, message: 'User already belongs to room!' }
+  validates :participant_id, uniqueness: { scope: :chat_id, message: 'User already belongs to chat!' }
 
   after_create :create_join_message
   after_destroy :create_leave_message
@@ -25,10 +25,10 @@ class RoomSubscription < ApplicationRecord
   private
 
   def create_join_message
-    Message.create(content: "#{participant.first_name} joined the room", sender: participant, room:)
+    Message.create(content: "#{participant.first_name} joined the chat", sender: participant, chat:)
   end
 
   def create_leave_message
-    Message.create(content: "#{participant.first_name} left the room", sender: participant, room:)
+    Message.create(content: "#{participant.first_name} left the chat", sender: participant, chat:)
   end
 end

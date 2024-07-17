@@ -16,10 +16,12 @@ Rails.application.routes.draw do
       resources :albums, only: %i[index show create]
       resources :photos, only: %i[index show]
       resources :intros, only: %i[create update]
-      resources :rooms, only: %i[index show create update destroy] do
-        resources :messages, only: %i[index create]
-      end
     end
+
+    resources :chats, only: %i[index show create update destroy] do
+      resources :messages, only: %i[index create]
+    end
+
     resources :photos, only: [:create]
 
     resources :posts, only: [] do

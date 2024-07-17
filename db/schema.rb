@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_17_091554) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_17_123737) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,6 +49,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_091554) do
     t.datetime "updated_at", null: false
     t.string "cover_photo_url"
     t.index ["user_id"], name: "index_albums_on_user_id"
+  end
+
+  create_table "chats", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -132,12 +138,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_091554) do
     t.index ["participant_id", "room_id"], name: "index_room_subscriptions_on_participant_id_and_room_id", unique: true
   end
 
-  create_table "rooms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
@@ -159,11 +159,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_091554) do
   add_foreign_key "friendships", "users", column: "receiver_id"
   add_foreign_key "friendships", "users", column: "sender_id"
   add_foreign_key "likes", "users", column: "liker_id"
-  add_foreign_key "messages", "rooms"
+  add_foreign_key "messages", "chats", column: "room_id"
   add_foreign_key "messages", "users", column: "sender_id"
   add_foreign_key "photos", "albums"
   add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "posts", "users", column: "profile_id"
-  add_foreign_key "room_subscriptions", "rooms"
+  add_foreign_key "room_subscriptions", "chats", column: "room_id"
   add_foreign_key "room_subscriptions", "users", column: "participant_id"
 end
