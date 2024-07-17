@@ -103,7 +103,6 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
       author_id: post_author.id,
       profile_id: post_author.id
     )
-    comment_text = faker_text
 
     # ACT
 
