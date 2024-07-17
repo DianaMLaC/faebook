@@ -12,9 +12,11 @@ class Api::MessagesController < ApplicationController
     @message.sender = @authenticated_user
 
     if @message.save
-      Rails.logger.debug "Broadcasting message to messaging_#{@chat.id}"
-      ActionCable.server.broadcast "messaging_#{@chat.id}", message: render_message(@message)
-      Rails.logger.debug 'Broadcast complete'
+      # Rails.logger.debug "Broadcasting message to messaging_#{@chat.id}"
+      # ActionCable.server.broadcast "messaging_#{@chat.id}", message: render_message(@message)
+      rendered_message = render_message(@message)
+      MessagingChannel.broadcast_to(@chat, message: rendered_message)
+      # Rails.logger.debug 'Broadcast complete'
       render :show, status: :created
     else
       render json: @message.errors, status: :unprocessable_entity

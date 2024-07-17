@@ -7,14 +7,6 @@ class MessagingChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
   end
 
-  # def speak(data)
-  #   chat = Chat.find(data['chat_id'])
-  #   message = chat.messages.create!(body: data['message'], sender_id: data['sender_id'])
-  #   # message = 'Hello world'
-  #   # ActionCable.server.broadcast("messaging_#{chat.id}", message)
-  #   # debugger
-  #   ActionCable.server.broadcast "messaging_#{chat.id}", message: render_message(message)
-  # end
   def speak(data)
     chat = Chat.find(data['chat_id'])
     message = chat.messages.create!(body: data['message'], sender_id: data['sender_id'])

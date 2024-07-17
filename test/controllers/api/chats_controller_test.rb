@@ -1,30 +1,30 @@
 require 'test_helper'
-require 'helpers/auth_helper'
+# require 'helpers/auth_helper'
 
 class Api::ChatControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
-  include AuthHelper
+  # include AuthHelper
 
-  # def user_params
-  #   { firstName: Faker::Name.first_name,
-  #     lastName: Faker::Name.last_name,
-  #     password: Faker::Internet.password(min_length: 6, mix_case: true, special_characters: true),
-  #     dateOfBirth: '2000-10-20',
-  #     email: Faker::Internet.email }
-  # end
+  def user_params
+    { firstName: Faker::Name.first_name,
+      lastName: Faker::Name.last_name,
+      password: Faker::Internet.password(min_length: 6, mix_case: true, special_characters: true),
+      dateOfBirth: '2000-10-20',
+      email: Faker::Internet.email }
+  end
 
   def chat_params
     { name: Faker::Lorem.word }
   end
 
-  # def create_and_sign_in_user(user_info)
-  #   post '/api/users', params: { user: user_info }
+  def create_and_sign_in_user(user_info)
+    post '/api/users', params: { user: user_info }
 
-  #   user_response = JSON.parse(@response.body)
-  #   User.find_by(id: user_response['id'])
-  # end
+    user_response = JSON.parse(@response.body)
+    User.find_by(id: user_response['id'])
+  end
 
   def create_unauthenticated_user
     User.create!(first_name: Faker::Name.first_name,

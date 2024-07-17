@@ -42,96 +42,72 @@ class Api::MessagesControllerTest < ActionDispatch::IntegrationTest
     JSON.parse(@response.body)
   end
 
-  # setup do
-  #   @user = create_and_sign_in_user(user_params)
-  #   @chat = create_chat_for_user(@user)
-  # end
-
   test 'when an authenticated user tries to create a message with valid params, then response is 201' do
     # Arrange
-
     user = create_and_sign_in_user(user_params)
-    chat = Chat.create!(name: 'Test Chat')
-
-    message_params = { body: 'This is a test message' }
-
-    # Mock Action Cable broadcasting
-    ActionCable.server.expects(:broadcast).with("messaging_#{@chat.id}", message: instance_of(String))
+    chat = create_chat_for_user(user)
+    body = Faker::Lorem.sentence
 
     # Act
-    post "/api/chats/#{chat.id}/messages", params: { message: message_params }
+    post "/api/chats/#{chat['id']}/messages", params: { message: { body: } }
 
     # Assert
     assert_response :created
     message_response = JSON.parse(@response.body)
     assert_not_nil(message_response['body'])
-    assert_equal(message_params[:body], message_response['body'])
+    assert_equal(body, message_response['body'])
   end
 
-  # test 'when an authenticated user tries to create a message with valid params, then response is 201' do
-  #   # Arrange
-  #   user = create_and_sign_in_user(user_params)
-  #   chat = create_chat_for_user(user)
+  test 'when an authenticated user tries to create a message with invalid params, then response is 422' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
+    chat = create_chat_for_user(user)
 
-  #   # Act
-  #   post "/api/chats/#{chat['id']}/messages", params: { message: message_params }
+    # Act
+    post "/api/chats/#{chat['id']}/messages", params: { message: { body: '' } }
 
-  #   # Assert
-  #   assert_response :created
-  #   message_response = JSON.parse(@response.body)
-  #   assert_not_nil(message_response['content'])
-  #   assert_equal(message_params[:body], message_response['body'])
-  # end
+    # Assert
+    assert_response :unprocessable_entity
+  end
 
-  # test 'when an authenticated user tries to create a message with invalid params, then response is 422' do
-  #   # Arrange
-  #   user = create_and_sign_in_user(user_params)
-  #   chat = create_chat_for_user(user)
+  test 'when an unauthenticated user tries to create a message, then response is 401' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
+    chat = create_chat_for_user(user)
+    reset!
+    # Act
+    post "/api/chats/#{chat['id']}/messages", params: { message: message_params }
 
-  #   # Act
-  #   post "/api/users/#{user.id}/chats/#{chat['id']}/messages", params: { message: { body: '' } }
+    # Assert
+    assert_response :unauthorized
+  end
 
-  #   # Assert
-  #   assert_response :unprocessable_entity
-  # end
+  test 'should get all messages for a specific chat' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
+    chat = create_chat_for_user(user)
+    post "/api/chats/#{chat['id']}/messages", params: { message: message_params }
+    post "/api/chats/#{chat['id']}/messages", params: { message: message_params }
 
-  # test 'when an unauthenticated user tries to create a message, then response is 401' do
-  #   # Arrange
-  #   user = create_unauthenticated_user
-  #   chat = create_chat_for_user(user)
+    # Act
+    get "/api/chats/#{chat['id']}/messages"
 
-  #   # Act
-  #   post "/api/users/#{user.id}/chats/#{chat['id']}/messages", params: { message: message_params }
+    # Assert
+    assert_response :success
+    get_response = JSON.parse(@response.body)
+    assert_equal(2, get_response.length)
+  end
 
-  #   # Assert
-  #   assert_response :unauthorized
-  # end
+  test 'when unauthenticated requests to view messages, then 401' do
+    # Arrange
+    user = create_and_sign_in_user(user_params)
+    chat = create_chat_for_user(user)
+    reset!
 
-  # test 'should get all messages for a specific chat' do
-  #   # Arrange
-  #   user = create_and_sign_in_user(user_params)
-  #   chat = create_chat_for_user(user)
-  #   post "/api/users/#{user.id}/chats/#{chat['id']}/messages", params: { message: message_params }
-  #   post "/api/users/#{user.id}/chats/#{chat['id']}/messages", params: { message: message_params }
+    # Act
+    get "/api/chats/#{chat['id']}/messages"
 
-  #   # Act
-  #   get "/api/users/#{user.id}/chats/#{chat['id']}/messages"
-
-  #   # Assert
-  #   assert_response :success
-  #   get_response = JSON.parse(@response.body)
-  #   assert_equal(2, get_response.length)
-  # end
-
-  # test 'when unauthenticated requests to view messages, then 401' do
-  #   # Arrange
-  #   user = create_unauthenticated_user
-  #   chat = create_chat_for_user(user)
-
-  #   # Act
-  #   get "/api/users/#{user.id}/chats/#{chat['id']}/messages"
-
-  #   # Assert
-  #   assert_response :unauthorized
-  # end
+    # Assert
+    assert_response :unauthorized
+  end
 end
