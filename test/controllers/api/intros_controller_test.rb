@@ -53,7 +53,7 @@ class Api::IntrosControllerTest < ActionDispatch::IntegrationTest
 
     # Assert
     assert_response 200
-    assert_not_nil(user.intro.zodiac_sign)
+    assert_not_nil(user.intro.zodiac)
     assert_not_nil(user.intro.location)
     assert_not_nil(user.intro.education)
     assert_not_nil(user.intro.house)
@@ -84,6 +84,7 @@ class Api::IntrosControllerTest < ActionDispatch::IntegrationTest
     # Assert
     assert_response 200
     resp = JSON.parse(@response.body)
-    assert_equal('Leo', resp['zodiacSign'])
+    assert_nil(resp)
+    assert_equal('Leo', resp['zodiac'])
   end
 end
