@@ -12,7 +12,9 @@ class Api::MessagesController < ApplicationController
     @message.sender = @authenticated_user
 
     if @message.save
+      Rails.logger.debug "Broadcasting message to messaging_#{@chat.id}"
       ActionCable.server.broadcast "messaging_#{@chat.id}", message: render_message(@message)
+      Rails.logger.debug 'Broadcast complete'
       render :show, status: :created
     else
       render json: @message.errors, status: :unprocessable_entity
@@ -31,7 +33,7 @@ class Api::MessagesController < ApplicationController
 
   def render_message(message)
     ApplicationController.renderer.render(
-      partial: 'messages/message',
+      partial: 'api/messages/message',
       locals: { message: }
     )
   end

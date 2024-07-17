@@ -1,65 +1,54 @@
-# require 'test_helper'
+require 'test_helper'
 
-# class MessagingChannelTest < ActionCable::Channel::TestCase
-#   # test "subscribes" do
-#   #   subscribe
-#   #   assert subscription.confirmed?
-#   # end
-#   def user_params
-#     { firstName: Faker::Name.first_name,
-#       lastName: Faker::Name.last_name,
-#       password: Faker::Internet.password(min_length: 6, mix_case: true, special_characters: true),
-#       dateOfBirth: '2000-10-20',
-#       email: Faker::Internet.email }
-#   end
+class MessagingChannelTest < ActionCable::Channel::TestCase
+  def user_params
+    { first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      password: Faker::Internet.password(min_length: 6, mix_case: true, special_characters: true),
+      date_of_birth: '2000-10-20',
+      email: Faker::Internet.email }
+  end
 
-#   def room_params
-#     { description: Faker::Lorem.word }
-#   end
+  def sign_in(user)
+    stub_connection(cookies: { signed: { auth_token: user.session_token } })
+  end
 
-#   def message_params
-#     { body: Faker::Lorem.sentence }
-#   end
+  def create_chat
+    Chat.create!(name: Faker::Lorem.word)
+  end
 
-#   def create_user(user_info)
-#     User.create!(first_name: user_info[:firstName],
-#                  last_name: user_info[:lastName],
-#                  password: user_info[:password],
-#                  date_of_birth: user_info[:dateOfBirth],
-#                  email: user_info[:email])
-#   end
+  test 'subscribes and streams for chat' do
+    user = User.create!(user_params)
+    sign_in(user)
+    chat = create_chat
+    subscribe(chat_id: chat.id)
 
-#   def create_room(user)
-#     Room.create!(description: room_params[:description], user:)
-#   end
+    assert subscription.confirmed?
+    assert_has_stream "messaging_#{chat.id}"
+  end
 
-#   test 'subscribes and streams for room' do
-#     # Arrange
-#     user = create_user(user_params)
-#     room = create_room(user)
+  test 'broadcasts message' do
+    user = User.create!(user_params)
+    sign_in(user)
+    chat = create_chat
 
-#     # Act
-#     subscribe room_id: room.id
+    subscribe(chat_id: chat.id)
 
-#     # Assert
-#     assert subscription.confirmed?
-#     assert_has_stream "messaging_#{room.id}"
-#   end
+    # Perform the action and check for broadcast on the correct channel
+    perform :speak, 'chat_id' => chat.id, 'message' => 'Hello, World!', 'sender_id' => user.id
 
-#   test 'broadcasts message to room' do
-#     # Arrange
-#     user = create_user(user_params)
-#     room = create_room(user)
-#     subscribe room_id: room.id
+    # Retrieve the message created during the broadcast
+    message = chat.messages.last
 
-#     # Act
-#     perform :speak, room_id: room.id, message: message_params[:body], sender_id: user.id
+    # Generate the expected_message with the actual message object
+    expected_message = ApplicationController.renderer.render(partial: 'api/messages/message', locals: { message: },
+                                                             formats: [:json])
 
-#     # Assert
-#     assert_broadcast_on("messaging_#{room.id}", message: {
-#                           body: message_params[:body],
-#                           sender: { id: user.id, first_name: user.first_name, last_name: user.last_name },
-#                           room_id: room.id
-#                         })
-#   end
-# end
+    # Debugging output
+    puts "Expected message: #{expected_message}"
+
+    # Assert broadcast on the correct channel with the expected message
+    assert_broadcast_on(MessagingChannel.broadcasting_for(chat), message: expected_message)
+  end
+  # expected_message = 'Hello world'
+end
