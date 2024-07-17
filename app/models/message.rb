@@ -4,7 +4,7 @@
 #
 #  id         :uuid             not null, primary key
 #  sender_id  :uuid             not null
-#  room_id    :uuid             not null
+#  chat_id    :uuid             not null
 #  body       :text             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
