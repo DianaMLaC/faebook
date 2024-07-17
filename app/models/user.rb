@@ -79,6 +79,19 @@ class User < ApplicationRecord
            through: :albums,
            source: :photos
 
+  has_many :messages,
+           class_name: 'Message',
+           foreign_key: :sender_id
+
+  has_many :room_subscriptions,
+           class_name: 'RoomSubscription',
+           foreign_key: :participant_id,
+           dependent: :destroy
+
+  has_many :rooms,
+           through: :room_subscriptions,
+           source: :room
+
   attr_reader :password
 
   def profile_photo_url
