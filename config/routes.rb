@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
   root to: 'root#root'
   # Defines the root path route ("/")
-  # root "posts#index"
   namespace :api, defaults: { format: :json } do
     resources :users, only: %i[create show] do
       collection do
@@ -17,6 +16,9 @@ Rails.application.routes.draw do
       resources :albums, only: %i[index show create]
       resources :photos, only: %i[index show]
       resources :intros, only: %i[create update]
+      resources :rooms, only: %i[index show create update destroy] do
+        resources :messages, only: %i[index create]
+      end
     end
     resources :photos, only: [:create]
 
@@ -49,4 +51,7 @@ Rails.application.routes.draw do
 
     resource :authentications, only: %i[create destroy]
   end
+
+  # Mount Action Cable server
+  mount ActionCable.server => '/cable'
 end

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Api::MessagesControllerTest < ActionDispatch::IntegrationTest
+class Api::RoomControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
@@ -15,10 +15,6 @@ class Api::MessagesControllerTest < ActionDispatch::IntegrationTest
 
   def room_params
     { description: Faker::Lorem.word }
-  end
-
-  def message_params
-    { body: Faker::Lorem.sentence }
   end
 
   def create_and_sign_in_user(user_info)
@@ -37,59 +33,50 @@ class Api::MessagesControllerTest < ActionDispatch::IntegrationTest
                  email: Faker::Internet.email)
   end
 
-  def create_room_for_user(user)
-    post "/api/users/#{user.id}/rooms", params: { room: room_params }
-    JSON.parse(@response.body)
-  end
-
-  test 'when an authenticated user tries to create a message with valid params, then response is 201' do
+  test 'when an authenticated user tries to create a room with valid params, then response is 201' do
     # Arrange
     user = create_and_sign_in_user(user_params)
-    room = create_room_for_user(user)
 
     # Act
-    post "/api/users/#{user.id}/rooms/#{room['id']}/messages", params: { message: message_params }
+    post "/api/users/#{user.id}/rooms", params: { room: room_params }
 
     # Assert
     assert_response :created
-    message_response = JSON.parse(@response.body)
-    assert_not_nil(message_response['content'])
-    assert_equal(message_params[:body], message_response['body'])
+    room_response = JSON.parse(@response.body)
+    assert_not_nil(room_response['name'])
+    assert_equal(room_params[:name], room_response['name'])
   end
 
-  test 'when an authenticated user tries to create a message with invalid params, then response is 422' do
+  test 'when an authenticated user tries to create a room with invalid params, then response is 422' do
     # Arrange
     user = create_and_sign_in_user(user_params)
-    room = create_room_for_user(user)
 
     # Act
-    post "/api/users/#{user.id}/rooms/#{room['id']}/messages", params: { message: { body: '' } }
+    post "/api/users/#{user.id}/rooms", params: { room: { description: '' } }
 
     # Assert
     assert_response :unprocessable_entity
   end
 
-  test 'when an unauthenticated user tries to create a message, then response is 401' do
+  test 'when an unauthenticated user tries to create a room, then response is 401' do
     # Arrange
     user = create_unauthenticated_user
-    room = create_room_for_user(user)
 
     # Act
-    post "/api/users/#{user.id}/rooms/#{room['id']}/messages", params: { message: message_params }
+    post "/api/users/#{user.id}/rooms", params: { room: room_params }
 
     # Assert
     assert_response :unauthorized
   end
 
-  test 'should get all messages for a specific room' do
+  test 'should get all the rooms for a specific user' do
     # Arrange
     user = create_and_sign_in_user(user_params)
-    room = create_room_for_user(user)
-    post "/api/users/#{user.id}/rooms/#{room['id']}/messages", params: { message: message_params }
-    post "/api/users/#{user.id}/rooms/#{room['id']}/messages", params: { message: message_params }
+    post "/api/users/#{user.id}/rooms", params: { room: room_params }
+    post "/api/users/#{user.id}/rooms", params: { room: room_params }
 
     # Act
-    get "/api/users/#{user.id}/rooms/#{room['id']}/messages"
+    get "/api/users/#{user.id}/rooms"
 
     # Assert
     assert_response :success
@@ -97,13 +84,12 @@ class Api::MessagesControllerTest < ActionDispatch::IntegrationTest
     assert_equal(2, get_response.length)
   end
 
-  test 'when unauthenticated requests to view messages, then 401' do
+  test 'when unauthenticated requests to view rooms, then 401' do
     # Arrange
     user = create_unauthenticated_user
-    room = create_room_for_user(user)
 
     # Act
-    get "/api/users/#{user.id}/rooms/#{room['id']}/messages"
+    get "/api/users/#{user.id}/rooms"
 
     # Assert
     assert_response :unauthorized
