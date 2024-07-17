@@ -84,7 +84,6 @@ class Api::IntrosControllerTest < ActionDispatch::IntegrationTest
     # Assert
     assert_response 200
     resp = JSON.parse(@response.body)
-    assert_nil(resp)
     assert_equal('Leo', resp['zodiac'])
   end
 end
