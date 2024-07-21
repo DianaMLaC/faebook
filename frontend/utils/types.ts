@@ -109,6 +109,27 @@ export interface Intro {
   order?: string
 }
 
+export interface Chat {
+  id: string
+  name: string
+  createdAt: string
+  updatedAt: string
+  participants: User[]
+}
+
+export interface Message {
+  id: string
+  body: string
+  createdAt: string
+  senderId: string
+  chatId: string
+}
+
+export interface WebSocketContextType {
+  messages: Message[]
+  sendMessage: (chatId: string, body: string) => void
+}
+
 export interface AuthContextType {
   currentUser: User | null
   profileUser: User | null
