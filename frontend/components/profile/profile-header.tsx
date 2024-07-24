@@ -11,6 +11,7 @@ import { TbDots } from "react-icons/tb"
 import { RxCross2 } from "react-icons/rx"
 import { deleteFriendship, fetchFriendships, requestFriendship } from "../../utils/profile"
 import { User } from "../../utils/types"
+import Chat from "../messenger/chat"
 
 function ProfileHeader(): React.ReactElement {
   const navigate = useNavigate()
@@ -21,6 +22,7 @@ function ProfileHeader(): React.ReactElement {
   const [friendshipAccepted, setFriendshipAccepted] = useState<boolean | null>(false)
   const [existingRelation, setExistingRelation] = useState<boolean>(true)
   const [friendshipId, setFriendshipId] = useState<string | null>(null)
+  const [isChatOpen, setIsChatOpen] = useState<boolean>(false)
 
   useEffect(() => {
     if (currentUser?.id === profileUser?.id) {
@@ -138,6 +140,14 @@ function ProfileHeader(): React.ReactElement {
       break
   }
 
+  const openChat = () => {
+    setIsChatOpen(true) // Open the chat
+  }
+
+  const closeChat = () => {
+    setIsChatOpen(false) // Close the chat
+  }
+
   const openProfileModal = () => setProfileModalIsOpen(true)
   const openCoverModal = () => setCoverModalIsOpen(true)
   const closeProfileModal = () => setProfileModalIsOpen(false)
@@ -226,7 +236,7 @@ function ProfileHeader(): React.ReactElement {
               </>
             ) : (
               <>
-                <div className="messenger-button">
+                <div className="messenger-button" onClick={openChat}>
                   <RiMessengerLine />
                   <span>Messenger</span>
                 </div>
@@ -270,6 +280,7 @@ function ProfileHeader(): React.ReactElement {
           </div>
         </nav>
       </header>
+      {isChatOpen && <Chat onClose={closeChat} />}
     </>
   )
 }
