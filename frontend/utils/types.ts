@@ -135,8 +135,8 @@ export interface WebSocketContextType {
   messages: Message[]
   chats: Chat[]
   sendMessage: (chatId: string, body: string) => void
-  fetchMessages: (chatId: string) => void
-  initiateChat: (profileUserId: string) => void
+  fetchMessages: (chatId: string) => Promise<Message[]>
+  initiateChat: (profileUserId: string) => Promise<Chat>
   subscribeToChat: (chatId: string) => void
 }
 

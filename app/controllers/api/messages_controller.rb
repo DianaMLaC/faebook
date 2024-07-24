@@ -1,9 +1,11 @@
 class Api::MessagesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   before_action :must_be_authorized
   before_action :set_chat_room
 
   def index
-    @messages = @chat.messages.includes(:sender)
+    @messages = @chat.messages.includes(:sender).order(created_at: :desc)
     render :index
   end
 

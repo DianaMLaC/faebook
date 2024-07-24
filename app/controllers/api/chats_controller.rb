@@ -1,6 +1,7 @@
 class Api::ChatsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :must_be_authorized
-  before_action :set_chat_room, only: %i[show update destroy]
+  before_action :set_chat_room, only: %i[show]
 
   # def index
   #   @chats = Chat.all
@@ -9,6 +10,7 @@ class Api::ChatsController < ApplicationController
 
   def show
     @chat = Chat.find(params[:id])
+    debuger
     if @chat
       render :show
     else

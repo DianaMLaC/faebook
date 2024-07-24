@@ -8,27 +8,37 @@ import { BiSolidLike } from "react-icons/bi"
 import { RiEmojiStickerFill } from "react-icons/ri"
 import { HiMiniGif } from "react-icons/hi2"
 import { useWebSocket } from "../../context/websockets"
+import { Chat } from "../../utils/types"
 
-function Chat({ onClose }): React.ReactElement {
+function Chat({ onClose, recipientId }): React.ReactElement {
   const { profileUser, currentUser } = useAuth()
-  const { messages, sendMessage } = useWebSocket()
+  const { messages, initiateChat, sendMessage } = useWebSocket()
+  const [chat, setChat] = useState<Chat | null>(null)
   const [message, setMessage] = useState("")
 
   useEffect(() => {
-    // Function to load initial messages between currentUser and profileUser
-    const loadMessages = async () => {
-      // Fetch messages from the backend using an API endpoint, if needed
-      // const response = await fetch(`/api/chats/${chatId}/messages`);
-      // const initialMessages = await response.json();
-      // setMessages(initialMessages);
+    console.log("in chat compoenent, before initiating chat")
+    if (!recipientId) {
+      console.log("It didn't work")
+      return
     }
 
-    loadMessages()
-  }, [profileUser])
+    const setupChat = async () => {
+      console.log("it worked, now initiating chat")
+      const chatResponse = await initiateChat(recipientId)
+      if (chatResponse) {
+        console.log("we got the response, now setting up chat")
+        setChat(chatResponse)
+        console.log("chat set up")
+      }
+    }
+
+    setupChat()
+  }, [recipientId])
 
   const handleSendMessage = () => {
-    if (message.trim() !== "" && profileUser?.id) {
-      sendMessage(profileUser.id, message)
+    if (chat && message.trim() !== "") {
+      sendMessage(chat.id, message)
       setMessage("")
     }
   }
@@ -71,14 +81,13 @@ function Chat({ onClose }): React.ReactElement {
         </div>
       </header>
       <div className="chat-room">
-        {messages.map((msg, index) => (
-          <div key={index} className="message">
-            <span className="message-sender">
-              {msg.senderId === currentUser?.id
-                ? currentUser.displayName
-                : profileUser?.displayName}
-              :
-            </span>
+        {messages.map((msg) => (
+          <div
+            key={msg.id}
+            className={`message ${
+              msg.senderId === currentUser?.id ? "message-sent" : "message-received"
+            }`}
+          >
             {msg.body}
           </div>
         ))}
@@ -95,6 +104,9 @@ function Chat({ onClose }): React.ReactElement {
             value={message}
             placeholder="Aa"
             onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSendMessage()
+            }}
           />
           <MdEmojiEmotions className="chat-input-emoji" />
         </div>

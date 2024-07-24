@@ -33,6 +33,7 @@ function ProfileHeader(): React.ReactElement {
       try {
         const friendshipData = await fetchFriendships(profileUser!.id)
         console.log({ friendshipData })
+
         if (friendshipData.existing_relation) {
           setFriendshipAccepted(friendshipData.existing_relation.friendship_accepted)
           setFriendshipRequested(true)
@@ -141,6 +142,7 @@ function ProfileHeader(): React.ReactElement {
   }
 
   const openChat = () => {
+    console.log("Opening messenger chat")
     setIsChatOpen(true) // Open the chat
   }
 
@@ -280,7 +282,7 @@ function ProfileHeader(): React.ReactElement {
           </div>
         </nav>
       </header>
-      {isChatOpen && <Chat onClose={closeChat} />}
+      {isChatOpen && <Chat onClose={closeChat} recipientId={profileUser?.id} />}
     </>
   )
 }

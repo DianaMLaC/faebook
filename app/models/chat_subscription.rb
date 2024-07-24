@@ -25,10 +25,10 @@ class ChatSubscription < ApplicationRecord
   private
 
   def create_join_message
-    Message.create(content: "#{participant.first_name} joined the chat", sender: participant, chat:)
+    Message.create(body: "#{participant.first_name} joined the chat", sender_id: participant, chat:)
   end
 
   def create_leave_message
-    Message.create(content: "#{participant.first_name} left the chat", sender: participant, chat:)
+    Message.create(body: "#{participant.first_name} left the chat", sender_id: participant, chat:)
   end
 end

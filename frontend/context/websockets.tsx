@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from "react"
 import { createConsumer, Channel } from "@rails/actioncable"
 import { WebSocketContextType, Message, Chat } from "../utils/types"
-import { createChat } from "../utils/chats"
+import { createChat, createMessage, fetchMessages } from "../utils/chats"
 
 const cable = createConsumer("ws://localhost:3000/cable")
 
@@ -19,32 +19,43 @@ function WebSocketProvider({ children }: WebSocketProviderProps): React.ReactEle
 
   // Function to add a new message to the state
   const addMessage = (newMessage: Message): void => {
+    console.log("adding message in websockets addMessage")
     setMessages((prevMessages): Message[] => [newMessage, ...prevMessages])
   }
 
   // Function to send a message through the WebSocket
-  const sendMessage = (chatId: string, body: string): void => {
+  const sendMessage = async (chatId: string, body: string) => {
+    const message = await createMessage(chatId, body)
+
     const subscription = subscriptions[chatId]
     if (subscription) {
-      subscription.perform("send_message", { chat_id: chatId, body })
+      subscription.perform("send_message", {
+        chat_id: chatId,
+        message: message.body,
+        sender_id: message.sender_id,
+      })
     }
   }
 
   // Function to fetch messages for a specific chat
-  const fetchMessages = async (chatId: string): Promise<Message[]> => {
-    const response = await fetch(`/api/chats/${chatId}/messages`)
-    const data = await response.json()
-    return data.messages
+  const getMessages = async (chatId: string): Promise<Message[]> => {
+    const messagesData = await fetchMessages(chatId)
+    return messagesData
   }
 
   // Function to create a chat or fetch an existing one, and subscribe to it
-  const initiateChat = async (recipientId) => {
+  const initiateChat = async (recipientId: string): Promise<Chat> => {
+    console.log("initiating chat in websockets")
     const chat = await createChat(recipientId)
     subscribeToChat(chat.id)
+    console.log("subscribed to chat in websockets")
+
     setChats((prevChats) => ({
       ...prevChats,
       [chat.id]: chat,
     }))
+    const messages = await getMessages(chat.id)
+    setMessages(messages)
     return chat
   }
 
