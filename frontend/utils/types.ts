@@ -42,7 +42,7 @@ export type ExistingRelation = {
 
 export interface Like {
   id: string
-  likeableId: number
+  likeableId: string
   likeableType: string
   liker: {
     id: string
@@ -125,9 +125,19 @@ export interface Message {
   chatId: string
 }
 
+export interface BackendErrorResponse {
+  errors: {
+    user: { [key: string]: string }
+  }
+}
+
 export interface WebSocketContextType {
   messages: Message[]
+  chats: Chat[]
   sendMessage: (chatId: string, body: string) => void
+  fetchMessages: (chatId: string) => void
+  initiateChat: (profileUserId: string) => void
+  subscribeToChat: (chatId: string) => void
 }
 
 export interface AuthContextType {
@@ -146,7 +156,7 @@ export interface FriendsContextType {
   setAcceptedFriends: React.Dispatch<React.SetStateAction<Friendship[]>>
   setPendingFriendships: React.Dispatch<React.SetStateAction<Friendship[]>>
   addAcceptedFriend: (friend: Friendship) => void
-  removePendingFriendship: (friendshipId: number) => void
+  removePendingFriendship: (friendshipId: string) => void
 }
 
 export interface PostsContextType {

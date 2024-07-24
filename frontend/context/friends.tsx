@@ -18,7 +18,7 @@ function FriendsProvider({ children }: FriendsProviderProps): React.ReactElement
     )
   }
 
-  function removePendingFriendship(friendshipId: number): void {
+  function removePendingFriendship(friendshipId: string): void {
     setPendingFriendships((prevRequests) =>
       prevRequests.filter((req) => req.friendshipId !== friendshipId)
     )

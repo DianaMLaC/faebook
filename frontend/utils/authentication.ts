@@ -1,14 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios"
-import { User, NewUserData, SessionData } from "./types"
+import { User, NewUserData, SessionData, BackendErrorResponse } from "./types"
 
 export const customHeaders = {
   "content-type": "application/json;charset=UTF-8",
-}
-
-interface BackendErrorResponse {
-  errors: {
-    user: { [key: string]: string }
-  }
 }
 
 export async function checkResponse(response: AxiosResponse) {
