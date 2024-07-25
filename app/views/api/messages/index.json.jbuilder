@@ -1,6 +1,3 @@
 json.array! @messages do |message|
-  json.extract! message, :id, :body, :created_at, :chat_id
-  json.sender do
-    json.extract! message.sender, :id, :first_name, :last_name
-  end
+  json.partial! 'api/messages/message', message: message
 end

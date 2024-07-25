@@ -17,7 +17,7 @@ function Chat({ onClose, recipientId }): React.ReactElement {
   const [message, setMessage] = useState("")
 
   useEffect(() => {
-    console.log("in chat compoenent, before initiating chat")
+    console.log("in chat component, before initiating chat")
     if (!recipientId) {
       console.log("It didn't work")
       return
@@ -84,14 +84,13 @@ function Chat({ onClose, recipientId }): React.ReactElement {
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`message ${
-              msg.senderId === currentUser?.id ? "message-sent" : "message-received"
-            }`}
+            className={msg.senderId === currentUser?.id ? "message-sent" : "message-received"}
           >
             {msg.body}
           </div>
         ))}
       </div>
+
       <div className="chat-footer">
         <div className="chat-footer-icons">
           <TbPhotoFilled />

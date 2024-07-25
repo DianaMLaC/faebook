@@ -5,7 +5,7 @@ class Api::MessagesController < ApplicationController
   before_action :set_chat_room
 
   def index
-    @messages = @chat.messages.includes(:sender).order(created_at: :desc)
+    @messages = @chat.messages.includes(:sender).order(created_at: :asc)
     render :index
   end
 

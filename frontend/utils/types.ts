@@ -124,8 +124,8 @@ export interface Message {
   id: string
   body: string
   createdAt: string
-  senderId: string
   chatId: string
+  senderId: string
 }
 
 export interface BackendErrorResponse {
