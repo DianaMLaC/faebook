@@ -2,6 +2,7 @@ class Api::ChatsController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :must_be_authorized
   before_action :set_chat_room, only: %i[show]
+  # before_action :ensure_no_associated_chat, only: %i[create]
 
   # def index
   #   @chats = Chat.all
@@ -14,18 +15,25 @@ class Api::ChatsController < ApplicationController
     if @chat
       render :show
     else
-      render json: { error: 'Unable to fetch chat' }, status: :unprocessable_entity
+      render json: { 'errors' => { 'chats' => 'Unable to fetch chat' } }, status: :unprocessable_entity
+
     end
   end
 
   def create
     recipient = User.find(params[:recipient_id])
-    @chat = find_or_create_chat_between(@authenticated_user, recipient)
+    sender = User.find(params[:sender_id])
+    # @chat = Chat.create(name: "#{@authenticated_user.display_name} & #{recipient.display_name}")
+    # ChatSubscription.create(chat: @chat, participant: @authenticated_user)
+    # ChatSubscription.create(chat: @chat, participant: recipient)
+    # debugger
+
+    @chat = find_or_create_chat_between(sender, recipient)
 
     if @chat
       render :show
     else
-      render json: { error: 'Unable to create chat' }, status: :unprocessable_entity
+      render json: { 'errors' => { 'chats' => 'Unable to create chat' } }, status: :unprocessable_entity
     end
   end
 
@@ -52,7 +60,7 @@ class Api::ChatsController < ApplicationController
                .first
 
     unless chat
-      chat = Chat.create(name: "#{user2.display_name}")
+      chat = Chat.create(name: "#{user1.display_name} & #{user2.display_name}")
 
       ChatSubscription.create(chat:, participant: user1)
       ChatSubscription.create(chat:, participant: user2)
@@ -60,6 +68,25 @@ class Api::ChatsController < ApplicationController
 
     chat
   end
+
+  # def ensure_no_associated_chat
+  #   recipient_id = params[:recipient_id]
+
+  #   chat = Chat.joins(:chat_subscriptions)
+  #              .where(chat_subscriptions: { participant_id: [@authenticated_user.id, recipient_id] })
+  #              .group('chats.id')
+  #              .having('COUNT(DISTINCT chat_subscriptions.participant_id) = 2')
+
+  #   Rails.logger.debug "Checked for existing chat: #{chat.inspect}"
+
+  #   unless chat.blank?
+  #     Rails.logger.debug "Found existing chat: #{chat.inspect}"
+  #     render json: { 'errors' => chat },
+  #            status: 406 and return false
+  #   end
+
+  #   true
+  # end
 
   def set_chat_room
     @chat = Chat.find(params[:id])

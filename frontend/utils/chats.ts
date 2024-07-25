@@ -2,11 +2,11 @@ import { customHeaders, checkResponse, extractError } from "./authentication"
 import { BackendErrorResponse, Chat } from "./types"
 import axios from "axios"
 
-export const createChat = async (recipientId: string): Promise<Chat> => {
+export const createChat = async (senderId: string, recipientId: string): Promise<Chat> => {
   try {
     const response = await axios.post(
       `http://localhost:3000/api/chats/`,
-      { recipient_id: recipientId },
+      { sender_id: senderId, recipient_id: recipientId },
       {
         headers: customHeaders,
       }

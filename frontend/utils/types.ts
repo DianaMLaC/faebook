@@ -137,9 +137,10 @@ export interface BackendErrorResponse {
 export interface WebSocketContextType {
   messages: Message[]
   chats: Chat[]
-  sendMessage: (chatId: string, body: string) => void
+  sendMessageOptimistic: (chatId: string, body: string, senderId: string) => void
   fetchMessages: (chatId: string) => Promise<Message[]>
-  initiateChat: (profileUserId: string) => Promise<Chat>
+  initiateChat: (currentUserId: string, profileUserId: string) => Promise<Chat>
+  // subscribeChat: (chat: Chat) => void
   subscribeToChat: (chatId: string) => void
 }
 

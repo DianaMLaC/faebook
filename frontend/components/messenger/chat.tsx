@@ -9,43 +9,74 @@ import { RiEmojiStickerFill } from "react-icons/ri"
 import { HiMiniGif } from "react-icons/hi2"
 import { useWebSocket } from "../../context/websockets"
 import { Chat } from "../../utils/types"
+import { createChat } from "../../utils/chats"
 
-function Chat({ onClose, recipientId }): React.ReactElement {
+function ChatRoom({ onClose, chat }): React.ReactElement {
   const { profileUser, currentUser } = useAuth()
-  const { messages, initiateChat, sendMessage } = useWebSocket()
-  const [chat, setChat] = useState<Chat | null>(null)
+  const { messages, sendMessageOptimistic } = useWebSocket()
+  // const [chat, setChat] = useState<Chat | null>(null)
   const [message, setMessage] = useState("")
 
-  useEffect(() => {
-    console.log("in chat component, before initiating chat")
-    if (!recipientId) {
-      console.log("It didn't work")
-      return
-    }
+  // useEffect(() => {
+  //   if (!currentUser || !profileUser) {
+  //     return
+  //   }
+  //   const setupChat = async () => {
+  //     console.log({ currentUser }, { profileUser }, recipientId)
 
-    const setupChat = async () => {
-      console.log("it worked, now initiating chat")
-      const chatResponse = await initiateChat(recipientId)
-      if (chatResponse) {
-        console.log("we got the response, now setting up chat")
-        setChat(chatResponse)
-        console.log("chat set up")
-      }
-    }
+  //     try {
+  //       const chatResponse = await createChat(currentUser.id, profileUser.id)
+  //       console.log(chatResponse)
+  //       if (chatResponse) {
+  //         setChat(chatResponse)
+  //         subscribeChat(chatResponse)
+  //         // const messages = await getMessages(chat.id)
+  //         // setMessages(messages)
+  //       }
+  //     } catch (err) {
+  //       console.log(err)
+  //     }
+  //   }
 
-    setupChat()
-  }, [recipientId])
+  //   setupChat()
+  // }, [currentUser, profileUser])
+
+  // useEffect(() => {
+  //   console.log("in chat component, before initiating chat")
+  //   if (!recipientId) {
+  //     console.log("no recepientId")
+  //     return
+  //   }
+
+  //   const setupChat = async () => {
+  //     console.log("it worked, now api create chat")
+  //     console.log({ currentUser }, { profileUser }, recipientId)
+
+  //     const chatResponse = await initiateChat(recipientId)
+  //     console.log({ chatResponse })
+  //     if (chatResponse) {
+  //       console.log("we got the response, now setting up chat")
+  //       setChat(chatResponse)
+  //       console.log("chat set up")
+  //     }
+  //   }
+
+  //   setupChat()
+  // }, [recipientId])
 
   const handleSendMessage = () => {
     if (chat && message.trim() !== "") {
-      sendMessage(chat.id, message)
+      if (!currentUser) {
+        return
+      }
+      sendMessageOptimistic(chat.id, message, currentUser.id)
       setMessage("")
     }
   }
 
   const handleChatLike = () => {
-    if (profileUser?.id) {
-      sendMessage(profileUser.id, "👍")
+    if (currentUser && chat) {
+      sendMessageOptimistic(chat.id, "👍", currentUser.id)
     }
   }
 
@@ -81,14 +112,15 @@ function Chat({ onClose, recipientId }): React.ReactElement {
         </div>
       </header>
       <div className="chat-room">
-        {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={msg.senderId === currentUser?.id ? "message-sent" : "message-received"}
-          >
-            {msg.body}
-          </div>
-        ))}
+        {messages &&
+          messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={msg.senderId === currentUser?.id ? "message-sent" : "message-received"}
+            >
+              {msg.body}
+            </div>
+          ))}
       </div>
 
       <div className="chat-footer">
@@ -117,4 +149,4 @@ function Chat({ onClose, recipientId }): React.ReactElement {
   )
 }
 
-export default Chat
+export default ChatRoom

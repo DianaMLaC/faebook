@@ -17,22 +17,32 @@ function WebSocketProvider({ children }: WebSocketProviderProps): React.ReactEle
   const [chats, setChats] = useState<Chat[]>([])
   const [subscriptions, setSubscriptions] = useState<Record<string, Channel | null>>({})
 
-  // Function to add a new message to the state
-  const addMessage = (newMessage: Message): void => {
-    console.log("adding message in websockets addMessage")
+  // Function #B
+  const addMessageOptimistic = (newMessage: Message): void => {
     setMessages((prevMessages): Message[] => [newMessage, ...prevMessages])
+    // Here we would also make an API call to save the message on the backend
+    createMessage(newMessage.chatId, newMessage.body) // Ensure this API call handles errors gracefully
   }
 
-  // Function to send a message through the WebSocket
-  const sendMessage = async (chatId: string, body: string) => {
-    const message = await createMessage(chatId, body)
+  // Function #D to send a message through the WebSocket with optimistic rendering
+  const sendMessageOptimistic = (chatId: string, body: string, senderId: string) => {
+    const optimisticMessage: Message = {
+      id: Date.now().toString(), // Temporary ID for the optimistic message
+      chatId,
+      body,
+      senderId, // Use the passed senderId
+      createdAt: new Date().toISOString(), // Temporary timestamp
+    }
+
+    // Optimistically add the message to the chat
+    addMessageOptimistic(optimisticMessage)
 
     const subscription = subscriptions[chatId]
     if (subscription) {
       subscription.perform("send_message", {
         chat_id: chatId,
-        message: message.body,
-        sender_id: message.sender_id,
+        message: body,
+        sender_id: senderId,
       })
     }
   }
@@ -44,9 +54,13 @@ function WebSocketProvider({ children }: WebSocketProviderProps): React.ReactEle
   }
 
   // Function to create a chat or fetch an existing one, and subscribe to it
-  const initiateChat = async (recipientId: string): Promise<Chat> => {
+  const initiateChat = async (senderId: string, recipientId: string): Promise<Chat> => {
     console.log("initiating chat in websockets")
-    const chat = await createChat(recipientId)
+
+    const chat = await createChat(senderId, recipientId)
+    console.log("we got the response from creating a chat")
+    console.log({ chat })
+
     subscribeToChat(chat.id)
     console.log("subscribed to chat in websockets")
 
@@ -64,10 +78,10 @@ function WebSocketProvider({ children }: WebSocketProviderProps): React.ReactEle
     if (subscriptions[chatId]) return
 
     const subscription = cable.subscriptions.create(
-      { channel: "ChatChannel", chat_id: chatId },
+      { channel: "MessagingChannel", chat_id: chatId },
       {
         received(data) {
-          addMessage(data.message)
+          addMessageOptimistic(data.message)
         },
       }
     )
@@ -96,7 +110,7 @@ function WebSocketProvider({ children }: WebSocketProviderProps): React.ReactEle
       value={{
         messages,
         chats,
-        sendMessage,
+        sendMessageOptimistic,
         fetchMessages,
         initiateChat,
         subscribeToChat,

@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect, MouseEvent } from "react"
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/auth"
+import { useWebSocket } from "../../context/websockets"
 import PhotoUpload from "./photo-uploader"
 import ReactModal from "react-modal"
 import { FaPlus, FaCamera } from "react-icons/fa"
@@ -10,17 +11,17 @@ import { IoPersonAddSharp } from "react-icons/io5"
 import { TbDots } from "react-icons/tb"
 import { RxCross2 } from "react-icons/rx"
 import { deleteFriendship, fetchFriendships, requestFriendship } from "../../utils/profile"
-import { User } from "../../utils/types"
-import Chat from "../messenger/chat"
+import { Chat, User } from "../../utils/types"
+import ChatRoom from "../messenger/chat"
 
 function ProfileHeader(): React.ReactElement {
-  const navigate = useNavigate()
   const { currentUser, setCurrentUser, profileUser } = useAuth()
+  const { initiateChat } = useWebSocket()
+  const [chat, setChat] = useState<Chat | null>(null)
   const [profileModalIsOpen, setProfileModalIsOpen] = useState<boolean>(false)
   const [coverModalIsOpen, setCoverModalIsOpen] = useState<boolean>(false)
   const [friendshipRequested, setFriendshipRequested] = useState<boolean>(false)
   const [friendshipAccepted, setFriendshipAccepted] = useState<boolean | null>(false)
-  // const [existingRelation, setExistingRelation] = useState<boolean>(true)
   const [friendshipId, setFriendshipId] = useState<string | null>(null)
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false)
 
@@ -141,8 +142,15 @@ function ProfileHeader(): React.ReactElement {
       break
   }
 
-  const openChat = () => {
+  const openChat = async () => {
     console.log("Opening messenger chat")
+    if (!currentUser || !profileUser) {
+      return
+    }
+    const initiatedChat = await initiateChat(currentUser.id, profileUser.id)
+    console.log("Chat initiated")
+    setChat(initiatedChat)
+
     setIsChatOpen(true) // Open the chat
   }
 
@@ -282,7 +290,7 @@ function ProfileHeader(): React.ReactElement {
           </div>
         </nav>
       </header>
-      {isChatOpen && <Chat onClose={closeChat} recipientId={profileUser?.id} />}
+      {isChatOpen && <ChatRoom onClose={closeChat} chat={chat} />}
     </>
   )
 }
