@@ -20,11 +20,12 @@ function ProfileHeader(): React.ReactElement {
   const [coverModalIsOpen, setCoverModalIsOpen] = useState<boolean>(false)
   const [friendshipRequested, setFriendshipRequested] = useState<boolean>(false)
   const [friendshipAccepted, setFriendshipAccepted] = useState<boolean | null>(false)
-  const [existingRelation, setExistingRelation] = useState<boolean>(true)
+  // const [existingRelation, setExistingRelation] = useState<boolean>(true)
   const [friendshipId, setFriendshipId] = useState<string | null>(null)
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false)
 
   useEffect(() => {
+    // we don't check for friendship on when current user is on his own profile
     if (currentUser?.id === profileUser?.id) {
       return
     }
@@ -34,24 +35,21 @@ function ProfileHeader(): React.ReactElement {
         const friendshipData = await fetchFriendships(profileUser!.id)
         console.log({ friendshipData })
 
-        if (friendshipData.existing_relation) {
-          setFriendshipAccepted(friendshipData.existing_relation.friendship_accepted)
-          setFriendshipRequested(true)
+        // when there is no friendship record of the current user and profile user
+        if (friendshipData.existing_relation === null) {
+          console.log("there is no existing relation between")
+          return
+        }
 
-          const acceptedFriendship = friendshipData.friends.accepted.find(
-            (friendship): boolean => friendship.user.id === profileUser?.id
-          )
-          const requestedFriendship = friendshipData.friends.requests.find(
-            (friendship): boolean => friendship.user.id === profileUser?.id
-          )
+        setFriendshipId(friendshipData.existing_relation.id)
+        console.log("there is an existing relation")
 
-          if (acceptedFriendship) {
-            setFriendshipId(acceptedFriendship.friendshipId)
-          } else if (requestedFriendship) {
-            setFriendshipId(requestedFriendship.friendshipId)
-          }
+        if (friendshipData.existing_relation.is_accepted) {
+          setFriendshipAccepted(friendshipData.existing_relation.is_accepted)
+          console.log("there is an existing relation and friendship is accepted")
         } else {
-          setExistingRelation(false)
+          setFriendshipRequested(true)
+          console.log("there is an existing relation and friendship is pending")
         }
       } catch (error) {
         console.error("Error fetching friendship data:", error)
@@ -90,8 +88,10 @@ function ProfileHeader(): React.ReactElement {
 
     try {
       const friendshipRequest = await requestFriendship(profileUser.id)
+      console.log("friendship requested")
       if (friendshipRequest) {
         setFriendshipRequested(true)
+        console.log(" friendshipRequested state set to true")
       }
     } catch (err) {
       console.error("error caught pHeader from api:", err)

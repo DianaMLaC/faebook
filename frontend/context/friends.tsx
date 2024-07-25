@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from "react"
-import { Friendship, FriendsContextType } from "../utils/types"
+import { FriendshipFriend, FriendsContextType } from "../utils/types"
 
 interface FriendsProviderProps {
   children: React.ReactNode
@@ -8,12 +8,12 @@ interface FriendsProviderProps {
 export const FriendsContext = createContext<FriendsContextType | null>(null)
 
 function FriendsProvider({ children }: FriendsProviderProps): React.ReactElement {
-  const [acceptedFriends, setAcceptedFriends] = useState<Friendship[]>([])
-  const [pendingFriendships, setPendingFriendships] = useState<Friendship[]>([])
+  const [acceptedFriends, setAcceptedFriends] = useState<FriendshipFriend[]>([])
+  const [pendingFriendships, setPendingFriendships] = useState<FriendshipFriend[]>([])
 
-  function addAcceptedFriend(friend: Friendship): void {
-    setAcceptedFriends((prevFriends): Friendship[] => [...prevFriends, friend])
-    setPendingFriendships((prevRequests): Friendship[] =>
+  function addAcceptedFriend(friend: FriendshipFriend): void {
+    setAcceptedFriends((prevFriends): FriendshipFriend[] => [...prevFriends, friend])
+    setPendingFriendships((prevRequests): FriendshipFriend[] =>
       prevRequests.filter((req) => req.friendshipId !== friend.friendshipId)
     )
   }

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios"
 import { customHeaders, checkResponse } from "./authentication"
-import { User, Photo, Album, Friendship, FriendshipData, Intro } from "./types"
+import { User, Photo, Album, FriendshipFriend, FriendshipData, Intro } from "./types"
 
 export async function fileChecksum(file: File): Promise<string> {
   const buffer = await file.arrayBuffer()
@@ -135,7 +135,7 @@ export const fetchUserSuggestions = async (searchTerm: string): Promise<{ users:
   }
 }
 
-export const requestFriendship = async (userId: string): Promise<Friendship> => {
+export const requestFriendship = async (userId: string): Promise<FriendshipFriend> => {
   try {
     const response = await axios.post(
       `http://localhost:3000/api/users/${userId}/friendships`,
@@ -164,7 +164,7 @@ export const deleteFriendship = async (friendshipId: string): Promise<boolean> =
   }
 }
 
-export const updateFriendship = async (friendshipId: string): Promise<Friendship> => {
+export const updateFriendship = async (friendshipId: string): Promise<FriendshipFriend> => {
   try {
     const response = await axios.patch(
       `http://localhost:3000/api/friendships/${friendshipId}/accept`,

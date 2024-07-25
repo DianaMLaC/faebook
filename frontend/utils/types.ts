@@ -22,7 +22,7 @@ export interface SessionData {
   password: string
 }
 
-export interface Friendship {
+export interface FriendshipFriend {
   friendshipId: string
   friendshipStatus: string
   user: User
@@ -30,14 +30,17 @@ export interface Friendship {
 
 export interface FriendshipData {
   friends: {
-    accepted: Friendship[]
-    requests: Friendship[]
+    accepted: FriendshipFriend[]
+    requests: FriendshipFriend[]
   }
-  existing_relation: ExistingRelation | null
+  existing_relation: Friendship | null
 }
 
-export type ExistingRelation = {
-  friendship_accepted: boolean | null
+export type Friendship = {
+  id: string
+  is_accepted: boolean
+  sender_id: string
+  receiver_id: string
 }
 
 export interface Like {
@@ -151,11 +154,11 @@ export interface AuthContextType {
 }
 
 export interface FriendsContextType {
-  acceptedFriends: Friendship[]
-  pendingFriendships: Friendship[]
-  setAcceptedFriends: React.Dispatch<React.SetStateAction<Friendship[]>>
-  setPendingFriendships: React.Dispatch<React.SetStateAction<Friendship[]>>
-  addAcceptedFriend: (friend: Friendship) => void
+  acceptedFriends: FriendshipFriend[]
+  pendingFriendships: FriendshipFriend[]
+  setAcceptedFriends: React.Dispatch<React.SetStateAction<FriendshipFriend[]>>
+  setPendingFriendships: React.Dispatch<React.SetStateAction<FriendshipFriend[]>>
+  addAcceptedFriend: (friend: FriendshipFriend) => void
   removePendingFriendship: (friendshipId: string) => void
 }
 

@@ -20,9 +20,7 @@ function FriendsPage(): React.ReactElement {
       try {
         if (profileUser) {
           const friendshipData = await fetchFriendships(profileUser.id)
-          // console.log("acceptedFriendsData:", friendshipData.friends.accepted)
           setAcceptedFriends(friendshipData.friends.accepted)
-          // console.log("requestedFriendsData:", friendshipData.friends.requests)
 
           setPendingFriendships(friendshipData.friends.requests)
         }

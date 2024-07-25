@@ -16,7 +16,7 @@ function Request({ friend }): React.ReactElement {
       const acceptFriendship = await updateFriendship(friend.friendshipId)
       if (acceptFriendship.friendshipStatus) {
         console.log("friendship accepted")
-        setFriendshipStatus(acceptFriendship.friendshipStatus)
+        // setFriendshipStatus(acceptFriendship.friendshipStatus)
         addAcceptedFriend(friend)
       }
     } catch (err) {
