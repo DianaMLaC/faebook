@@ -11,7 +11,7 @@ class Api::MessagesController < ApplicationController
 
   def create
     @message = @chat.messages.new(message_params)
-    @message.sender = @authenticated_user
+    @message.sender = User.find_by(id: params[:sender_id])
 
     if @message.save
       rendered_message = render_message(@message)

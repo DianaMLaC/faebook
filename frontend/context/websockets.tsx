@@ -19,9 +19,10 @@ function WebSocketProvider({ children }: WebSocketProviderProps): React.ReactEle
 
   // Function #B
   const addMessageOptimistic = (newMessage: Message): void => {
-    setMessages((prevMessages): Message[] => [newMessage, ...prevMessages])
+    setMessages((prevMessages): Message[] => [...prevMessages, newMessage])
     // Here we would also make an API call to save the message on the backend
-    createMessage(newMessage.chatId, newMessage.body) // Ensure this API call handles errors gracefully
+    console.log("adding message in websockets from:")
+    createMessage(newMessage.chatId, newMessage.body, newMessage.senderId) // Ensure this API call handles errors gracefully
   }
 
   // Function #D to send a message through the WebSocket with optimistic rendering
@@ -62,7 +63,6 @@ function WebSocketProvider({ children }: WebSocketProviderProps): React.ReactEle
     console.log({ chat })
 
     subscribeToChat(chat.id)
-    console.log("subscribed to chat in websockets")
 
     setChats((prevChats) => ({
       ...prevChats,
@@ -76,7 +76,7 @@ function WebSocketProvider({ children }: WebSocketProviderProps): React.ReactEle
   // Function to subscribe to a chat channel
   const subscribeToChat = (chatId: string) => {
     if (subscriptions[chatId]) return
-
+    console.log("subscribed to chat in websockets")
     const subscription = cable.subscriptions.create(
       { channel: "MessagingChannel", chat_id: chatId },
       {

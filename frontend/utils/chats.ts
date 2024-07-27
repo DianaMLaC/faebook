@@ -32,11 +32,11 @@ export const fetchChat = async (chatId: string) => {
   }
 }
 
-export const createMessage = async (chatId: string, body: string) => {
+export const createMessage = async (chatId: string, body: string, senderId: string) => {
   try {
     const response = await axios.post(
       `http://localhost:3000/api/chats/${chatId}/messages`,
-      { body },
+      { body, sender_id: senderId },
       {
         headers: customHeaders,
       }

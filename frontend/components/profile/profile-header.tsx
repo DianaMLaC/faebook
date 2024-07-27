@@ -147,6 +147,9 @@ function ProfileHeader(): React.ReactElement {
     if (!currentUser || !profileUser) {
       return
     }
+    console.log("initiating chat with currentUser:", currentUser)
+    console.log("initiating chat with profileUser:", profileUser)
+
     const initiatedChat = await initiateChat(currentUser.id, profileUser.id)
     console.log("Chat initiated")
     setChat(initiatedChat)

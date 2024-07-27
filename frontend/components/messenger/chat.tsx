@@ -8,67 +8,18 @@ import { BiSolidLike } from "react-icons/bi"
 import { RiEmojiStickerFill } from "react-icons/ri"
 import { HiMiniGif } from "react-icons/hi2"
 import { useWebSocket } from "../../context/websockets"
-import { Chat } from "../../utils/types"
-import { createChat } from "../../utils/chats"
 
 function ChatRoom({ onClose, chat }): React.ReactElement {
   const { profileUser, currentUser } = useAuth()
   const { messages, sendMessageOptimistic } = useWebSocket()
-  // const [chat, setChat] = useState<Chat | null>(null)
   const [message, setMessage] = useState("")
-
-  // useEffect(() => {
-  //   if (!currentUser || !profileUser) {
-  //     return
-  //   }
-  //   const setupChat = async () => {
-  //     console.log({ currentUser }, { profileUser }, recipientId)
-
-  //     try {
-  //       const chatResponse = await createChat(currentUser.id, profileUser.id)
-  //       console.log(chatResponse)
-  //       if (chatResponse) {
-  //         setChat(chatResponse)
-  //         subscribeChat(chatResponse)
-  //         // const messages = await getMessages(chat.id)
-  //         // setMessages(messages)
-  //       }
-  //     } catch (err) {
-  //       console.log(err)
-  //     }
-  //   }
-
-  //   setupChat()
-  // }, [currentUser, profileUser])
-
-  // useEffect(() => {
-  //   console.log("in chat component, before initiating chat")
-  //   if (!recipientId) {
-  //     console.log("no recepientId")
-  //     return
-  //   }
-
-  //   const setupChat = async () => {
-  //     console.log("it worked, now api create chat")
-  //     console.log({ currentUser }, { profileUser }, recipientId)
-
-  //     const chatResponse = await initiateChat(recipientId)
-  //     console.log({ chatResponse })
-  //     if (chatResponse) {
-  //       console.log("we got the response, now setting up chat")
-  //       setChat(chatResponse)
-  //       console.log("chat set up")
-  //     }
-  //   }
-
-  //   setupChat()
-  // }, [recipientId])
 
   const handleSendMessage = () => {
     if (chat && message.trim() !== "") {
       if (!currentUser) {
         return
       }
+      console.log("sending message from:", currentUser)
       sendMessageOptimistic(chat.id, message, currentUser.id)
       setMessage("")
     }
