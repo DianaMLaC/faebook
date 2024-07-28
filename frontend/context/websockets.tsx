@@ -68,8 +68,9 @@ function WebSocketProvider({ children }: WebSocketProviderProps): React.ReactEle
       ...prevChats,
       [chat.id]: chat,
     }))
-    const messages = await getMessages(chat.id)
-    setMessages(messages)
+    if (messages) {
+      setMessages(chat.messages)
+    }
     return chat
   }
 

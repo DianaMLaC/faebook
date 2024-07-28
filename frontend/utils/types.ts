@@ -118,6 +118,7 @@ export interface Chat {
   createdAt: string
   updatedAt: string
   participants: User[]
+  messages: Message[]
 }
 
 export interface Message {

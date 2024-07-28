@@ -57,6 +57,7 @@ class Api::ChatsController < ApplicationController
                .where(chat_subscriptions: { participant_id: [user1.id, user2.id] })
                .group(:id)
                .having('COUNT(chats.id) = 2')
+               .includes(:messages)
                .first
 
     unless chat
