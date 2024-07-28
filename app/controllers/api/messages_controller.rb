@@ -38,7 +38,7 @@ class Api::MessagesController < ApplicationController
   end
 
   def message_params
-    params.require(:message).permit(:body)
+    params.require(:message).permit(:body, :sender_id, :chat_id)
   end
 
   def render_message(message)
