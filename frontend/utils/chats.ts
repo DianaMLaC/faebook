@@ -2,7 +2,7 @@ import { customHeaders, checkResponse, extractError } from "./authentication"
 import { BackendErrorResponse, Chat } from "./types"
 import axios from "axios"
 
-export const createChat = async (senderId: string, recipientId: string): Promise<Chat> => {
+export const initiateChat = async (senderId: string, recipientId: string): Promise<Chat> => {
   try {
     const response = await axios.post(
       `http://localhost:3000/api/chats/`,

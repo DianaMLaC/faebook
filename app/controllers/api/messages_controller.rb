@@ -14,8 +14,16 @@ class Api::MessagesController < ApplicationController
     @message.sender = User.find_by(id: params[:sender_id])
 
     if @message.save
-      rendered_message = render_message(@message)
-      MessagingChannel.broadcast_to(@chat, message: rendered_message)
+      data = {
+        'id' => @message.id,
+        'senderId' => @message.sender.id,
+        'body' => @message.body,
+        'chatId' => @message.chat_id,
+        'createdAt' => @message.created_at
+      }
+      # rendered_message = render_message(@message)
+      ActionCable.server.broadcast("messenger_chat_#{@message.chat_id}", data)
+      # MessagingChannel.broadcast_to(@chat, message: rendered_message)
       render :show, status: :created
     else
       render json: @message.errors, status: :unprocessable_entity

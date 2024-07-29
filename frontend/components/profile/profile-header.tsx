@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect, MouseEvent } from "react"
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/auth"
-import { useWebSocket } from "../../context/websockets"
+// import { useWebSocket } from "../../context/websockets"
 import PhotoUpload from "./photo-uploader"
 import ReactModal from "react-modal"
 import { FaPlus, FaCamera } from "react-icons/fa"
@@ -13,10 +13,11 @@ import { RxCross2 } from "react-icons/rx"
 import { deleteFriendship, fetchFriendships, requestFriendship } from "../../utils/profile"
 import { Chat, User } from "../../utils/types"
 import ChatRoom from "../messenger/chat"
+import { initiateChat } from "../../utils/chats"
 
 function ProfileHeader(): React.ReactElement {
   const { currentUser, setCurrentUser, profileUser } = useAuth()
-  const { initiateChat } = useWebSocket()
+  // const { initiateChat } = useWebSocket()
   const [chat, setChat] = useState<Chat | null>(null)
   const [profileModalIsOpen, setProfileModalIsOpen] = useState<boolean>(false)
   const [coverModalIsOpen, setCoverModalIsOpen] = useState<boolean>(false)
@@ -147,13 +148,17 @@ function ProfileHeader(): React.ReactElement {
     if (!currentUser || !profileUser) {
       return
     }
-    console.log("initiating chat with currentUser:", currentUser)
-    console.log("initiating chat with profileUser:", profileUser)
 
-    const initiatedChat = await initiateChat(currentUser.id, profileUser.id)
-    console.log("Chat initiated")
-    setChat(initiatedChat)
+    try {
+      const chatResponse = await initiateChat(currentUser!.id, profileUser!.id)
+      console.log("initiated chat:", chatResponse.name)
+      setChat(chatResponse)
+    } catch (error) {
+      console.error("Error fetching chat data:", error)
+    }
 
+    console.log("opening chat with currentUser:", currentUser)
+    console.log("opening chat with profileUser:", profileUser)
     setIsChatOpen(true) // Open the chat
   }
 

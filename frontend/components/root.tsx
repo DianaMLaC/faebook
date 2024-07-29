@@ -5,20 +5,23 @@ import AuthProvider from "../context/auth"
 import App from "./app"
 import PostsProvider from "../context/posts"
 import PhotosProvider from "../context/photos"
-import WebSocketProvider from "../context/websockets"
+// import WebSocketProvider from "../context/websockets"
+import { CableProvider } from "../context/cable"
 
 function Root() {
   return (
     <StrictMode>
       <HashRouter>
         <AuthProvider>
-          <WebSocketProvider>
+          {/* <WebSocketProvider> */}
+          <CableProvider>
             <PostsProvider>
               <PhotosProvider>
                 <App />
               </PhotosProvider>
             </PostsProvider>
-          </WebSocketProvider>
+          </CableProvider>
+          {/* </WebSocketProvider> */}
         </AuthProvider>
       </HashRouter>
     </StrictMode>
