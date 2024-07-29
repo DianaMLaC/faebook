@@ -16,6 +16,7 @@ class Api::PostsController < ApplicationController
 
   def create
     @post = @user.profile_posts.new(body: params[:body])
+    @post.photo_url = params[:photo_url] if params[:photo_url]
     @post.author_id = @authenticated_user.id
 
     if @post.save

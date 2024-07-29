@@ -2331,7 +2331,7 @@ ul.friends-display-grid {
 }
 
 .post-content, .photo-description {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 400;
   padding-left: 16px;
   padding-right: 16px;
@@ -2623,7 +2623,8 @@ align-self: center;
 .post-form-add-on-banner {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  /* align-items: flex-start; */
+  justify-content: space-between;
   border: 1px solid rgb(206, 208, 212);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -2636,6 +2637,12 @@ align-self: center;
 
 .post-form-add-on-banner p {
   padding: 10px;
+}
+
+.post-form-add-on-banner span {
+  font-size: 28px;
+  padding-right: 10px;
+  cursor: pointer;
 }
 
 .post-submit-button {

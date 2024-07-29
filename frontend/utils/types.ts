@@ -73,6 +73,7 @@ export interface Comment {
 export interface Post {
   id: string
   body: string
+  photoUrl: string
   createdAt: string
   author: {
     id: string

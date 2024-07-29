@@ -94,6 +94,7 @@ function PostContainer({ post }): React.ReactElement {
       </header>
 
       <div className="post-content">{post.body}</div>
+      <div className="post-photo">{post.photoUrl}</div>
 
       <div className="likes-container">
         {likes.length > 0 && <Likes likes={likes} position={"post"} />}

@@ -6,30 +6,48 @@ import { createPost } from "../../utils/post_and_comments"
 import { CircleLoader } from "react-spinners"
 import { RxCross2 } from "react-icons/rx"
 import { IoMdArrowDropdown } from "react-icons/io"
+import { TbLibraryPhoto } from "react-icons/tb"
+import { uploadProfilePhoto } from "../../utils/profile"
 
 function PostForm({ closeModalContainer }): React.ReactElement {
   const { addPost } = usePosts()
   const { currentUser, profileUser } = useAuth()
   const [postBody, setPostBody] = useState("")
   const [formErr, setFormErr] = useState("")
-  // const [createdPost, setCreatedPost] = useState(null)
+  const [photoFile, setPhotoFile] = useState("")
+  const [postPhotoUrl, setPostPhotoUrl] = useState("")
   const [isUploading, setIsUploading] = useState(false)
+  const [togglePhotoInput, setTogglePhotoInput] = useState(false)
 
   const handleInput = (e) => {
     setPostBody(e.target.value)
   }
 
+  const handleFileChange = (e) => {
+    setPhotoFile(e.target.files[0])
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsUploading(true)
-    // let postResponse = null
 
+    if (photoFile) {
+      try {
+        await handlePhotoUpload()
+      } catch (error) {
+        setFormErr("Photo upload failed")
+        setIsUploading(false)
+        return
+      }
+    }
+    console.log({ postPhotoUrl })
     try {
       if (profileUser) {
-        const postResponse = await createPost(postBody, profileUser.id)
+        const postResponse = await createPost(postBody, profileUser.id, postPhotoUrl)
         if (postResponse) {
           addPost(postResponse)
           setPostBody("")
+          setPostPhotoUrl("")
           closeModalContainer()
         }
       }
@@ -37,6 +55,23 @@ function PostForm({ closeModalContainer }): React.ReactElement {
       setFormErr(err.message)
     } finally {
       setIsUploading(false)
+    }
+  }
+
+  const handlePhotoUpload = async () => {
+    const formData = new FormData()
+    formData.append("photo[image]", photoFile)
+    formData.append("album_name", "Timeline")
+
+    try {
+      const fileData = await uploadProfilePhoto(formData)
+      console.log({ fileData })
+      setPostPhotoUrl(fileData.url)
+      console.log("photoUrl:", postPhotoUrl)
+      setTogglePhotoInput(false)
+    } catch (error) {
+      console.error("Error uploading photo:", error)
+      throw error
     }
   }
 
@@ -76,10 +111,19 @@ function PostForm({ closeModalContainer }): React.ReactElement {
           placeholder="What's on your mind?"
           rows={5}
         />
+        {/* {photoFile && <div className="photo-preview">{photoFile}</div>} */}
       </div>
       <div className="post-form-add-on-banner">
         <p>Add to your post</p>
         {/* Place for icons and other add-ons */}
+        {togglePhotoInput && (
+          <span>
+            <input type="file" onChange={handleFileChange} />
+          </span>
+        )}
+        <span onClick={() => setTogglePhotoInput(true)}>
+          <TbLibraryPhoto />
+        </span>
       </div>
 
       {formErr ? (

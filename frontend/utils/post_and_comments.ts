@@ -4,12 +4,18 @@ import { Post, Like, Comment } from "./types"
 
 interface PostPayload {
   body: string
+  photo_url: string
 }
 
-export const createPost = async (postBody: string, profileId: string): Promise<Post> => {
+export const createPost = async (
+  postBody: string,
+  profileId: string,
+  postPhotoUrl: string
+): Promise<Post> => {
   try {
     const payload: PostPayload = {
       body: postBody,
+      photo_url: postPhotoUrl,
     }
 
     const response: AxiosResponse<Post> = await axios.post(

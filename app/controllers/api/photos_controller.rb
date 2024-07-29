@@ -49,6 +49,7 @@ class Api::PhotosController < ApplicationController
 
   def find_or_create_album
     album_name = params[:album_name] || 'Default'
+    # debugger
     @authenticated_user.albums.find_by(name: album_name) || @authenticated_user.albums.create(name: album_name)
   end
 end
