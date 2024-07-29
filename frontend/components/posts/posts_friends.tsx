@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
 import { fetchFriendships } from "../../utils/profile"
 import PostsFriend from "./posts_friend"
-import { Friendship } from "../../utils/types"
+import { FriendshipFriend } from "../../utils/types"
 import { useNavigate } from "react-router-dom"
 
 function PostsFriends(): React.ReactElement {
   const { profileUser } = useAuth()
-  const [friends, setFriends] = useState<Friendship[] | null>(null)
+  const [friends, setFriends] = useState<FriendshipFriend[] | null>(null)
   const navigate = useNavigate()
 
   useEffect(() => {

@@ -1904,7 +1904,10 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  cursor: pointer;
 }
+
+
 
 .friend-accepted-photo {
   align-items: stretch;

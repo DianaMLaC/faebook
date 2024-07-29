@@ -1,8 +1,14 @@
 import React from "react"
+import { useNavigate } from "react-router-dom"
 
 function FriendAccepted({ friend }): React.ReactElement {
+  const navigate = useNavigate()
+
+  const handleFriendClick = () => {
+    navigate(`/profile-page/${friend.id}/posts`)
+  }
   return (
-    <div className="friend-accepted-container">
+    <div className="friend-accepted-container" onClick={handleFriendClick}>
       <div className="friend-accepted-photo">
         {friend.profilePhotoUrl ? (
           <img className="friend-cover-" src={friend.profilePhotoUrl} alt={friend.displayName} />
