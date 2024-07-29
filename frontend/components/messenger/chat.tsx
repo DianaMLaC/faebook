@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Consumer } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { useAuth } from "../../context/auth"
 import { IoClose } from "react-icons/io5"
 import { FaMinus } from "react-icons/fa6"
@@ -8,23 +8,29 @@ import { BiSolidLike } from "react-icons/bi"
 import { RiEmojiStickerFill } from "react-icons/ri"
 import { HiMiniGif } from "react-icons/hi2"
 import { useCable } from "../../context/cable"
-import { Chat, Message } from "../../utils/types"
-import { Subscription } from "@rails/actioncable"
+import { Message } from "../../utils/types"
 import { createMessage } from "../../utils/chats"
 
 function ChatRoom({ onClose, chat }): React.ReactElement {
   const { profileUser, currentUser } = useAuth()
   const { CableApp } = useCable()
-  const [subscription, setSubscription] = useState<Subscription | null>(null)
   const [messages, setMessages] = useState<Message[] | null>(chat.messages)
   const [messageBody, setMessageBody] = useState("")
+  const [hasEffectRun, setHasEffectRun] = useState(false)
 
   useEffect(() => {
-    if (!chat) {
+    const chatContainer = document.querySelector(".chat-room")
+    if (chatContainer) {
+      chatContainer.scrollTop = chatContainer.scrollHeight
+    }
+  }, [messages])
+
+  useEffect(() => {
+    if (!chat || !CableApp.cable || hasEffectRun) {
       return
     }
-    // setMessages(chat.messages)
-    const subscription = CableApp.cable.subscriptions.create(
+    console.log("subscription created")
+    CableApp.cable.subscriptions.create(
       {
         channel: "MessagingChannel",
         chat_id: chat.id,
@@ -40,14 +46,11 @@ function ChatRoom({ onClose, chat }): React.ReactElement {
         },
       }
     )
-    setSubscription(subscription)
+    setHasEffectRun(true)
   }, [])
 
   const handleSendMessage = () => {
-    if (subscription && messageBody.trim() !== "") {
-      if (!currentUser) {
-        return
-      }
+    if (currentUser && messageBody.trim() !== "") {
       console.log("sending message from:", currentUser)
       // subscription.send({ message: message })
       createMessage(chat.id, messageBody, currentUser.id)

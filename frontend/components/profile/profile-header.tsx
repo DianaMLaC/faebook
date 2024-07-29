@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useEffect, MouseEvent } from "react"
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/auth"
-// import { useWebSocket } from "../../context/websockets"
 import PhotoUpload from "./photo-uploader"
 import ReactModal from "react-modal"
 import { FaPlus, FaCamera } from "react-icons/fa"
@@ -17,7 +16,6 @@ import { initiateChat } from "../../utils/chats"
 
 function ProfileHeader(): React.ReactElement {
   const { currentUser, setCurrentUser, profileUser } = useAuth()
-  // const { initiateChat } = useWebSocket()
   const [chat, setChat] = useState<Chat | null>(null)
   const [profileModalIsOpen, setProfileModalIsOpen] = useState<boolean>(false)
   const [coverModalIsOpen, setCoverModalIsOpen] = useState<boolean>(false)
