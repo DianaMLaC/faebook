@@ -2531,6 +2531,10 @@ align-self: center;
   box-sizing: border-box;
 }
 
+.no-posts-data span {
+  padding-top: 30px;
+}
+
 .posts-index-container ul {
   padding-inline-start: 0px;
   margin-block-start: 0;
