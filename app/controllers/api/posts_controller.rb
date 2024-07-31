@@ -5,7 +5,7 @@ class Api::PostsController < ApplicationController
 
   def index
     Rails.logger.info 'In PhotosController#index'
-    @posts = @user.profile_posts.includes(:likes, comments: { replies: :likes }).order(created_at: :desc)
+    @posts = @user.profile_posts.includes(:likes, :content, comments: { replies: :likes }).order(created_at: :desc)
 
     if @posts.empty?
       render json: { 'posts' => [] }
@@ -15,8 +15,7 @@ class Api::PostsController < ApplicationController
   end
 
   def create
-    @post = @user.profile_posts.new(body: params[:body])
-    @post.photo_url = params[:photo_url] if params[:photo_url]
+    @post = @user.profile_posts.new(post_params)
     @post.author_id = @authenticated_user.id
 
     if @post.save
@@ -29,7 +28,7 @@ class Api::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:body, :extra_content_id)
+    params.require(:post).permit(:body, :content_id, :content_type)
   end
 
   def set_user_profile

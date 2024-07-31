@@ -24,4 +24,6 @@ class Post < ApplicationRecord
            class_name: 'Comment'
 
   has_many :likes, as: :likeable
+
+  belongs_to :content, polymorphic: true, optional: true
 end

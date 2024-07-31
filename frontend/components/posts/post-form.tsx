@@ -17,17 +17,7 @@ function PostForm({ closeModalContainer }): React.ReactElement {
   const [postPhotoUrl, setPostPhotoUrl] = useState("")
   const [isUploading, setIsUploading] = useState(false)
   const [togglePhotoInput, setTogglePhotoInput] = useState(false)
-  const [activeButton, setActiveButton] = useState(false)
-
-  // useEffect(() => {
-  //   if (postBody.trim() && !togglePhotoInput) {
-  //     setActiveButton(true)
-  //   } else if (togglePhotoInput && postPhotoUrl) {
-  //     setActiveButton(true)
-  //   } else {
-  //     setActiveButton(false)
-  //   }
-  // }, [postBody, postPhotoUrl, togglePhotoInput])
+  // const [activeButton, setActiveButton] = useState(false)
 
   const isButtonActive = useCallback(() => {
     if (togglePhotoInput) {
@@ -69,7 +59,7 @@ function PostForm({ closeModalContainer }): React.ReactElement {
     console.log({ postPhotoUrl })
     try {
       if (profileUser) {
-        const postResponse = await createPost(postBody, profileUser.id, postPhotoUrl)
+        const postResponse = await createPost(postBody, profileUser.id)
         if (postResponse) {
           addPost(postResponse)
           setPostBody("")

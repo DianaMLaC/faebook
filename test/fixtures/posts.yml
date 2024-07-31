@@ -2,12 +2,13 @@
 #
 # Table name: posts
 #
-#  id         :uuid             not null, primary key
-#  body       :string           not null
-#  author_id  :uuid             not null
-#  profile_id :uuid             not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id               :uuid             not null, primary key
+#  body             :string           not null
+#  author_id        :uuid             not null
+#  profile_id       :uuid             not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  extra_content_id :uuid
 #
 
 # This model initially had no columns defined. If you add columns to the

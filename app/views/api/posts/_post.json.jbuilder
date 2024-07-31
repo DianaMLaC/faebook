@@ -7,8 +7,10 @@ json.author do
   json.profilePhotoUrl post.author.profile_photo_url
 end
 
-if post.photo_url.present?
-  json.photoUrl post.photo_url
+if post.content.present?
+    json.content do
+      json.partial! 'api/photos/photo', content: post.content
+    end
 end
 
 

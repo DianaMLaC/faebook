@@ -40,7 +40,7 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     user = create_and_sign_in_user(user_params)
 
     # Act
-    post "/api/users/#{user.id}/posts"
+    post "/api/users/#{user.id}/posts", params: { post: { body: '' } }
 
     # Assert
     assert_response 422
@@ -52,7 +52,7 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     user_full_name = user.first_name + ' ' + user.last_name
 
     # Act
-    post "/api/users/#{user.id}/posts", params: { body: post_body }
+    post "/api/users/#{user.id}/posts", params: { post: { body: post_body } }
 
     # Assert
     assert_response :success
@@ -74,7 +74,7 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     user = create_unauthenticated_user
 
     # Act
-    post "/api/users/#{user.id}/posts", params: { body: post_body }
+    post "/api/users/#{user.id}/posts", params: { post: { body: post_body } }
 
     # Assert
     assert_response 401
@@ -88,7 +88,7 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     create_friendship(user_one, user_two)
 
     # Act
-    post "/api/users/#{user_one.id}/posts", params: { body: post_body }
+    post "/api/users/#{user_one.id}/posts", params: { post: { body: post_body } }
 
     # Assert
     assert_response :success
@@ -104,7 +104,7 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     create_and_sign_in_user(user_params)
 
     # Act
-    post "/api/users/#{user_one.id}/posts", params: { body: post_body }
+    post "/api/users/#{user_one.id}/posts", params: { post: { body: post_body } }
 
     # Assert
     assert_response 422
@@ -115,8 +115,8 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
     # Arrange
     user = create_and_sign_in_user(user_params)
 
-    post "/api/users/#{user.id}/posts", params: { body: post_body }
-    post "/api/users/#{user.id}/posts", params: { body: post_body }
+    post "/api/users/#{user.id}/posts", params: { post: { body: post_body } }
+    post "/api/users/#{user.id}/posts", params: { post: { body: post_body } }
 
     get "/api/users/#{user.id}/posts"
     assert_response :success
@@ -133,8 +133,8 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
 
     create_friendship(user_one, user_two)
 
-    post "/api/users/#{user_one.id}/posts", params: { body: post_body }
-    post "/api/users/#{user_one.id}/posts", params: { body: post_body }
+    post "/api/users/#{user_one.id}/posts", params: { post: { body: post_body } }
+    post "/api/users/#{user_one.id}/posts", params: { post: { body: post_body } }
 
     # Act
     get "/api/users/#{user_one.id}/posts"
@@ -164,7 +164,7 @@ class Api::PostsControllerTest < ActionDispatch::IntegrationTest
   test 'when we retrieve posts with data, then we should correct attributes for each post object in the array' do
     # Arrange
     user = create_and_sign_in_user(user_params)
-    post "/api/users/#{user.id}/posts", params: { body: post_body }
+    post "/api/users/#{user.id}/posts", params: { post: { body: post_body } }
 
     # Act
     get "/api/users/#{user.id}/posts"

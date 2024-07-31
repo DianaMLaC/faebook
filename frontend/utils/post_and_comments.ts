@@ -4,18 +4,21 @@ import { Post, Like, Comment } from "./types"
 
 interface PostPayload {
   body: string
-  photo_url: string
+  content_id?: string
+  content_type?: string
 }
 
 export const createPost = async (
   postBody: string,
   profileId: string,
-  postPhotoUrl: string
+  contentId?: string,
+  contentType?: string
 ): Promise<Post> => {
   try {
     const payload: PostPayload = {
       body: postBody,
-      photo_url: postPhotoUrl,
+      content_id: contentId,
+      content_type: contentType,
     }
 
     const response: AxiosResponse<Post> = await axios.post(

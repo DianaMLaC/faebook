@@ -21,4 +21,5 @@ class Photo < ApplicationRecord
            class_name: 'Comment'
 
   has_many :likes, as: :likeable
+  has_many :posts, as: :content
 end
