@@ -28,6 +28,10 @@ class Api::PostsController < ApplicationController
 
   private
 
+  def post_params
+    params.require(:post).permit(:body, :extra_content_id)
+  end
+
   def set_user_profile
     @user = User.find_by(id: params[:user_id])
   end

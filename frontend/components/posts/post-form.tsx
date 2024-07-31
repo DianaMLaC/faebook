@@ -19,24 +19,31 @@ function PostForm({ closeModalContainer }): React.ReactElement {
   const [togglePhotoInput, setTogglePhotoInput] = useState(false)
   const [activeButton, setActiveButton] = useState(false)
 
-  useEffect(() => {
-    if (postBody.trim() && !togglePhotoInput) {
-      setActiveButton(true)
-    } else if (togglePhotoInput && postPhotoUrl) {
-      setActiveButton(true)
-    } else {
-      setActiveButton(false)
+  // useEffect(() => {
+  //   if (postBody.trim() && !togglePhotoInput) {
+  //     setActiveButton(true)
+  //   } else if (togglePhotoInput && postPhotoUrl) {
+  //     setActiveButton(true)
+  //   } else {
+  //     setActiveButton(false)
+  //   }
+  // }, [postBody, postPhotoUrl, togglePhotoInput])
+
+  const isButtonActive = useCallback(() => {
+    if (togglePhotoInput) {
+      return postPhotoUrl !== ""
     }
+    return postBody.trim() !== ""
   }, [postBody, postPhotoUrl, togglePhotoInput])
 
   const handleTextInput = (e) => {
     setPostBody(e.target.value)
-    setActiveButton(false)
+    // setActiveButton(false)
   }
 
   const handlePhotoInput = (e) => {
     setTogglePhotoInput(true)
-    setActiveButton(false)
+    // setActiveButton(false)
   }
 
   const handleFileUpload = async (e) => {
@@ -134,7 +141,7 @@ function PostForm({ closeModalContainer }): React.ReactElement {
         <div className="spinner">{isUploading && <CircleLoader loading={isUploading} />}</div>
       )}
 
-      <button type="submit" className="post-submit-button" disabled={!activeButton}>
+      <button type="submit" className="post-submit-button" disabled={!isButtonActive()}>
         Post
       </button>
     </form>
