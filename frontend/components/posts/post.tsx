@@ -94,13 +94,13 @@ function PostContainer({ post }): React.ReactElement {
       </header>
 
       <div className="post-content">{post.body}</div>
-      <div className="post-photo">
-        <img className="photo-cover-image" src={post.photoUrl} alt={post.body} />
-      </div>
+      {post.photoUrl && (
+        <div className="post-photo">
+          <img className="post-image" src={post.photoUrl} alt={post.body} />
+        </div>
+      )}
 
-      <div className="likes-container">
-        {likes.length > 0 && <Likes likes={likes} position={"post"} />}
-      </div>
+      {likes.length > 0 && <Likes likes={likes} position={"post"} />}
 
       <div className="post-action-buttons">
         <div className={likedByCurrentUser ? "liked" : "like"} onClick={handlePostLike}>

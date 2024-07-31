@@ -40,7 +40,6 @@ function PostForm({ closeModalContainer }): React.ReactElement {
   }
 
   const handleFileUpload = async (e) => {
-    // setOtherContentsSettled(false)
     const photoFile = e.target.files[0]
     const formData = new FormData()
     formData.append("photo[image]", photoFile)
@@ -50,7 +49,6 @@ function PostForm({ closeModalContainer }): React.ReactElement {
       const fileData = await uploadProfilePhoto(formData)
       console.log({ fileData })
       setPostPhotoUrl(fileData.url)
-      // setTogglePhotoInput(false)
       console.log("photoUrl:", postPhotoUrl)
     } catch (error) {
       console.error("Error uploading photo:", error)
@@ -58,25 +56,9 @@ function PostForm({ closeModalContainer }): React.ReactElement {
     }
   }
 
-  const submitButtonActive = () => {
-    if (!activeButton) {
-      if (togglePhotoInput && postPhotoUrl) {
-        setTogglePhotoInput(false)
-        setActiveButton(true)
-      }
-
-      if (postBody.trim()) {
-        setActiveButton(true)
-      }
-    }
-
-    return activeButton
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsUploading(true)
-
     console.log({ postPhotoUrl })
     try {
       if (profileUser) {
@@ -94,23 +76,6 @@ function PostForm({ closeModalContainer }): React.ReactElement {
       setIsUploading(false)
     }
   }
-
-  // const handlePhotoUpload = async () => {
-  //   const formData = new FormData()
-  //   formData.append("photo[image]", photoFile)
-  //   formData.append("album_name", "Timeline")
-
-  //   try {
-  //     const fileData = await uploadProfilePhoto(formData)
-  //     console.log({ fileData })
-  //     setPostPhotoUrl(fileData.url)
-  //     console.log("photoUrl:", postPhotoUrl)
-  //     setTogglePhotoInput(false)
-  //   } catch (error) {
-  //     console.error("Error uploading photo:", error)
-  //     throw error
-  //   }
-  // }
 
   return (
     <form className="post-form" onSubmit={handleSubmit}>

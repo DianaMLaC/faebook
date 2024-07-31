@@ -5,11 +5,13 @@ function Likes({ likes, position }): React.ReactElement {
   const likesNumber = likes.length
 
   return (
-    <div className="likes-details">
-      <div className="likes-details-icon">
-        <BiSolidLike />
+    <div className="likes-container">
+      <div className="likes-details">
+        <div className="likes-details-icon">
+          <BiSolidLike />
+        </div>
+        <span className="likes-details-count">{likesNumber}</span>
       </div>
-      <span className="likes-details-count">{likesNumber}</span>
     </div>
   )
 }
