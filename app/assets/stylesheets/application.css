@@ -1903,15 +1903,21 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 
 
 
-.al-friends-display {
+.all-friends-display {
   display: flex;
-  justify-content: start;
   flex-wrap: wrap;
+  justify-content: space-between; 
   list-style-type: none;
   padding: 0;
   margin: 0;
   padding-inline-start: 5px;
 
+}
+
+.all-friends-display li {
+  width: calc(50% - 8px); 
+  box-sizing: border-box; 
+  margin-bottom: 16px;
 }
 
 .friend-accepted-container {
