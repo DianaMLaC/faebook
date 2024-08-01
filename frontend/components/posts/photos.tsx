@@ -37,7 +37,10 @@ function Photos(): React.ReactElement {
         </div>
       </header>
       <ul className="photos-display-grid">
-        {photos && photos.map((photo) => <PhotoSmall key={photo.id} photo={photo} />)}
+        {photos &&
+          photos.map((photo) => (
+            <PhotoSmall key={photo.id} photo={photo} className="posts-photos" />
+          ))}
       </ul>
     </div>
   )

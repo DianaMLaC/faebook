@@ -22,8 +22,6 @@ function PhotosPage(): React.ReactElement {
         return <Albums />
       case "allPhotos":
         return <PhotosIndex />
-      // case "taggedPhotos":
-      //   return <Photos tagged />
       default:
         return null
     }

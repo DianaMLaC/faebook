@@ -60,7 +60,7 @@ function PostContainer({ post }): React.ReactElement {
   const renderPostContent = () => {
     switch (post.contentType) {
       case "Photo":
-        return <PhotoSmall photo={content} />
+        return <PhotoSmall photo={content!} className="post" />
       default:
         return <div>Post Content</div>
     }

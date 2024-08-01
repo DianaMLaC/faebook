@@ -19,8 +19,6 @@ function PhotosIndex(): React.ReactElement {
         const photosData = await fetchUserPhotos(profileUser.id)
         photosData.length > 0 ? setPhotos(photosData) : setPhotos(null)
       }
-      // console.log("photos-urls:", photosData)
-      // console.log(photosData.length)
     }
 
     fetchAllPhotosUrls()
@@ -29,7 +27,11 @@ function PhotosIndex(): React.ReactElement {
   return (
     <ul className="photos-list">
       {photos &&
-        photos.map((photo: Photo): React.ReactNode => <PhotoSmall key={photo.id} photo={photo} />)}
+        photos.map(
+          (photo: Photo): React.ReactNode => (
+            <PhotoSmall key={photo.id} photo={photo} className="index" />
+          )
+        )}
     </ul>
   )
 }

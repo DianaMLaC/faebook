@@ -8,7 +8,6 @@ import { FaTag } from "react-icons/fa6"
 import { useAuth } from "../../context/auth"
 import { Comment, Like, Photo } from "../../utils/types"
 import { fetchAlbum, fetchPhoto } from "../../utils/profile"
-import NavRight from "../user_profile_details/nav-right"
 import PhotoDetails from "./photo-details"
 import PhotosProvider from "../../context/photos"
 
@@ -68,11 +67,6 @@ function PhotoViewer(): React.ReactElement {
               >
                 <IoClose />
               </div>
-              {/* <img
-                className="photo-viewer-logo-img"
-                src="/assets/images/dark-logo.png"
-                alt="Facebook"
-              /> */}
             </div>
             <div className="main-header-right">
               <HiOutlineZoomIn />
@@ -100,12 +94,9 @@ function PhotoViewer(): React.ReactElement {
           </div>
         </div>
         <div className="photo-viewer-details">
-          {/* <div className="details-header">
-            <NavRight />
-          </div> */}
           <div className="photo-details">
             <PhotosProvider>
-              <PhotoDetails photo={photoDetails} /> {/* Integrate PhotoDetails */}
+              <PhotoDetails photo={photoDetails} />
             </PhotosProvider>
           </div>
         </div>
