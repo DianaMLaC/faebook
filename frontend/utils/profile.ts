@@ -23,6 +23,8 @@ export const fetchUserProfile = async (userId: string): Promise<User> => {
   }
 }
 
+/* PHOTOS */
+
 export const uploadProfilePhoto = async (formData: FormData): Promise<Photo> => {
   try {
     const response = await axios.post("http://localhost:3000/api/photos", formData)

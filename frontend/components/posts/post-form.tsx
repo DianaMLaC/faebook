@@ -14,17 +14,17 @@ function PostForm({ closeModalContainer }): React.ReactElement {
   const { currentUser, profileUser } = useAuth()
   const [postBody, setPostBody] = useState("")
   const [formErr, setFormErr] = useState("")
-  const [postPhotoUrl, setPostPhotoUrl] = useState("")
+  const [contentType, setContentType] = useState("")
+  const [contentId, setContentId] = useState("")
   const [isUploading, setIsUploading] = useState(false)
   const [togglePhotoInput, setTogglePhotoInput] = useState(false)
-  // const [activeButton, setActiveButton] = useState(false)
 
   const isButtonActive = useCallback(() => {
     if (togglePhotoInput) {
-      return postPhotoUrl !== ""
+      return contentId !== ""
     }
     return postBody.trim() !== ""
-  }, [postBody, postPhotoUrl, togglePhotoInput])
+  }, [postBody, contentType, contentId])
 
   const handleTextInput = (e) => {
     setPostBody(e.target.value)
@@ -37,6 +37,7 @@ function PostForm({ closeModalContainer }): React.ReactElement {
   }
 
   const handleFileUpload = async (e) => {
+    setContentType("Photo")
     const photoFile = e.target.files[0]
     const formData = new FormData()
     formData.append("photo[image]", photoFile)
@@ -45,8 +46,7 @@ function PostForm({ closeModalContainer }): React.ReactElement {
     try {
       const fileData = await uploadProfilePhoto(formData)
       console.log({ fileData })
-      setPostPhotoUrl(fileData.url)
-      console.log("photoUrl:", postPhotoUrl)
+      setContentId(fileData.id)
     } catch (error) {
       console.error("Error uploading photo:", error)
       throw error
@@ -56,14 +56,14 @@ function PostForm({ closeModalContainer }): React.ReactElement {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsUploading(true)
-    console.log({ postPhotoUrl })
+    // console.log({ postPhotoUrl })
     try {
       if (profileUser) {
-        const postResponse = await createPost(postBody, profileUser.id)
+        const postResponse = contentId
+          ? await createPost(postBody, profileUser.id, contentId, contentType)
+          : await createPost(postBody, profileUser.id)
         if (postResponse) {
           addPost(postResponse)
-          setPostBody("")
-          setPostPhotoUrl("")
           closeModalContainer()
         }
       }

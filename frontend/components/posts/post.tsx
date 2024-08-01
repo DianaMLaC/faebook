@@ -10,12 +10,17 @@ import Comments from "../comments/comments_index"
 import CommentForm from "../comments/comment_form"
 import { formatPostDate } from "../../utils/helpers"
 import { useNavigate } from "react-router-dom"
+import { fetchPhoto } from "../../utils/profile"
+import { Photo } from "../../utils/types"
+import PhotoViewer from "../photos/photo-viewer"
+import PhotoSmall from "../photos/photo-ts"
 
 function PostContainer({ post }): React.ReactElement {
   const navigate = useNavigate()
   const { currentUser } = useAuth()
   const [likes, setLikes] = useState(post.likes || [])
   const { addLikeToPost, deleteLikeFromPost, addCommentToPost } = usePosts()
+  const [content, setContent] = useState<Photo | null>(null)
   const [likedByCurrentUser, setLikedByCurrentUser] = useState(
     post.likes.some((like) => like.liker.id === currentUser?.id)
   )
@@ -25,9 +30,25 @@ function PostContainer({ post }): React.ReactElement {
   const postTimeStamp = formatPostDate(post.createdAt)
 
   useEffect(() => {
+    if (!post.contentType) {
+      return
+    }
+    async function fetchPostContent() {
+      if ((post.contentType = "Photo")) {
+        const contentData = await fetchPhoto(post.author.id, post.contentId)
+        if (contentData) {
+          setContent(contentData)
+        }
+      }
+    }
+
+    fetchPostContent()
+  }, [post.contentType])
+
+  useEffect(() => {
+    console.log(post)
     async function fetchCommentsData() {
       const commentsData = await fetchTopLevelComments(post.id, "post")
-      // console.log("Fetched comments data:", commentsData)
       setComments(commentsData.comments)
     }
 
@@ -35,6 +56,15 @@ function PostContainer({ post }): React.ReactElement {
     setLikedByCurrentUser(post.likes.some((like) => like.liker.id === currentUser?.id))
     setLikes(post.likes)
   }, [post.id])
+
+  const renderPostContent = () => {
+    switch (post.contentType) {
+      case "Photo":
+        return <PhotoSmall photo={content} />
+      default:
+        return <div>Post Content</div>
+    }
+  }
 
   const handlePostLike = async (e) => {
     e.preventDefault()
@@ -93,13 +123,8 @@ function PostContainer({ post }): React.ReactElement {
         <div className="more-button">...</div>
       </header>
 
-      <div className="post-content">{post.body}</div>
-      {post.photoUrl && (
-        <div className="post-photo">
-          <img className="post-image" src={post.photoUrl} alt={post.body} />
-        </div>
-      )}
-
+      <div className="post-body">{post.body}</div>
+      {content && <div className="post-content">{renderPostContent()}</div>}
       {likes.length > 0 && <Likes likes={likes} position={"post"} />}
 
       <div className="post-action-buttons">

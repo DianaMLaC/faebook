@@ -75,6 +75,7 @@ export interface Post {
   body: string
   photoUrl: string
   createdAt: string
+  content?: Photo
   author: {
     id: string
     displayName: string

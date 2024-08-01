@@ -2330,7 +2330,7 @@ ul.friends-display-grid {
   padding-right: 6px;
 }
 
-.post-content, .photo-description {
+.post-body, .photo-description {
   font-size: 20px;
   font-weight: 400;
   padding-left: 16px;
@@ -2338,21 +2338,11 @@ ul.friends-display-grid {
   padding-bottom: 6px;
 }
 
-.post-photo {
-  width: 100%;
-  overflow: hidden;
-}
-
-.post-image {
+.post-content {
   width: 100%;
   height: auto;
+
 }
-/* .post-image {
-  object-fit: cover;
-  overflow-x: clip;
-  overflow-y: clip;
-  overflow-clip-margin: content-box;
-} */
 
 
 .post-action-buttons, .photo-action-buttons {
