@@ -75,7 +75,9 @@ export interface Post {
   body: string
   photoUrl: string
   createdAt: string
-  content?: Photo
+  // content?: Photo
+  contentType?: string
+  contentId?: string
   author: {
     id: string
     displayName: string
@@ -83,6 +85,14 @@ export interface Post {
   }
   likes: Like[]
   comments: Comment[]
+}
+
+export interface Url {
+  id: string
+  title: string
+  description: string
+  image: string
+  url: string
 }
 
 export interface Photo {

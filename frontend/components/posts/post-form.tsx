@@ -27,7 +27,7 @@ function PostForm({ closeModalContainer }): React.ReactElement {
   const isButtonActive = useCallback(() => {
     if (togglePhotoInput) {
       return contentId !== ""
-    } else if (toggleUrlInputBar) {
+    } else if (acceptUrl) {
       return contentId !== ""
     }
     return postBody.trim() !== ""
@@ -47,7 +47,7 @@ function PostForm({ closeModalContainer }): React.ReactElement {
 
   const setUrlInput = async (e) => {
     setFormErr("")
-    setContentType("Url")
+    setContentType("PostUrl")
     setUrl(e.target.value.trim())
   }
 
@@ -62,15 +62,15 @@ function PostForm({ closeModalContainer }): React.ReactElement {
     try {
       const response = await postUrl(url)
       if (response) {
+        setContentId(response.id)
+      }
+      if (response) {
         setUrl("")
         setToggleUrlInputBar(false)
       }
     } catch (err) {
       setFormErr(err.message)
     }
-
-    // here is where I would use LinkPreview to get the metadata from the url and save it to db
-    // console.log({UrlResponse})
   }
 
   const handleFileUpload = async (e) => {
@@ -93,13 +93,13 @@ function PostForm({ closeModalContainer }): React.ReactElement {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsUploading(true)
-    // console.log({ postPhotoUrl })
     try {
       if (profileUser) {
         const postResponse = contentId
           ? await createPost(postBody, profileUser.id, contentId, contentType)
           : await createPost(postBody, profileUser.id)
         if (postResponse) {
+          console.log({ postResponse })
           addPost(postResponse)
           closeModalContainer()
         }

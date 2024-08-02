@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios"
 import { customHeaders, checkResponse } from "./authentication"
-import { Post, Like, Comment } from "./types"
+import { Post, Like, Comment, Url } from "./types"
 
 interface PostPayload {
   body: string
@@ -20,7 +20,7 @@ const linkPreviewHeaders = {
   "X-Linkpreview-Api-Key": LINK_PREVIEW_API_KEY,
 }
 
-export const postUrl = async (url: string) => {
+export const postUrl = async (url: string): Promise<Post> => {
   try {
     const encodedUrl = encodeURIComponent(url)
     const linkPreviewResponse = await axios.get(
@@ -28,20 +28,37 @@ export const postUrl = async (url: string) => {
     )
     await checkResponse(linkPreviewResponse)
     console.log(linkPreviewResponse.data)
-    return linkPreviewResponse.data
-    // const urlPayload: UrlPayload = {
-    //   title: linkPreviewResponse.data.title,
-    //   description: linkPreviewResponse.data.description,
-    //   image: linkPreviewResponse.data.image,
-    //   url: linkPreviewResponse.data.url
-    // }
-    // const urlResponse = await axios.post("http://localhost:3000/api/urls", urlPayload, {
-    //   headers: customHeaders,
-    // })
-    // await checkResponse(urlResponse)
-    // return urlResponse.data
+    // return linkPreviewResponse.data
+    const urlPayload: UrlPayload = {
+      title: linkPreviewResponse.data.title,
+      description: linkPreviewResponse.data.description,
+      image: linkPreviewResponse.data.image,
+      url: linkPreviewResponse.data.url,
+    }
+    const urlResponse = await axios.post("http://localhost:3000/api/post_urls", urlPayload, {
+      headers: customHeaders,
+    })
+    await checkResponse(urlResponse)
+    console.log(urlResponse.data)
+    return urlResponse.data
   } catch (err) {
     console.error("Error with response from LinkPreview API", err.message)
+    throw err
+  }
+}
+
+export const fetchUrl = async (postId: string, urlId: string): Promise<Url> => {
+  try {
+    const urlResponse = await axios.get(
+      `http://localhost:3000/api/posts/${postId}/post_urls/${urlId}`,
+      {
+        headers: customHeaders,
+      }
+    )
+    await checkResponse(urlResponse)
+    return urlResponse.data
+  } catch (err) {
+    console.error("Error with response from fetching post_url API", err.message)
     throw err
   }
 }

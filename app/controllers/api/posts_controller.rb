@@ -4,7 +4,7 @@ class Api::PostsController < ApplicationController
   before_action :ensure_relation, only: %i[create]
 
   def index
-    @posts = @user.profile_posts.includes(:likes, :content, comments: { replies: :likes }).order(created_at: :desc)
+    @posts = @user.profile_posts.includes(:content, :likes, comments: { replies: :likes }).order(created_at: :desc)
 
     if @posts.empty?
       render json: { 'posts' => [] }
@@ -18,6 +18,7 @@ class Api::PostsController < ApplicationController
     @post.author_id = @authenticated_user.id
 
     if @post.save
+      set_post_content if @post.content_type.present?
       render :create
     else
       render json: @post.errors, status: 422
@@ -28,6 +29,10 @@ class Api::PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:body, :content_id, :content_type)
+  end
+
+  def set_post_content
+    @post.content = @post.content_type.constantize.find_by(id: @post.content_id) if @post.content_type.present?
   end
 
   def set_user_profile
