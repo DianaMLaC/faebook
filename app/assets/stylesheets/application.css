@@ -2638,6 +2638,7 @@ align-self: center;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  cursor: not-allowed;
 }
 
 .post-form-visibility span {

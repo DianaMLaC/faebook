@@ -2,13 +2,12 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 import { Photo } from "../../utils/types"
 
-function PhotoSmall({
-  photo,
-  className,
-}: {
+interface PhotoSmallProps {
   photo: Photo
-  className?: string
-}): React.ReactElement {
+  className: string
+}
+
+function PhotoSmall({ photo, className }: PhotoSmallProps): React.ReactElement {
   const navigate = useNavigate()
 
   const handleClick = () => {

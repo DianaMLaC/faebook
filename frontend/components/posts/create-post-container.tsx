@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
 import ReactModal from "react-modal"
-import PostForm from "./post-form"
+// import PostForm from "./post-form"
 import { useAuth } from "../../context/auth"
+import NewPost from "./new-post"
 
 function CreatePost(): React.ReactElement {
   const { currentUser } = useAuth()
@@ -42,7 +43,7 @@ function CreatePost(): React.ReactElement {
           contentLabel="create-post"
           className="Modal"
         >
-          <PostForm closeModalContainer={closeModal} />
+          <NewPost closeModalContainer={closeModal} />
         </ReactModal>
       </div>
       <div className="create-post-bottom">
