@@ -4,7 +4,6 @@ class Api::PostsController < ApplicationController
   before_action :ensure_relation, only: %i[create]
 
   def index
-    Rails.logger.info 'In PhotosController#index'
     @posts = @user.profile_posts.includes(:likes, :content, comments: { replies: :likes }).order(created_at: :desc)
 
     if @posts.empty?

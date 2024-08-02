@@ -23,8 +23,10 @@ Rails.application.routes.draw do
     end
 
     resources :photos, only: [:create]
+    resources :post_urls, only: [:create]
 
     resources :posts, only: [] do
+      resources :post_urls, only: [:show]
       resources :comments, only: %i[create index]
       resources :likes, only: [:index] do
         post 'toggle_like', on: :collection
