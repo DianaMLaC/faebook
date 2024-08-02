@@ -8,6 +8,44 @@ interface PostPayload {
   content_type?: string
 }
 
+interface UrlPayload {
+  title: string
+  description: string
+  image: string
+  url: string
+}
+
+const LINK_PREVIEW_API_KEY = "9ed80b03c174426ecaab34e1ad344ad8"
+const linkPreviewHeaders = {
+  "X-Linkpreview-Api-Key": LINK_PREVIEW_API_KEY,
+}
+
+export const postUrl = async (url: string) => {
+  try {
+    const encodedUrl = encodeURIComponent(url)
+    const linkPreviewResponse = await axios.get(
+      `https://api.linkpreview.net/?key=${LINK_PREVIEW_API_KEY}&q=${encodedUrl}`
+    )
+    await checkResponse(linkPreviewResponse)
+    console.log(linkPreviewResponse.data)
+    return linkPreviewResponse.data
+    // const urlPayload: UrlPayload = {
+    //   title: linkPreviewResponse.data.title,
+    //   description: linkPreviewResponse.data.description,
+    //   image: linkPreviewResponse.data.image,
+    //   url: linkPreviewResponse.data.url
+    // }
+    // const urlResponse = await axios.post("http://localhost:3000/api/urls", urlPayload, {
+    //   headers: customHeaders,
+    // })
+    // await checkResponse(urlResponse)
+    // return urlResponse.data
+  } catch (err) {
+    console.error("Error with response from LinkPreview API", err.message)
+    throw err
+  }
+}
+
 export const createPost = async (
   postBody: string,
   profileId: string,

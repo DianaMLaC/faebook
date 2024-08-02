@@ -1,13 +1,15 @@
 import React, { useCallback, useState, useEffect } from "react"
+import { createPost, postUrl } from "../../utils/post_and_comments"
+import { uploadProfilePhoto } from "../../utils/profile"
+import { BiCheckboxChecked, BiSolidCheckboxChecked } from "react-icons/bi"
 import { useAuth } from "../../context/auth"
 import { usePosts } from "../../context/posts"
 import { FaUserFriends } from "react-icons/fa"
-import { createPost } from "../../utils/post_and_comments"
+import { FaLink } from "react-icons/fa6"
 import { CircleLoader } from "react-spinners"
 import { RxCross2 } from "react-icons/rx"
 import { IoMdArrowDropdown } from "react-icons/io"
 import { TbLibraryPhoto } from "react-icons/tb"
-import { uploadProfilePhoto } from "../../utils/profile"
 
 function PostForm({ closeModalContainer }): React.ReactElement {
   const { addPost } = usePosts()
@@ -18,9 +20,14 @@ function PostForm({ closeModalContainer }): React.ReactElement {
   const [contentId, setContentId] = useState("")
   const [isUploading, setIsUploading] = useState(false)
   const [togglePhotoInput, setTogglePhotoInput] = useState(false)
+  const [toggleUrlInputBar, setToggleUrlInputBar] = useState(false)
+  const [acceptUrl, setAcceptUrl] = useState(false)
+  const [url, setUrl] = useState("")
 
   const isButtonActive = useCallback(() => {
     if (togglePhotoInput) {
+      return contentId !== ""
+    } else if (toggleUrlInputBar) {
       return contentId !== ""
     }
     return postBody.trim() !== ""
@@ -28,12 +35,42 @@ function PostForm({ closeModalContainer }): React.ReactElement {
 
   const handleTextInput = (e) => {
     setPostBody(e.target.value)
-    // setActiveButton(false)
   }
 
   const handlePhotoInput = (e) => {
     setTogglePhotoInput(true)
-    // setActiveButton(false)
+  }
+
+  const handleUrlInput = (e) => {
+    setToggleUrlInputBar(true)
+  }
+
+  const setUrlInput = async (e) => {
+    setFormErr("")
+    setContentType("Url")
+    setUrl(e.target.value.trim())
+  }
+
+  const handleUrlUpload = async (e) => {
+    setAcceptUrl(true)
+    if (url === "") {
+      setAcceptUrl(false)
+      setFormErr("Url can't be blank")
+      return
+    }
+
+    try {
+      const response = await postUrl(url)
+      if (response) {
+        setUrl("")
+        setToggleUrlInputBar(false)
+      }
+    } catch (err) {
+      setFormErr(err.message)
+    }
+
+    // here is where I would use LinkPreview to get the metadata from the url and save it to db
+    // console.log({UrlResponse})
   }
 
   const handleFileUpload = async (e) => {
@@ -114,12 +151,29 @@ function PostForm({ closeModalContainer }): React.ReactElement {
       </div>
       <div className="post-form-add-on-banner">
         <p>Add to your post</p>
-        {/* Place for icons and other add-ons */}
+        {toggleUrlInputBar && (
+          <span>
+            <input type="text" onChange={setUrlInput} />
+            {!acceptUrl ? (
+              <span onClick={handleUrlUpload}>
+                <BiCheckboxChecked />
+              </span>
+            ) : (
+              <span>
+                <BiSolidCheckboxChecked />
+              </span>
+            )}
+          </span>
+        )}
+
         {togglePhotoInput && (
           <span>
             <input type="file" onChange={handleFileUpload} />
           </span>
         )}
+        <span onClick={handleUrlInput}>
+          <FaLink />
+        </span>
         <span onClick={handlePhotoInput}>
           <TbLibraryPhoto />
         </span>
