@@ -36,6 +36,8 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+  text-decoration: none;
+
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -940,7 +942,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   align-items: center;
 }
 
-.photo-uploader input[type="file"] {
+.photo-uploader input[type="file"], .post-content-input input[type="file"] {
   border-radius: 5px;
   padding: 6px;
 }
@@ -952,7 +954,8 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   background: var(--secondary-color);
 }
 
-.photo-uploader input[type="file"]::-webkit-file-upload-button {
+.photo-uploader input[type="file"]::-webkit-file-upload-button,
+.post-content-input input[type="file"]::-webkit-file-upload-button {
   border-radius: 5px;
   border: none;
   padding: 8px 15px;
@@ -961,7 +964,8 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   cursor: pointer;
 }
 
-.photo-uploader input[type="file"]::-webkit-file-upload-button:hover, .photo-uploader button:hover {
+.photo-uploader input[type="file"]::-webkit-file-upload-button:hover, .photo-uploader button:hover,
+.post-content-input input[type="file"]::-webkit-file-upload-button:hover {
   background: var(--primary-color);
   color: var(--text-contrast);
 }
@@ -2375,6 +2379,10 @@ ul.friends-display-grid {
   overflow: hidden;
 }
 
+.post-url-container {
+  color: var(--text-color);
+}
+
 .post-image, .post-url-image  {
   margin-top: 10px;
   width: 100%;
@@ -2661,9 +2669,15 @@ align-self: center;
   margin-right: 4px;
 }
 
+.post-form-body {
+  min-height: 400px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .post-form-body-input {
   width: auto;
-  min-height: 200px; 
   display: flex;
   align-items: flex-start; 
   margin: 10px;
@@ -2708,17 +2722,110 @@ align-self: center;
   font-size: 14px;
   font-weight: 600;
   padding: 8px;
+  margin-bottom: 4px;
 }
 
 .post-form-add-on-banner p {
   padding: 10px;
 }
 
-.post-form-add-on-banner span {
+.post-url-button, .post-photo-button {
   font-size: 28px;
   padding-right: 10px;
   cursor: pointer;
 }
+
+.post-url-button:hover, .post-photo-button:hover {
+  font-size: 28px;
+  padding-right: 10px;
+  cursor: pointer;
+  color: var(--primary-button-hover);
+}
+
+.choose-input {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.post-content-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.post-url-input {
+  display: flex;
+  align-items: center;
+}
+
+.post-url-check {
+  display:flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.post-content-input svg {
+  font-size: 26px
+}
+
+.post-url-accepted {
+  color: var(--accent-color);
+}
+
+.close-post-input {
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.close-post-input:hover {
+  background-color: var(--secondary-button-background);
+  border-radius: 50%;
+  padding: 4px
+}
+
+.post-content-preview {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 400px;
+  width: 100%;
+  padding: 10px 15px;
+}
+
+.post-content-preview img {
+  height: inherit;
+  width: 100%;
+  object-fit: contain;
+  overflow: hidden;
+  display: block;
+}
+
+.post-url-preview-details {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--shade-background-color);
+  padding: 16px 12px;
+  font-size: 13px;
+  max-height: 48px;
+  overflow: hidden;
+}
+
+.form-errors {
+  padding: 10px 12px;
+  margin-left: 15px;
+  margin-right: 15px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-style: italic;
+  color: crimson;
+  background-color: #FFE6E6FF;
+  text-align: center;
+}
+
+
 
 .post-submit-button {
   display: flex;
@@ -2729,6 +2836,7 @@ align-self: center;
   font-weight: 600;
   font-weight: 600px;
   color: var(--secondary-color);
+  margin-top: 4px;
   margin-left: 16px;
   margin-right: 16px;
   margin-bottom: 16px;

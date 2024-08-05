@@ -9,12 +9,17 @@ import { BiCheckboxChecked, BiSolidCheckboxChecked } from "react-icons/bi"
 import { createPost, postUrl } from "../../utils/post_and_comments"
 import { uploadProfilePhoto } from "../../utils/profile"
 import { usePosts } from "../../context/posts"
+import { Photo, Url } from "../../utils/types"
+import PostContainer from "./post"
+import { redirect } from "react-router-dom"
 
 function NewPost({ closeModalContainer }): React.ReactElement {
   const { currentUser, profileUser } = useAuth()
   const { addPost } = usePosts()
   const [formErr, setFormErr] = useState("")
   const [postBody, setPostBody] = useState("")
+  const [postUrlPreview, setPostUrlPreview] = useState<Url | null>(null)
+  const [postPhotoPreview, setPostPhotoPreview] = useState<Photo | null>(null)
   const [postContentType, setPostContentType] = useState("")
   const [postContentId, setPostContentId] = useState("")
   const [toggleInput, setToggleInput] = useState(false)
@@ -55,8 +60,9 @@ function NewPost({ closeModalContainer }): React.ReactElement {
     try {
       const response = await postUrl(url)
       if (response) {
+        setPostUrlPreview(response)
         setPostContentId(response.id)
-        setFormErr("Url attached to post") // to be replaced by preview
+        // setFormErr("Url attached to post") // to be replaced by preview
       }
       if (response) {
         setUrl("")
@@ -82,41 +88,6 @@ function NewPost({ closeModalContainer }): React.ReactElement {
     } catch (error) {
       console.error("Error uploading photo:", error)
       throw error
-    }
-  }
-
-  const renderPostContentInput = (content: string) => {
-    switch (content) {
-      case "Photo":
-        return (
-          <div>
-            <input type="file" onChange={handleFileUpload} />
-            <div className="close-post-input" onClick={closePostInput}>
-              <RxCross2 />
-            </div>
-          </div>
-        )
-      case "PostUrl":
-        return (
-          <div>
-            <input type="url" onChange={setUrlInput} />
-            {!acceptUrl ? (
-              <div onClick={handleUrlUpload}>
-                <BiCheckboxChecked />
-                <p>Check Url</p>
-              </div>
-            ) : (
-              <div>
-                <BiSolidCheckboxChecked />
-              </div>
-            )}
-            <div className="close-post-input" onClick={closePostInput}>
-              <RxCross2 />
-            </div>
-          </div>
-        )
-      default:
-        return <p></p>
     }
   }
 
@@ -146,6 +117,96 @@ function NewPost({ closeModalContainer }): React.ReactElement {
 
     return postBody.trim() !== ""
   }, [postBody, postContentId])
+
+  const renderPostContentInput = (content: string) => {
+    switch (content) {
+      case "Photo":
+        return (
+          <div className="post-content-input">
+            <input type="file" onChange={handleFileUpload} />
+            <div className="close-post-input" onClick={closePostInput}>
+              <RxCross2 />
+            </div>
+          </div>
+        )
+      case "PostUrl":
+        return (
+          <div className="post-content-input">
+            <div className="post-url-input">
+              <input type="url" onChange={setUrlInput} placeholder="Enter URL here" />
+              {!acceptUrl ? (
+                <div className="post-url-check" onClick={handleUrlUpload}>
+                  <BiCheckboxChecked />
+                  {/* <span>Check Url</span> */}
+                </div>
+              ) : (
+                <div className="post-url-accepted">
+                  <BiSolidCheckboxChecked />
+                </div>
+              )}
+            </div>
+            <div className="close-post-input" onClick={closePostInput}>
+              <RxCross2 />
+            </div>
+          </div>
+        )
+      default:
+        return <p></p>
+    }
+  }
+
+  const renderPostAddContentBanner = () => {
+    return (
+      <div className="post-form-add-on-banner">
+        {!toggleInput ? (
+          <div className="choose-input">
+            <p>Add to your post</p>
+            <span>
+              <span className="post-url-button" onClick={handleUrlClick}>
+                <FaLink />
+              </span>
+              <span className="post-photo-button" onClick={handlePhotoClick}>
+                <TbLibraryPhoto />
+              </span>
+            </span>
+          </div>
+        ) : (
+          renderPostContentInput(postContentType)
+        )}
+      </div>
+    )
+  }
+
+  const renderPreview = () => {
+    switch (postContentType) {
+      case "PostUrl":
+        if (!postUrlPreview) {
+          return
+        }
+        return (
+          <div className="post-content-preview">
+            <img src={postUrlPreview.image} alt={postUrlPreview.title} />
+            <div className="post-url-preview-details">
+              <div className="post-url-title">{postUrlPreview.title}</div>
+              <div className="post-url-description">{postUrlPreview.description}</div>
+            </div>
+          </div>
+        )
+      case "Photo":
+        if (!postPhotoPreview) {
+          return
+        }
+        return (
+          <div className="post-content-preview">
+            <img
+              className="photo-cover-image"
+              src={postPhotoPreview.url}
+              alt={postPhotoPreview.description}
+            />
+          </div>
+        )
+    }
+  }
 
   return (
     <form className="post-form" onSubmit={handleSubmit}>
@@ -177,35 +238,19 @@ function NewPost({ closeModalContainer }): React.ReactElement {
         </div>
       </div>
 
-      <div className="post-form-body-input">
-        <textarea
-          value={postBody}
-          onChange={(e) => {
-            setPostBody(e.target.value)
-          }}
-          placeholder={placeholder}
-          rows={5}
-        />
-      </div>
-
-      {!postContentId && (
-        <div className="post-form-add-on-banner">
-          {!toggleInput ? (
-            <div className="choose-input">
-              <p>Add to your post</p>
-              <span onClick={handleUrlClick}>
-                <FaLink />
-              </span>
-              <span onClick={handlePhotoClick}>
-                <TbLibraryPhoto />
-              </span>
-            </div>
-          ) : (
-            renderPostContentInput(postContentType)
-          )}
+      <div className="post-form-body">
+        <div className="post-form-body-input">
+          <textarea
+            value={postBody}
+            onChange={(e) => {
+              setPostBody(e.target.value)
+            }}
+            placeholder={placeholder}
+          />
         </div>
-      )}
 
+        {postContentId ? renderPreview() : renderPostAddContentBanner()}
+      </div>
       {formErr && <div className="form-errors">{formErr}</div>}
 
       <button type="submit" className="post-submit-button" disabled={!isButtonActive()}>

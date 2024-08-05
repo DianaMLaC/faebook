@@ -20,7 +20,7 @@ const linkPreviewHeaders = {
   "X-Linkpreview-Api-Key": LINK_PREVIEW_API_KEY,
 }
 
-export const postUrl = async (url: string): Promise<Post> => {
+export const postUrl = async (url: string): Promise<Url> => {
   try {
     const encodedUrl = encodeURIComponent(url)
     const linkPreviewResponse = await axios.get(
