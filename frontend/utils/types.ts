@@ -73,11 +73,10 @@ export interface Comment {
 export interface Post {
   id: string
   body: string
-  photoUrl: string
   createdAt: string
-  // content?: Photo
   contentType?: string
   contentId?: string
+  content?: Photo | Url
   author: {
     id: string
     displayName: string

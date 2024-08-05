@@ -29,27 +29,6 @@ function PostContainer({ post }): React.ReactElement {
 
   const postTimeStamp = formatPostDate(post.createdAt)
 
-  // useEffect(() => {
-  //   if (!post.contentType) {
-  //     return
-  //   }
-  //   async function fetchPostContent() {
-  //     if ((post.contentType = "Photo")) {
-  //       const contentData = await fetchPhoto(post.author.id, post.contentId)
-  //       if (contentData) {
-  //         setContent(contentData)
-  //       }
-  //     } else if ((post.contentType = "Url")) {
-  //       const contentData = await fetchUrl(post.author.id, post.contentId)
-  //       if (contentData) {
-  //         setContent(contentData)
-  //       }
-  //     }
-  //   }
-
-  //   fetchPostContent()
-  // }, [post.contentType])
-
   useEffect(() => {
     console.log(post)
     async function fetchCommentsData() {
