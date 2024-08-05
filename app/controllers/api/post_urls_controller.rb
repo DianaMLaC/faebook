@@ -3,8 +3,8 @@ class Api::PostUrlsController < ApplicationController
   before_action :must_be_authorized
 
   def create
-    @post_url = PostUrl.new(url_params)
-    if @post_url.save
+    @post_url = find_or_create_url
+    if @post_url
       render :create
     else
       render json: @post_url.errors, status: 422
@@ -21,6 +21,14 @@ class Api::PostUrlsController < ApplicationController
   end
 
   private
+
+  def find_or_create_url
+    post_url = PostUrl.find_by(url: params[:url])
+
+    post_url ||= PostUrl.create(url_params)
+
+    post_url
+  end
 
   def url_params
     params.require(:post_url).permit(:title, :description, :image, :url)
