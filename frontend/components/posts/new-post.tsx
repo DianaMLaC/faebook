@@ -40,6 +40,7 @@ function NewPost({ closeModalContainer }): React.ReactElement {
   }
 
   const closePostInput = () => {
+    setFormErr("")
     setToggleInput(false)
     setPlaceholder("What's on your mind?")
   }
@@ -70,7 +71,7 @@ function NewPost({ closeModalContainer }): React.ReactElement {
       }
     } catch (err) {
       setAcceptUrl(false)
-      setFormErr(err.message)
+      setFormErr("Error in attaching URL to post")
     }
   }
 
@@ -84,9 +85,11 @@ function NewPost({ closeModalContainer }): React.ReactElement {
       const fileData = await uploadProfilePhoto(formData)
       console.log({ fileData })
       setPostContentId(fileData.id)
-      setFormErr("Photo attached to post") // to be replaced by preview
+      setPostPhotoPreview(fileData)
     } catch (error) {
       console.error("Error uploading photo:", error)
+      setFormErr("Error in attaching photo to post")
+      setToggleInput(true)
       throw error
     }
   }
@@ -113,6 +116,9 @@ function NewPost({ closeModalContainer }): React.ReactElement {
   const isButtonActive = useCallback((): boolean => {
     if (postContentType && postContentId) {
       return postBody.trim() !== ""
+    }
+    if (postContentType && !postContentId) {
+      return false
     }
 
     return postBody.trim() !== ""

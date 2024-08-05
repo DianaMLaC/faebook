@@ -1,3 +1,1 @@
-json.id photo.id
-json.url photo.photo_url
-json.description photo.description
+json.partial! 'api/photos/photo', photo: @photo

@@ -26,16 +26,16 @@ class Api::PhotosController < ApplicationController
 
   def create
     album = find_or_create_album
-    photo = album.photos.build(photo_params)
+    @photo = album.photos.build(photo_params)
     # debugger
 
-    if photo.save
-      if photo.image.attached?
-        photo.update(photo_url: url_for(photo.image))
-        photo.save
-        album.update(cover_photo_url: url_for(photo.image))
+    if @photo.save
+      if @photo.image.attached?
+        @photo.update(photo_url: url_for(@photo.image))
+        @photo.save
+        album.update(cover_photo_url: url_for(@photo.image))
       end
-      render json: { id: photo.id, albumName: album.name, url: photo.photo_url }, status: 200
+      render :create
     else
       render json: { errors: photo.errors.full_messages }, status: :unprocessable_entity
     end
