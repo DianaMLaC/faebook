@@ -5,3 +5,4 @@ json.house intro.house
 json.zodiac intro.zodiac
 json.elements intro.elements
 json.order intro.order
+json.bio intro.bio

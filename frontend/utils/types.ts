@@ -121,6 +121,7 @@ export interface Intro {
   elements?: string
   zodiac?: string
   order?: string
+  bio?: string
 }
 
 export interface Chat {

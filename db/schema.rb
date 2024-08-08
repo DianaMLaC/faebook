@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_02_132428) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_08_122803) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -99,6 +99,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_02_132428) do
     t.uuid "user_id"
     t.string "zodiac"
     t.string "order"
+    t.string "bio"
   end
 
   create_table "likes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

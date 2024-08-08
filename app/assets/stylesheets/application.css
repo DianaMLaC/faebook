@@ -1395,7 +1395,6 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   margin-bottom: 10px;
   border: 1px solid #dddfe2;
   border-radius: 5px;
-  /* font-size: 17px; */
   font-style: italic;
   color: var(--text-secondary);
 }
@@ -2142,6 +2141,38 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   padding: 6px;
   font-size: 14px;
   font-weight: 400;
+}
+
+.intro-bio-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.intro-bio svg {
+  font-size: 28px;
+}
+
+.intro-bio svg:hover {
+  color:(var(--primary-button-hover));
+  cursor: pointer;
+}
+
+.intro-bio input[type="text"] {
+  padding-bottom: 8px;
+  padding-top: 8px;
+  padding-right: 10px;
+  padding-left: 10px;
+  background-color: var(--secondary-button-background);
+  border: transparent;
+  border-radius: 8px;
+  width: 90%;
+  align-self: center;
+  font-size: 17px;
+  color: var(--text-color);
+  font-weight: 200;
+
 }
 
 .intro-details { 

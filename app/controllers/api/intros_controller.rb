@@ -15,6 +15,7 @@ class Api::IntrosController < ApplicationController
   end
 
   def update
+    # debugger
     @intro = Intro.find_by(id: params[:id])
     @intro.update(intro_params)
     if @intro.save
@@ -31,6 +32,6 @@ class Api::IntrosController < ApplicationController
   end
 
   def intro_params
-    params.require(:intro).permit(:order, :location, :education, :house, :elements, :zodiac)
+    params.require(:intro).permit(:order, :location, :education, :house, :elements, :zodiac, :bio)
   end
 end
