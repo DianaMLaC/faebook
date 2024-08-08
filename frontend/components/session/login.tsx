@@ -37,7 +37,7 @@ function Login(): React.ReactElement {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
         />
 
-        {formErr && <p>{formErr}</p>}
+        {formErr && <div className="form-errors">{formErr}</div>}
 
         <button onClick={handleSubmit}>Log In</button>
       </form>

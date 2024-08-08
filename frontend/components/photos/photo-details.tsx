@@ -82,9 +82,7 @@ function PhotoDetails({ photo }) {
 
       <div className="photo-description">{photo.description}</div>
 
-      <div className="likes-container">
-        {likes.length > 0 ? <Likes likes={likes} position={"photo"} /> : <p></p>}
-      </div>
+      <div>{likes.length > 0 ? <Likes likes={likes} position={"photo"} /> : <p></p>}</div>
 
       <div className="photo-action-buttons">
         <div className={likedByCurrentUser ? "liked" : "like"} onClick={handlePhotoLike}>

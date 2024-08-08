@@ -10,8 +10,7 @@ import Comments from "../comments/comments_index"
 import CommentForm from "../comments/comment_form"
 import { formatPostDate } from "../../utils/helpers"
 import { useNavigate } from "react-router-dom"
-import { fetchPhoto } from "../../utils/profile"
-import { Photo, Url } from "../../utils/types"
+
 import PhotoSmall from "../photos/photo-ts"
 import PostUrl from "./post-url"
 
@@ -20,13 +19,11 @@ function PostContainer({ post }): React.ReactElement {
   const { currentUser } = useAuth()
   const [likes, setLikes] = useState(post.likes || [])
   const { addLikeToPost, deleteLikeFromPost, addCommentToPost } = usePosts()
-  // const [content, setContent] = useState<Photo | Url | null>(null)
   const [likedByCurrentUser, setLikedByCurrentUser] = useState(
     post.likes.some((like) => like.liker.id === currentUser?.id)
   )
   const [comments, setComments] = useState(post.comments || [])
   const [toggleCommenting, setToggleCommenting] = useState(false)
-
   const postTimeStamp = formatPostDate(post.createdAt)
 
   useEffect(() => {

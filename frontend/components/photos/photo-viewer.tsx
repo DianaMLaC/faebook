@@ -15,7 +15,7 @@ function PhotoViewer(): React.ReactElement {
   const { profileUser } = useAuth()
   const { photoId } = useParams<{ photoId: string }>()
   const [photoDetails, setPhotoDetails] = useState<Photo | null>(null)
-  const [photoLikes, setPhotoLikes] = useState<Like[] | null>(null)
+  // const [photoLikes, setPhotoLikes] = useState<Like[] | null>(null)
   const [albumPhotos, setAlbumPhotos] = useState<Photo[] | []>([])
   const navigate = useNavigate()
 
@@ -24,7 +24,7 @@ function PhotoViewer(): React.ReactElement {
       if (profileUser && photoId) {
         const details = await fetchPhoto(profileUser.id, photoId)
         setPhotoDetails(details)
-        setPhotoLikes(details.likes)
+        // setPhotoLikes(details.likes)
         const album = await fetchAlbum(profileUser.id, details.albumId)
         setAlbumPhotos(album.photos)
       }

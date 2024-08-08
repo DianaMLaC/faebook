@@ -1346,6 +1346,23 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   color: var(--text-color);
 }
 
+.photo-action-buttons {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 12px;
+  margin-right: 12px;
+  color: var(--text-secondary);
+  background-color: transparent;
+  border-bottom-color: rgb(206, 208, 212);
+  border-bottom-style: solid;
+  border-bottom-width: 0.555556px;
+
+}
+
 .details-header {
   width: 100%;
   display: flex;
@@ -2317,7 +2334,7 @@ ul.friends-display-grid {
 }
 
 .avatar {
-  width: 40px; 
+  min-width: 40px; 
   height: 40px;
   border-radius: 50%; 
   overflow: hidden;
@@ -2427,6 +2444,9 @@ ul.friends-display-grid {
   cursor: pointer;
 }
 
+
+
+
 .post-action-buttons div:hover, .photo-action-buttons div:hover {
   background-color: var(--shade-background-color);
   border-radius: 3px;
@@ -2490,6 +2510,7 @@ ul.friends-display-grid {
   border-bottom-color: rgb(206, 208, 212);
   border-bottom-style: solid;
   border-bottom-width: 0.555556px;
+  width: 100%;
 }
 
 .likes-details {
@@ -2534,7 +2555,7 @@ ul.friends-display-grid {
 }
 
 .comment-avatar {
-  width: 32px; 
+  min-width: 32px; 
   height: 32px;
   border-radius: 50%; 
   overflow: hidden;
@@ -2547,7 +2568,7 @@ ul.friends-display-grid {
 .comment-avatar img {
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
   display: block;
 
 }
@@ -2982,7 +3003,7 @@ align-self: center;
 }
 
 .reply-avatar {
-  width: 28px; 
+  min-width: 28px; 
   height: 25px;
   border-radius: 50%; 
   overflow: hidden;
