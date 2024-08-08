@@ -164,10 +164,10 @@ function ProfileHeader(): React.ReactElement {
     setIsChatOpen(false) // Close the chat
   }
 
-  const openProfileModal = () => setProfileModalIsOpen(true)
-  const openCoverModal = () => setCoverModalIsOpen(true)
-  const closeProfileModal = () => setProfileModalIsOpen(false)
-  const closeCoverModal = () => setCoverModalIsOpen(false)
+  const openProfileModal = useCallback(() => setProfileModalIsOpen(true), [])
+  const openCoverModal = useCallback(() => setCoverModalIsOpen(true), [])
+  const closeProfileModal = useCallback(() => setProfileModalIsOpen(false), [])
+  const closeCoverModal = useCallback(() => setCoverModalIsOpen(false), [])
 
   useEffect(() => {
     ReactModal.setAppElement(".profile-header")
@@ -199,6 +199,9 @@ function ProfileHeader(): React.ReactElement {
               closeModalContainer={closeCoverModal}
               albumName="Cover"
             />
+            <button onClick={closeCoverModal} className="close-photo-modal-button">
+              <RxCross2 />
+            </button>
           </ReactModal>
         </section>
         <section className="profile-details-banner">
@@ -217,23 +220,23 @@ function ProfileHeader(): React.ReactElement {
             {currentUser?.id === profileUser?.id && (
               <div className="profile-photo-button-container" onClick={openProfileModal}>
                 <FaCamera />
-                <ReactModal
-                  isOpen={profileModalIsOpen}
-                  onRequestClose={closeProfileModal}
-                  contentLabel="Profile"
-                  className="Modal"
-                >
-                  <PhotoUpload
-                    updatePhoto={updatePhoto}
-                    closeModalContainer={closeProfileModal}
-                    albumName="Profile"
-                  />
-                  <button onClick={closeProfileModal} className="close-photo-modal-button">
-                    <RxCross2 />
-                  </button>
-                </ReactModal>
               </div>
             )}
+            <ReactModal
+              isOpen={profileModalIsOpen}
+              onRequestClose={closeProfileModal}
+              contentLabel="Profile"
+              className="Modal"
+            >
+              <PhotoUpload
+                updatePhoto={updatePhoto}
+                closeModalContainer={closeProfileModal}
+                albumName="Profile"
+              />
+              <button onClick={closeProfileModal} className="close-photo-modal-button">
+                <RxCross2 />
+              </button>
+            </ReactModal>
           </div>
           <div className="profile-display-name-container">
             <h1 className="profile-display-name">{profileUser?.displayName}</h1>

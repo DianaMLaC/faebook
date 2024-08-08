@@ -53,7 +53,7 @@ class Api::PhotosController < ApplicationController
 
   def destroy
     @photo = Photo.find_by(id: params[:id])
-    @photo.destroy
+    @photo.delete
     render json: { 'photos' => 'photo deleted' }, status: 200
   end
 
