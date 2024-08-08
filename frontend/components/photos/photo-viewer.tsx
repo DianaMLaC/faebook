@@ -94,11 +94,9 @@ function PhotoViewer(): React.ReactElement {
           </div>
         </div>
         <div className="photo-viewer-details">
-          <div className="photo-details">
-            <PhotosProvider>
-              <PhotoDetails photo={photoDetails} />
-            </PhotosProvider>
-          </div>
+          <PhotosProvider>
+            <PhotoDetails photo={photoDetails} />
+          </PhotosProvider>
         </div>
       </div>
     </div>

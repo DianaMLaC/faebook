@@ -4,17 +4,22 @@ import { BiSolidLike, BiLike } from "react-icons/bi"
 import { PiShareFat } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
 import { usePhotos } from "../../context/photos"
+import { RiDeleteBinLine, RiEditLine } from "react-icons/ri"
+import { BiCheckboxChecked, BiSolidCheckboxChecked } from "react-icons/bi"
 
 import { toggleLike, fetchTopLevelComments } from "../../utils/post_and_comments"
 import Likes from "../posts/likes"
 import Comments from "../comments/comments_index"
 import CommentForm from "../comments/comment_form"
 import { formatPostDate } from "../../utils/helpers"
+import { editPhoto } from "../../utils/profile"
 
 function PhotoDetails({ photo }) {
   const { currentUser, profileUser } = useAuth()
   const { addLikeToPhoto, deleteLikeFromPhoto, addCommentToPhoto } = usePhotos()
   const [likes, setLikes] = useState(photo.likes || [])
+  const [caption, setCaption] = useState(photo.description || "")
+  const [toggleInput, setToggleInput] = useState(false)
   const [likedByCurrentUser, setLikedByCurrentUser] = useState(
     (photo.likes && photo.likes.some((like) => like.liker.id === currentUser?.id)) || false
   )
@@ -61,6 +66,15 @@ function PhotoDetails({ photo }) {
     [photo.id, addCommentToPhoto]
   )
 
+  const handleCaptionSubmit = async (e) => {
+    e.preventDefault()
+    const editResponse = await editPhoto(currentUser!.id, photo.id, caption)
+    if (editResponse) {
+      setCaption(editResponse.description)
+      setToggleInput(false)
+    }
+  }
+
   return (
     <div className="photo-details-container">
       <header className="photo-header">
@@ -77,10 +91,23 @@ function PhotoDetails({ photo }) {
             </div>
           </div>
         </div>
-        {/* <div className="more-button">...</div> */}
       </header>
 
-      <div className="photo-description">{photo.description}</div>
+      {toggleInput ? (
+        <div className="edit-photo-caption">
+          <input
+            type="text"
+            className="photo-caption-input"
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+          />
+          <div className="caption-submit" onClick={handleCaptionSubmit}>
+            <BiCheckboxChecked />
+          </div>
+        </div>
+      ) : (
+        <div className="photo-description">{caption}</div>
+      )}
 
       <div>{likes.length > 0 ? <Likes likes={likes} position={"photo"} /> : <p></p>}</div>
 
@@ -97,6 +124,12 @@ function PhotoDetails({ photo }) {
           <PiShareFat />
           <div className="action-name">Share</div>
         </div>
+        {currentUser?.id === profileUser?.id && (
+          <div className="edit" onClick={() => setToggleInput(true)}>
+            <RiEditLine />
+            <div className="action-name">Edit</div>
+          </div>
+        )}
       </div>
 
       {comments.length > 0 ? <Comments comments={comments} parentType={"photo"} /> : <p></p>}

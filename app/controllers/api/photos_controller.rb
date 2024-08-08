@@ -41,6 +41,22 @@ class Api::PhotosController < ApplicationController
     end
   end
 
+  def update
+    # debugger
+    @photo = Photo.find_by(id: params[:id])
+    if @photo.update(photo_params)
+      render :show
+    else
+      render json: @photo.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @photo = Photo.find_by(id: params[:id])
+    @photo.destroy
+    render json: { 'photos' => 'photo deleted' }, status: 200
+  end
+
   private
 
   def photo_params

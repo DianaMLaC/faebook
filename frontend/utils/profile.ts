@@ -36,6 +36,27 @@ export const uploadProfilePhoto = async (formData: FormData): Promise<Photo> => 
   }
 }
 
+export const editPhoto = async (userId: string, photoId: string, description: string) => {
+  try {
+    const payload = {
+      description,
+    }
+
+    const response = await axios.patch(
+      `http://localhost:3000/api/users/${userId}/photos/${photoId}`,
+      payload,
+      {
+        headers: customHeaders,
+      }
+    )
+    await checkResponse(response)
+    return response.data
+  } catch (err) {
+    console.error("Error in uploadProfilePhoto api:", err.message)
+    throw err
+  }
+}
+
 export const fetchAlbums = async (userID: string): Promise<Album[]> => {
   try {
     const response = await axios.get(`http://localhost:3000/api/users/${userID}/albums`)

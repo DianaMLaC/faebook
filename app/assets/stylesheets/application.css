@@ -1346,6 +1346,57 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   color: var(--text-color);
 }
 
+.photo-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+ .photo-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 12px;
+  margin-bottom: 12px;
+
+}
+
+.photo-header-left {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.edit-photo-caption {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 16px;
+  padding-bottom: 6px;
+}
+
+.edit-photo-caption svg {
+  font-size: 20px;
+  padding: 4px;
+}
+.edit-photo-caption svg:hover {
+  color: var(--primary-button-hover)
+}
+
+.photo-caption-input {
+  width: 100px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #dddfe2;
+  border-radius: 5px;
+  font-size: 17px;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+
 .photo-action-buttons {
   display: flex;
   width: 100%;
@@ -1378,12 +1429,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   width: 100%;
 }
 
-.photo-details-container {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
 
-}
 
 /* About me */
 .profile-page-components {
@@ -2304,7 +2350,7 @@ ul.friends-display-grid {
 }
 
 
-.post-header, .photo-header {
+.post-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -2327,7 +2373,7 @@ ul.friends-display-grid {
   margin-right: 9px; 
 }
 
-.post-header-left, .photo-header-left {
+.post-header-left {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -2425,7 +2471,7 @@ ul.friends-display-grid {
 }
 
 
-.post-action-buttons, .photo-action-buttons {
+.post-action-buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -2481,6 +2527,7 @@ ul.friends-display-grid {
   margin-top: 2px;
   margin-bottom: 2px;
   font-weight: 600;
+  cursor: pointer;
 
 }
 
@@ -2502,6 +2549,18 @@ ul.friends-display-grid {
   padding: 6px;
   margin-top: 2px;
   margin-bottom: 2px;
+  cursor: not-allowed;
+}
+
+.edit {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  cursor: not-allowed;
 }
 
 .likes-container {
