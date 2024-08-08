@@ -59,6 +59,8 @@ Faebook leverages ActionStorage and AWS for optimal storage of photos. Uploaded 
 
 Users can attach photos to posts, which will be saved in a `Timeline` Album. A preview of the photo can be seen before creating the post.
 
+![alt-text](/docs/gifs/profile-photo-upload.gif "Photo Upload")
+
 ### Automatic Parsing of URLs in Posts
 
 When users include URLs in their post the link is automatically parsed and meta-data is fetched using LinkPreview API. The metadata is then stored in the db as a polymorphic association to the post.
