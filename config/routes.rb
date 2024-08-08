@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       resources :posts, only: %i[create index show]
       resources :friendships, only: %i[create index show]
       resources :albums, only: %i[index show create]
-      resources :photos, only: %i[index show update]
+      resources :photos, only: %i[index show]
       resources :intros, only: %i[create update]
     end
 
@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       resources :messages, only: %i[index create]
     end
 
-    resources :photos, only: [:create]
+    resources :photos, only: %i[create update destroy]
     resources :post_urls, only: [:create]
 
     resources :posts, only: [] do

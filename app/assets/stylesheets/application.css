@@ -1378,11 +1378,15 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 }
 
 .edit-photo-caption svg {
-  font-size: 20px;
+  font-size: 28px;
   padding: 4px;
 }
 .edit-photo-caption svg:hover {
   color: var(--primary-button-hover)
+}
+
+.delete-photo-button {
+  cursor: pointer;
 }
 
 .photo-caption-input {
@@ -1391,10 +1395,11 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   margin-bottom: 10px;
   border: 1px solid #dddfe2;
   border-radius: 5px;
-  font-size: 17px;
+  /* font-size: 17px; */
   font-style: italic;
   color: var(--text-secondary);
 }
+
 
 
 .photo-action-buttons {

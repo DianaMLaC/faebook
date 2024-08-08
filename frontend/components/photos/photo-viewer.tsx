@@ -3,19 +3,19 @@ import { useNavigate, useParams } from "react-router-dom"
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from "react-icons/io"
 import { IoClose } from "react-icons/io5"
 import { HiOutlineZoomOut, HiOutlineZoomIn } from "react-icons/hi"
-import { BsArrowsAngleContract, BsArrowsAngleExpand } from "react-icons/bs"
+import { BsArrowsAngleExpand } from "react-icons/bs"
+import { RiDeleteBinLine } from "react-icons/ri"
 import { FaTag } from "react-icons/fa6"
 import { useAuth } from "../../context/auth"
-import { Comment, Like, Photo } from "../../utils/types"
-import { fetchAlbum, fetchPhoto } from "../../utils/profile"
+import { Photo } from "../../utils/types"
+import { deletePhoto, fetchAlbum, fetchPhoto } from "../../utils/profile"
 import PhotoDetails from "./photo-details"
 import PhotosProvider from "../../context/photos"
 
 function PhotoViewer(): React.ReactElement {
-  const { profileUser } = useAuth()
+  const { profileUser, currentUser } = useAuth()
   const { photoId } = useParams<{ photoId: string }>()
   const [photoDetails, setPhotoDetails] = useState<Photo | null>(null)
-  // const [photoLikes, setPhotoLikes] = useState<Like[] | null>(null)
   const [albumPhotos, setAlbumPhotos] = useState<Photo[] | []>([])
   const navigate = useNavigate()
 
@@ -47,6 +47,13 @@ function PhotoViewer(): React.ReactElement {
     }
   }
 
+  const handlePhotoDelete = async () => {
+    const deleteResponse = await deletePhoto(photoId!)
+    if (deleteResponse) {
+      navigate(`/photo/${albumPhotos[currentIndex - 1].id}`)
+    }
+  }
+
   if (!photoDetails) {
     return <div>Loading photo...</div>
   }
@@ -69,6 +76,9 @@ function PhotoViewer(): React.ReactElement {
               </div>
             </div>
             <div className="main-header-right">
+              {currentUser?.id === profileUser?.id && (
+                <RiDeleteBinLine className="delete-photo-button" onClick={handlePhotoDelete} />
+              )}
               <HiOutlineZoomIn />
               <HiOutlineZoomOut />
               <FaTag />

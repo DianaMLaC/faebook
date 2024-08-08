@@ -4,8 +4,8 @@ import { BiSolidLike, BiLike } from "react-icons/bi"
 import { PiShareFat } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
 import { usePhotos } from "../../context/photos"
-import { RiDeleteBinLine, RiEditLine } from "react-icons/ri"
-import { BiCheckboxChecked, BiSolidCheckboxChecked } from "react-icons/bi"
+import { RiEditLine } from "react-icons/ri"
+import { BiCheckboxChecked } from "react-icons/bi"
 
 import { toggleLike, fetchTopLevelComments } from "../../utils/post_and_comments"
 import Likes from "../posts/likes"
@@ -68,7 +68,7 @@ function PhotoDetails({ photo }) {
 
   const handleCaptionSubmit = async (e) => {
     e.preventDefault()
-    const editResponse = await editPhoto(currentUser!.id, photo.id, caption)
+    const editResponse = await editPhoto(photo.id, caption)
     if (editResponse) {
       setCaption(editResponse.description)
       setToggleInput(false)
