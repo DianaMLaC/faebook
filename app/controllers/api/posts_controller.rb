@@ -1,5 +1,5 @@
 class Api::PostsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  # skip_before_action :verify_authenticity_token
   before_action :must_be_authorized, :set_user_profile
   before_action :ensure_relation, only: %i[create]
 

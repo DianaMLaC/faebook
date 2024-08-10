@@ -1,5 +1,5 @@
 class Api::PostUrlsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  # skip_before_action :verify_authenticity_token
   before_action :must_be_authorized
 
   def create
@@ -22,7 +22,7 @@ class Api::PostUrlsController < ApplicationController
 
   def get_api_key
     api_key = Rails.application.credentials.dig(:link_preview_api_key)
-    debugger
+    # debugger
     render json: { link_preview_api_key: api_key }
   end
 

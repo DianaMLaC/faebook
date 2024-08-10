@@ -1,8 +1,13 @@
 import axios, { AxiosError, AxiosResponse } from "axios"
 import { User, NewUserData, SessionData, BackendErrorResponse } from "./types"
 
+const getCsrfToken = (): string | undefined => {
+  return document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") || undefined
+}
+
 export const customHeaders = {
-  "content-type": "application/json;charset=UTF-8",
+  "Content-Type": "application/json;charset=UTF-8",
+  "X-CSRF-Token": getCsrfToken(),
 }
 
 export async function checkResponse(response: AxiosResponse) {

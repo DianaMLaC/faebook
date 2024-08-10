@@ -25,9 +25,11 @@ export const fetchUserProfile = async (userId: string): Promise<User> => {
 
 /* PHOTOS */
 
-export const uploadProfilePhoto = async (formData: FormData): Promise<Photo> => {
+export const uploadPhoto = async (formData: FormData): Promise<Photo> => {
   try {
-    const response = await axios.post("http://localhost:3000/api/photos", formData)
+    const response = await axios.post("http://localhost:3000/api/photos", formData, {
+      headers: customHeaders,
+    })
     await checkResponse(response)
     return response.data
   } catch (err) {
@@ -55,7 +57,9 @@ export const editPhoto = async (photoId: string, description: string) => {
 
 export const deletePhoto = async (photoId: string) => {
   try {
-    const response = await axios.delete(`http://localhost:3000/api/photos/${photoId}`)
+    const response = await axios.delete(`http://localhost:3000/api/photos/${photoId}`, {
+      headers: customHeaders,
+    })
     await checkResponse(response)
     return response.data
   } catch (err) {
@@ -66,7 +70,9 @@ export const deletePhoto = async (photoId: string) => {
 
 export const fetchAlbums = async (userID: string): Promise<Album[]> => {
   try {
-    const response = await axios.get(`http://localhost:3000/api/users/${userID}/albums`)
+    const response = await axios.get(`http://localhost:3000/api/users/${userID}/albums`, {
+      headers: customHeaders,
+    })
     await checkResponse(response)
     return response.data
   } catch (err) {
@@ -77,7 +83,12 @@ export const fetchAlbums = async (userID: string): Promise<Album[]> => {
 
 export const fetchAlbum = async (userID: string, albumId: string): Promise<Album> => {
   try {
-    const response = await axios.get(`http://localhost:3000/api/users/${userID}/albums/${albumId}`)
+    const response = await axios.get(
+      `http://localhost:3000/api/users/${userID}/albums/${albumId}`,
+      {
+        headers: customHeaders,
+      }
+    )
     await checkResponse(response)
     return response.data
   } catch (err) {

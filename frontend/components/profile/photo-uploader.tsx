@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { uploadProfilePhoto } from "../../utils/profile"
+import { uploadPhoto } from "../../utils/profile"
 import { CircleLoader } from "react-spinners"
 import { useAuth } from "../../context/auth"
 
@@ -33,7 +33,7 @@ function PhotoUpload({ updatePhoto, closeModalContainer, albumName }): React.Rea
     formData.append("album_name", albumName)
 
     try {
-      const fileData = await uploadProfilePhoto(formData)
+      const fileData = await uploadPhoto(formData)
       console.log("PhotoData returned as fileData")
       console.log("fileData:", fileData)
       updatePhoto(fileData.albumName, fileData.url)

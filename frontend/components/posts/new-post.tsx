@@ -7,7 +7,7 @@ import { TbLibraryPhoto } from "react-icons/tb"
 import { IoMdArrowDropdown } from "react-icons/io"
 import { BiCheckboxChecked, BiSolidCheckboxChecked } from "react-icons/bi"
 import { createPost, postUrl } from "../../utils/post_and_comments"
-import { uploadProfilePhoto } from "../../utils/profile"
+import { uploadPhoto } from "../../utils/profile"
 import { usePosts } from "../../context/posts"
 import { Photo, Url } from "../../utils/types"
 import PostContainer from "./post"
@@ -82,7 +82,7 @@ function NewPost({ closeModalContainer }): React.ReactElement {
     formData.append("album_name", "Timeline")
 
     try {
-      const fileData = await uploadProfilePhoto(formData)
+      const fileData = await uploadPhoto(formData)
       console.log({ fileData })
       setPostContentId(fileData.id)
       setPostPhotoPreview(fileData)

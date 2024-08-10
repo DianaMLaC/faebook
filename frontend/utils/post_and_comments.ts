@@ -26,7 +26,6 @@ interface UrlPayload {
 const fetchApiKey = async (): Promise<string> => {
   try {
     const response = await axios.get("/api/post_urls/get_api_key")
-    console.log(response.data.link_preview_api_key)
     return response.data.link_preview_api_key
   } catch (error) {
     console.error("Error fetching LinkPreview API key:", error)
