@@ -4,10 +4,10 @@ class Api::ChatsController < ApplicationController
   before_action :set_chat_room, only: %i[show]
   # before_action :ensure_no_associated_chat, only: %i[create]
 
-  # def index
-  #   @chats = Chat.all
-  #   render :index
-  # end
+  def index
+    @chats = @authenticated_user.chats
+    render :index
+  end
 
   def show
     @chat = Chat.find(params[:id])
