@@ -23,7 +23,11 @@ Rails.application.routes.draw do
     end
 
     resources :photos, only: %i[create update destroy]
-    resources :post_urls, only: [:create]
+    resources :post_urls, only: [:create] do
+      collection do
+        get 'get_api_key'
+      end
+    end
 
     resources :posts, only: [] do
       resources :post_urls, only: [:show]

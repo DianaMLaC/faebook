@@ -15,13 +15,28 @@ interface UrlPayload {
   url: string
 }
 
-const LINK_PREVIEW_API_KEY = "9ed80b03c174426ecaab34e1ad344ad8"
-const linkPreviewHeaders = {
-  "X-Linkpreview-Api-Key": LINK_PREVIEW_API_KEY,
+// const LINK_PREVIEW_API_KEY = "9ed80b03c174426ecaab34e1ad344ad8"
+
+// json object returned from get_api_key: {link_preview_api_key: "9ed80b03c174426ecaab34e1ad344ad8"}
+
+// const linkPreviewHeaders = {
+//   "X-Linkpreview-Api-Key": LINK_PREVIEW_API_KEY,
+// }
+
+const fetchApiKey = async (): Promise<string> => {
+  try {
+    const response = await axios.get("/api/post_urls/get_api_key")
+    console.log(response.data.link_preview_api_key)
+    return response.data.link_preview_api_key
+  } catch (error) {
+    console.error("Error fetching LinkPreview API key:", error)
+    throw error
+  }
 }
 
 export const postUrl = async (url: string): Promise<Url> => {
   try {
+    const LINK_PREVIEW_API_KEY = await fetchApiKey()
     const encodedUrl = encodeURIComponent(url)
     const linkPreviewResponse = await axios.get(
       `https://api.linkpreview.net/?key=${LINK_PREVIEW_API_KEY}&q=${encodedUrl}`

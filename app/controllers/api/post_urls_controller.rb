@@ -20,6 +20,12 @@ class Api::PostUrlsController < ApplicationController
     end
   end
 
+  def get_api_key
+    api_key = Rails.application.credentials.dig(:link_preview_api_key)
+    debugger
+    render json: { link_preview_api_key: api_key }
+  end
+
   private
 
   def find_or_create_url
