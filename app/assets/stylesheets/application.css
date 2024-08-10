@@ -2930,6 +2930,11 @@ align-self: center;
   overflow: hidden;
 }
 
+.post-url-description {
+  max-height: 24px;
+  overflow: hidden;
+}
+
 .form-errors {
   padding: 10px 12px;
   margin-left: 15px;
