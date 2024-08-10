@@ -36,11 +36,11 @@ class Api::FriendshipsController < ApplicationController
     return unless find_receiver(params[:user_id])
     return unless ensure_no_existing_friendship(@receiver, @authenticated_user)
 
-    friendship = Friendship.new(receiver_id: receiver.id, sender_id: @authenticated_user.id)
-    if friendship.save
+    @friendship = Friendship.new(receiver_id: @receiver.id, sender_id: @authenticated_user.id)
+    if @friendship.save
       render :show
     else
-      render json: { errors: friendship.errors.full_messages }, status: 422
+      render json: { errors: @friendship.errors.full_messages }, status: 422
     end
   end
 
@@ -59,8 +59,16 @@ class Api::FriendshipsController < ApplicationController
   end
 
   def destroy
-    @friendship.delete
-    render json: { 'friendship' => 'request removed' }, status: 200
+    if @authenticated_user.id == @friendship.sender_id || @authenticated_user.id == @friendship.receiver_id
+      @friendship.delete
+      render json: { 'friendship' => 'request removed' }, status: 200
+    else
+      render json: {
+        'errors' => {
+          'friendship' => 'User Not part of the friendship to delete'
+        }
+      }, status: 403
+    end
   end
 
   private
