@@ -120,7 +120,10 @@ function ChatRoom({ onClose, chat }): React.ReactElement {
             placeholder="Aa"
             onChange={(e) => setMessageBody(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter") handleSendMessage()
+              if (e.key === "Enter") {
+                handleSendMessage()
+                console.log("message sent")
+              }
             }}
           />
           <MdEmojiEmotions className="chat-input-emoji" />
