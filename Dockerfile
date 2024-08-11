@@ -19,8 +19,14 @@ FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config
+    apt-get install --no-install-recommends -y \
+    build-essential git libpq-dev libvips \
+    pkg-config  python-is-python3 node-gyp \
+    nodejs npm
 
+# RUN apt-get update && apt-get upgrade -y && \
+#     apt-get install -y nodejs \
+#     npm                      
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
@@ -29,6 +35,12 @@ RUN bundle install && \
 
 # Copy application code
 COPY . .
+
+# Install npm packages
+# RUN NODE_ENV=development npm install
+
+# Precompile assets with Vite
+# RUN npm run build
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
