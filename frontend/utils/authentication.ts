@@ -1,6 +1,12 @@
 import axios, { AxiosError, AxiosResponse } from "axios"
 import { User, NewUserData, SessionData, BackendErrorResponse } from "./types"
 
+// Determine the base URL based on the environment
+const baseURL =
+  process.env.NODE_ENV === "production"
+    ? "https://faebook.fly.dev/api" // Production URL
+    : "http://localhost:3000/api" // Development URL
+
 const getCsrfToken = (): string | undefined => {
   return document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") || undefined
 }
@@ -9,6 +15,12 @@ export const customHeaders = {
   "Content-Type": "application/json;charset=UTF-8",
   "X-CSRF-Token": getCsrfToken(),
 }
+
+// Axios instance with dynamic baseURL
+export const apiClient = axios.create({
+  baseURL: baseURL,
+  headers: customHeaders,
+})
 
 export async function checkResponse(response: AxiosResponse) {
   // console.log("CALLED", { response })
@@ -38,9 +50,7 @@ export async function extractError<T>(error: AxiosError): Promise<T> {
 
 export const postUser = async (userData: NewUserData) => {
   try {
-    const response = await axios.post("http://localhost:3000/api/users", userData, {
-      headers: customHeaders,
-    })
+    const response = await apiClient.post<User>("/users", userData)
     await checkResponse(response)
     const user = response.data
     return user
@@ -70,13 +80,7 @@ type AuthErrorResponse = KnownServerError<AuthServerError>
 
 export const postSession = async (sessionData: SessionData) => {
   try {
-    const response = await axios.post<User>(
-      "http://localhost:3000/api/authentications",
-      sessionData,
-      {
-        headers: customHeaders,
-      }
-    )
+    const response = await apiClient.post<User>("/authentications", sessionData)
     // await checkResponse(response)
     const session = response.data
     return session
@@ -94,9 +98,7 @@ export const postSession = async (sessionData: SessionData) => {
 
 export const deleteSession = async () => {
   try {
-    const response = await axios.delete("http://localhost:3000/api/authentications", {
-      headers: customHeaders,
-    })
+    const response = await apiClient.delete("/authentications")
     await checkResponse(response)
   } catch (err) {
     console.error("Error with response code or parsing response in API DELETE Session", err)
