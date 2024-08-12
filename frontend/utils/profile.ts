@@ -1,25 +1,40 @@
-import axios, { AxiosResponse } from "axios"
-import { customHeaders, checkResponse } from "./authentication"
-import { User, Photo, Album, FriendshipFriend, FriendshipData, Intro } from "./types"
+import axios, { AxiosError, AxiosResponse } from "axios"
+import { customHeaders, checkResponse, apiClient } from "./axios"
+import {
+  User,
+  Photo,
+  Album,
+  FriendshipFriend,
+  FriendshipData,
+  Intro,
+  BackendErrorResponse,
+} from "./types"
 
-export async function fileChecksum(file: File): Promise<string> {
-  const buffer = await file.arrayBuffer()
-  const digest = await crypto.subtle.digest("SHA-256", buffer)
-  return Array.from(new Uint8Array(digest))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("")
-}
+// export async function fileChecksum(file: File): Promise<string> {
+//   const buffer = await file.arrayBuffer()
+//   const digest = await crypto.subtle.digest("SHA-256", buffer)
+//   return Array.from(new Uint8Array(digest))
+//     .map((b) => b.toString(16).padStart(2, "0"))
+//     .join("")
+// }
 
 export const fetchUserProfile = async (userId: string): Promise<User> => {
   try {
-    const response = await axios.get(`http://localhost:3000/api/users/${userId}`, {
-      headers: customHeaders,
-    })
+    // const response = await axios.get(`http://localhost:3000/api/users/${userId}`, {
+    //   headers: customHeaders,
+    // })
+    const response = await apiClient.get<User>(`/users/${userId}`)
     await checkResponse(response)
     return response.data
   } catch (err) {
-    console.error("Error with response code or parsing response in API GET User", err)
-    throw err
+    if (axios.isAxiosError(err) && err.response) {
+      console.error("API error:", err.response.data)
+      const backendErrorResponse: BackendErrorResponse = err.response.data
+      throw backendErrorResponse.errors.user
+    } else {
+      console.error("Error with response code or parsing response in API GET User", err)
+      throw err
+    }
   }
 }
 

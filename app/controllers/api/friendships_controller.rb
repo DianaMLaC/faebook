@@ -40,7 +40,7 @@ class Api::FriendshipsController < ApplicationController
     if @friendship.save
       render :show
     else
-      render json: { errors: @friendship.errors.full_messages }, status: 422
+      render json: { errors: @friendship.errors.messages }, status: 422
     end
   end
 
@@ -54,7 +54,7 @@ class Api::FriendshipsController < ApplicationController
     if @friendship.save
       render :show
     else
-      render json: { errors: friendship.errors.full_messages }, status: 422
+      render json: { errors: friendship.errors.messages }, status: 422
     end
   end
 
@@ -63,45 +63,24 @@ class Api::FriendshipsController < ApplicationController
       @friendship.delete
       render json: { 'friendship' => 'request removed' }, status: 200
     else
-      render json: {
-        'errors' => {
-          'friendship' => 'User Not part of the friendship to delete'
-        }
-      }, status: 403
+      render json: { errors: { friendship: 'No relation between users' } }, status: :unprocessable_entity
     end
   end
 
   private
 
   def set_friendship
-    @friendship = Friendship.find_by(id: params[:id])
-    if @friendship.nil?
-      render json: {}, status: 404
-      return
-    end
-    @friendship
+    @friendship = Friendship.find(params[:id])
   end
 
   def find_receiver(id)
     @receiver = User.find(id)
-    unless @receiver
-      render json: {
-        'errors' => {
-          'friendship' => 'No such user exists'
-        }
-      }, status: 404 and return false
-    end
-
-    true
   end
 
   def friendship_pending(friendship)
     if friendship.is_accepted
-      render json: {
-        'errors' => {
-          'friendship' => 'Friendship already pending/accepted'
-        }
-      }, status: 422 and return
+      render json: { errors: { friendship: 'Friendship already accepted' } },
+             status: :unprocessable_entity and return false
     end
 
     true
@@ -113,8 +92,8 @@ class Api::FriendshipsController < ApplicationController
       Friendship.find_by(receiver_id: sender.id, sender_id: receiver.id)
 
     if existing_relation
-      render json: { 'errors' => { 'friendship' => 'Friendship already pending/accepted' } },
-             status: 403 and return false
+      render json: { errors: { friendship: 'Friendship already pending/accepted' } },
+             status: :unprocessable_entity and return false
     end
 
     true
@@ -123,8 +102,8 @@ class Api::FriendshipsController < ApplicationController
   def ensure_user_is_receiver(friendship)
     return true if @authenticated_user.id == friendship.receiver_id
 
-    render json: { 'errors' => { 'friendship' => 'Forbidden! Only receiver can delete/accept the friendship' } },
-           status: 403 and return false
+    render json: { errors: { friendship: 'Forbidden! Only receiver can delete/accept the friendship' } },
+           status: :unprocessable_entity and return false
   end
 
   def find_friendship(profile_user, auth_user)

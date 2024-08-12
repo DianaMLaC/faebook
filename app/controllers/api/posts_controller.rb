@@ -1,5 +1,4 @@
 class Api::PostsController < ApplicationController
-  # skip_before_action :verify_authenticity_token
   before_action :must_be_authorized, :set_user_profile
   before_action :ensure_relation, only: %i[create]
 
@@ -7,7 +6,7 @@ class Api::PostsController < ApplicationController
     @posts = @user.profile_posts.includes(:content, :likes, comments: { replies: :likes }).order(created_at: :desc)
 
     if @posts.empty?
-      render json: { 'posts' => [] }
+      render json: { 'posts' => [] }, status: 200
     else
       render :index
     end
@@ -21,7 +20,7 @@ class Api::PostsController < ApplicationController
       set_post_content if @post.content_type.present?
       render :create
     else
-      render json: @post.errors, status: 422
+      render json: { errors: @post.errors.messages }, status: :unprocessable_entity
     end
   end
 
@@ -32,25 +31,36 @@ class Api::PostsController < ApplicationController
   end
 
   def set_post_content
-    @post.content = @post.content_type.constantize.find_by(id: @post.content_id) if @post.content_type.present?
+    @post.content = @post.content_type.constantize.find(@post.content_id) if @post.content_type.present?
   end
 
   def set_user_profile
-    @user = User.find_by(id: params[:user_id])
+    @user = User.find(params[:user_id])
   end
+
+  # def ensure_relation
+  #   existing_relation = Friendship.find_by(receiver_id: @authenticated_user.id, sender_id: @user.id,
+  #                                          is_accepted: true) ||
+  #                       Friendship.find_by(receiver_id: @user.id, sender_id: @authenticated_user.id,
+  #                                          is_accepted: true)
+
+  #   return if @authenticated_user.id == @user.id || existing_relation.present?
+
+  #   render json: {
+  #     'errors' => {
+  #       'friendship' => 'No relation between users'
+  #     }
+  #   }, status: 422 and false
+  # end
 
   def ensure_relation
     existing_relation = Friendship.find_by(receiver_id: @authenticated_user.id, sender_id: @user.id,
                                            is_accepted: true) ||
-                        Friendship.find_by(receiver_id: @user.id, sender_id: @authenticated_user.id,
-                                           is_accepted: true)
+                        Friendship.find_by(receiver_id: @user.id, sender_id: @authenticated_user.id, is_accepted: true)
 
     return if @authenticated_user.id == @user.id || existing_relation.present?
 
-    render json: {
-      'errors' => {
-        'friendship' => 'No relation between users'
-      }
-    }, status: 422 and false
+    @user.errors.add(:friendship, 'No relation between users')
+    render json: { errors: @user.errors.messages }, status: :unprocessable_entity and return
   end
 end

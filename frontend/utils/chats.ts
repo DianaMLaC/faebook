@@ -1,4 +1,4 @@
-import { customHeaders, checkResponse, extractError } from "./authentication"
+import { customHeaders, checkResponse } from "./axios"
 import { BackendErrorResponse, Chat } from "./types"
 import axios from "axios"
 

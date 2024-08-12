@@ -86,8 +86,21 @@ export interface Post {
   comments: Comment[]
 }
 
+export interface PostPayload {
+  body: string
+  content_id?: string
+  content_type?: string
+}
+
 export interface Url {
   id: string
+  title: string
+  description: string
+  image: string
+  url: string
+}
+
+export interface UrlPayload {
   title: string
   description: string
   image: string
@@ -143,7 +156,7 @@ export interface Message {
 
 export interface BackendErrorResponse {
   errors: {
-    user: { [key: string]: string }
+    [key: string]: string[]
   }
 }
 

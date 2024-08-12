@@ -17,9 +17,11 @@ class User < ApplicationRecord
   has_secure_password
 
   validates :first_name, :last_name, :password_digest, :date_of_birth, :email, presence: true
-  validates :date_of_birth, comparison: { less_than: 14.years.ago.to_date }
-  validates :email, uniqueness: true, email: { mode: :strict }
-  validates :password, length: { minimum: 6 }
+  validates :date_of_birth,
+            comparison: { less_than: 14.years.ago.to_date,
+                          message: 'You have to be older than 14 to create an account' }
+  validates :email, uniqueness: true, email: { mode: :strict, message: 'Not a valid email address' }
+  validates :password, length: { minimum: 6, message: 'Password must be at least 6 characters long' }
   validate :password_must_be_of_mix_case
 
   before_create :create_session_token
@@ -117,6 +119,15 @@ class User < ApplicationRecord
     self.password_digest = BCrypt::Password.create(password)
   end
 
+  def authenticate_with_error(password)
+    if has_password?(password)
+      true
+    else
+      errors.add(:base, 'Email and password combination is invalid')
+      false
+    end
+  end
+
   private
 
   def create_session_token
@@ -126,6 +137,6 @@ class User < ApplicationRecord
   def password_must_be_of_mix_case
     return unless password.present? && password == password.downcase
 
-    errors.add(:password, 'password is missing capital letters')
+    errors.add(:password, 'Password is missing capital letters')
   end
 end

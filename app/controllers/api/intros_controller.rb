@@ -5,23 +5,20 @@ class Api::IntrosController < ApplicationController
   def create
     @intro = Intro.new(intro_params)
     @intro.user_id = @authenticated_user.id
-    # intro = @user.intro.new(work: params[:work])
-    # debugger
     if @intro.save
       render :create
     else
-      render json: { errors: intro.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: intro.errors.messages }, status: :unprocessable_entity
     end
   end
 
   def update
-    # debugger
-    @intro = Intro.find_by(id: params[:id])
+    @intro = Intro.find(params[:id])
     @intro.update(intro_params)
     if @intro.save
       render :update
     else
-      render json: { errors: @intro.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @intro.errors.messages }, status: :unprocessable_entity
     end
   end
 

@@ -6,12 +6,16 @@ class Api::MessagesController < ApplicationController
 
   def index
     @messages = @chat.messages.includes(:sender).order(created_at: :asc)
-    render :index
+    if @messages.empty?
+      render json: { 'messages' => [] }, status: 200
+    else
+      render :index
+    end
   end
 
   def create
     @message = @chat.messages.new(message_params)
-    @message.sender = User.find_by(id: params[:message][:sender_id])
+    @message.sender = User.find(params[:message][:sender_id])
 
     if @message.save
       data = {
@@ -21,12 +25,10 @@ class Api::MessagesController < ApplicationController
         'chatId' => @message.chat_id,
         'createdAt' => @message.created_at
       }
-      # rendered_message = render_message(@message)
       ActionCable.server.broadcast("messenger_chat_#{@message.chat_id}", data)
-      # MessagingChannel.broadcast_to(@chat, message: rendered_message)
       render :show, status:
     else
-      render json: @message.errors, status: :unprocessable_entity
+      render json: { errors: @message.errors.messages }, status: :unprocessable_entity
     end
   end
 
@@ -34,15 +36,6 @@ class Api::MessagesController < ApplicationController
 
   def set_chat_room
     @chat = Chat.find(params[:chat_id])
-    unless @chat
-      render json: {
-        'errors' => {
-          'chat' => 'No such chat exists'
-        }
-      }, status: 404 and return false
-    end
-
-    true
   end
 
   def message_params

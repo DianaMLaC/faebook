@@ -7,11 +7,12 @@ class Api::CommentsController < ApplicationController
   def index
     @comments = @commentable.comments.includes(:likes,
                                                replies: :likes).where(parent_comment_id: nil).order(created_at: :desc)
-    if @comments.empty?
-      render json: { 'comments' => [] }
-      return
-    end
+    # if @comments.empty?
+    #   render json: { 'comments' => [] }
+    #   return
+    # end
 
+    render json: { 'comments' => [] } if @comments.nil?
     render :index
   end
 
@@ -22,16 +23,7 @@ class Api::CommentsController < ApplicationController
     if @comment.save
       render :create
     else
-      logger.debug "Comment creation failed: #{@comment.errors.full_messages.join(', ')}"
-      mapped_errors = {
-        text: @comment.errors.where(:text).map(&:full_message).join(', '),
-        parentCommentId: @comment.errors.where(:parent_comment_id).map(&:full_message).join(', ')
-      }
-      render json: {
-        errors: {
-          comment: omit_empty_strings(mapped_errors)
-        }
-      }, status: 422
+      render json: { errors: @comment.errors.messages }, status: :unprocessable_entity
     end
   end
 
@@ -65,10 +57,7 @@ class Api::CommentsController < ApplicationController
 
     return if @authenticated_user.id == profile_id || existing_relation.present?
 
-    render json: {
-      errors: {
-        friendship: 'No relation between users'
-      }
-    }, status: 422 and false
+    @comment.errors.add(:friendship, 'No relation between users')
+    render json: { errors: @comment.errors.messages }, status: :unprocessable_entity and return
   end
 end

@@ -14,7 +14,7 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    # debugger
+
     if @user.save
       session[:auth_token] = @user.session_token
       render :create
@@ -38,9 +38,13 @@ class Api::UsersController < ApplicationController
   def search
     if params[:q].present?
       @users = User.where('first_name ILIKE :q OR last_name ILIKE :q', q: "%#{params[:q]}%")
+
       render :search
     else
-      render json: { error: 'No query provided' }, status: :bad_request
+      @users = User.new
+      @users.errors.add(:base, 'No query provided')
+
+      render json: { errors: @users.errors.messages }, status: :bad_request
     end
   end
 

@@ -6,34 +6,24 @@ class Api::ChatsController < ApplicationController
 
   def index
     @chats = @authenticated_user.chats
+    render json: { 'chats' => [] } if @chats.nil?
     render :index
   end
 
   def show
     @chat = Chat.find(params[:id])
-    debuger
-    if @chat
-      render :show
-    else
-      render json: { 'errors' => { 'chats' => 'Unable to fetch chat' } }, status: :unprocessable_entity
-
-    end
+    render :show
   end
 
   def create
     recipient = User.find(params[:recipient_id])
     sender = User.find(params[:sender_id])
-    # @chat = Chat.create(name: "#{@authenticated_user.display_name} & #{recipient.display_name}")
-    # ChatSubscription.create(chat: @chat, participant: @authenticated_user)
-    # ChatSubscription.create(chat: @chat, participant: recipient)
-    # debugger
-
     @chat = find_or_create_chat_between(sender, recipient)
 
     if @chat
       render :show
     else
-      render json: { 'errors' => { 'chats' => 'Unable to create chat' } }, status: :unprocessable_entity
+      render json: { errors: { chats: 'Unable to create chat' } }, status: :unprocessable_entity
     end
   end
 

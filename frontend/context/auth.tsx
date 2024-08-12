@@ -2,7 +2,7 @@ import React, { useState, createContext, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { fetchUserProfile, createIntro } from "../utils/profile"
 import { User, NewUserData, SessionData, AuthContextType } from "../utils/types"
-import { postUser, postSession, deleteSession } from "../utils/authentication"
+import { postUser, postSession, deleteSession } from "../utils/axios"
 import { calculateZodiac } from "../utils/helpers"
 
 interface AuthProviderProps {

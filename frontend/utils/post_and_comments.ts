@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios"
-import { customHeaders, checkResponse } from "./authentication"
+import { customHeaders, checkResponse } from "./axios"
 import { Post, Like, Comment, Url } from "./types"
 
 interface PostPayload {

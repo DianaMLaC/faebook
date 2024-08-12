@@ -4,8 +4,7 @@ class Api::PhotosController < ApplicationController
   # before_action :resize_before_save, only: [:create]
 
   def index
-    # Rails.logger.info 'In PhotosController#index'
-    @user = User.find_by(id: params[:user_id])
+    @user = User.find(params[:user_id])
     @photos = @user.photos.order(created_at: :desc)
 
     if @photos.empty?
@@ -16,18 +15,13 @@ class Api::PhotosController < ApplicationController
   end
 
   def show
-    @photo = Photo.includes(:likes, :comments).find_by(id: params[:id])
-    if @photo
-      render :show
-    else
-      render json: { 'Photos' => 'Photo not found' }, status: 404
-    end
+    @photo = Photo.includes(:likes, :comments).find(params[:id])
+    render :show
   end
 
   def create
     album = find_or_create_album
     @photo = album.photos.new(photo_params)
-    # debugger
 
     if @photo.save
       if @photo.image.attached?
@@ -37,22 +31,21 @@ class Api::PhotosController < ApplicationController
       end
       render :create
     else
-      render json: { errors: photo.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @photo.errors.messages }, status: :unprocessable_entity
     end
   end
 
   def update
-    # debugger
-    @photo = Photo.find_by(id: params[:id])
+    @photo = Photo.find(params[:id])
     if @photo.update(photo_params)
       render :show
     else
-      render json: @photo.errors, status: :unprocessable_entity
+      render json: { errors: @photo.errors.messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @photo = Photo.find_by(id: params[:id])
+    @photo = Photo.find(params[:id])
     @photo.delete
     render json: { 'photos' => 'photo deleted' }, status: 200
   end
@@ -65,7 +58,6 @@ class Api::PhotosController < ApplicationController
 
   def find_or_create_album
     album_name = params[:album_name] || 'Default'
-    # debugger
     @authenticated_user.albums.find_by(name: album_name) || @authenticated_user.albums.create(name: album_name)
   end
 
