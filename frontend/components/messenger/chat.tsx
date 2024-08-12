@@ -9,7 +9,7 @@ import { RiEmojiStickerFill } from "react-icons/ri"
 import { HiMiniGif } from "react-icons/hi2"
 import { useCable } from "../../context/cable"
 import { Message } from "../../utils/types"
-import { createMessage } from "../../utils/chats"
+import { createMessage } from "../../utils/axios"
 
 function ChatRoom({ onClose, chat }): React.ReactElement {
   const { profileUser, currentUser } = useAuth()
@@ -29,7 +29,6 @@ function ChatRoom({ onClose, chat }): React.ReactElement {
     if (!chat || !CableApp.cable || hasEffectRun) {
       return
     }
-    console.log("subscription created")
     CableApp.cable.subscriptions.create(
       {
         channel: "MessagingChannel",
@@ -37,8 +36,6 @@ function ChatRoom({ onClose, chat }): React.ReactElement {
       },
       {
         received: (data) => {
-          console.log({ data })
-          console.log({ messages })
           if (!messages?.some((message) => message.id === data.id)) {
             setMessages((prevMessages) => (prevMessages ? [...prevMessages, data] : [data]))
           }
@@ -51,8 +48,6 @@ function ChatRoom({ onClose, chat }): React.ReactElement {
 
   const handleSendMessage = () => {
     if (currentUser && messageBody.trim() !== "") {
-      console.log("sending message from:", currentUser)
-      // subscription.send({ message: message })
       createMessage(chat.id, messageBody, currentUser.id)
       setMessageBody("")
     }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useAuth } from "../../context/auth"
 import AlbumContainer from "./album"
-import { fetchAlbums } from "../../utils/profile"
+import { fetchAlbums } from "../../utils/axios"
 import { Album } from "../../utils/types"
 
 function Albums(): React.ReactElement {
@@ -17,10 +17,8 @@ function Albums(): React.ReactElement {
     async function fetchAlbumsData() {
       if (profileUser) {
         const albumsData = await fetchAlbums(profileUser.id)
-        // console.log("albumsData:", { albumsData })
         setAlbums(albumsData)
       }
-      // console.log("albums-state:", albums)
     }
 
     fetchAlbumsData()

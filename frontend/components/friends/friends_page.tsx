@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
 import { useFriends } from "../../context/friends"
-import { fetchFriendships } from "../../utils/profile"
+import { fetchFriendships } from "../../utils/axios"
 import FriendsIndex from "./friends_index"
 import FriendRequests from "./friend_requests"
 import PhotosPage from "../photos/photos-page"
 import PhotosProvider from "../../context/photos"
 
 function FriendsPage(): React.ReactElement {
-  const { currentUser, profileUser } = useAuth()
+  const { profileUser } = useAuth()
   const { acceptedFriends, pendingFriendships, setAcceptedFriends, setPendingFriendships } =
     useFriends()
 
@@ -21,7 +21,6 @@ function FriendsPage(): React.ReactElement {
         if (profileUser) {
           const friendshipData = await fetchFriendships(profileUser.id)
           setAcceptedFriends(friendshipData.friends.accepted)
-
           setPendingFriendships(friendshipData.friends.requests)
         }
       } catch (error) {

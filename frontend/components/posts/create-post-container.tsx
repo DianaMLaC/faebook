@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import ReactModal from "react-modal"
-// import PostForm from "./post-form"
 import { useAuth } from "../../context/auth"
 import NewPost from "./new-post"
 

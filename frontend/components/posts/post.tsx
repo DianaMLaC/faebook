@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react"
+import { useNavigate } from "react-router-dom"
 import { FaUserFriends, FaRegComment } from "react-icons/fa"
 import { BiSolidLike, BiLike } from "react-icons/bi"
-import { PiShareFat, PiPaperPlaneRightFill } from "react-icons/pi"
+import { PiShareFat } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
-import { toggleLike, fetchTopLevelComments, fetchUrl } from "../../utils/post_and_comments"
 import { usePosts } from "../../context/posts"
+import { toggleLike, fetchTopLevelComments } from "../../utils/axios"
+import { formatPostDate } from "../../utils/helpers"
 import Likes from "./likes"
 import Comments from "../comments/comments_index"
 import CommentForm from "../comments/comment_form"
-import { formatPostDate } from "../../utils/helpers"
-import { useNavigate } from "react-router-dom"
-
 import PhotoSmall from "../photos/photo-ts"
 import PostUrl from "./post-url"
 
@@ -27,7 +26,7 @@ function PostContainer({ post }): React.ReactElement {
   const postTimeStamp = formatPostDate(post.createdAt)
 
   useEffect(() => {
-    console.log(post)
+    // console.log(post)
     async function fetchCommentsData() {
       const commentsData = await fetchTopLevelComments(post.id, "post")
       setComments(commentsData.comments)

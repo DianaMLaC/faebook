@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
 import { usePosts } from "../../context/posts"
-import { fetchPosts } from "../../utils/post_and_comments"
+import { fetchPosts } from "../../utils/axios"
 import PostContainer from "./post"
 import { Post } from "../../utils/types"
 function PostsIndex(): React.ReactElement {
@@ -15,11 +15,9 @@ function PostsIndex(): React.ReactElement {
         const postsData = await fetchPosts(profileUser.id)
         postsData.posts.length > 0 ? setPostsDb(postsData.posts) : setPostsDb(null)
       }
-      // console.log("postsData from fetched posts:", postsData)
     }
 
     fetchPostsData()
-    // console.log("posts-state:", posts)
   }, [profileUser, setPostsDb, posts])
 
   return (

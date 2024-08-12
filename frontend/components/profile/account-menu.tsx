@@ -1,7 +1,7 @@
 import React from "react"
 import { useAuth } from "../../context/auth"
 import { PiUserSwitchFill } from "react-icons/pi"
-import { IoIosArrowForward, IoMdHelpCircle, IoMdSettings } from "react-icons/io"
+import { IoMdHelpCircle, IoMdSettings } from "react-icons/io"
 import { MdNightlight, MdFeedback } from "react-icons/md"
 import { IoLogOut } from "react-icons/io5"
 import { useNavigate } from "react-router-dom"

@@ -7,8 +7,7 @@ import { FaJediOrder } from "react-icons/fa"
 import { IoLocationSharp } from "react-icons/io5"
 import { useAuth } from "../../context/auth"
 import { Intro } from "../../utils/types"
-import { calculateZodiac } from "../../utils/helpers"
-import { updateIntro } from "../../utils/profile"
+import { updateIntro } from "../../utils/axios"
 
 function Overview(): React.ReactElement {
   const { currentUser, profileUser, setCurrentUser } = useAuth()

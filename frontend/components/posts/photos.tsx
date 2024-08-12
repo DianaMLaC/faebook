@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
 import PhotoSmall from "../photos/photo-ts"
-import { fetchUserPhotos } from "../../utils/profile"
+import { fetchUserPhotos } from "../../utils/axios"
 import { Photo } from "../../utils/types"
 import { useNavigate } from "react-router-dom"
 
@@ -14,7 +14,6 @@ function Photos(): React.ReactElement {
     async function fetchAllPhotosUrls() {
       if (profileUser) {
         const photosData = await fetchUserPhotos(profileUser.id)
-        console.log("photos of profileUser")
         const displayPhotos = photosData.length > 9 ? photosData.slice(0, 9) : photosData
         setPhotos(displayPhotos.length > 0 ? displayPhotos : null)
       }

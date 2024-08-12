@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from "react"
 import { Outlet } from "react-router-dom"
-import { fetchUserSuggestions } from "../utils/profile"
+import { fetchUserSuggestions } from "../utils/axios"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/auth"
 import { User } from "../utils/types"

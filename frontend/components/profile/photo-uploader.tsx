@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { uploadPhoto } from "../../utils/profile"
+import { uploadPhoto } from "../../utils/axios"
 import { CircleLoader } from "react-spinners"
 import { useAuth } from "../../context/auth"
 
@@ -23,19 +23,12 @@ function PhotoUpload({ updatePhoto, closeModalContainer, albumName }): React.Rea
     setIsUploading(true)
 
     const formData = new FormData()
-    console.log("photo[image]:", photoFile)
-    console.log("photo[description]:", description)
-    // console.log("photo[album_name]:", albumName)
-
     formData.append("photo[image]", photoFile)
     formData.append("photo[description]", description)
-    // formData.append("photo[album_name]", albumName)
     formData.append("album_name", albumName)
 
     try {
       const fileData = await uploadPhoto(formData)
-      console.log("PhotoData returned as fileData")
-      console.log("fileData:", fileData)
       updatePhoto(fileData.albumName, fileData.url)
 
       if (currentUser) {
@@ -48,8 +41,6 @@ function PhotoUpload({ updatePhoto, closeModalContainer, albumName }): React.Rea
         setCurrentUser(newUserData)
         sessionStorage.setItem("currentUser", JSON.stringify(newUserData))
       }
-
-      console.log("Data has been sent to parent with updatePhoto callback")
 
       closeModalContainer()
       setIsUploading(false)

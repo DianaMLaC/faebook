@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
-import { fetchFriendships } from "../../utils/profile"
+import { fetchFriendships } from "../../utils/axios"
 import PostsFriend from "./posts_friend"
 import { FriendshipFriend } from "../../utils/types"
 import { useNavigate } from "react-router-dom"

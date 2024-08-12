@@ -6,12 +6,9 @@ import { FaLink } from "react-icons/fa6"
 import { TbLibraryPhoto } from "react-icons/tb"
 import { IoMdArrowDropdown } from "react-icons/io"
 import { BiCheckboxChecked, BiSolidCheckboxChecked } from "react-icons/bi"
-import { createPost, postUrl } from "../../utils/post_and_comments"
-import { uploadPhoto } from "../../utils/profile"
+import { uploadPhoto, createPost, postUrl } from "../../utils/axios"
 import { usePosts } from "../../context/posts"
 import { Photo, Url } from "../../utils/types"
-import PostContainer from "./post"
-import { redirect } from "react-router-dom"
 
 function NewPost({ closeModalContainer }): React.ReactElement {
   const { currentUser, profileUser } = useAuth()
@@ -83,7 +80,6 @@ function NewPost({ closeModalContainer }): React.ReactElement {
 
     try {
       const fileData = await uploadPhoto(formData)
-      console.log({ fileData })
       setPostContentId(fileData.id)
       setPostPhotoPreview(fileData)
     } catch (error) {

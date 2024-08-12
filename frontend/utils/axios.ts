@@ -375,6 +375,21 @@ export const uploadPhoto = async (formData: FormData): Promise<Photo> => {
   }
 }
 
+export const fetchPhoto = async (userId: string, photoId: string): Promise<Photo> => {
+  try {
+    const response: AxiosResponse<Photo> = await apiClient.get(`/users/${userId}/photos/${photoId}`)
+    return response.data
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      const errorMessage = extractErrorMessage(err)
+      console.error("Error in fetchPhoto API:", errorMessage)
+      throw new Error(errorMessage)
+    }
+    console.error("Non-Axios error in fetchPhoto API:", err)
+    throw err
+  }
+}
+
 export const editPhoto = async (photoId: string, description: string): Promise<Photo> => {
   try {
     const payload = {

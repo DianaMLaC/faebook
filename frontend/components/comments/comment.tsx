@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react"
+import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/auth"
 import { usePosts } from "../../context/posts"
 import { usePhotos } from "../../context/photos"
-import Likes from "../posts/likes"
-import { toggleLike } from "../../utils/post_and_comments"
+import { toggleLike } from "../../utils/axios"
 import { formatCommentDate } from "../../utils/helpers"
+import { Comment } from "../../utils/types"
 import Comments from "./comments_index"
 import CommentForm from "./comment_form"
-import { Comment, User } from "../../utils/types"
-import { useNavigate } from "react-router-dom"
+import Likes from "../posts/likes"
 
 interface CommentContainerProps {
   comment: Comment

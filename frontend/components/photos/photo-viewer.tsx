@@ -8,7 +8,7 @@ import { RiDeleteBinLine } from "react-icons/ri"
 import { FaTag } from "react-icons/fa6"
 import { useAuth } from "../../context/auth"
 import { Photo } from "../../utils/types"
-import { deletePhoto, fetchAlbum, fetchPhoto } from "../../utils/profile"
+import { deletePhoto, fetchAlbum, fetchPhoto } from "../../utils/axios"
 import PhotoDetails from "./photo-details"
 import PhotosProvider from "../../context/photos"
 
@@ -24,7 +24,6 @@ function PhotoViewer(): React.ReactElement {
       if (profileUser && photoId) {
         const details = await fetchPhoto(profileUser.id, photoId)
         setPhotoDetails(details)
-        // setPhotoLikes(details.likes)
         const album = await fetchAlbum(profileUser.id, details.albumId)
         setAlbumPhotos(album.photos)
       }

@@ -2,9 +2,7 @@ import React, { useState } from "react"
 import CommentContainer from "./comment"
 
 function Comments({ comments, parentType }): React.ReactElement {
-  // console.log("comments:", comments)
   const [showAll, setShowAll] = useState(false)
-  // console.log("comments list:", comments)
   const displayedComments = showAll ? comments : comments.slice(-3).reverse()
   return (
     <div>

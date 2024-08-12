@@ -12,7 +12,7 @@ import { RxCross2 } from "react-icons/rx"
 import { deleteFriendship, fetchFriendships, requestFriendship } from "../../utils/profile"
 import { Chat, User } from "../../utils/types"
 import ChatRoom from "../messenger/chat"
-import { initiateChat } from "../../utils/chats"
+import { initiateChat } from "../../utils/axios"
 
 function ProfileHeader(): React.ReactElement {
   const { currentUser, setCurrentUser, profileUser } = useAuth()

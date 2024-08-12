@@ -6,12 +6,11 @@ import { useAuth } from "../../context/auth"
 import { usePhotos } from "../../context/photos"
 import { RiEditLine } from "react-icons/ri"
 import { BiCheckboxChecked } from "react-icons/bi"
-import { toggleLike, fetchTopLevelComments } from "../../utils/post_and_comments"
+import { formatPostDate } from "../../utils/helpers"
+import { toggleLike, fetchTopLevelComments, editPhoto } from "../../utils/axios"
 import Likes from "../posts/likes"
 import Comments from "../comments/comments_index"
 import CommentForm from "../comments/comment_form"
-import { formatPostDate } from "../../utils/helpers"
-import { editPhoto } from "../../utils/profile"
 
 function PhotoDetails({ photo }) {
   const { currentUser, profileUser } = useAuth()

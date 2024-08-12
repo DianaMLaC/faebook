@@ -1,13 +1,9 @@
 import React, { useState } from "react"
-import { updateFriendship, deleteFriendship } from "../../utils/profile"
+import { updateFriendship, deleteFriendship } from "../../utils/axios"
 import { useFriends } from "../../context/friends"
-import { Friendship } from "../../utils/types"
 
 function Request({ friend }): React.ReactElement {
-  const [friendshipStatus, setFriendshipStatus] = useState(friend.friendshipStatus)
   const { addAcceptedFriend, removePendingFriendship } = useFriends()
-
-  // console.log("friend:", friend)
 
   const acceptFriendship = async (e) => {
     e.preventDefault()
@@ -15,8 +11,6 @@ function Request({ friend }): React.ReactElement {
     try {
       const acceptFriendship = await updateFriendship(friend.friendshipId)
       if (acceptFriendship.friendshipStatus) {
-        console.log("friendship accepted")
-        // setFriendshipStatus(acceptFriendship.friendshipStatus)
         addAcceptedFriend(friend)
       }
     } catch (err) {

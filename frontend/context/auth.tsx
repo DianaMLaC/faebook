@@ -1,8 +1,7 @@
 import React, { useState, createContext, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { fetchUserProfile, createIntro } from "../utils/profile"
 import { User, NewUserData, SessionData, AuthContextType } from "../utils/types"
-import { postUser, postSession, deleteSession } from "../utils/axios"
+import { postUser, postSession, deleteSession, fetchUserProfile, createIntro } from "../utils/axios"
 import { calculateZodiac } from "../utils/helpers"
 
 interface AuthProviderProps {
@@ -29,7 +28,7 @@ function AuthProvider({ children }: AuthProviderProps): React.ReactElement {
 
   async function loadUserProfile(userId: string) {
     const profileData = await fetchUserProfile(userId)
-    console.log("loading user profile:", profileData)
+    // console.log("loading user profile:", profileData)
     setProfileUser(profileData)
   }
 
@@ -42,10 +41,9 @@ function AuthProvider({ children }: AuthProviderProps): React.ReactElement {
       zodiac: calculateZodiac(dbUser.dateOfBirth),
     }
     try {
-      const response = await createIntro(dbUser.id, intro)
-      console.log("Intro created:", response)
+      await createIntro(dbUser.id, intro)
     } catch (err) {
-      console.error("Error in create Intro api:", err.message)
+      console.error(err)
     }
 
     const updatedUserData = await fetchUserProfile(dbUser.id)

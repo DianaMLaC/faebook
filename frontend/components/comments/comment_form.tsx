@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from "react"
 import { PiPaperPlaneRightFill } from "react-icons/pi"
 import { useAuth } from "../../context/auth"
-import { createComment } from "../../utils/post_and_comments"
+import { createComment } from "../../utils/axios"
 import { CircleLoader } from "react-spinners"
 import { Comment } from "../../utils/types"
 

@@ -3,7 +3,7 @@ import { useAuth } from "../../context/auth"
 import { RiEditLine } from "react-icons/ri"
 import { BiCheckboxChecked } from "react-icons/bi"
 import { Intro } from "../../utils/types"
-import { updateIntro } from "../../utils/profile"
+import { updateIntro } from "../../utils/axios"
 
 function Intro(): React.ReactElement {
   const { profileUser, currentUser, setCurrentUser } = useAuth()
