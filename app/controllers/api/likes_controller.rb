@@ -38,9 +38,11 @@ class Api::LikesController < ApplicationController
     if likeable_type
       @likeable = likeable_type[1].find_by(id: params[likeable_type[0]])
       unless @likeable
-        render json: { errors: { likeable_type[1].name.downcase => ["#{likeable_type[1].name} not found"] } }, status: :not_found and return
+        render json: { errors: { likeable_type[1].name.downcase => ["#{likeable_type[1].name} not found"] } },
+               status: :not_found and return
       end
     else
       render json: { errors: { base: ['Likeable type not found'] } }, status: :not_found and return
     end
+  end
 end
