@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { HiHome } from "react-icons/hi2"
+import { MdHome } from "react-icons/md"
 import { BsFillMortarboardFill } from "react-icons/bs"
 import { CiCirclePlus } from "react-icons/ci"
 import { TbCircleTriangle } from "react-icons/tb"
@@ -16,18 +16,9 @@ function Overview(): React.ReactElement {
   const [house, setHouse] = useState(profileUser?.intro?.house || "")
   const [elements, setElements] = useState(profileUser?.intro?.elements || "")
   const [order, setOrder] = useState(profileUser?.intro?.order || "")
-  // const [zodiac, setZodiac] = useState(profileUser?.intro?.zodiac || "")
   const [editingField, setEditingField] = useState<string | null>(null)
 
   const isCurrentUser = currentUser?.id === profileUser?.id
-
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     console.log({ currentUser })
-  //     const dob = currentUser.dateOfBirth
-  //     setZodiac(calculateZodiac(dob))
-  //   }
-  // }, [currentUser])
 
   const renderFieldInput = (field: keyof Intro) => {
     switch (field) {
@@ -55,7 +46,7 @@ function Overview(): React.ReactElement {
             type="text"
             value={order}
             onChange={(e) => setOrder(e.target.value)}
-            placeholder="Type your oder"
+            placeholder="Type your order"
           />
         )
       case "elements":
@@ -111,7 +102,7 @@ function Overview(): React.ReactElement {
       case "elements":
         return <TbCircleTriangle />
       case "house":
-        return <HiHome />
+        return <MdHome />
       default:
         return <div></div>
     }
