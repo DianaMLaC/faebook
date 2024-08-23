@@ -21,11 +21,13 @@ function PhotoUpload({ updatePhoto, closeModalContainer, albumName }): React.Rea
     }
 
     setIsUploading(true)
+    console.log({ photoFile })
 
     const formData = new FormData()
     formData.append("photo[image]", photoFile)
     formData.append("photo[description]", description)
     formData.append("album_name", albumName)
+    console.log({ formData })
 
     try {
       const fileData = await uploadPhoto(formData)

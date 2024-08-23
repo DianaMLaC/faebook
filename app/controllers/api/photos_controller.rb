@@ -21,13 +21,14 @@ class Api::PhotosController < ApplicationController
 
   def create
     album = find_or_create_album
+    debugger
     @photo = album.photos.new(photo_params)
 
     if @photo.save
       if @photo.image.attached?
-        @photo.update(photo_url: url_for(@photo.image))
+        @photo.update(photo_url: rails_blob_path(@photo.image))
         @photo.save
-        album.update(cover_photo_url: url_for(@photo.image))
+        album.update(cover_photo_url: rails_blob_path(@photo.image))
       end
       render :create
     else

@@ -362,7 +362,16 @@ export const fetchUserPhotos = async (userId: string): Promise<Photo[]> => {
 
 export const uploadPhoto = async (formData: FormData): Promise<Photo> => {
   try {
-    const response: AxiosResponse<Photo> = await apiClient.post("/photos", formData)
+    const csrfToken = getCsrfToken()
+
+    const response: AxiosResponse<Photo> = await axios.post("/photos", formData, {
+      baseURL: apiClient.defaults.baseURL, // Use the same baseURL as apiClient
+      headers: {
+        "Content-Type": "multipart/form-data", // Set the correct content type for FormData
+        "X-CSRF-Token": csrfToken, // Include CSRF token
+      },
+    })
+
     return response.data
   } catch (err) {
     if (axios.isAxiosError(err)) {
