@@ -21,7 +21,6 @@ class Api::PhotosController < ApplicationController
 
   def create
     album = find_or_create_album
-    debugger
     @photo = album.photos.new(photo_params)
 
     if @photo.save

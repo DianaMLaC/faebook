@@ -55,3 +55,13 @@ export const calculateZodiac = (dateOfBirth: string): string => {
   if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) return "Capricorn"
   return ""
 }
+
+export const icon = {
+  logo: "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjQxLCJwdXIiOiJibG9iX2lkIn19--f03c38b1aacd23d60193de4ecb2cd9c1fabf3d95/I%20(5).png",
+  video:
+    "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjM4LCJwdXIiOiJibG9iX2lkIn19--de90f4847543ad853f7abfc9fa4eeed54eafb592/live-video-47b604bc1a4775322aac2ba15ab09681891be4de298889b12d37d63b3298d2bb.png",
+  photo:
+    "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjM5LCJwdXIiOiJibG9iX2lkIn19--b5120ae9624c5743157989e320b82f428f17411f/photo-video-a4153dea47c25b60c03b6f448bc566439129d781bcb21ba5f9c52fe7e4c41c20.png",
+  event:
+    "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjQwLCJwdXIiOiJibG9iX2lkIn19--b246bd924800d182c3abac0868e71a9144d4cc21/life-event-5e5f06fb17a6788e156f1f8d3fc62268af400476d42b3c8b100c576e9c67c587.png",
+}

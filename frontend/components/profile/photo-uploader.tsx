@@ -31,6 +31,7 @@ function PhotoUpload({ updatePhoto, closeModalContainer, albumName }): React.Rea
 
     try {
       const fileData = await uploadPhoto(formData)
+      console.log({ fileData })
       updatePhoto(fileData.albumName, fileData.url)
 
       if (currentUser) {

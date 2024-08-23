@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/auth"
 import { User } from "../utils/types"
 import NavRight from "./user_profile_details/nav-right"
+import { icon } from "../utils/helpers"
 
 function NavBar(): React.ReactElement {
   const { setProfileUser } = useAuth()
@@ -44,7 +45,7 @@ function NavBar(): React.ReactElement {
       <header className="nav-bar">
         <div className="nav-left">
           <div className="nav-logo">
-            <img className="nav-logo-img" src="/assets/images/logo.png" alt="Faebook" />
+            <img className="nav-logo-img" src={icon.logo} alt="Faebook" />
           </div>
           <div className="nav-search">
             <input
