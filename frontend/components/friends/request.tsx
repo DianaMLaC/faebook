@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { updateFriendship, deleteFriendship } from "../../utils/axios"
 import { useFriends } from "../../context/friends"
+import { icon } from "../../utils/helpers"
 
 function Request({ friend }): React.ReactElement {
   const { addAcceptedFriend, removePendingFriendship } = useFriends()
@@ -40,11 +41,7 @@ function Request({ friend }): React.ReactElement {
             alt={friend.displayName}
           />
         ) : (
-          <img
-            className="missing-profile-photo"
-            src="/assets/images/missing-profile-pic.png"
-            alt="Faebook"
-          />
+          <img className="missing-profile-photo" src={icon.noProfilePhoto} alt="Faebook" />
         )}
       </div>
       <div className="friend-request-bottom">

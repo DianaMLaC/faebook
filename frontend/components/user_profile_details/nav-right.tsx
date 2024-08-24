@@ -5,6 +5,7 @@ import { IoMdNotifications } from "react-icons/io"
 import { MdKeyboardArrowDown } from "react-icons/md"
 import { useAuth } from "../../context/auth"
 import AccountMenu from "../profile/account-menu"
+import { icon } from "../../utils/helpers"
 
 function NavRight(): React.ReactElement {
   const { currentUser } = useAuth()
@@ -31,11 +32,7 @@ function NavRight(): React.ReactElement {
           {currentUser?.profilePhotoUrl ? (
             <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
           ) : (
-            <img
-              className="missing-profile-photo"
-              src="/assets/images/missing-profile-pic.png"
-              alt="Faebook"
-            />
+            <img className="missing-profile-photo" src={icon.noProfilePhoto} alt="Faebook" />
           )}
         </div>
         <div className="account-menu-toggle">

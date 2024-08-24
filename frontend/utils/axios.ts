@@ -419,7 +419,7 @@ export const editPhoto = async (photoId: string, description: string): Promise<P
 
 export const deletePhoto = async (photoId: string) => {
   try {
-    const response = await apiClient.patch(`/photos/${photoId}`)
+    const response = await apiClient.delete(`/photos/${photoId}`)
     return response.data
   } catch (err) {
     if (axios.isAxiosError(err)) {

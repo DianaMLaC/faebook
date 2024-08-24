@@ -7,6 +7,7 @@ import { useAuth } from "../../context/auth"
 import { usePosts } from "../../context/posts"
 import { toggleLike, fetchTopLevelComments } from "../../utils/axios"
 import { formatPostDate } from "../../utils/helpers"
+import { icon } from "../../utils/helpers"
 import Likes from "./likes"
 import Comments from "../comments/comments_index"
 import CommentForm from "../comments/comment_form"
@@ -85,11 +86,7 @@ function PostContainer({ post }): React.ReactElement {
             {post.author.profilePhotoUrl ? (
               <img className="profile-photo" src={post.author.profilePhotoUrl} alt="Profile" />
             ) : (
-              <img
-                className="missing-profile-photo"
-                src="/assets/images/missing-profile-pic.png"
-                alt="Faebook"
-              />
+              <img className="missing-profile-photo" src={icon.noProfilePhoto} alt="Faebook" />
             )}
           </div>
           <div className="post-details">

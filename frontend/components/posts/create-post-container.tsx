@@ -27,11 +27,7 @@ function CreatePost(): React.ReactElement {
           {currentUser?.profilePhotoUrl ? (
             <img className="profile-photo" src={currentUser.profilePhotoUrl} alt="Profile" />
           ) : (
-            <img
-              className="missing-profile-photo"
-              src="/assets/images/missing-profile-pic.png"
-              alt="Faebook"
-            />
+            <img className="missing-profile-photo" src={icon.noProfilePhoto} alt="Faebook" />
           )}
         </div>
         <div className="create-post-input-bar" onClick={openModal}>

@@ -9,6 +9,7 @@ import { Comment } from "../../utils/types"
 import Comments from "./comments_index"
 import CommentForm from "./comment_form"
 import Likes from "../posts/likes"
+import { icon } from "../../utils/helpers"
 
 interface CommentContainerProps {
   comment: Comment
@@ -98,11 +99,7 @@ function CommentContainer({ comment, parentType }: CommentContainerProps): React
         {author?.profilePhotoUrl ? (
           <img className="profile-photo" src={author.profilePhotoUrl} alt="Profile" />
         ) : (
-          <img
-            className="missing-profile-photo"
-            src="/assets/images/missing-profile-pic.png"
-            alt="Faebook"
-          />
+          <img className="missing-profile-photo" src={icon.noProfilePhoto} alt="Faebook" />
         )}
       </div>
       <div className="comment-details">

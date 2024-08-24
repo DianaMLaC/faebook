@@ -9,6 +9,7 @@ import { BiCheckboxChecked, BiSolidCheckboxChecked } from "react-icons/bi"
 import { uploadPhoto, createPost, postUrl } from "../../utils/axios"
 import { usePosts } from "../../context/posts"
 import { Photo, Url } from "../../utils/types"
+import { icon } from "../../utils/helpers"
 
 function NewPost({ closeModalContainer }): React.ReactElement {
   const { currentUser, profileUser } = useAuth()
@@ -223,11 +224,7 @@ function NewPost({ closeModalContainer }): React.ReactElement {
           {currentUser?.profilePhotoUrl ? (
             <img className="profile-photo" src={currentUser?.profilePhotoUrl} alt="Profile" />
           ) : (
-            <img
-              className="missing-profile-photo"
-              src="/assets/images/missing-profile-pic.png"
-              alt="Faebook"
-            />
+            <img className="missing-profile-photo" src={icon.noProfilePhoto} alt="Faebook" />
           )}
         </div>
         <div>

@@ -64,4 +64,6 @@ export const icon = {
     "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjM5LCJwdXIiOiJibG9iX2lkIn19--b5120ae9624c5743157989e320b82f428f17411f/photo-video-a4153dea47c25b60c03b6f448bc566439129d781bcb21ba5f9c52fe7e4c41c20.png",
   event:
     "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjQwLCJwdXIiOiJibG9iX2lkIn19--b246bd924800d182c3abac0868e71a9144d4cc21/life-event-5e5f06fb17a6788e156f1f8d3fc62268af400476d42b3c8b100c576e9c67c587.png",
+  noProfilePhoto:
+    "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjQ3LCJwdXIiOiJibG9iX2lkIn19--26b5868d904c8a5011f1a4f76bf18f235ce0a2a3/I%20(6).png",
 }

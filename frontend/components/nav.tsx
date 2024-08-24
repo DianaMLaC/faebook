@@ -63,7 +63,7 @@ function NavBar(): React.ReactElement {
                     ) : (
                       <img
                         className="missing-profile-photo"
-                        src="/assets/images/missing-profile-pic.png"
+                        src={icon.noProfilePhoto}
                         alt="Faebook"
                       />
                     )}

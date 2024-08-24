@@ -13,6 +13,7 @@ import { deleteFriendship, fetchFriendships, requestFriendship } from "../../uti
 import { Chat, User } from "../../utils/types"
 import ChatRoom from "../messenger/chat"
 import { initiateChat } from "../../utils/axios"
+import { icon } from "../../utils/helpers"
 
 function ProfileHeader(): React.ReactElement {
   const { currentUser, setCurrentUser, profileUser } = useAuth()
@@ -210,11 +211,7 @@ function ProfileHeader(): React.ReactElement {
               {profileUser?.profilePhotoUrl ? (
                 <img className="profile-photo" src={profileUser.profilePhotoUrl} alt="Profile" />
               ) : (
-                <img
-                  className="missing-profile-photo"
-                  src="/assets/images/missing-profile-pic.png"
-                  alt="Faebook"
-                />
+                <img className="missing-profile-photo" src={icon.noProfilePhoto} alt="Faebook" />
               )}
             </div>
             {currentUser?.id === profileUser?.id && (

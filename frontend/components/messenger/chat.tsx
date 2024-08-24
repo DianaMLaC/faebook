@@ -10,6 +10,7 @@ import { HiMiniGif } from "react-icons/hi2"
 import { useCable } from "../../context/cable"
 import { Message } from "../../utils/types"
 import { createMessage } from "../../utils/axios"
+import { icon } from "../../utils/helpers"
 
 function ChatRoom({ onClose, chat }): React.ReactElement {
   const { profileUser, currentUser } = useAuth()
@@ -69,11 +70,7 @@ function ChatRoom({ onClose, chat }): React.ReactElement {
             {profileUser?.profilePhotoUrl ? (
               <img className="profile-photo" src={profileUser.profilePhotoUrl} alt="Profile" />
             ) : (
-              <img
-                className="missing-profile-photo"
-                src="/assets/images/missing-profile-pic.png"
-                alt="Faebook"
-              />
+              <img className="missing-profile-photo" src={icon.noProfilePhoto} alt="Faebook" />
             )}
           </div>
           <div className="chat-header-user-details">
