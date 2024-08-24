@@ -8,7 +8,7 @@ import PhotosPage from "../photos/photos-page"
 import PhotosProvider from "../../context/photos"
 
 function FriendsPage(): React.ReactElement {
-  const { profileUser } = useAuth()
+  const { profileUser, currentUser } = useAuth()
   const { acceptedFriends, pendingFriendships, setAcceptedFriends, setPendingFriendships } =
     useFriends()
 
@@ -37,12 +37,25 @@ function FriendsPage(): React.ReactElement {
     setActiveLink(view)
   }
 
+  // const getViewComponent = () => {
+  //   switch (activeView) {
+  //     case "allFriends":
+  //       return <FriendsIndex friends={acceptedFriends} />
+  //     case "friendRequests":
+  //       return <FriendRequests requests={pendingFriendships} />
+  //     default:
+  //       return null
+  //   }
+  // }
+
   const getViewComponent = () => {
     switch (activeView) {
       case "allFriends":
         return <FriendsIndex friends={acceptedFriends} />
       case "friendRequests":
-        return <FriendRequests requests={pendingFriendships} />
+        return profileUser?.id === currentUser?.id ? (
+          <FriendRequests requests={pendingFriendships} />
+        ) : null
       default:
         return null
     }
