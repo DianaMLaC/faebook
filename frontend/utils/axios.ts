@@ -282,6 +282,21 @@ export const fetchPosts = async (userId: string): Promise<{ posts: Post[] }> => 
   }
 }
 
+export const destroyPost = async (postId: string) => {
+  try {
+    const response = await apiClient.delete(`/posts/${postId}`)
+    return response.data
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      const errorMessage = extractErrorMessage(err)
+      console.error("Error in deletePost API:", errorMessage)
+      throw new Error(errorMessage)
+    }
+    console.error("Non-Axios error in deletePost API:", err)
+    throw err
+  }
+}
+
 // LIKES
 export const toggleLike = async (likeable: string, likeableId: string): Promise<Like> => {
   try {

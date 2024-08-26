@@ -192,6 +192,7 @@ export interface FriendsContextType {
 export interface PostsContextType {
   posts: Post[]
   addPost: (newPost: Post) => void
+  deletePost: (postId: string) => void
   addLikeToPost: (postId: string, like: Like) => void
   deleteLikeFromPost: (postId: string, likeId: string) => void
   addCommentToPost: (postId: string, comment: Comment) => void

@@ -1,5 +1,6 @@
 class Api::PostsController < ApplicationController
-  before_action :must_be_authorized, :set_user_profile
+  before_action :must_be_authorized
+  before_action :set_user_profile, only: %i[create index]
   before_action :ensure_relation, only: %i[create]
 
   def index
@@ -22,6 +23,12 @@ class Api::PostsController < ApplicationController
     else
       render json: { errors: @post.errors.messages }, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @post = Post.find(params[:id])
+    @post.delete
+    render json: { 'posts' => 'post deleted' }, status: 200
   end
 
   private

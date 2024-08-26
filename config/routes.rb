@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       collection do
         get 'search'
       end
-      resources :posts, only: %i[create index show]
+      resources :posts, only: %i[create index]
       resources :friendships, only: %i[create index show]
       resources :albums, only: %i[index show create]
       resources :photos, only: %i[index show]
@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     end
 
     resources :photos, only: %i[create update destroy]
+    resources :posts, only: %i[show destroy]
+
     resources :post_urls, only: [:create] do
       collection do
         get 'get_api_key'

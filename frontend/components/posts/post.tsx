@@ -6,7 +6,7 @@ import { PiShareFat } from "react-icons/pi"
 import { RiDeleteBinLine } from "react-icons/ri"
 import { useAuth } from "../../context/auth"
 import { usePosts } from "../../context/posts"
-import { toggleLike, fetchTopLevelComments } from "../../utils/axios"
+import { toggleLike, fetchTopLevelComments, destroyPost } from "../../utils/axios"
 import { formatPostDate } from "../../utils/helpers"
 import { icon } from "../../utils/helpers"
 import Likes from "./likes"
@@ -19,7 +19,7 @@ function PostContainer({ post }): React.ReactElement {
   const navigate = useNavigate()
   const { currentUser } = useAuth()
   const [likes, setLikes] = useState(post.likes || [])
-  const { addLikeToPost, deleteLikeFromPost, addCommentToPost } = usePosts()
+  const { addLikeToPost, deleteLikeFromPost, addCommentToPost, deletePost } = usePosts()
   const [likedByCurrentUser, setLikedByCurrentUser] = useState(
     post.likes.some((like) => like.liker.id === currentUser?.id)
   )
@@ -81,6 +81,14 @@ function PostContainer({ post }): React.ReactElement {
     navigate(`/profile-page/${post.author.id}/posts`)
   }
 
+  const handleDelete = async (e) => {
+    e.preventDefault()
+    const deletePostResponse = await destroyPost(post.id)
+    if (deletePostResponse) {
+      deletePost(post.id)
+    }
+  }
+
   return (
     <div className="post-container">
       <header className="post-header">
@@ -104,7 +112,7 @@ function PostContainer({ post }): React.ReactElement {
         </div>
         {toggleMore && (
           <div className="more-menu">
-            <div className="delete-post">
+            <div className="delete-post" onClick={handleDelete}>
               <RiDeleteBinLine />
             </div>
           </div>

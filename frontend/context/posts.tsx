@@ -14,6 +14,10 @@ function PostsProvider({ children }: PostsProviderProps): React.ReactElement {
     setPosts((prevPosts): Post[] => [newPost, ...prevPosts])
   }
 
+  function deletePost(postId: string): void {
+    setPosts((prevPosts): Post[] => prevPosts.filter((post) => post.id !== postId))
+  }
+
   // Add a like to a specific post
   function addLikeToPost(postId: string, like: Like): void {
     setPosts((prevPosts): Post[] =>
@@ -121,6 +125,7 @@ function PostsProvider({ children }: PostsProviderProps): React.ReactElement {
       value={{
         posts,
         addPost,
+        deletePost,
         addLikeToPost,
         deleteLikeFromPost,
         addCommentToPost,
