@@ -7,7 +7,7 @@ function Comments({ comments, parentType }): React.ReactElement {
   return (
     <div>
       {comments.length > 3 && (
-        <button onClick={() => setShowAll(!showAll)}>
+        <button className="comments-display" onClick={() => setShowAll(!showAll)}>
           {showAll ? "Show Less" : "View More Comments"}
         </button>
       )}

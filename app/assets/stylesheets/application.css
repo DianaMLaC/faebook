@@ -147,7 +147,7 @@ body {
 }
 
 .login-container {
-  min-width:400px;
+  width:400px;
   background-color: var(--background-color);
   padding: 20px;
   /* border-radius: 8px; */
@@ -1484,6 +1484,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   border-radius: 10px;
   padding: 10px;
   display: flex;
+  flex-direction: row;
 }
 
 
@@ -2404,6 +2405,21 @@ ul.friends-display-grid {
   background: transparent;
 }
 
+.comments-display {
+  border: transparent;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 8px 12px;
+  margin-left: 6px;
+
+}
+
+.comments-display:hover {
+  font-size: 16px;
+  color: var(--primary-button-hover);
+}
+
 /* POST */
 
 .post-container{
@@ -2472,7 +2488,7 @@ ul.friends-display-grid {
 }
 
 .avatar {
-  min-width: 40px; 
+  width: 40px; 
   height: 40px;
   border-radius: 50%; 
   overflow: hidden;
@@ -3347,6 +3363,10 @@ align-self: center;
     flex-direction: column;
   }
 
+  .login-container {
+    max-width: 400px;
+  }
+
   .faebook-welcome {
     align-items: center;
     margin-right: 0px;
@@ -3380,6 +3400,8 @@ align-self: center;
   .menu-see-all-profiles {
     margin: 0px;
     font-size: 12px;
+    font-weight: 600px;
+
   }
 
   .menu-item {
@@ -3433,20 +3455,27 @@ align-self: center;
 
   .profile-header-nav-buttons {
     margin-top: 4px; 
+    margin-bottom: 24px;
     flex-direction: column;
+    margin-left: 0px;
   }
 
   .add-to-story-button, .edit-profile-button, .messenger-button, .add-friend-button, .cancel-friendship-button, .already-friends-button {
     font-size: 10px;
+    height: 22px;
+    width: 86px;
+    padding: 2px 8px;
     margin-bottom: 4px;
-    padding-left: 16px;
-    padding-right: 16px; 
   }
 
   .profile-header-nav {
     margin-left: 6px;
     margin-right: 6px;
     height: 44px;
+  }
+
+  .profile-header-nav-links {
+    overflow: scroll;
   }
 
   .profile-header-nav-links > * {
@@ -3467,24 +3496,41 @@ align-self: center;
     border-radius: 0;
   }
 
-  /* .photo-container-posts-photos {
-    width: 100px;
-    height: 100px;
-    margin: 5px;
-  } */
+  .photo-container-posts-photos {
+    width: 80px;
+    height: 80px;
+    margin: 4px;
+  }
+  
+  .posts-friend-photo {
+    width: 80px;
+    height: 80px;
+    margin: 4px;
+  }
+
+  .photo-container-index {
+    width: 80px;
+    height: 80px;
+    margin: 4px;
+  }
+  
 
   .more-button {
-    font-size: 18px;
-    width: 30px;
-    height: 30px;
+    font-size: 16px;
+    width: 24px;
+    height: 24px;
 
   }
 
   .more-menu {
     font-size: 14px;
-    right: 60px;
-    padding: 6px 10px;
-    top: 13px;
+    right: 54px;
+    padding: 4px 8px;
+    top: 12px;
+  }
+
+  .post-body {
+    font-size: 18px;
   }
 
   .about-me-nav {
@@ -3506,4 +3552,177 @@ align-self: center;
  
 }
 
+@media  (max-width: 500px) {
+  .start-page-items {
+    width: 300px;
+    height: 600px;
+    flex-direction: column;
+  }
+
+  .login-container {
+    width: 260px;
+    padding: 10px;
+  }
+
+  .nav-bar {
+    height: 36px;
+    padding: 4px;
+  }
+
+  .nav-logo {
+    padding-left: 0px;
+    height: 30px;
+    width: 30px;
+
+  }
+
+  .nav-search {
+    width: 120px;
+    margin-left: 4px;
+    height: 30px;
+  }
+
+  .nav-create-button, .nav-messenger-button, .nav-notifications-button {
+    height: 30px;
+    margin-right: 4px;
+    font-size: 18px;
+    min-width: 30px;
+  }
+
+  .nav-account-button {
+    height: 30px;
+    width: 30px;
+    position: relative;
+  }
+
+  .avatar {
+    width: 30px; 
+    height: 30px;
+  }
+  
+  .account-menu-toggle {
+    position: absolute;
+    z-index: 10;
+    top: 16px;
+    right: 8px;
+    font-size: 14px;
+  }
+  
+
+
+  .account-menu-container {
+    width: 200px;
+    right: -15px;
+  }
+
+  .menu-banner {
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+
+  .menu-see-all-profiles span{
+    margin: 0px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px;
+  }
+
+  .menu-item {
+    font-size: 12px;
+  }
+
+  .menu-icon {
+    font-size: 18px;
+    width: 30px;
+    height: 30px;
+  }
+
+
+  .cover-photo-container {
+    height: 160px;
+  }
+
+
+  .profile-photo-container {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-photo-button-container {
+    top: 50px;
+    left: 50px;
+  }
+
+  .profile-display-name-container {
+    padding: 8px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+
+  .profile-display-name {
+    font-size: 18px;
+    margin-left: 86px;
+    margin-top: 4px;
+    margin-bottom: 26px;
+  }
+
+  .profile-header-nav-buttons {
+    margin-top: 4px; 
+    flex-direction: column;
+  }
+
+  .add-to-story-button, .edit-profile-button, .messenger-button, .add-friend-button, .cancel-friendship-button, .already-friends-button {
+    font-size: 10px;
+    margin-bottom: 4px;
+    padding: 2px 8px;
+  }
+
+  .post-header {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 6px;
+    margin-bottom: 6px;
+
+  }
+
+  .post-comment {
+    margin: 4px 8px;
+  }
+
+  .friend-accepted-container {
+    padding: 8px;
+  }
+
+  .friend-accepted-photo {
+    height: 50px;
+  }
+
+  .friend-accepted-photo img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .friend-accepted-name {
+    font-size: 12px;
+  }
+
+  .about-me-container {
+    flex-direction: column;
+  }
+
+  .about-me-nav {
+    border-bottom: 2px solid var(--shade-background-color);
+    padding: 0px;
+  }
+
+  .about-me-content {
+    border: transparent;
+    padding: 0px;
+  }
+
+  .add-photo-button {
+    font-size: 12px;
+  }
+
+}
   

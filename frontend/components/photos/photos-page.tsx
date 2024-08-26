@@ -34,8 +34,8 @@ function PhotosPage(): React.ReactElement {
           <h2>Photos</h2>
 
           <div>
-            <button className="add-photo-button">Add photos/video</button>
-            <div className="photo-header-more-button">...</div>
+            {/* <button className="add-photo-button">Add photos/video</button> */}
+            {/* <div className="photo-header-more-button">...</div> */}
           </div>
         </header>
         <nav className="photos-nav">

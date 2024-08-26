@@ -67,10 +67,10 @@ function FriendsPage(): React.ReactElement {
         <header>
           <h2> Friends </h2>
           <div className="friends-page-header-right">
-            <div className="friends-page-search-bar">
+            {/* <div className="friends-page-search-bar">
               <span>Search</span>
-            </div>
-            <div className="friends-page-more-button">...</div>
+            </div> */}
+            {/* <div className="friends-page-more-button">...</div> */}
           </div>
         </header>
         <nav className="friends-nav">
