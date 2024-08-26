@@ -75,13 +75,13 @@ function PhotoViewer(): React.ReactElement {
               </div>
             </div>
             <div className="main-header-right">
-              {currentUser?.id === profileUser?.id && (
-                <RiDeleteBinLine className="delete-photo-button" onClick={handlePhotoDelete} />
-              )}
               <HiOutlineZoomIn />
               <HiOutlineZoomOut />
               <FaTag />
               <BsArrowsAngleExpand />
+              {currentUser?.id === profileUser?.id && (
+                <RiDeleteBinLine className="delete-photo-button" onClick={handlePhotoDelete} />
+              )}
             </div>
           </div>
           <div className="photo-viewer-display">

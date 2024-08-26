@@ -123,12 +123,13 @@ function PhotoDetails({ photo }) {
           <div className="action-name">Share</div>
         </div>
         {currentUser?.id === profileUser?.id && (
-          <div className="edit" onClick={() => setToggleInput(true)}>
+          <div className="edit" onClick={() => setToggleInput(!toggleInput)}>
             <RiEditLine />
             <div className="action-name">Edit</div>
           </div>
         )}
       </div>
+      <div className="separator-line"></div>
 
       {comments.length > 0 ? <Comments comments={comments} parentType={"photo"} /> : <p></p>}
 

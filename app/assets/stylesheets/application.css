@@ -1218,7 +1218,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 
 .photo-viewer-modal {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1311,6 +1311,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 .photo-viewer-display img {
   max-height: 100%;
   max-width: 100%;
+  padding-bottom: 55px;
   height: auto;
   object-fit: contain;
 }
@@ -1352,15 +1353,20 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   background-color: var(--background-color);
   color: var(--text-color);
 }
 
 .photo-details-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+
 }
 
  .photo-header {
@@ -1414,7 +1420,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 
 .photo-action-buttons {
   display: flex;
-  width: 100%;
+  /* width: 100%; */
   flex-wrap: wrap;
   justify-content: space-evenly;
   font-size: 14px;
@@ -1423,9 +1429,9 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   margin-right: 12px;
   color: var(--text-secondary);
   background-color: transparent;
-  border-bottom-color: rgb(206, 208, 212);
+  /* border-bottom-color: rgb(206, 208, 212);
   border-bottom-style: solid;
-  border-bottom-width: 0.555556px;
+  border-bottom-width: 0.555556px; */
 
 }
 
@@ -1442,6 +1448,12 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 .photo-details {
   height: 100vh;
   width: 100%;
+}
+
+.separator-line {
+  width: 95%;
+  border-top: 1px solid var(--secondary-button-background);
+  margin: 12px;
 }
 
 
@@ -2391,7 +2403,7 @@ ul.friends-display-grid {
 
 /* POST */
 
-.post-container, .photo-details-container {
+.post-container{
   padding-top:10px;
   padding-bottom:10px;
   margin-bottom: 10px;
@@ -3428,11 +3440,11 @@ align-self: center;
     border-radius: 0;
   }
 
-  .photo-container-posts-photos {
+  /* .photo-container-posts-photos {
     width: 100px;
     height: 100px;
     margin: 5px;
-  }
+  } */
 
   .more-button {
     font-size: 18px;
@@ -3443,6 +3455,18 @@ align-self: center;
 
   .about-me-nav {
     flex: 0 0 200px;
+  }
+
+  .photo-viewer-content {
+    flex-direction: column;
+  }
+
+  .main-header-right > * {
+    color: transparent;
+  }
+
+  .delete-photo-button {
+    color: whitesmoke;
   }
 
  
