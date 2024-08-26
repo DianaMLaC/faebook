@@ -92,7 +92,7 @@ table {
 body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
-  background-color: var(--background-color);
+  background-color: var(--secondary-background);
   color: var(--text-color);
   margin: 0;
   padding: 0;
@@ -636,12 +636,12 @@ body {
 .profile-header-container {
   padding-bottom: 6px;
   box-sizing: border-box;
+  background-color: var(--background-color);
 }
 
 .profile-header {
   position: relative;
   box-sizing: border-box;
-
 }
 
 .cover-photo-container {
@@ -679,7 +679,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   border: 1px solid var(--shade-background-color);
   border-radius: 6px;
   cursor: pointer;
-  height: var(--button-height);
+  height: 36px;
   font-size: 14px;
   font-weight: 600;
   display: flex;
@@ -765,8 +765,8 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   background-color: transparent;
   padding: 10px;
   margin-left: 50px;
-  flex-grow: 1;
   margin-bottom: 50px;
+  flex-grow: 1;
 }
 
 .profile-header-nav-buttons {
@@ -788,7 +788,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   position: relative;
   margin-left: 160px;
   margin-top: 10px;
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 700;
   color: var(--text-color)
 }
@@ -828,7 +828,6 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 
 .add-to-story-button, .edit-profile-button, .messenger-button, .add-friend-button, .cancel-friendship-button, .already-friends-button {
   padding: 8px 12px;
-  font-size: 12px; 
   border-radius: 5px;
   border-color: transparent;
   margin-right: 9px; 
@@ -877,7 +876,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   text-decoration: none;
 }
 
-.profile-header-nav-links div:hover {
+.profile-header-nav-links > *:hover {
   background-color: var(--secondary-color);
   border-radius: 6px;
   padding-top: 16px; 
@@ -3346,7 +3345,82 @@ align-self: center;
     font-size: 18px;
   }
 
+  .cover-photo-container {
+    height: 200px;
+  }
 
+  .cover-photo-button {
+    font-size: 10px;
+    padding-left: 6px;
+    padding-right: 6px;
+    right: 6px;
+    bottom: 6px;
+    height: 24px;
+  }
+
+  .profile-details-banner {
+    padding-bottom: 0px;
+    width: 100%;
+  }
+
+  .profile-photo-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile-photo-button-container {
+    top: 70px;
+    left: 70px;
+  }
+
+  .profile-display-name-container {
+    padding: 8px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+
+  .profile-display-name {
+    font-size: 22px;
+    margin-left: 110px;
+    margin-top: 6px;
+    margin-bottom: 26px;
+  }
+
+  .profile-header-nav-buttons {
+    margin-top: 4px; 
+    flex-direction: column;
+  }
+
+  .add-to-story-button, .edit-profile-button, .messenger-button, .add-friend-button, .cancel-friendship-button, .already-friends-button {
+    font-size: 10px;
+    margin-bottom: 4px;
+    padding-left: 16px;
+    padding-right: 16px; 
+  }
+
+  .profile-header-nav {
+    margin-left: 6px;
+    margin-right: 6px;
+    height: 44px;
+  }
+
+  .profile-header-nav-links > * {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 0 8px;
+    margin: 0 3px;
+  }
+
+  .profile-header-nav-links a.active {
+    color: var(--link-color);
+    border-bottom: 3px solid var(--link-color);
+    margin-bottom: -3px; /* To counteract the border width */
+    background-color: white;
+    z-index: 1;
+    padding-top: 16px; 
+    padding-bottom: 16px; 
+    border-radius: 0;
+  }
 
  
 }

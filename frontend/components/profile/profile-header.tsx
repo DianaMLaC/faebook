@@ -289,11 +289,6 @@ function ProfileHeader(): React.ReactElement {
               Books
             </NavLink>
           </div>
-          <div className="nav-profile-header-button">
-            <span>
-              <TbDots />
-            </span>
-          </div>
         </nav>
       </header>
       {isChatOpen && <ChatRoom onClose={closeChat} chat={chat} />}
