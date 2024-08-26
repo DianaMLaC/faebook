@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { FaUserFriends, FaRegComment } from "react-icons/fa"
 import { BiSolidLike, BiLike } from "react-icons/bi"
 import { PiShareFat } from "react-icons/pi"
+import { RiDeleteBinLine } from "react-icons/ri"
 import { useAuth } from "../../context/auth"
 import { usePosts } from "../../context/posts"
 import { toggleLike, fetchTopLevelComments } from "../../utils/axios"
@@ -24,6 +25,8 @@ function PostContainer({ post }): React.ReactElement {
   )
   const [comments, setComments] = useState(post.comments || [])
   const [toggleCommenting, setToggleCommenting] = useState(false)
+  const [toggleMore, setToggleMore] = useState(false)
+
   const postTimeStamp = formatPostDate(post.createdAt)
 
   useEffect(() => {
@@ -99,7 +102,16 @@ function PostContainer({ post }): React.ReactElement {
             </div>
           </div>
         </div>
-        <div className="more-button">...</div>
+        {toggleMore && (
+          <div className="more-menu">
+            <div className="delete-post">
+              <RiDeleteBinLine />
+            </div>
+          </div>
+        )}
+        <div className="more-button" onClick={() => setToggleMore(!toggleMore)}>
+          ...
+        </div>
       </header>
 
       <div className="post-body">{post.body}</div>
