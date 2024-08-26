@@ -102,18 +102,6 @@ body {
 
 /* START PAGE */
 
-/* .start-page {
-  display: flex;
-  width: 100%; 
-  min-height: 100vh;
-  justify-content: space-around; 
-  justify-content: center;
-  align-items: center; 
-  padding: 20px; 
-  box-sizing: border-box; 
-  background-color: var(--shade-background-color);
-} */
-
 .start-page {
   display: flex;
   justify-content: center;
@@ -131,7 +119,6 @@ body {
   justify-content: center;
   box-sizing: border-box;
   width: min(900px, 70%);
-  /* height: 900px; */
   margin: 0px 40px;
 }
 
@@ -142,14 +129,6 @@ body {
   margin-right: 40px;
 }
 
-/* .faebook-title {
-  font-size: 4em; 
-  font-weight: bold; 
-  color: var(--primary-color);
-  flex-basis: 50%; 
-  padding-top: 8px;
-  padding-bottom: 16px;
-} */
 
 .faebook-title {
   font-weight: bold; 
@@ -162,27 +141,10 @@ body {
 
 
 
-/* .faebook-motto {
-  font-size: 1.5em; 
-  color: var(--text-color);
-  padding-right: 40px;
-  margin-right: 40px
-} */
-
 .faebook-motto {
   color: var(--text-color);
   font-size: 18px;
 }
-
-/* .login-container {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  flex-basis: 40%; 
-  display: flex;
-  flex-direction: column;
-} */
 
 .login-container {
   min-width:400px;
@@ -273,7 +235,6 @@ body {
 }
 
 /* Sign Up form styling */
-
 .signup-container {
   display: flex;
   flex-direction: column;
@@ -371,7 +332,7 @@ body {
 
 /* Nav Bar */
 
-.nav-bar {
+/* .nav-bar {
   background-color: var(--background-color);
   color: var(--text-color);
   display: flex;
@@ -380,20 +341,53 @@ body {
   padding: 6px; 
   box-shadow: 0 2px 4px rgba(8, 5, 5, 0.1);
   height: 60px;
+} */
+
+.nav-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  justify-content: space-between;
+  padding: 12px; 
+  box-shadow: 0 2px 4px rgba(8, 5, 5, 0.1);
+  height: 40px;
 }
 
-.nav-left, .nav-center, .nav-right {
+/* .nav-left, .nav-center, .nav-right {
   display: flex;
+  align-items: center;
+} */
+
+.nav-left, .nav-right {
+  display: flex;
+  flex-direction: row;
   align-items: center;
 }
 
-.nav-logo {
+
+/* .nav-logo {
   height: 50px;
   width: 50px;
   font-weight: bold;
   padding-left: 16px;
   color: var(--primary-color);
+} */
+
+.nav-logo {
+  height: 48px;
+  width: 48px;
+  font-weight: bold;
+  padding-left: 16px;
 }
+
+/* .nav-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+} */
 
 .nav-logo-img {
   width: 100%;
@@ -402,7 +396,8 @@ body {
   display: block;
 }
 
-.nav-search input[type="search"] {
+
+/* .nav-search input[type="search"] {
   background-color: var(--secondary-color);
   color: var(--text-color);
   border: transparent;
@@ -414,26 +409,51 @@ body {
   margin-top:10px;
   margin-left: 10px;
   margin-right: 10px;
+} */
+
+.nav-search input[type="search"] {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  font-size: 15px;
+  border: transparent;
+  border-radius: 18px;
+  padding-left: 12px;
+  font-size: var(--font-input);
+  width: 100%;
+  height: 100%;
+  position: relative;
+
 }
 
 
-
+/* 
 .nav-search input[type="search"]:hover {
   background-color: var(--accent-color);
   color: var(--text-contrast);
   cursor:auto;
-}
+} */
+
 .nav-search input[type="search"]::placeholder {
   color: var(--text-color);
+  font-style: italic;
 }
 
 
-.nav-search {
+/* .nav-search {
   position: relative; 
+} */
+
+.nav-search {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  height: 40px;
+  margin-left: 10px;
+  position: relative;
 }
   
 
-.visible {
+/* .visible {
   position: absolute;
   width: 100%;
   background: white;
@@ -447,6 +467,22 @@ body {
   margin-right: 10px;  
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+} */
+
+.visible {
+  position: absolute;
+  top: 100%; 
+  left: 0;  
+  width: 100%;
+  background: white;
+  border: transparent;
+  max-height: 900px; 
+  overflow-y: auto; 
+  z-index: 100; 
+  margin: 0; 
+  padding: 0;  
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 
@@ -459,8 +495,8 @@ body {
   
   
 .visible li img {
-  width: 40px; 
-  height: 40px; 
+  width: 36px; 
+  height: 36px; 
   border-radius: 50%; 
   margin-right: 12px; 
 
@@ -3363,6 +3399,22 @@ align-self: center;
     align-items: center;
     margin-right: 0px;
     margin-bottom: 40px;
+  }
+
+  .nav-bar {
+    height: 48px;
+    padding: 6px;
+  }
+
+  .nav-logo {
+    height: 36px;
+    width: 36px;
+    padding-left: 0px;
+  }
+
+  .nav-search {
+    width: 150px;
+    margin-left: 4px;
   }
 
 

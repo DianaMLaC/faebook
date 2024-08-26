@@ -75,7 +75,7 @@ function NavBar(): React.ReactElement {
           </div>
         </div>
 
-        <div className="nav-center"></div>
+        {/* <div className="nav-center"></div> */}
         <NavRight />
       </header>
 
