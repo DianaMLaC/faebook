@@ -20,21 +20,24 @@ function StartPage(): React.ReactElement {
 
   return (
     <div className="start-page">
-      <div>
-        <div className="faebook-title">
-          <p>faebook</p>
+      <div className="start-page-items">
+        <div className="faebook-welcome">
+          <div className="faebook-title">
+            <p>faebook</p>
+          </div>
+          <div className="faebook-motto">
+            <p>Connect with fae students from Zodiac Academy and Solaria world on Faebook.</p>
+          </div>
         </div>
-        <div className="faebook-motto">
-          <p>Connect with fae friends and the Zodiac Academy world on Faebook.</p>
+        <div className="login-container">
+          <Login />
+          <div className="separator"></div>
+          <button className="signup-button" onClick={openModal}>
+            Create new account
+          </button>
         </div>
       </div>
-      <div className="login-container">
-        <Login />
-        <div className="separator"></div>
-        <button className="signup-button" onClick={openModal}>
-          Create new account
-        </button>
-      </div>
+
       <ReactModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}

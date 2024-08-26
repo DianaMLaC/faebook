@@ -37,6 +37,7 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
   text-decoration: none;
+  
 
 }
 /* HTML5 display-role reset for older browsers */
@@ -101,7 +102,7 @@ body {
 
 /* START PAGE */
 
-.start-page {
+/* .start-page {
   display: flex;
   width: 100%; 
   min-height: 100vh;
@@ -111,30 +112,85 @@ body {
   padding: 20px; 
   box-sizing: border-box; 
   background-color: var(--shade-background-color);
+} */
+
+.start-page {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  background-color: var(--secondary-background);
+  box-sizing: border-box;
+  width: 100%; 
+  min-height: 100vh;
 }
 
-.faebook-title {
+.start-page-items {
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: min(900px, 70%);
+  /* height: 900px; */
+  margin: 0px 40px;
+}
+
+.faebook-welcome {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 40px;
+}
+
+/* .faebook-title {
   font-size: 4em; 
   font-weight: bold; 
   color: var(--primary-color);
   flex-basis: 50%; 
   padding-top: 8px;
   padding-bottom: 16px;
+} */
+
+.faebook-title {
+  font-weight: bold; 
+  color: var(--primary-color);
+  flex-basis: 50%; 
+  padding-top: 8px;
+  padding-bottom: 16px;
+  font-size: 48px;
 }
 
-.faebook-motto {
+
+
+/* .faebook-motto {
   font-size: 1.5em; 
   color: var(--text-color);
   padding-right: 40px;
   margin-right: 40px
+} */
+
+.faebook-motto {
+  color: var(--text-color);
+  font-size: 18px;
 }
 
-.login-container {
+/* .login-container {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex-basis: 40%; 
+  display: flex;
+  flex-direction: column;
+} */
+
+.login-container {
+  min-width:400px;
+  background-color: var(--background-color);
+  padding: 20px;
+  /* border-radius: 8px; */
+  border-radius: var(--box-border-radius);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
 }
@@ -157,8 +213,8 @@ body {
 .login-form button {
   padding: 10px;
   margin-bottom: 16px;
-  background-color: var(--primary-color);
-  color: white;
+  background-color: var(--primary-button-background);
+  color: var(--text-contrast);
   font-size: 20px;
   border: none;
   border-radius: 5px;
@@ -168,12 +224,14 @@ body {
 }
 
 .login-form button:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-button-hover);
+  color: var(--background-color);
+
 }
 
 .signup-button {
   background-color: var(--accent-color); 
-  color: white; 
+  color: var(--text-contrast);
   padding: 10px 0;
   font-size: 17px; 
   font-weight: 700;
@@ -182,6 +240,10 @@ body {
   cursor: pointer;
   line-height: 38px;
   margin-top: 16px;
+}
+
+.signup-button:hover {
+  color: var(--background-color);
 }
 
 .separator {
@@ -256,8 +318,11 @@ body {
 .dob {
   padding: 5px;
   margin-bottom: 5px;
-  font-size: 14px;
+  margin-left: 4px;
+  font-size: 17px;
   color: var(--text-color);
+  opacity: 0.7;
+
 }
 
 .signup-form button {
@@ -3286,45 +3351,22 @@ align-self: center;
 
 
 
-@media only screen and (max-width: 600px) {
-  .nav-bar {
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 10px;
-    height: auto;
+@media  (max-width: 900px) {
+
+  .start-page-items {
+    width: 400px;
+    height: 800px;
+    flex-direction: column;
   }
 
-  .nav-left, .nav-right {
-    flex-direction: row;
-    align-items: flex-start;
-    width: 100%;
-    padding: 0;
-  }
-
-  .nav-logo-img {
-    width: 50px; /* or another appropriate size for mobile */
-    height: auto;
-  }
-
-  .nav-search {
-    width: 100%;
-  }
-  .nav-search input[type="search"] {
-    width: 80%;
-    margin: 5px 0;
+  .faebook-welcome {
+    align-items: center;
+    margin-right: 0px;
+    margin-bottom: 40px;
   }
 
 
-  .nav-create-button, .nav-messenger-button, .nav-notifications-button {
-    margin-right: 0;
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-
-  .account-menu-container {
-    width: 100%;
-  }
+ 
 }
 
   

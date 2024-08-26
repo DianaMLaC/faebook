@@ -57,7 +57,7 @@ function Signup(): React.ReactElement {
             value={password}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
           />
-          <div className="dob">Birthday</div>
+          <div className="dob">Date Of Birth</div>
           <input
             type="date"
             value={dateOfBirth}
