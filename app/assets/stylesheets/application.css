@@ -332,17 +332,6 @@ body {
 
 /* Nav Bar */
 
-/* .nav-bar {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px; 
-  box-shadow: 0 2px 4px rgba(8, 5, 5, 0.1);
-  height: 60px;
-} */
-
 .nav-bar {
   display: flex;
   flex-direction: row;
@@ -355,10 +344,6 @@ body {
   height: 40px;
 }
 
-/* .nav-left, .nav-center, .nav-right {
-  display: flex;
-  align-items: center;
-} */
 
 .nav-left, .nav-right {
   display: flex;
@@ -367,14 +352,6 @@ body {
 }
 
 
-/* .nav-logo {
-  height: 50px;
-  width: 50px;
-  font-weight: bold;
-  padding-left: 16px;
-  color: var(--primary-color);
-} */
-
 .nav-logo {
   height: 48px;
   width: 48px;
@@ -382,12 +359,6 @@ body {
   padding-left: 16px;
 }
 
-/* .nav-logo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-} */
 
 .nav-logo-img {
   width: 100%;
@@ -396,21 +367,6 @@ body {
   display: block;
 }
 
-
-/* .nav-search input[type="search"] {
-  background-color: var(--secondary-color);
-  color: var(--text-color);
-  border: transparent;
-  border-radius: 18px;
-  padding-left: 12px;
-  font-size: 15px;
-  width: 250px;
-  height: 40px;
-  margin-top:10px;
-  margin-left: 10px;
-  margin-right: 10px;
-} */
-
 .nav-search input[type="search"] {
   background-color: var(--secondary-color);
   color: var(--text-color);
@@ -418,6 +374,7 @@ body {
   border: transparent;
   border-radius: 18px;
   padding-left: 12px;
+  padding-right: 12px;
   font-size: var(--font-input);
   width: 100%;
   height: 100%;
@@ -425,23 +382,11 @@ body {
 
 }
 
-
-/* 
-.nav-search input[type="search"]:hover {
-  background-color: var(--accent-color);
-  color: var(--text-contrast);
-  cursor:auto;
-} */
-
 .nav-search input[type="search"]::placeholder {
   color: var(--text-color);
   font-style: italic;
 }
 
-
-/* .nav-search {
-  position: relative; 
-} */
 
 .nav-search {
   display: flex;
@@ -452,22 +397,6 @@ body {
   position: relative;
 }
   
-
-/* .visible {
-  position: absolute;
-  width: 100%;
-  background: white;
-  border: 1px solid #ccc; 
-  max-height: 900px; 
-  overflow-y: auto; 
-  z-index: 1000; 
-  margin-block-start: 0.1em;  
-  padding-inline-start: 0;  
-  border: transparent;  
-  margin-right: 10px;  
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-} */
 
 .visible {
   position: absolute;
@@ -512,30 +441,9 @@ body {
   background-color: var(--shade-background-color);
 }
 
-    
-.nav-center {
-  flex-grow: 1; 
-  justify-content: center; 
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding-right: 200px;
-  padding-left: 100px;
-}
+  
 
 
-.nav-home-button, .nav-video-button, .nav-groups-button, .nav-games-button {
-  min-width: 40px;
-  max-width: 110px;
-  height: 55px;
-  margin: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 32px;
-  font-weight: 800;
-  color: var(--text-secondary);
-}
 
 .nav-create-button, .nav-messenger-button, .nav-notifications-button {
   border: transparent;
@@ -548,10 +456,14 @@ body {
   align-items: center;
   font-size: 26px;
   min-width: 40px;
+  cursor: not-allowed;
 }
 
 .nav-account-button {
   cursor: pointer;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
   position: relative;
 }
 
@@ -570,26 +482,22 @@ body {
 }
 
 
-.nav-home-button:hover, .nav-video-button:hover, .nav-groups-button:hover, .nav-games-button:hover {
-  background-color: var(--shade-background-color);
-  border-radius: 2px;
-  /* cursor: pointer; */
-}
 
 .nav-create-button:hover, .nav-messenger-button:hover, .nav-notifications-button:hover, .nav-account-button:hover {
   background-color: var(--secondary-button-hover);
+  
 }
 
 .nav-account-button:hover {
-  background-color: var(--secondary-button-hover);
+  border: 2px solid var(--primary-button-hover); 
   cursor: pointer;
 }
 
 .account-menu-container {
   position: absolute;
   width: 360px;
-  right: 0px;
-  background: white;
+  right: -22px;
+  background: var(--background-color);
   border: 1px solid #ccc; 
   max-height: 900px; 
   overflow-y: auto; 
@@ -3407,8 +3315,6 @@ align-self: center;
   }
 
   .nav-logo {
-    height: 36px;
-    width: 36px;
     padding-left: 0px;
   }
 
@@ -3416,6 +3322,30 @@ align-self: center;
     width: 150px;
     margin-left: 4px;
   }
+
+  .account-menu-container {
+    width: 200px;
+    right: -15px;
+  }
+
+  .menu-banner {
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+
+  .menu-see-all-profiles {
+    margin: 0px;
+    font-size: 12px;
+  }
+
+  .menu-item {
+    font-size: 12px;
+  }
+
+  .menu-icon {
+    font-size: 18px;
+  }
+
 
 
  
