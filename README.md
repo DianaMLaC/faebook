@@ -2,8 +2,11 @@
 
 ## Summary
 
-**Faebook** is a fully real-time social-networking site inspired by [Facebook](https://www.facebook.com) and tailored for characters of Zodiac Academy books. In **Faebook**, users are assigned a zodiac sign based on their date of birth provided during signup. The "About Me" section features unique details such as a fae's power elements, magic order and academy house, replacing the traditional fields like education, hometown, and workplace found on Facebook.
-**Faebook** is deployed using [Fly](https://fly.io/)
+**Faebook** is a real-time, immersive social networking site inspired by [Facebook](https://www.facebook.com) and uniquely tailored for fans of the Zodiac Academy book series by Caroline Peckham and Susanne Valenti. In this magical world, users are assigned a zodiac sign based on their date of birth during signup, which determines their "House" and magical attributes, creating a personalized and thematic experience. The "About Me" section is enriched with fields such as a fae's Power Elements, Magic Order, and Academy House, replacing the traditional fields like education, hometown, and workplace found on Facebook.
+
+## Live Demo
+
+Explore **Faebook** live at [faebook.fly.dev](https://faebook.fly.dev). For the best experience, try logging in as one of the characters from the Zodiac Academy universe. Otherwise, enjoy creating your own account and exploring the features!
 
 ### Back End
 

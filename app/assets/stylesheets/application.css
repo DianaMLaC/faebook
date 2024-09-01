@@ -428,7 +428,7 @@ body {
   height: 36px; 
   border-radius: 50%; 
   margin-right: 12px; 
-
+  object-fit: cover;
 }
   
   
@@ -944,6 +944,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   height: 60px;
   padding:0px 60px;
   margin-bottom: 10px;
+  border-bottom: 2px solid var(--shade-background-color);
 }
 
 .photo-uploader header h2 {
@@ -953,24 +954,25 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 }
 
 .photo-uploader input[type="file"], .post-content-input input[type="file"] {
-  border-radius: 5px;
+  border-radius: 8px;
   padding: 6px;
 }
 .photo-uploader input[type="text"] {
-  border-radius: 5px;
+  border-radius: 8px;
   width: 90%;
   margin: 8px;
   padding: 8px;
   background: var(--secondary-color);
+  border-color: var(--primary-color);
 }
 
 .photo-uploader input[type="file"]::-webkit-file-upload-button,
 .post-content-input input[type="file"]::-webkit-file-upload-button {
-  border-radius: 5px;
+  border-radius: 8px;
   border: none;
   padding: 8px 15px;
-  background: var(--secondary-color);
-  color: var(--primary-color);
+  background: var(--primary-button-background);
+  color: var(--primary-button-text);
   cursor: pointer;
 }
 
@@ -987,7 +989,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 
 .photo-uploader button {
   margin-top: 20px; 
-  border-radius: 5px;
+  border-radius: 8px;
   background: var(--secondary-deemphasized-button);
   color: var(--primary-color);
   padding: 10px 20px;
@@ -2948,10 +2950,18 @@ align-self: center;
   align-items: center;
 }
 
+input[type="url"] {
+  border-radius: 8px;
+  background-color: var(--secondary-background);
+  border-color: var(--primary-color);
+  font-size: 14px;
+}
+
 .post-url-check {
   display:flex;
   align-items: center;
   font-size: 12px;
+  color: var(--primary-button-background);
 }
 
 .post-content-input svg {
