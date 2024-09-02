@@ -20,10 +20,11 @@ class Post < ApplicationRecord
              class_name: 'User'
 
   has_many :comments,
+           dependent: :destroy,
            foreign_key: :post_id,
            class_name: 'Comment'
 
-  has_many :likes, as: :likeable
+  has_many :likes, dependent: :destroy, as: :likeable
 
   belongs_to :content, polymorphic: true, optional: true
 end

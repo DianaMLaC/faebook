@@ -1,12 +1,6 @@
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
 
 require_relative 'seed_content'
 # helpers
@@ -14,8 +8,19 @@ require_relative 'seed_content'
 posts_data = POSTS_DATA
 user_intros = INTROS
 
-def create_friendship(requester, receiver)
-  Friendship.create!(sender_id: requester.id, receiver_id: receiver.id, is_accepted: true)
+def create_friendship(sender, receiver)
+  existing_friendship = Friendship.find_by(receiver_id: sender.id,
+                                           sender_id: receiver.id) ||
+                        Friendship.find_by(
+                          receiver_id: receiver.id, sender_id: sender.id
+                        )
+
+  existing_friendship || Friendship.create!(sender_id: sender.id, receiver_id: receiver.id,
+                                            is_accepted: true)
+end
+
+def post_exist?(profile_id, author_id, body)
+  Post.exists?(profile_id:, author_id:, body:)
 end
 
 def create_post(profile_id, author_id, body)
@@ -27,9 +32,11 @@ def create_comment(post_id, author_id, text, parent_comment_id = nil)
 end
 
 def create_like(likeable, liker_id)
-  Like.create!(likeable_id: likeable.id,
-               likeable_type: likeable.class,
-               liker_id:)
+  like = Like.find_by(likeable_id: likeable.id, liker_id:)
+
+  like || Like.create!(likeable_id: likeable.id,
+                       likeable_type: likeable.class,
+                       liker_id:)
 end
 
 # Users
@@ -130,118 +137,37 @@ end
 
 puts 'Intros seeded successfully.'
 
-# Intro.create!(user_id: tory.id,
-#               house: 'Ignis',
-#               location: 'Solaria',
-#               education: 'Zodiac Academy',
-#               elements: 'Fire, Earth, Air, Water',
-#               zodiac: 'Gemini',
-#               order: 'Phoenix',
-#               bio: 'Everyone knows karma’s a bitch. And today her name was Tory Vega.')
-
-# Intro.create!(user_id: darcy.id,
-#               house: 'Aer',
-#               location: 'Solaria',
-#               education: 'Zodiac Academy',
-#               elements: 'Fire, Earth, Air, Water',
-#               zodiac: 'Gemini',
-#               order: 'Phoenix',
-#               bio: "My deepest fear is being cast aside, my heart crushed by trusting blindly again. So I'll never let anyone in again.")
-
-# Intro.create!(user_id: darius.id,
-#               house: 'Ignis',
-#               location: 'Solaria',
-#               education: 'Zodiac Academy',
-#               elements: 'Fire, Water',
-#               zodiac: 'Leo',
-#               order: 'Dragon',
-#               bio: 'This freedom tastes like ashes')
-
-# Intro.create!(user_id: seth.id,
-#               house: 'Aer',
-#               location: 'Solaria',
-#               education: 'Zodiac Academy',
-#               elements: 'Air, Earth',
-#               zodiac: 'Aquarius',
-#               order: 'Werewolf',
-#               bio: "I licked it, so it's mine")
-
-# Intro.create!(user_id: caleb.id,
-#               house: 'Terra',
-#               location: 'Solaria',
-#               education: 'Zodiac Academy',
-#               elements: 'Earth, Fire',
-#               zodiac: 'Taurus',
-#               order: 'Vampire',
-#               bio: 'A man with charm is a very dangerous thing')
-
-# Intro.create!(user_id: max.id,
-#               house: 'Aqua',
-#               location: 'Solaria',
-#               education: 'Zodiac Academy',
-#               elements: 'Water, Air',
-#               zodiac: 'Pisces',
-#               order: 'Siren',
-#               bio: 'I have sea foam in my veins, I understand the language of the waves')
-
-# Intro.create!(user_id: lance.id,
-#               house: 'Aer',
-#               location: 'Solaria',
-#               education: 'Zodiac Academy',
-#               elements: 'Air, Water',
-#               zodiac: 'Libra',
-#               order: 'Vampire',
-#               bio: "Sorry I'm late. I got here as soon as I wanted to")
-
-# Intro.create!(user_id: geraldine.id,
-#               house: 'Terra',
-#               location: 'Solaria',
-#               education: 'Zodiac Academy',
-#               elements: 'Earth, Water',
-#               zodiac: 'Scorpio',
-#               order: 'Cerberus',
-#               bio: 'I am the fair demon who haunts your nightmares, shadow fiends. Fell the kiss of justice when I strike you down and banish you to the depths of the nether world!')
-
 # Friendships
 puts 'Seeding friendships...'
-create_friendship(tory, darcy)
-create_friendship(tory, geraldine)
-create_friendship(tory, darius)
-create_friendship(tory, caleb)
-create_friendship(tory, max)
-create_friendship(tory, seth)
-create_friendship(tory, lance)
 
-create_friendship(darcy, geraldine)
-create_friendship(darcy, lance)
-create_friendship(darcy, darius)
-create_friendship(darcy, caleb)
-create_friendship(darcy, max)
-create_friendship(darcy, seth)
-
-create_friendship(darius, lance)
-create_friendship(darius, caleb)
-create_friendship(darius, max)
-create_friendship(darius, seth)
-create_friendship(darius, geraldine)
-
-create_friendship(seth, caleb)
-create_friendship(seth, max)
-create_friendship(seth, lance)
-create_friendship(seth, geraldine)
-
-create_friendship(caleb, max)
-create_friendship(caleb, lance)
-create_friendship(caleb, geraldine)
-
-create_friendship(max, lance)
-create_friendship(max, geraldine)
-
-create_friendship(geraldine, lance)
+users.values.combination(2).each do |sender, receiver|
+  create_friendship(sender, receiver)
+end
 
 puts 'Friendships seeded successfully.'
 
 # Posts Comments and Likes
+# puts 'Deleting all posts with they dependencies'
+
+# Post.all.each(&:destroy)
+
+# if Post.all.empty?
+#   puts 'Posts deleted successfully'
+# else
+#   puts 'Post entries found in db'
+# end
+
+# if Comment.all.empty?
+#   puts 'Comments deleted successfully'
+# else
+#   puts 'Comments entries found in db'
+# end
+
+# if Like.all.empty?
+#   puts 'Likes deleted successfully'
+# else
+#   puts 'Likes entries found in db'
+# end
 
 puts 'Seeding posts, comments, likes ...'
 
@@ -252,6 +178,8 @@ users.each do |user_key, user|
 
   # Create own posts
   user_data[:own].each do |post_data|
+    next if post_exist?(user.id, user.id, post_data[:body])
+
     post = create_post(user.id, user.id, post_data[:body])
 
     # Add likes to the post
@@ -279,6 +207,9 @@ users.each do |user_key, user|
   # Create posts from others on this user's profile
   user_data[:others].each do |other_user_key, post_data|
     other_user = users[other_user_key]
+
+    next if post_exist?(user.id, other_user.id, post_data[:body])
+
     post = create_post(user.id, other_user.id, post_data[:body])
 
     # Add likes to the post

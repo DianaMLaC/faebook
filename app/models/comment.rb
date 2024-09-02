@@ -20,10 +20,10 @@ class Comment < ApplicationRecord
   belongs_to :photo, foreign_key: :photo_id, class_name: 'Photo', optional: true
   belongs_to :author, foreign_key: :author_id, class_name: 'User'
 
-  has_many :replies, foreign_key: :parent_comment_id, class_name: 'Comment'
+  has_many :replies, dependent: :destroy, foreign_key: :parent_comment_id, class_name: 'Comment'
   belongs_to :parent_comment, class_name: 'Comment', optional: true
 
-  has_many :likes, as: :likeable
+  has_many :likes, dependent: :destroy, as: :likeable
 
   private
 
