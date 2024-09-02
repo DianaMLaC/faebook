@@ -478,6 +478,7 @@ POSTS_DATA = {
       }
     }
   }
+
 }
 
 photo_caption = {
@@ -568,5 +569,88 @@ photo_caption = {
     3 => 'artwork by adamszkiart',
     4 => 'artwork by bethgilbert_art',
     'profile' => 'artwork from Jessica Engvall Pinterest'
+  }
+}
+
+INTROS = {
+  tory: {
+    house: 'Ignis',
+    location: 'Solaria',
+    education: 'Zodiac Academy',
+    elements: 'Fire, Earth, Air, Water',
+    zodiac: 'Gemini',
+    order: 'Phoenix',
+    bio: 'Everyone knows karma’s a bitch. And today her name was Tory Vega.'
+  },
+  darcy: {
+    house: 'Aer',
+    location: 'Solaria',
+    education: 'Zodiac Academy',
+    elements: 'Fire, Earth, Air, Water',
+    zodiac: 'Gemini',
+    order: 'Phoenix',
+    bio: "My deepest fear is being cast aside, my heart crushed by trusting blindly again. So I'll never let anyone in again."
+  },
+  darius: {
+    house: 'Ignis',
+    location: 'Solaria',
+    education: 'Zodiac Academy',
+    elements: 'Fire, Water',
+    zodiac: 'Leo',
+    order: 'Dragon',
+    bio: 'This freedom tastes like ashes'
+  },
+  seth: {
+    house: 'Aer',
+    location: 'Solaria',
+    education: 'Zodiac Academy',
+    elements: 'Air, Earth',
+    zodiac: 'Aquarius',
+    order: 'Werewolf',
+    bio: "I licked it, so it's mine"
+  },
+  caleb: {
+    house: 'Terra',
+    location: 'Solaria',
+    education: 'Zodiac Academy',
+    elements: 'Earth, Fire',
+    zodiac: 'Taurus',
+    order: 'Vampire',
+    bio: 'A man with charm is a very dangerous thing'
+  },
+  max: {
+    house: 'Aqua',
+    location: 'Solaria',
+    education: 'Zodiac Academy',
+    elements: 'Water, Air',
+    zodiac: 'Pisces',
+    order: 'Siren',
+    bio: 'I have sea foam in my veins, I understand the language of the waves'
+  },
+  lance: {
+    house: 'Aer',
+    location: 'Solaria',
+    education: 'Zodiac Academy',
+    elements: 'Air, Water',
+    zodiac: 'Libra',
+    order: 'Vampire',
+    bio: "Sorry I'm late. I got here as soon as I wanted to"
+  },
+  geraldine: {
+    house: 'Terra',
+    location: 'Solaria',
+    education: 'Zodiac Academy',
+    elements: 'Earth, Water',
+    zodiac: 'Scorpio',
+    order: 'Cerberus',
+    bio: 'I am the fair demon who haunts your nightmares, shadow fiends. Fell the kiss of justice when I strike you down and banish you to the depths of the nether world!'
+  },
+  sofia: {
+    house: 'Ignis',
+    location: 'Solaria',
+    education: 'Zodiac Academy',
+    elements: 'Fire',
+    zodiac: 'Sagittarius',
+    order: 'Pegasus'
   }
 }

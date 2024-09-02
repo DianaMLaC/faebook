@@ -12,6 +12,7 @@ require_relative 'seed_content'
 # helpers
 
 posts_data = POSTS_DATA
+user_intros = INTROS
 
 def create_friendship(requester, receiver)
   Friendship.create!(sender_id: requester.id, receiver_id: receiver.id, is_accepted: true)
@@ -25,145 +26,184 @@ def create_comment(post_id, author_id, text, parent_comment_id = nil)
   Comment.create!(post_id:, author_id:, text:, parent_comment_id:)
 end
 
-def create_like(likeable, user)
+def create_like(likeable, liker_id)
   Like.create!(likeable_id: likeable.id,
                likeable_type: likeable.class,
-               liker_id: user.id)
+               liker_id:)
 end
 
 # Users
+puts 'Seeding users...'
+# TWINS
+tory = User.find_or_create_by!(email: 'tory@vega.com') do |user|
+  user.first_name = 'Tory'
+  user.last_name = 'Vega'
+  user.date_of_birth = Date.parse('2002-06-11')
+  user.password = 'ToryVega'
+end
 
-tory = User.new(email: 'tory@vega.com',
-                first_name: 'Tory',
-                last_name: 'Vega',
-                date_of_birth: Date.parse('2002-06-11'),
-                password: 'ToryVega')
-tory.save!
+darcy = User.find_or_create_by!(email: 'darcy@vega.com') do |user|
+  user.first_name = 'Darcy'
+  user.last_name = 'Vega'
+  user.date_of_birth = Date.parse('2002-06-11')
+  user.password = 'DarcyVega'
+end
 
-darcy = User.new(email: 'darcy@vega.com',
-                 first_name: 'Darcy',
-                 last_name: 'Vega',
-                 date_of_birth: Date.parse('2002-06-11'),
-                 password: 'DarcyVega')
-darcy.save!
+# HEIRS
+darius = User.find_or_create_by!(email: 'darius@acrux.com') do |user|
+  user.first_name = 'Darius'
+  user.last_name = 'Acrux'
+  user.date_of_birth = Date.parse('2000-07-30')
+  user.password = 'DariusAcrux'
+end
 
-darius = User.new(email: 'darius@acrux.com',
-                  first_name: 'Darius',
-                  last_name: 'Acrux',
-                  date_of_birth: Date.parse('2000-07-30'),
-                  password: 'DariusAcrux')
-darius.save!
+seth = User.find_or_create_by!(email: 'seth@capella.com') do |user|
+  user.first_name = 'Seth'
+  user.last_name = 'Capella'
+  user.date_of_birth = Date.parse('2000-01-28')
+  user.password = 'SethCapella'
+end
 
-seth = User.new(email: 'seth@capella.com',
-                first_name: 'Seth',
-                last_name: 'Capella',
-                date_of_birth: Date.parse('2000-01-28'),
-                password: 'SethCapella')
-seth.save!
+caleb = User.find_or_create_by!(email: 'caleb@altair.com') do |user|
+  user.first_name = 'Caleb'
+  user.last_name = 'Altair'
+  user.date_of_birth = Date.parse('2000-05-20')
+  user.password = 'CalebAltair'
+end
 
-caleb = User.new(email: 'caleb@altair.com',
-                 first_name: 'Caleb',
-                 last_name: 'Altair',
-                 date_of_birth: Date.parse('2000-05-20'),
-                 password: 'CalebAltair')
-caleb.save!
+max = User.find_or_create_by!(email: 'max@rigel.com') do |user|
+  user.first_name = 'Max'
+  user.last_name = 'Rigel'
+  user.date_of_birth = Date.parse('2000-03-01')
+  user.password = 'MaxRigel'
+end
 
-max = User.new(email: 'max@rigel.com',
-               first_name: 'Max',
-               last_name: 'Rigel',
-               date_of_birth: Date.parse('2000-03-01'),
-               password: 'MaxRigel')
-max.save!
+# FRIENDS
+lance = User.find_or_create_by!(email: 'lance@orion.com') do |user|
+  user.first_name = 'Lance'
+  user.last_name = 'Orion'
+  user.date_of_birth = Date.parse('1994-09-30')
+  user.password = 'LanceOrion'
+end
 
-lance = User.new(email: 'lance@orion.com',
-                 first_name: 'Lance',
-                 last_name: 'Orion',
-                 date_of_birth: Date.parse('1994-09-30'),
-                 password: 'LanceOrion')
-lance.save!
+geraldine = User.find_or_create_by!(email: 'geraldine@grus.com') do |user|
+  user.first_name = 'Geraldine'
+  user.last_name = 'Grus'
+  user.date_of_birth = Date.parse('2001-11-30')
+  user.password = 'GeraldineGrus'
+end
 
-geraldine = User.new(email: 'geraldine@grus.com',
-                     first_name: 'Geraldine',
-                     last_name: 'Grus',
-                     date_of_birth: Date.parse('2001-11-30'),
-                     password: 'GeraldineGrus')
-geraldine.save!
+sofia = User.find_or_create_by!(email: 'sofia@cygnus.com') do |user|
+  user.first_name = 'Sofia'
+  user.last_name = 'Cygnus'
+  user.date_of_birth = Date.parse('2002-12-10')
+  user.password = 'SofiaCygnus'
+end
+# create a method that generates the obj bellow
+users = {
+  tory:,
+  darcy:,
+  darius:,
+  seth:,
+  caleb:,
+  max:,
+  lance:,
+  geraldine:,
+  sofia:
+}
+puts 'Users seeded successfully.'
 
 # Intros
-Intro.create!(user_id: tory.id,
-              house: 'Ignis',
-              location: 'Solaria',
-              education: 'Zodiac Academy',
-              elements: 'Fire, Earth, Air, Water',
-              zodiac: 'Gemini',
-              order: 'Phoenix',
-              bio: 'Everyone knows, karma’s a bitch. And today her name was Tory Vega.')
+puts 'Seeding users intros...'
 
-Intro.create!(user_id: darcy.id,
-              house: 'Aer',
-              location: 'Solaria',
-              education: 'Zodiac Academy',
-              elements: 'Fire, Earth, Air, Water',
-              zodiac: 'Gemini',
-              order: 'Phoenix',
-              bio: "My deepest fear is being cast aside, my heart crushed by trusting blindly again. So I'll never let anyone in again.")
+users.each do |k, v|
+  Intro.find_or_create_by!(user_id: v.id) do |intro|
+    intro.house = user_intros[k][:house]
+    intro.location = user_intros[k][:location]
+    intro.education = user_intros[k][:education]
+    intro.elements = user_intros[k][:elements]
+    intro.zodiac = user_intros[k][:zodiac]
+    intro.order = user_intros[k][:order]
+    intro.bio = user_intros[k][:bio]
+  end
+end
 
-Intro.create!(user_id: darius.id,
-              house: 'Ignis',
-              location: 'Solaria',
-              education: 'Zodiac Academy',
-              elements: 'Fire, Water',
-              zodiac: 'Leo',
-              order: 'Dragon',
-              bio: 'This freedom tastes like ashes')
+puts 'Intros seeded successfully.'
 
-Intro.create!(user_id: seth.id,
-              house: 'Aer',
-              location: 'Solaria',
-              education: 'Zodiac Academy',
-              elements: 'Air, Earth',
-              zodiac: 'Aquarius',
-              order: 'Werewolf',
-              bio: "I liked it so it's mine")
+# Intro.create!(user_id: tory.id,
+#               house: 'Ignis',
+#               location: 'Solaria',
+#               education: 'Zodiac Academy',
+#               elements: 'Fire, Earth, Air, Water',
+#               zodiac: 'Gemini',
+#               order: 'Phoenix',
+#               bio: 'Everyone knows karma’s a bitch. And today her name was Tory Vega.')
 
-Intro.create!(user_id: caleb.id,
-              house: 'Terra',
-              location: 'Solaria',
-              education: 'Zodiac Academy',
-              elements: 'Earth, Fire',
-              zodiac: 'Taurus',
-              order: 'Vampire',
-              bio: 'A man with charm is a very dangerous thing')
+# Intro.create!(user_id: darcy.id,
+#               house: 'Aer',
+#               location: 'Solaria',
+#               education: 'Zodiac Academy',
+#               elements: 'Fire, Earth, Air, Water',
+#               zodiac: 'Gemini',
+#               order: 'Phoenix',
+#               bio: "My deepest fear is being cast aside, my heart crushed by trusting blindly again. So I'll never let anyone in again.")
 
-Intro.create!(user_id: max.id,
-              house: 'Aqua',
-              location: 'Solaria',
-              education: 'Zodiac Academy',
-              elements: 'Water, Air',
-              zodiac: 'Pisces',
-              order: 'Siren',
-              bio: 'I have sea foam in my veins, I understand the language of the waves')
+# Intro.create!(user_id: darius.id,
+#               house: 'Ignis',
+#               location: 'Solaria',
+#               education: 'Zodiac Academy',
+#               elements: 'Fire, Water',
+#               zodiac: 'Leo',
+#               order: 'Dragon',
+#               bio: 'This freedom tastes like ashes')
 
-Intro.create!(user_id: lance.id,
-              house: 'Aer',
-              location: 'Solaria',
-              education: 'Zodiac Academy',
-              elements: 'Air, Water',
-              zodiac: 'Libra',
-              order: 'Vampire',
-              bio: "Sorry I'm late. I got here as soon as I wanted to")
+# Intro.create!(user_id: seth.id,
+#               house: 'Aer',
+#               location: 'Solaria',
+#               education: 'Zodiac Academy',
+#               elements: 'Air, Earth',
+#               zodiac: 'Aquarius',
+#               order: 'Werewolf',
+#               bio: "I licked it, so it's mine")
 
-Intro.create!(user_id: geraldine.id,
-              house: 'Terra',
-              location: 'Solaria',
-              education: 'Zodiac Academy',
-              elements: 'Earth, Water',
-              zodiac: 'Scorpio',
-              order: 'Cerberus',
-              bio: 'I am the fair demon who haunts your nightmares, shadow fiends. Fell the kiss of justice when I strike you down and banish you to the depths of the nether world!')
+# Intro.create!(user_id: caleb.id,
+#               house: 'Terra',
+#               location: 'Solaria',
+#               education: 'Zodiac Academy',
+#               elements: 'Earth, Fire',
+#               zodiac: 'Taurus',
+#               order: 'Vampire',
+#               bio: 'A man with charm is a very dangerous thing')
+
+# Intro.create!(user_id: max.id,
+#               house: 'Aqua',
+#               location: 'Solaria',
+#               education: 'Zodiac Academy',
+#               elements: 'Water, Air',
+#               zodiac: 'Pisces',
+#               order: 'Siren',
+#               bio: 'I have sea foam in my veins, I understand the language of the waves')
+
+# Intro.create!(user_id: lance.id,
+#               house: 'Aer',
+#               location: 'Solaria',
+#               education: 'Zodiac Academy',
+#               elements: 'Air, Water',
+#               zodiac: 'Libra',
+#               order: 'Vampire',
+#               bio: "Sorry I'm late. I got here as soon as I wanted to")
+
+# Intro.create!(user_id: geraldine.id,
+#               house: 'Terra',
+#               location: 'Solaria',
+#               education: 'Zodiac Academy',
+#               elements: 'Earth, Water',
+#               zodiac: 'Scorpio',
+#               order: 'Cerberus',
+#               bio: 'I am the fair demon who haunts your nightmares, shadow fiends. Fell the kiss of justice when I strike you down and banish you to the depths of the nether world!')
 
 # Friendships
-
+puts 'Seeding friendships...'
 create_friendship(tory, darcy)
 create_friendship(tory, geraldine)
 create_friendship(tory, darius)
@@ -199,20 +239,16 @@ create_friendship(max, geraldine)
 
 create_friendship(geraldine, lance)
 
+puts 'Friendships seeded successfully.'
+
 # Posts Comments and Likes
-users = {
-  tory:,
-  darcy:,
-  darius:,
-  seth:,
-  caleb:,
-  max:,
-  lance:,
-  geraldine:
-}
+
+puts 'Seeding posts, comments, likes ...'
 
 users.each do |user_key, user|
   user_data = posts_data[user_key]
+
+  next unless posts_data.key?(user_key)
 
   # Create own posts
   user_data[:own].each do |post_data|
@@ -235,7 +271,7 @@ users.each do |user_key, user|
       # Add likes to comments without a reply from the post author
       if comment_data[:replies].none? { |reply| reply[:user] == user_key }
         liker = users.values.reject { |u| u == commenter }.sample
-        create_like(comment, liker)
+        create_like(comment, liker.id)
       end
     end
   end
@@ -267,5 +303,7 @@ users.each do |user_key, user|
     end
   end
 end
+
+puts 'Posts, comments and likes seeded successfully.'
 
 # Photos
