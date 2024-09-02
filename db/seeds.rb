@@ -8,7 +8,6 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-require date
 require_relative 'seed_content'
 # helpers
 
@@ -89,69 +88,77 @@ geraldine = User.new(email: 'geraldine@grus.com',
 geraldine.save!
 
 # Intros
-tory.intro.create!(house: 'Ignis',
-                   location: 'Solaria',
-                   education: 'Zodiac Academy',
-                   elements: 'Fire, Earth, Air, Water',
-                   zodiac: 'Gemini',
-                   order: 'Phoenix',
-                   bio: 'Everyone knows, karma’s a bitch. And today her name was Tory Vega.')
+Intro.create!(user_id: tory.id,
+              house: 'Ignis',
+              location: 'Solaria',
+              education: 'Zodiac Academy',
+              elements: 'Fire, Earth, Air, Water',
+              zodiac: 'Gemini',
+              order: 'Phoenix',
+              bio: 'Everyone knows, karma’s a bitch. And today her name was Tory Vega.')
 
-darcy.intro.create!(house: 'Aer',
-                    location: 'Solaria',
-                    education: 'Zodiac Academy',
-                    elements: 'Fire, Earth, Air, Water',
-                    zodiac: 'Gemini',
-                    order: 'Phoenix',
-                    bio: "My deepest fear is being cast aside, my heart crushed by trusting blindly again. So I'll never let anyone in again.")
+Intro.create!(user_id: darcy.id,
+              house: 'Aer',
+              location: 'Solaria',
+              education: 'Zodiac Academy',
+              elements: 'Fire, Earth, Air, Water',
+              zodiac: 'Gemini',
+              order: 'Phoenix',
+              bio: "My deepest fear is being cast aside, my heart crushed by trusting blindly again. So I'll never let anyone in again.")
 
-darius.intro.create!(house: 'Ignis',
-                     location: 'Solaria',
-                     education: 'Zodiac Academy',
-                     elements: 'Fire, Water',
-                     zodiac: 'Leo',
-                     order: 'Dragon',
-                     bio: 'This freedom tastes like ashes')
+Intro.create!(user_id: darius.id,
+              house: 'Ignis',
+              location: 'Solaria',
+              education: 'Zodiac Academy',
+              elements: 'Fire, Water',
+              zodiac: 'Leo',
+              order: 'Dragon',
+              bio: 'This freedom tastes like ashes')
 
-seth.intro.create!(house: 'Aer',
-                   location: 'Solaria',
-                   education: 'Zodiac Academy',
-                   elements: 'Air, Earth',
-                   zodiac: 'Aquarius',
-                   order: 'Werewolf',
-                   bio: "I liked it so it's mine")
+Intro.create!(user_id: seth.id,
+              house: 'Aer',
+              location: 'Solaria',
+              education: 'Zodiac Academy',
+              elements: 'Air, Earth',
+              zodiac: 'Aquarius',
+              order: 'Werewolf',
+              bio: "I liked it so it's mine")
 
-caleb.intro.create!(house: 'Terra',
-                    location: 'Solaria',
-                    education: 'Zodiac Academy',
-                    elements: 'Earth, Fire',
-                    zodiac: 'Taurus',
-                    order: 'Vampire',
-                    bio: 'A man with charm is a very dangerous thing')
+Intro.create!(user_id: caleb.id,
+              house: 'Terra',
+              location: 'Solaria',
+              education: 'Zodiac Academy',
+              elements: 'Earth, Fire',
+              zodiac: 'Taurus',
+              order: 'Vampire',
+              bio: 'A man with charm is a very dangerous thing')
 
-max.intro.create!(house: 'Aqua',
-                  location: 'Solaria',
-                  education: 'Zodiac Academy',
-                  elements: 'Water, Air',
-                  zodiac: 'Pisces',
-                  order: 'Siren',
-                  bio: 'I have sea foam in my veins, I understand the language of the waves')
+Intro.create!(user_id: max.id,
+              house: 'Aqua',
+              location: 'Solaria',
+              education: 'Zodiac Academy',
+              elements: 'Water, Air',
+              zodiac: 'Pisces',
+              order: 'Siren',
+              bio: 'I have sea foam in my veins, I understand the language of the waves')
 
-lance.intro.create!(house: 'Aer',
-                    location: 'Solaria',
-                    education: 'Zodiac Academy',
-                    elements: 'Air, Water',
-                    zodiac: 'Libra',
-                    order: 'Vampire',
-                    bio: "Sorry I'm late. I got here as soon as I wanted to")
+Intro.create!(user_id: lance.id,
+              house: 'Aer',
+              location: 'Solaria',
+              education: 'Zodiac Academy',
+              elements: 'Air, Water',
+              zodiac: 'Libra',
+              order: 'Vampire',
+              bio: "Sorry I'm late. I got here as soon as I wanted to")
 
-geraldine.intro.create!(house: 'Terra',
-                        location: 'Solaria',
-                        education: 'Zodiac Academy',
-                        elements: 'Earth, Water',
-                        zodiac: 'Scorpio',
-                        order: 'Cerberus',
-                        bio: 'I am the fair demon who haunts your nightmares, shadow fiends. Fell the kiss of justice when I strike you down and banish you to the depths of the nether world!')
+Intro.create!(user_id: geraldine.id,
+              house: 'Terra',
+              location: 'Solaria',
+              education: 'Zodiac Academy',
+              elements: 'Earth, Water',
+              zodiac: 'Scorpio',
+              order: 'Cerberus',
+              bio: 'I am the fair demon who haunts your nightmares, shadow fiends. Fell the kiss of justice when I strike you down and banish you to the depths of the nether world!')
 
 # Friendships
 
