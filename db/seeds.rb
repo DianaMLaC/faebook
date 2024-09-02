@@ -94,56 +94,64 @@ tory.intro.create!(house: 'Ignis',
                    education: 'Zodiac Academy',
                    elements: 'Fire, Earth, Air, Water',
                    zodiac: 'Gemini',
-                   order: 'Phoenix')
+                   order: 'Phoenix',
+                   bio: 'Everyone knows, karma’s a bitch. And today her name was Tory Vega.')
 
 darcy.intro.create!(house: 'Aer',
                     location: 'Solaria',
                     education: 'Zodiac Academy',
                     elements: 'Fire, Earth, Air, Water',
                     zodiac: 'Gemini',
-                    order: 'Phoenix')
+                    order: 'Phoenix',
+                    bio: "My deepest fear is being cast aside, my heart crushed by trusting blindly again. So I'll never let anyone in again.")
 
 darius.intro.create!(house: 'Ignis',
                      location: 'Solaria',
                      education: 'Zodiac Academy',
                      elements: 'Fire, Water',
                      zodiac: 'Leo',
-                     order: 'Dragon')
+                     order: 'Dragon',
+                     bio: 'This freedom tastes like ashes')
 
 seth.intro.create!(house: 'Aer',
                    location: 'Solaria',
                    education: 'Zodiac Academy',
                    elements: 'Air, Earth',
                    zodiac: 'Aquarius',
-                   order: 'Werewolf')
+                   order: 'Werewolf',
+                   bio: "I liked it so it's mine")
 
 caleb.intro.create!(house: 'Terra',
                     location: 'Solaria',
                     education: 'Zodiac Academy',
                     elements: 'Earth, Fire',
                     zodiac: 'Taurus',
-                    order: 'Vampire')
+                    order: 'Vampire',
+                    bio: 'A man with charm is a very dangerous thing')
 
 max.intro.create!(house: 'Aqua',
                   location: 'Solaria',
                   education: 'Zodiac Academy',
                   elements: 'Water, Air',
                   zodiac: 'Pisces',
-                  order: 'Siren')
+                  order: 'Siren',
+                  bio: 'I have sea foam in my veins, I understand the language of the waves')
 
 lance.intro.create!(house: 'Aer',
                     location: 'Solaria',
                     education: 'Zodiac Academy',
                     elements: 'Air, Water',
                     zodiac: 'Libra',
-                    order: 'Vampire')
+                    order: 'Vampire',
+                    bio: "Sorry I'm late. I got here as soon as I wanted to")
 
 geraldine.intro.create!(house: 'Terra',
                         location: 'Solaria',
                         education: 'Zodiac Academy',
                         elements: 'Earth, Water',
                         zodiac: 'Scorpio',
-                        order: 'Cerberus')
+                        order: 'Cerberus',
+                        bio: 'I am the fair demon who haunts your nightmares, shadow fiends. Fell the kiss of justice when I strike you down and banish you to the depths of the nether world!')
 
 # Friendships
 

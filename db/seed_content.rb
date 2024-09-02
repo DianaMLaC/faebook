@@ -484,7 +484,7 @@ photo_caption = {
   tory: {
     1 => 'artwork by witchlingsart',
     2 => 'artwork by bethgilbert_art',
-    3 => '',
+    3 => 'artwork from Salty Sam Pinterest',
     4 => 'artwork by ajn_art',
     5 => 'artwork by adamszkiart',
     6 => 'artwork by moondraw_s',
@@ -492,7 +492,8 @@ photo_caption = {
     8 => 'artwork by jemlin_c',
     9 => '',
     10 => 'artwork by jessdraw.s',
-    11 => 'artwork by emilia.mildner'
+    11 => 'artwork by emilia.mildner',
+    'profile' => 'artwork from Jessica Engvall Pinterest'
   },
 
   darcy: {
@@ -501,64 +502,71 @@ photo_caption = {
     3 => 'artwork by podgorisheva_art',
     4 => 'artwork by jemlin_c',
     5 => 'artwork by jessdraw.s',
-    6 => '',
+    6 => 'artwork from Salty Sam Pinterest',
     7 => 'artwork by moondraw_s',
     8 => 'artwork by adamszkiart',
     9 => 'artwork by bethgilbert_art',
     10 => 'artwork by emilia.mildner',
-    11 => 'artwork by anoriel_neural'
+    11 => 'artwork by anoriel_neural',
+    'profile' => 'artwork from Jessica Engvall Pinterest'
   },
 
   darius: {
     1 => 'artwork by mybookishdoodles',
-    2 => '',
+    2 => 'artwork from Salty Sam Pinterest',
     3 => 'artwork by mia',
     4 => '',
     5 => 'artwork by podgorisheva_art',
-    6 => 'artwork by adamszkiart'
+    6 => 'artwork by adamszkiart',
+    'profile' => 'artwork from Jessica Engvall Pinterest'
   },
 
   seth: {
     1 => 'artwork by jemlin_c',
     2 => 'artwork by a million worlds design',
-    3 => '',
+    3 => 'artwork from Salty Sam Pinterest',
     4 => '',
     5 => 'artwork by mia',
-    6 => 'artwork by bethgilbert_art'
+    6 => 'artwork by bethgilbert_art',
+    'profile' => 'artwork from Jessica Engvall Pinterest'
   },
 
   caleb: {
     1 => 'artwork by adamszkiart',
-    2 => '',
+    2 => 'artwork from Salty Sam Pinterest',
     3 => 'artwork by podgorisheva_art',
     4 => 'artwork by jemlin_c',
     5 => 'artwork by bethgilbert_art',
-    6 => 'artwork by mia'
+    6 => 'artwork by mia',
+    'profile' => 'artwork from Jessica Engvall Pinterest'
   },
 
   max: {
     1 => 'artwork by jemlin_c',
     2 => 'artwork by mia',
     3 => 'artwork by a million worlds design',
-    4 => '',
+    4 => 'artwork from Salty Sam Pinterest',
     5 => 'artwork by adamszkiart',
-    6 => 'artwork by bethgilbert_art'
+    6 => 'artwork by bethgilbert_art',
+    'profile' => 'artwork from Jessica Engvall Pinterest'
   },
 
   lance: {
     1 => 'artwork by booknuts',
     2 => 'artwork by akari',
     3 => 'artwork by mystery.artistz',
-    4 => '',
+    4 => 'artwork from Salty Sam Pinterest',
     5 => 'artwork by jemlin_c',
     6 => 'artwork by carlosgzz003',
     7 => 'artwork by jessdraw.s',
-    8 => 'artwork by bethgilbert_art'
+    8 => 'artwork by bethgilbert_art',
+    'profile' => 'artwork from Jessica Engvall Pinterest'
   },
   geraldine: {
     1 => '',
-    2 => '',
+    2 => 'artwork from Salty Sam Pinterest',
     3 => 'artwork by adamszkiart',
-    4 => 'artwork by bethgilbert_art'
+    4 => 'artwork by bethgilbert_art',
+    'profile' => 'artwork from Jessica Engvall Pinterest'
   }
 }
