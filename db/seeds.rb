@@ -210,7 +210,7 @@ users.each do |user_key, user|
     post = create_post(user.id, user.id, post_data[:body])
 
     # Add likes to the post
-    users.sample(rand(3..7)).each { |liker| create_like(post, liker.id) }
+    users.values.sample(rand(3..7)).each { |liker| create_like(post, liker.id) }
 
     # Add comments and replies to the post
     post_data[:comments].each do |comment_data|
@@ -237,7 +237,7 @@ users.each do |user_key, user|
     post = create_post(user.id, other_user.id, post_data[:body])
 
     # Add likes to the post
-    users.sample(rand(3..7)).each { |liker| create_like(post, liker.id) }
+    users.values.sample(rand(3..7)).each { |liker| create_like(post, liker.id) }
 
     # Add comments and replies to the post
     post_data[:comments].each do |comment_data|
