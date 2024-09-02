@@ -1,4 +1,4 @@
-posts_data = {
+POSTS_DATA = {
   tory: {
     own: [
       {

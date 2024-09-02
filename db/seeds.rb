@@ -11,6 +11,8 @@
 require_relative 'seed_content'
 # helpers
 
+posts_data = POSTS_DATA
+
 def create_friendship(requester, receiver)
   Friendship.create!(sender_id: requester.id, receiver_id: receiver.id, is_accepted: true)
 end
