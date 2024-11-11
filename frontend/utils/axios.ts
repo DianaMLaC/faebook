@@ -35,7 +35,7 @@ export const customHeaders = {
   "Content-Type": "application/json;charset=UTF-8",
   "X-CSRF-Token": getCsrfToken(),
 }
-
+console.log("Axios Base URL:", baseURL)
 // Axios instance with dynamic baseURL
 export const apiClient = axios.create({
   baseURL: baseURL,

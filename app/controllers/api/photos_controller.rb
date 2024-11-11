@@ -25,9 +25,14 @@ class Api::PhotosController < ApplicationController
 
     if @photo.save
       if @photo.image.attached?
-        @photo.update(photo_url: rails_blob_path(@photo.image))
-        @photo.save
-        album.update(cover_photo_url: rails_blob_path(@photo.image))
+
+        aws_url = "https://faebook.s3.amazonaws.com/#{@photo.image.key}"
+        @photo.update(photo_url: aws_url)
+        album.update(cover_photo_url: aws_url)
+
+        # @photo.update(photo_url: rails_blob_path(@photo.image, only_path: false))
+        # @photo.save
+        # album.update(cover_photo_url: rails_blob_path(@photo.image, only_path: false))
       end
       render :create
     else
