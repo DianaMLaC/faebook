@@ -40,6 +40,7 @@ export const customHeaders = {
 export const apiClient = axios.create({
   baseURL: baseURL,
   headers: customHeaders,
+  withCredentials: true,
 })
 
 // This function extracts and formats error messages from Axios errors
