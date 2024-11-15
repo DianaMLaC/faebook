@@ -43,6 +43,11 @@ export const apiClient = axios.create({
   withCredentials: true,
 })
 
+apiClient.interceptors.request.use((config) => {
+  console.log("Axios Request Headers:", config.headers)
+  return config
+})
+
 // This function extracts and formats error messages from Axios errors
 export function extractErrorMessage(error: AxiosError<BackendErrorResponse>): string {
   const errors = error.response?.data?.errors
@@ -379,6 +384,7 @@ export const fetchUserPhotos = async (userId: string): Promise<Photo[]> => {
 export const uploadPhoto = async (formData: FormData): Promise<Photo> => {
   try {
     const csrfToken = getCsrfToken()
+    console.log("CSRF Token for uploadPhoto:", csrfToken) // Log CSRF token value
 
     const response: AxiosResponse<Photo> = await axios.post("/photos", formData, {
       baseURL: apiClient.defaults.baseURL, // Use the same baseURL as apiClient

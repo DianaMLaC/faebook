@@ -2,7 +2,7 @@ class Api::FriendshipsController < ApplicationController
   before_action :must_be_authorized
   before_action :set_friendship, only: %i[accept destroy]
 
-  skip_before_action :verify_authenticity_token
+  # skip_before_action :verify_authenticity_token
 
   def index
     profile_user = User.find_by(id: params[:user_id])
