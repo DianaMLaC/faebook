@@ -26,7 +26,8 @@ class Api::PhotosController < ApplicationController
     if @photo.save
       if @photo.image.attached?
 
-        aws_url = "https://faebook.s3.amazonaws.com/#{@photo.image.key}"
+        # aws_url = "https://faebook.s3.amazonaws.com/#{@photo.image.key}"
+        aws_url = @photo.image.service_url
         @photo.update(photo_url: aws_url)
         album.update(cover_photo_url: aws_url)
 
