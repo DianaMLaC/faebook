@@ -1,5 +1,5 @@
 class Api::IntrosController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  # skip_before_action :verify_authenticity_token
   before_action :must_be_authorized, :set_user_profile
 
   def create
