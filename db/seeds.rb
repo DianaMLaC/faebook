@@ -234,7 +234,40 @@ users.each do |user_key, user|
     end
   end
 end
-
 puts 'Posts, comments and likes seeded successfully.'
 
 # Photos
+puts 'Seeding users albums and their photos'
+# Parse the photos.json file
+photos_data = JSON.parse(File.read('db/seeds/photos.json'), symbolize_names: true)
+
+# Helper: Create album and add photos
+def add_photos_to_album(user, album_name, photos)
+  # Find or create the album for the user
+  album = user.albums.find_or_create_by!(name: album_name)
+
+  # Iterate over photos and create Photo records
+  photos.each do |photo_data|
+    # If the photo_data is a hash (for Profile), use description and url
+    album.photos.create!(
+      description: photo_data[:description],
+      photo_url: photo_data[:url]
+    )
+  end
+end
+
+# Seed Covers
+puts 'Seeding cover photos...'
+photos_data[:covers].each do |(user_name, aws_link)|
+  user = users[user_name.to_sym]
+  add_photos_to_album(user, 'Cover', [{ photo_url: aws_link }])
+end
+puts 'Cover photos seeded successfully.'
+
+# Seed Profile Photos
+puts 'Seeding profile photos...'
+photos_data.except(:covers).each do |user_name, photos|
+  user = users[user_name.to_sym]
+  add_photos_to_album(user, 'Profile', photos)
+end
+puts 'Profile photos seeded successfully.'

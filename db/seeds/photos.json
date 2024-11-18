@@ -1,0 +1,330 @@
+{
+  "covers": [
+    [
+      "caleb",
+      "https://faebook.s3.amazonaws.com/faebook-seeds/covers/caleb.jpg"
+    ],
+    [
+      "darcy",
+      "https://faebook.s3.amazonaws.com/faebook-seeds/covers/darcy.jpg"
+    ],
+    [
+      "darius",
+      "https://faebook.s3.amazonaws.com/faebook-seeds/covers/darius.jpg"
+    ],
+    [
+      "geraldine",
+      "https://faebook.s3.amazonaws.com/faebook-seeds/covers/geraldine.jpg"
+    ],
+    [
+      "lance",
+      "https://faebook.s3.amazonaws.com/faebook-seeds/covers/lance.jpg"
+    ],
+    [
+      "max",
+      "https://faebook.s3.amazonaws.com/faebook-seeds/covers/max.jpg"
+    ],
+    [
+      "seth",
+      "https://faebook.s3.amazonaws.com/faebook-seeds/covers/seth.jpg"
+    ],
+    [
+      "sofia",
+      "https://faebook.s3.amazonaws.com/faebook-seeds/covers/sofia.jpg"
+    ],
+    [
+      "tory",
+      "https://faebook.s3.amazonaws.com/faebook-seeds/covers/tory.jpg"
+    ]
+  ],
+  "caleb": [
+    {
+      "description": "artwork by adamszkiart",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/caleb/1.jpg"
+    },
+    {
+      "description": "artwork from Salty Sam Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/caleb/2.jpg"
+    },
+    {
+      "description": "artwork by podgorisheva_art",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/caleb/3.jpg"
+    },
+    {
+      "description": "artwork by jemlin_c",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/caleb/4.jpg"
+    },
+    {
+      "description": "artwork by bethgilbert_art",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/caleb/5.jpg"
+    },
+    {
+      "description": "artwork by mia",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/caleb/6.jpg"
+    },
+    {
+      "description": "artwork from Jessica Engvall Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/caleb/7.jpg"
+    }
+  ],
+  "darcy": [
+    {
+      "description": "artwork by witchlingsart",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darcy/1.jpg"
+    },
+    {
+      "description": "artwork by emilia.mildner",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darcy/10.jpg"
+    },
+    {
+      "description": "artwork by anoriel_neural",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darcy/11.jpg"
+    },
+    {
+      "description": "artwork from Jessica Engvall Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darcy/12.jpg"
+    },
+    {
+      "description": "artwork by moondraw_s",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darcy/2.jpg"
+    },
+    {
+      "description": "artwork by podgorisheva_art",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darcy/3.jpg"
+    },
+    {
+      "description": "artwork by jemlin_c",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darcy/4.jpg"
+    },
+    {
+      "description": "artwork by jessdraw.s",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darcy/5.jpg"
+    },
+    {
+      "description": "artwork from Salty Sam Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darcy/6.jpg"
+    },
+    {
+      "description": "artwork by moondraw_s",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darcy/7.jpg"
+    },
+    {
+      "description": "artwork by adamszkiart",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darcy/8.jpg"
+    },
+    {
+      "description": "artwork by bethgilbert_art",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darcy/9.jpg"
+    }
+  ],
+  "darius": [
+    {
+      "description": "artwork by mybookishdoodles",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darius/1.jpg"
+    },
+    {
+      "description": "artwork from Salty Sam Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darius/2.jpg"
+    },
+    {
+      "description": "artwork by mia",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darius/3.jpg"
+    },
+    {
+      "description": "",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darius/4.jpg"
+    },
+    {
+      "description": "artwork by podgorisheva_art",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darius/5.jpg"
+    },
+    {
+      "description": "artwork by adamszkiart",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darius/6.jpg"
+    },
+    {
+      "description": "artwork from Jessica Engvall Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/darius/7.jpg"
+    }
+  ],
+  "geraldine": [
+    {
+      "description": "",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/geraldine/1.jpg"
+    },
+    {
+      "description": "artwork from Salty Sam Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/geraldine/2.jpg"
+    },
+    {
+      "description": "artwork by adamszkiart",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/geraldine/3.jpg"
+    },
+    {
+      "description": "artwork by bethgilbert_art",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/geraldine/4.jpg"
+    },
+    {
+      "description": "artwork from Jessica Engvall Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/geraldine/5.jpg"
+    }
+  ],
+  "lance": [
+    {
+      "description": "artwork by booknuts",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/lance/1.jpg"
+    },
+    {
+      "description": "artwork by akari",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/lance/2.jpg"
+    },
+    {
+      "description": "artwork by mystery.artistz",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/lance/3.jpg"
+    },
+    {
+      "description": "artwork from Salty Sam Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/lance/4.jpg"
+    },
+    {
+      "description": "artwork by jemlin_c",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/lance/5.jpg"
+    },
+    {
+      "description": "artwork by carlosgzz003",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/lance/6.jpg"
+    },
+    {
+      "description": "artwork by jessdraw.s",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/lance/7.jpg"
+    },
+    {
+      "description": "artwork by bethgilbert_art",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/lance/8.jpg"
+    },
+    {
+      "description": "artwork from Jessica Engvall Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/lance/9.jpg"
+    }
+  ],
+  "max": [
+    {
+      "description": "artwork by mia",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/max/2.jpg"
+    },
+    {
+      "description": "artwork by a million worlds design",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/max/3.jpg"
+    },
+    {
+      "description": "artwork from Salty Sam Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/max/4.jpg"
+    },
+    {
+      "description": "artwork by adamszkiart",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/max/5.jpg"
+    },
+    {
+      "description": "artwork by bethgilbert_art",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/max/6.jpg"
+    },
+    {
+      "description": "artwork from Jessica Engvall Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/max/7.jpg"
+    }
+  ],
+  "seth": [
+    {
+      "description": "artwork by jemlin_c",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/seth/1.jpg"
+    },
+    {
+      "description": "artwork by a million worlds design",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/seth/2.jpg"
+    },
+    {
+      "description": "artwork from Salty Sam Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/seth/3.jpg"
+    },
+    {
+      "description": "",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/seth/4.jpg"
+    },
+    {
+      "description": "artwork by mia",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/seth/5.jpg"
+    },
+    {
+      "description": "artwork by bethgilbert_art",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/seth/6.jpg"
+    },
+    {
+      "description": "artwork from Jessica Engvall Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/seth/7.jpg"
+    }
+  ],
+  "sofia": [
+    {
+      "description": "artwork by adamszkiart",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/sofia/1.jpg"
+    },
+    {
+      "description": "artwork from Salty Sam Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/sofia/2.jpg"
+    },
+    {
+      "description": "artwork by bethgilbert_art",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/sofia/3.jpg"
+    }
+  ],
+  "tory": [
+    {
+      "description": "artwork by witchlingsart",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/tory/1.jpg"
+    },
+    {
+      "description": "artwork by jessdraw.s",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/tory/10.jpg"
+    },
+    {
+      "description": "artwork by emilia.mildner",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/tory/11.jpg"
+    },
+    {
+      "description": "artwork from Jessica Engvall Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/tory/12.jpg"
+    },
+    {
+      "description": "artwork by bethgilbert_art",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/tory/2.jpg"
+    },
+    {
+      "description": "artwork from Salty Sam Pinterest",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/tory/3.jpg"
+    },
+    {
+      "description": "artwork by ajn_art",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/tory/4.jpg"
+    },
+    {
+      "description": "artwork by adamszkiart",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/tory/5.jpg"
+    },
+    {
+      "description": "artwork by moondraw_s",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/tory/6.jpg"
+    },
+    {
+      "description": "artwork by jemlin_c",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/tory/7.jpg"
+    },
+    {
+      "description": "artwork by jemlin_c",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/tory/8.jpg"
+    },
+    {
+      "description": "",
+      "url": "https://faebook.s3.amazonaws.com/faebook-seeds/tory/9.jpg"
+    }
+  ]
+}
