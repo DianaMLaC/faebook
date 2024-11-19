@@ -3,7 +3,17 @@
 # # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 
 require_relative 'seed_content'
+require 'json'
 # helpers
+
+puts 'Clearing database...'
+# Destroy dependent records first to avoid foreign key violations
+[Like, Comment, Post, Photo].each(&:destroy_all)
+
+# Now destroy higher-level records
+[Album, Friendship, Intro, User].each(&:destroy_all)
+
+puts 'Database cleared.'
 
 posts_data = POSTS_DATA
 user_intros = INTROS
@@ -235,39 +245,44 @@ users.each do |user_key, user|
   end
 end
 puts 'Posts, comments and likes seeded successfully.'
-
-# Photos
-puts 'Seeding users albums and their photos'
+puts 'Seeding users albums and their cover photos'
 # Parse the photos.json file
 photos_data = JSON.parse(File.read('db/seeds/photos.json'), symbolize_names: true)
 
-# Helper: Create album and add photos
-def add_photos_to_album(user, album_name, photos)
-  # Find or create the album for the user
-  album = user.albums.find_or_create_by!(name: album_name)
+# users.each do |user_sym, user_instance|
+#   cover_album = user_instance.albums.create!("Cover")
+#   cover_album.photos.create!(photo_url: photos_data[:covers])
+# end
+# # Helper: Create album and add photos
+# def add_photos_to_album(user, album_name, photos)
+#   # Find or create the album for the user
+#   album = user.albums.find_or_create_by!(name: album_name)
 
-  # Iterate over photos and create Photo records
-  photos.each do |photo_data|
-    # If the photo_data is a hash (for Profile), use description and url
-    album.photos.create!(
-      description: photo_data[:description],
-      photo_url: photo_data[:url]
-    )
-  end
-end
+#   # Iterate over photos and create Photo records
+#   photos.each do |photo_data|
+#     # If the photo_data is a hash (for Profile), use description and url
+#     album.photos.create!(
+#       description: photo_data[:description],
+#       photo_url: photo_data[:url]
+#     )
+#   end
+# end
 
 # Seed Covers
 puts 'Seeding cover photos...'
 photos_data[:covers].each do |(user_name, aws_link)|
   user = users[user_name.to_sym]
-  add_photos_to_album(user, 'Cover', [{ photo_url: aws_link }])
+  cover_album = user.albums.create!(name: 'Cover')
+  cover_album.photos.create!(photo_url: aws_link)
+  cover_album.update!(cover_photo_url: aws_link)
+  # add_photos_to_album(user, 'Cover', [{ photo_url: aws_link }])
 end
 puts 'Cover photos seeded successfully.'
 
-# Seed Profile Photos
-puts 'Seeding profile photos...'
-photos_data.except(:covers).each do |user_name, photos|
-  user = users[user_name.to_sym]
-  add_photos_to_album(user, 'Profile', photos)
-end
-puts 'Profile photos seeded successfully.'
+# # Seed Profile Photos
+# puts 'Seeding profile photos...'
+# photos_data.except(:covers).each do |user_name, photos|
+#   user = users[user_name.to_sym]
+#   add_photos_to_album(user, 'Profile', photos)
+# end
+# puts 'Profile photos seeded successfully.'

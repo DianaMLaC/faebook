@@ -6,7 +6,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
+    Rails.logger.debug "Session token: #{session[:auth_token]}"
     @authenticated_user = User.find_by(session_token: session[:auth_token])
+    # debugger
     return unless @authenticated_user.nil?
 
     nil
