@@ -31,8 +31,7 @@ def upload_photo(s3, bucket, local_path, s3_key)
     bucket:,
     key: s3_key,
     body: File.open(local_path),
-    content_type: content_type_for_file(local_path),
-    acl: 'public-read' # Make sure the image is public and renders in the browser
+    content_type: content_type_for_file(local_path)
   )
   "https://#{bucket}.s3.amazonaws.com/#{s3_key}"
 end
