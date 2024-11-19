@@ -3,7 +3,7 @@ class Api::AuthenticationsController < ApplicationController
 
   def create
     @user = User.find_by(email: params[:email])
-    debugger
+    # debugger
     if @user && @user.authenticate_with_error(params[:password])
       # @user.update!(session_token: SecureRandom.urlsafe_base64(16)) # Regenerate token on login
       session[:auth_token] = @user.session_token
