@@ -43,10 +43,10 @@ export const apiClient = axios.create({
   withCredentials: true,
 })
 
-apiClient.interceptors.request.use((config) => {
-  console.log("Axios Request Headers:", config.headers)
-  return config
-})
+// apiClient.interceptors.request.use((config) => {
+//   console.log("Axios Request Headers:", config.headers)
+//   return config
+// })
 
 // This function extracts and formats error messages from Axios errors
 export function extractErrorMessage(error: AxiosError<BackendErrorResponse>): string {
