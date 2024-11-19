@@ -10,7 +10,7 @@ console_command = '/rails/bin/rails console'
 [build]
 
 [deploy]
-release_command = './bin/rails db:prepare && ./bin/rails db:seed'
+release_command = "/bin/sh -c './bin/rails db:prepare && ./bin/rails db:seed'"
 
 [http_service]
 internal_port = 3000
