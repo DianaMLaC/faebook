@@ -277,17 +277,4 @@ photos_data.except(:covers).each do |user_name, photos|
   add_photos_to_album(profile_album, photos)
 end
 
-# def add_photos_to_album(album, photos)
-#   # Iterate over photos and create Photo records
-#   photos.each do |photo_data|
-#     # If the photo_data is a hash (for Profile), use description and url
-#     album.photos.create!(
-#       description: photo_data[:description],
-#       photo_url: photo_data[:url]
-#     )
-#   end
-#   url = album.cover_photo.photo_url
-#   album.update!(cover_photo_url: url)
-# end
-
 puts 'Profile photos seeded successfully.'
