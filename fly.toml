@@ -4,7 +4,7 @@
 #
 
 app = 'faebook'
-primary_region = 'otp'
+primary_region = 'lhr'
 console_command = '/rails/bin/rails console'
 
 [build]
