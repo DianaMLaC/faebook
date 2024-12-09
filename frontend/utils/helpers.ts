@@ -63,3 +63,42 @@ export const icon = {
   event: "https://faebook.s3.amazonaws.com/t11vhlvvyxnsva53mg050lcifbjl",
   noProfilePhoto: "https://faebook.s3.amazonaws.com/qezvjm1wsh8fwazvafs884ydgomd",
 }
+
+export const characters = {
+  "Tory Vega": {
+    email: "tory@vega.com",
+    password: "ToryVega",
+  },
+  "Darcy Vega": {
+    email: "darcy@vega.com",
+    password: "DarcyVega",
+  },
+  "Darius Acrux": {
+    email: "darius@acrux.com",
+    password: "DariusAcrux",
+  },
+  "Caleb Altair": {
+    email: "caleb@altair.com",
+    password: "CalebAltair",
+  },
+  "Seth Capella": {
+    email: "seth@capella.com",
+    password: "SethCapella",
+  },
+  "Max Rigel": {
+    email: "max@rigel.com",
+    password: "MaxRigel",
+  },
+  "Lance Orion": {
+    email: "lance@orion.com",
+    password: "LanceOrion",
+  },
+  "Geraldine Grus": {
+    email: "geraldine@grus.com",
+    password: "GeraldineGrus",
+  },
+  "Sofia Cygnus": {
+    email: "sofia@cygnus.com",
+    password: "SofiaCygnus",
+  },
+}
