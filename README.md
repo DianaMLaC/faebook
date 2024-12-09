@@ -59,27 +59,14 @@ Users can attach photos to posts, which will be saved in a `Timeline` Album. A p
 
 Faebook includes a real-time chat messenger. This feature is implemented using ActionCable and Rails Context to connect the frontend to the backend's WebSocket, ensuring seamless real-time communication.
 
-## Installation and configuration
+## Disclaimer
 
-To document whatever steps are necessary to get the application up and running:
+This project, Faebook, is a fan-made clone created for educational purposes. It is not affiliated with or endorsed by Meta Platforms, Inc. (the owners of Facebook) or by Caroline Peckham and Susanne Valenti (the authors of Zodiac Academy).
 
-- Ruby version (ruby '3.2.3')
+- The Facebook logo, design, and related intellectual property are the property of Meta Platforms, Inc.
+- Zodiac Academy characters, names, and world-building elements are the intellectual property of Caroline Peckham and Susanne Valenti.
 
-- System dependencies
-
-- Configuration
-
-- Database creation
-
-- Database initialization
-
-- How to run the test suite
-
-- Services (job queues, cache servers, search engines, etc.)
-
-- Deployment instructions
-
-- ...
+This project is intended solely for personal learning and exploration of web development concepts. No commercial use is intended or permitted.
 
 ## Contact
 
