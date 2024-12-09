@@ -217,6 +217,7 @@ export const postUrl = async (url: string): Promise<Url> => {
       image: linkPreviewResponse.data.image,
       url: linkPreviewResponse.data.url,
     }
+    console.log({ urlPayload })
 
     const urlResponse: AxiosResponse<Url> = await apiClient.post("/post_urls", urlPayload)
     return urlResponse.data

@@ -156,29 +156,6 @@ end
 
 puts 'Friendships seeded successfully.'
 
-# Posts Comments and Likes
-# puts 'Deleting all posts with their dependencies'
-
-# Post.all.each(&:destroy)
-
-# if Post.all.empty?
-#   puts 'Posts deleted successfully'
-# else
-#   puts 'Post entries found in db'
-# end
-
-# if Comment.all.empty?
-#   puts 'Comments deleted successfully'
-# else
-#   puts 'Comments entries found in db'
-# end
-
-# if Like.all.empty?
-#   puts 'Likes deleted successfully'
-# else
-#   puts 'Likes entries found in db'
-# end
-
 puts 'Seeding posts, comments, likes ...'
 
 users.each do |user_key, user|
@@ -244,8 +221,24 @@ users.each do |user_key, user|
     end
   end
 end
-puts 'Posts, comments and likes seeded successfully.'
 
+puts 'Seeding post-url'
+post_url_data = {
+  title: 'New York-Style Bagel Recipe',
+  description: 'This easy homemade New York-Style Bagel recipe is simply the best! Basic pantry ingredients transform into deliciously chewy freshly made New York bagels.',
+  image: 'https://www.sophisticatedgourmet.com/wp-content/uploads/2020/05/new-york-style-bagels-recipe-1.jpg',
+  url:
+'https://www.sophisticatedgourmet.com/2009/10/new-york-style-bagel-recipe/'
+
+}
+post_url = PostUrl.create!(title: post_url_data[:title], description: post_url_data[:description],
+                           image: post_url_data[:image], url: post_url_data[:url])
+
+user = users[:geraldine]
+Post.create!(profile_id: user.id, author_id: user.id, body: 'Best buttery bagels receipe!', content_type: 'PostUrl',
+             content_id: post_url.id)
+
+puts 'Posts, comments and likes seeded successfully.'
 # Photos
 puts 'Seeding users albums and their cover photos'
 # Parse the photos.json file
@@ -282,19 +275,6 @@ photos_data.except(:covers).each do |user_name, photos|
   profile_album = user.albums.find_or_create_by(name: 'Profile')
 
   add_photos_to_album(profile_album, photos)
-end
-
-def add_photos_to_album(album, photos)
-  # Iterate over photos and create Photo records
-  photos.each do |photo_data|
-    # If the photo_data is a hash (for Profile), use description and url
-    album.photos.create!(
-      description: photo_data[:description],
-      photo_url: photo_data[:url]
-    )
-  end
-  url = album.cover_photo.photo_url
-  album.update!(cover_photo_url: url)
 end
 
 puts 'Profile photos seeded successfully.'
