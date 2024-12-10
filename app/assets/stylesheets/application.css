@@ -1654,7 +1654,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   align-items: center;
   color: var(--text-color);
   padding: 10px;
-  cursor: pointer;
+
 }
 
 .data-present-icon{
@@ -2390,6 +2390,7 @@ ul.friends-display-grid {
 .posts-friend-container {
   display: flex;
   flex-direction: column;
+  cursor: pointer;
   /* justify-content: flex-start;
   margin: 10px; */
 }
