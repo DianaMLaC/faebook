@@ -16,7 +16,7 @@ const CableContext = createContext<CableContextType | null>(null)
 function CableProvider({ children }: CableProviderProps): React.ReactElement {
   const actionCableUrl =
     process.env.NODE_ENV === "production"
-      ? "wss://<your-deployed-app-domain>.com/cable"
+      ? "wss://faebook.fly.dev/cable"
       : "ws://localhost:3000/cable"
 
   const CableApp = {
