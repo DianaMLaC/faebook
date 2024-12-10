@@ -57,7 +57,7 @@ function ProfileHeader(): React.ReactElement {
       }
     }
 
-    if (profileUser?.id) {
+    if (currentUser && profileUser?.id) {
       checkFriendshipStatus()
     }
   }, [profileUser, currentUser?.id])
