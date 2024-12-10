@@ -16,7 +16,7 @@ class Api::PostUrlsController < ApplicationController
   end
 
   def get_api_key
-    api_key = Rails.application.credentials.dig(:link_preview_api_key)
+    api_key = Rails.application.credentials[:link_preview_api_key]
     render json: { link_preview_api_key: api_key }
   end
 
