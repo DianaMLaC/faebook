@@ -2437,6 +2437,7 @@ ul.friends-display-grid {
   border-top-width: 0.555556px;
   margin-top:12px;
   padding-top: 8px;
+  cursor: pointer;
 }
 
 .create-post-bottom > div {
@@ -2779,7 +2780,7 @@ ul.friends-display-grid {
 }
 
 .comment-avatar {
-  min-width: 32px; 
+  width: 32px; 
   height: 32px;
   border-radius: 50%; 
   overflow: hidden;

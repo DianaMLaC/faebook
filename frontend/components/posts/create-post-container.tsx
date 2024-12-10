@@ -42,7 +42,7 @@ function CreatePost(): React.ReactElement {
           <NewPost closeModalContainer={closeModal} />
         </ReactModal>
       </div>
-      <div className="create-post-bottom">
+      <div className="create-post-bottom" onClick={openModal}>
         <div>
           <img className="live-video" src={icon.video} alt="Live-Video" />
           <p>Live Video</p>
