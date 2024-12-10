@@ -1,5 +1,7 @@
 # Faebook
 
+![alt-text](/docs/screenshots/darcy-profile-page.png "Darcy")
+
 ## Summary
 
 **Faebook** is a real-time, immersive social networking site inspired by [Facebook](https://www.facebook.com) and uniquely tailored for fans of the Zodiac Academy book series by Caroline Peckham and Susanne Valenti. In this magical world, users are assigned a zodiac sign based on their date of birth during signup, which determines their "House" and magical attributes, creating a personalized and thematic experience. The "About Me" section is enriched with fields such as a fae's Power Elements, Magic Order, and Academy House, replacing the traditional fields like education, hometown, and workplace found on Facebook.
@@ -31,8 +33,9 @@ Explore **Faebook** live at [faebook.fly.dev](https://faebook.fly.dev). For the 
 ### Authentication
 
 Session authentication is handled on the backend using BCrypt and enforced with session tokens. Automatic redirection to the login/signup page occurs when not logged in.
-![alt-text](/docs/screenshots/login.gif "Photo Upload")
-![alt-text](/docs/screenshots/signup.gif "Photo Upload")
+
+![alt-text](/docs/screenshots/login.png "Log In")
+![alt-text](/docs/screenshots/signup.png "Sign In")
 
 ### Posts
 
@@ -43,7 +46,7 @@ This allows for posts to display an attached picture, or a preview of a URL, ins
 
 When users include URLs in their post the link is automatically parsed and meta-data is fetched using LinkPreview API. The metadata is then stored in the db as a polymorphic association to the post.
 A thumbnail and description of the URL is then displayed in the `Post` next to what was originally typed.
-![alt-text](/docs/gifs/post-url-attached.gif "Photo Upload")
+![alt-text](/docs/gifs/post-url-attached.gif "Post Url")
 
 ### Photo Upload
 
@@ -57,7 +60,28 @@ Users can attach photos to posts, which will be saved in a `Timeline` Album. A p
 
 ### Real-Time Chat Messenger
 
-Faebook includes a real-time chat messenger. This feature is implemented using ActionCable and Rails Context to connect the frontend to the backend's WebSocket, ensuring seamless real-time communication.
+Faebook includes a real-time chat messenger, enabling seamless communication between users. This feature is implemented using Rails' ActionCable for WebSocket functionality, ensuring real-time updates as users exchange messages.
+
+**How It Works:**
+
+- The frontend connects to the WebSocket server using ActionCable.
+- Each chat is represented as a conversation, uniquely identified by the participants involved.
+- Messages are sent and received via the WebSocket connection, which automatically updates the chat interface for both participants without the need for page refreshes.
+
+**How to Use:**
+
+1. Navigate to a friend's profile page by clicking on their name or avatar in the Friends section.
+2. On their profile page, just below their cover photo, you'll see a Messenger button.
+3. Click the Messenger button to initiate a chat.
+4. The chat window opens, and you can start typing and sending messages in real time.
+
+![alt-text](/docs/gifs/messaging-max-geraldine.gif "Max-Geraldine-Messages")
+
+### Mobile-responsiveness
+
+Faebook is fully mobile-responsive, allowing users to enjoy the platform on any device. CSS media queries (@media screen) have been used extensively to adapt the layout and components for smaller screens, ensuring an optimized and seamless experience on mobile devices.
+
+![alt-text](/docs/gifs/mobile-version.gif "Photo Upload")
 
 ## Disclaimer
 

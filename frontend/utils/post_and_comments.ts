@@ -15,14 +15,6 @@ interface UrlPayload {
   url: string
 }
 
-// const LINK_PREVIEW_API_KEY = "9ed80b03c174426ecaab34e1ad344ad8"
-
-// json object returned from get_api_key: {link_preview_api_key: "9ed80b03c174426ecaab34e1ad344ad8"}
-
-// const linkPreviewHeaders = {
-//   "X-Linkpreview-Api-Key": LINK_PREVIEW_API_KEY,
-// }
-
 const fetchApiKey = async (): Promise<string> => {
   try {
     const response = await axios.get("/api/post_urls/get_api_key")

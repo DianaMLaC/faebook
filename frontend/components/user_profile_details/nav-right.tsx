@@ -18,9 +18,9 @@ function NavRight(): React.ReactElement {
 
   return (
     <div className="nav-right">
-      <div className="nav-create-button">
+      {/* <div className="nav-create-button">
         <TbGridDots />
-      </div>
+      </div> */}
       <div className="nav-messenger-button">
         <FaFacebookMessenger />
       </div>
