@@ -404,8 +404,8 @@ POSTS_DATA = {
         body: 'Your dedication to your our future Queens is commendable.',
         comments: [
           {
-            user: :geraldine,
-            text: 'Thank you, Geraldine. I am trying my best.',
+            user: :tory,
+            text: 'Especially to Darcy.',
             replies: []
           }
         ]
