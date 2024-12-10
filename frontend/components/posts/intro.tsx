@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useAuth } from "../../context/auth"
 import { RiEditLine } from "react-icons/ri"
 import { BiCheckboxChecked } from "react-icons/bi"
@@ -10,6 +10,10 @@ function Intro(): React.ReactElement {
   const [introBio, setIntroBio] = useState(profileUser?.intro?.bio || "")
   const bioButton = profileUser?.id === currentUser?.id
   const [toggleBioInput, setToggleBioInput] = useState(false)
+
+  useEffect(() => {
+    setIntroBio(profileUser?.intro?.bio || "")
+  }, [profileUser])
 
   const handleBioSubmit = async () => {
     if (!currentUser || !currentUser.intro?.id) {

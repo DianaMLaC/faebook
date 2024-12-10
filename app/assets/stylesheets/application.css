@@ -591,6 +591,15 @@ body {
   flex-direction: row;
 }
 
+.menu-account-profile .comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 12px; /* Adds space between avatar and input */
+  flex-shrink: 0; /* Prevents avatar from shrinking */
+}
+
 .menu-see-all-profiles {
   border-radius: 5px;
   border: none;
