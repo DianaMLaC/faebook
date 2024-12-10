@@ -36,6 +36,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/credentials/production.key
 
 # Vite Ruby
 /public/vite*
@@ -44,3 +45,4 @@ node_modules
 # https://vitejs.dev/guide/env-and-mode.html#env-files
 *.local
 
+/config/credentials/production.key

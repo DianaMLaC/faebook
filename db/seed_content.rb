@@ -60,7 +60,7 @@ POSTS_DATA = {
         ]
       },
       darius: {
-        body: "Good job on today's battle tactics, Tory. You are getting stronger every day.",
+        body: "Good job on today's battle tactics, Roxy. You are getting stronger every day.",
         comments: [
           {
             user: :tory,
@@ -401,11 +401,11 @@ POSTS_DATA = {
     ],
     others: {
       geraldine: {
-        body: 'Your dedication to your studies is commendable, Geraldine. Keep reaching for the stars.',
+        body: 'Your dedication to your our future Queens is commendable.',
         comments: [
           {
             user: :geraldine,
-            text: 'Thank you, Professor. I am trying my best.',
+            text: 'Thank you, Geraldine. I am trying my best.',
             replies: []
           }
         ]
@@ -457,11 +457,11 @@ POSTS_DATA = {
     ],
     others: {
       lance: {
-        body: 'Thank you for always being a bright light, Geraldine. Your energy is unmatched.',
+        body: 'Your dedication to your studies is commendable, Geraldine. Keep reaching for the stars.',
         comments: [
           {
             user: :geraldine,
-            text: 'Thank you, Lance! Your words mean a lot.',
+            text: 'Thank you, Professor. I am trying my best.',
             replies: []
           }
         ]
