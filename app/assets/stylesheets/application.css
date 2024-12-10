@@ -687,15 +687,18 @@ body {
 
 .profile-header-container {
   padding-bottom: 6px;
+  /* width: 100vh; */
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   box-sizing: border-box;
-  background-color: var(--background-color);
+  background: linear-gradient(to bottom, rgba(128, 128, 128, 0.3), var(--background-color));
 }
 
 .profile-header {
   position: relative;
   box-sizing: border-box;
+  max-width: 1280px; 
+  margin: 0 auto; 
 }
 
 .cover-photo-container {
@@ -897,7 +900,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   margin-left: 16px;
   margin-right: 16px;
   border-top: 1px solid rgb(206, 208, 212);
-  background-color: white;
+  /* background-color: white; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1059,10 +1062,6 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 
 /* PROFILE PAGE - PHOTOS*/
 
-.profile-page {
-  max-width: 1280px;
-  margin: 0 auto;
-}
 
 .profile-photos-container {
   background-color: var(--secondary-color);
@@ -1246,7 +1245,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 .photo-container-posts-photos {
   width: 150px;
   height: 150px;
-  margin: 10px;
+  margin: 4px;
   cursor: pointer;
 }
 
@@ -1545,17 +1544,22 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 
 
 /* About me */
+/* .profile-page {
+  width: 100vh;
+  margin: 0 auto;
+} */
+
 .profile-page-components {
   background-color: var(--secondary-color);
   padding-top: 10px;
   height: 100vh;
-  width: 100%;
-
+  max-width: 1280px; 
+  margin: 0 auto;
 }
 .profile-about-me-container {
   background-color: var(--secondary-color);
-  padding-left: 10px;
-  padding-right: 10px;
+  /* padding-left: 10px;
+  padding-right: 10px; */
   position: relative;
 
 }
@@ -2230,6 +2234,10 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
   padding-right: 10px;
 }
 
+.intro-header svg {
+  cursor: pointer;
+}
+
 .intro-header h2 {
   font-size: 20px;
   font-weight: 700px;
@@ -2249,7 +2257,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 .intro-bio p {
   text-align: center;
   padding: 6px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
 }
 
@@ -2302,6 +2310,8 @@ ul.photos-display-grid {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  box-sizing: border-box; 
+
 }
 
 .photos-display-grid li {
@@ -2360,25 +2370,28 @@ ul.photos-display-grid {
 ul.friends-display-grid {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   list-style-type: none;
   padding: 0;
   margin: 0;
+  box-sizing: border-box; 
+
 }
 
 .friends-display-grid li {
   flex: 1 0 33.33%; 
   max-width: 33.33%; 
   box-sizing: border-box; 
-  margin: 12px;
+  padding: 6px;
+  margin: 0;
 }
 
 .posts-friend-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  margin: 10px;
+  /* justify-content: flex-start;
+  margin: 10px; */
 }
 
 .posts-friend-photo {
@@ -2529,34 +2542,30 @@ ul.friends-display-grid {
 }
 
 .more-button {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   text-align: center;
-  /* background-color: var(--secondary-button-background); */
   /* box-shadow:0px 0px 4px 0.5px rgba(0, 0, 0, 0.1); needs to stay like this! */
-
   color: var(--text-color);
-  font-size: 36px;
+  font-size: 28px;
   font-weight: bolder; 
-  border-radius: 8px;
-  border-color: transparent;
-  cursor: not-allowed;
-  margin-right: 9px; 
+  cursor: pointer;
+  margin-right: 8px;
 }
 
-.more-button:hover, .more-menu {
-  background-color: var(--secondary-button-hover);
+.more-button:hover {
+  font-size: 36px;
 }
 
 .more-menu {
   position: absolute;
-  background-color: var(--secondary-button-background);
+  /* background-color: var(--secondary-button-background); */
   padding: 8px 12px;
-  font-size: 28px;
-  right: 86px;
-  top: 14px;
-  border-radius: 8px;
-  box-shadow:0px 0px 4px 0.5px rgba(0, 0, 0, 0.1); /* needs to stay like this! */
+  font-size: 26px;
+  right: 50px;
+  top: 12px;
+  /* border-radius: 8px;
+  box-shadow:0px 0px 4px 0.5px rgba(0, 0, 0, 0.1); needs to stay like this! */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2727,6 +2736,7 @@ ul.friends-display-grid {
   align-items: center;
   padding: 6px;
   margin: 2px 6px;
+  cursor: not-allowed;
 }
 
 .share {
@@ -3562,11 +3572,11 @@ input[type="url"] {
     margin-bottom: 4px;
   }
 
-  .profile-header-nav {
+  /* .profile-header-nav {
     margin-left: 6px;
     margin-right: 6px;
     height: 44px;
-  }
+  } */
 
   .profile-header-nav-links {
     overflow: scroll;
@@ -3769,6 +3779,11 @@ input[type="url"] {
     font-size: 10px;
     margin-bottom: 4px;
     padding: 2px 8px;
+  }
+
+  .posts-index-container {
+    padding: 0 4px;
+    margin-right: -6px;
   }
 
   .post-header {
