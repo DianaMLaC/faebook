@@ -22,10 +22,9 @@ export interface SessionData {
   password: string
 }
 
-export interface FriendshipFriend {
+export interface FriendshipFriend extends User {
   friendshipId: string
   friendshipStatus: string
-  user: User
 }
 
 export interface FriendshipData {

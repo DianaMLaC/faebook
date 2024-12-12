@@ -20,6 +20,7 @@ function FriendsPage(): React.ReactElement {
       try {
         if (profileUser) {
           const friendshipData = await fetchFriendships(profileUser.id)
+          console.log("acceptedFriends in friends_page", friendshipData.friends.accepted)
           setAcceptedFriends(friendshipData.friends.accepted)
           setPendingFriendships(friendshipData.friends.requests)
         }
@@ -36,17 +37,6 @@ function FriendsPage(): React.ReactElement {
     setActiveView(view)
     setActiveLink(view)
   }
-
-  // const getViewComponent = () => {
-  //   switch (activeView) {
-  //     case "allFriends":
-  //       return <FriendsIndex friends={acceptedFriends} />
-  //     case "friendRequests":
-  //       return <FriendRequests requests={pendingFriendships} />
-  //     default:
-  //       return null
-  //   }
-  // }
 
   const getViewComponent = () => {
     switch (activeView) {
