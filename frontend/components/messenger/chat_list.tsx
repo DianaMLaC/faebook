@@ -20,7 +20,6 @@ function ChatList() {
         if (currentUser) {
           const friendshipData = await fetchFriendships(currentUser.id)
           if (friendshipData) {
-            console.log(friendshipData.friends.accepted)
             setAcceptedFriends(friendshipData.friends.accepted)
           }
         }
