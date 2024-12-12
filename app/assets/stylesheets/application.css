@@ -876,6 +876,7 @@ background: linear-gradient(to bottom, #f0f2f5, #f0f2f5 70%, rgba(0, 0, 0, 0.5))
 .messenger-button:hover, .already-friends-button:hover, .cancel-friendship-button:hover {
   background-color: var(--primary-button-hover);
   color: var(--primary-button-text);
+  cursor: pointer;
 }
 
 .edit-profile-button, .add-friend-button {
