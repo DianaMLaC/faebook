@@ -10,12 +10,14 @@ import ChatList from "../messenger/chat_list"
 
 function NavRight(): React.ReactElement {
   const { currentUser } = useAuth()
-  const [toggleUserMenu, setToggleUserMenu] = useState<boolean>(false)
-  const [toggleChatMenu, setToggleChatMenu] = useState<boolean>(false)
+  const [activeMenu, setActiveMenu] = useState<"user" | "chat" | null>(null) // Track the active menu
 
   const handleMenuButton = () => {
-    setToggleUserMenu(!toggleUserMenu)
-    console.log("toggleMenu:", toggleUserMenu)
+    setActiveMenu((prev) => (prev === "user" ? null : "user")) // Toggle User Menu
+  }
+
+  const handleChatMenuButton = () => {
+    setActiveMenu((prev) => (prev === "chat" ? null : "chat")) // Toggle Chat Menu
   }
 
   return (
@@ -26,11 +28,11 @@ function NavRight(): React.ReactElement {
       <div className="nav-notifications-button">
         <IoMdNotifications />
       </div>
-      <div className="nav-messenger-button" onClick={() => setToggleChatMenu(!toggleChatMenu)}>
+      <div className="nav-messenger-button" onClick={handleChatMenuButton}>
         <div className="chat-menu-toggle">
           <FaFacebookMessenger />
         </div>
-        {toggleChatMenu && (
+        {activeMenu === "chat" && (
           <div className="chat-menu-container">
             <ChatList />
           </div>
@@ -47,7 +49,7 @@ function NavRight(): React.ReactElement {
         <div className="account-menu-toggle">
           <MdKeyboardArrowDown />
         </div>
-        {toggleUserMenu && (
+        {activeMenu === "user" && (
           <div className="account-menu-container">
             <AccountMenu />
           </div>
