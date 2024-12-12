@@ -3461,8 +3461,114 @@ input[type="url"] {
   /* border: 1px solid #ddd; */
 }
 
+/* Chat List Container */
 
+.chat-menu-container {
+  /**/
+}
 
+/*position relative on the nav messenger button */
+.chat-list-container {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  width: 320px;
+  max-height: 600px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chat List Header */
+.chat-list-header {
+  padding: 16px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #444;
+  border-bottom: 1px solid #e4e6eb;
+  background-color: #f0f2f5;
+  text-align: center;
+}
+
+/* Friends List */
+.chat-friends-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+/* Individual Friend Item */
+.friend-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.friend-item:hover {
+  background-color: #f0f2f5;
+}
+
+/* Avatar */
+/* .friend-item .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 12px;
+}
+
+.friend-item .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+} */
+
+/* Display Name */
+/* .post-user-display-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #050505;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} */
+
+/* Chat Room (Optional Inline Chat View) */
+/* .chat-room {
+  padding: 16px;
+  background-color: #f0f2f5;
+  border-top: 1px solid #e4e6eb;
+} */
+
+/* Chat Room Header */
+/* .chat-room .chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e4e6eb;
+} */
+
+/* Close Button */
+/* .chat-header .chat-header-buttons div {
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 8px;
+  transition: background-color 0.2s ease;
+  border-radius: 50%;
+}
+
+.chat-header .chat-header-buttons div:hover {
+  background-color: #d8dadf;
+} */
 
 
 
