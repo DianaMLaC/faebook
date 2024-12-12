@@ -508,6 +508,9 @@ body {
   align-items: center;
   font-size: 26px;
   min-width: 40px;
+  cursor: pointer;
+}
+.nav-notifications-button {
   cursor: not-allowed;
 }
 

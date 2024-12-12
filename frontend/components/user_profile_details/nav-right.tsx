@@ -26,13 +26,15 @@ function NavRight(): React.ReactElement {
       <div className="nav-notifications-button">
         <IoMdNotifications />
       </div>
-      <div className="nav-messenger-button" onClick={() => !setToggleChatMenu}>
+      <div className="nav-messenger-button" onClick={() => setToggleChatMenu(!toggleChatMenu)}>
         <div className="chat-menu-toggle">
           <FaFacebookMessenger />
         </div>
-        <div className="chat-menu-container">
-          <ChatList />
-        </div>
+        {toggleChatMenu && (
+          <div className="chat-menu-container">
+            <ChatList />
+          </div>
+        )}
       </div>
       <div className="nav-account-button" onClick={handleMenuButton}>
         <div className="avatar">
