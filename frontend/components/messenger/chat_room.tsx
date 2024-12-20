@@ -11,10 +11,12 @@ import { useCable } from "../../context/cable"
 import { Message } from "../../utils/types"
 import { createMessage } from "../../utils/axios"
 import { icon } from "../../utils/helpers"
+import { useChat } from "../../context/chat"
 
-function ChatRoom({ onClose, chat }): React.ReactElement {
+function ChatRoom({ chat }): React.ReactElement {
   const { profileUser, currentUser } = useAuth()
   const { CableApp } = useCable()
+  const { closeChat } = useChat()
   const [messages, setMessages] = useState<Message[] | null>(chat.messages)
   const [messageBody, setMessageBody] = useState("")
   const [hasEffectRun, setHasEffectRun] = useState(false)
@@ -82,7 +84,7 @@ function ChatRoom({ onClose, chat }): React.ReactElement {
           <div onClick={minimizeChat}>
             <FaMinus />
           </div>
-          <div onClick={onClose}>
+          <div onClick={() => closeChat}>
             <IoClose />
           </div>
         </div>

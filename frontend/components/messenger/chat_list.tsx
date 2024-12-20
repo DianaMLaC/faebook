@@ -10,7 +10,7 @@ import { useChat } from "../../context/chat"
 
 function ChatList() {
   const { currentUser } = useAuth()
-  const { openChat, isChatOpen, currentChat, closeChat } = useChat()
+  const { openChat, isChatOpen, currentChat } = useChat()
   const { acceptedFriends, setAcceptedFriends } = useFriends()
 
   useEffect(() => {
@@ -56,7 +56,7 @@ function ChatList() {
             ))}
         </ul>
       </div>
-      {isChatOpen && <ChatRoom chat={currentChat} onClose={closeChat} />}
+      {isChatOpen && <ChatRoom chat={currentChat} />}
     </>
   )
 }

@@ -216,6 +216,6 @@ export interface PhotosContextType {
 export interface ChatContextType {
   currentChat: Chat | null
   isChatOpen: boolean
-  openChat: (chat: Chat) => void
+  openChat: (senderId: string, receiverId: string) => void
   closeChat: () => void
 }

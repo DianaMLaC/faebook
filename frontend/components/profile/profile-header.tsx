@@ -17,7 +17,7 @@ import { useChat } from "../../context/chat"
 
 function ProfileHeader(): React.ReactElement {
   const { currentUser, setCurrentUser, profileUser } = useAuth()
-  const { openChat, currentChat, isChatOpen, closeChat } = useChat()
+  const { openChat, currentChat, isChatOpen } = useChat()
 
   const [profileModalIsOpen, setProfileModalIsOpen] = useState<boolean>(false)
   const [coverModalIsOpen, setCoverModalIsOpen] = useState<boolean>(false)
@@ -280,7 +280,7 @@ function ProfileHeader(): React.ReactElement {
           </div>
         </nav>
       </header>
-      {isChatOpen && <ChatRoom onClose={closeChat} chat={currentChat} />}
+      {isChatOpen && <ChatRoom chat={currentChat} />}
     </>
   )
 }
