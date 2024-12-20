@@ -48,31 +48,33 @@ function ChatList() {
   }
 
   return (
-    <div className="chat-list-container">
-      <div className="chat-list-header">Contacts</div>
-      <ul className="chat-friends-list">
-        {acceptedFriends &&
-          acceptedFriends.map((friend) => (
-            <li key={friend.id} onClick={() => openChat(friend.id)}>
-              <div className="friend-item">
-                <div className="avatar">
-                  {friend.profilePhotoUrl ? (
-                    <img className="profile-photo" src={friend.profilePhotoUrl} alt="Profile" />
-                  ) : (
-                    <img
-                      className="missing-profile-photo"
-                      src={icon.noProfilePhoto}
-                      alt="Faebook"
-                    />
-                  )}
+    <>
+      <div className="chat-list-container">
+        <div className="chat-list-header">Contacts</div>
+        <ul className="chat-friends-list">
+          {acceptedFriends &&
+            acceptedFriends.map((friend) => (
+              <li key={friend.id} onClick={() => openChat(friend.id)}>
+                <div className="friend-item">
+                  <div className="avatar">
+                    {friend.profilePhotoUrl ? (
+                      <img className="profile-photo" src={friend.profilePhotoUrl} alt="Profile" />
+                    ) : (
+                      <img
+                        className="missing-profile-photo"
+                        src={icon.noProfilePhoto}
+                        alt="Faebook"
+                      />
+                    )}
+                  </div>
+                  <div className="post-user-display-name">{friend.displayName}</div>
                 </div>
-                <div className="post-user-display-name">{friend.displayName}</div>
-              </div>
-            </li>
-          ))}
-      </ul>
+              </li>
+            ))}
+        </ul>
+      </div>
       {isChatOpen && <ChatRoom chat={chat} onClose={() => setIsChatOpen(false)} />}
-    </div>
+    </>
   )
 }
 
