@@ -6,12 +6,11 @@ import { useFriends } from "../../context/friends"
 import { Chat } from "../../utils/types"
 import ChatRoom from "./chat_room"
 import { icon } from "../../utils/helpers"
+import { useChat } from "../../context/chat"
 
 function ChatList() {
   const { currentUser } = useAuth()
-  const [chat, setChat] = useState<Chat | null>(null)
-  const [isChatOpen, setIsChatOpen] = useState<boolean>(false)
-
+  const { openChat, isChatOpen, currentChat, closeChat } = useChat()
   const { acceptedFriends, setAcceptedFriends } = useFriends()
 
   useEffect(() => {
@@ -31,22 +30,6 @@ function ChatList() {
     getFriendshipsData()
   }, [currentUser])
 
-  const openChat = async (userId) => {
-    console.log("Opening messenger chat")
-    if (!currentUser || !userId) {
-      return
-    }
-
-    try {
-      const chatResponse = await initiateChat(currentUser!.id, userId)
-      console.log("initiated chat:", chatResponse.name)
-      setChat(chatResponse)
-    } catch (error) {
-      console.error("Error fetching chat data:", error)
-    }
-    setIsChatOpen(true) // Open the chat
-  }
-
   return (
     <>
       <div className="chat-list-container">
@@ -54,7 +37,7 @@ function ChatList() {
         <ul className="chat-friends-list">
           {acceptedFriends &&
             acceptedFriends.map((friend) => (
-              <li key={friend.id} onClick={() => openChat(friend.id)}>
+              <li key={friend.id} onClick={() => openChat(currentUser!.id, friend.id)}>
                 <div className="friend-item">
                   <div className="avatar">
                     {friend.profilePhotoUrl ? (
@@ -73,7 +56,7 @@ function ChatList() {
             ))}
         </ul>
       </div>
-      {isChatOpen && <ChatRoom chat={chat} onClose={() => setIsChatOpen(false)} />}
+      {isChatOpen && <ChatRoom chat={currentChat} onClose={closeChat} />}
     </>
   )
 }
