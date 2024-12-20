@@ -11,7 +11,7 @@ import { TbDots } from "react-icons/tb"
 import { RxCross2 } from "react-icons/rx"
 import { deleteFriendship, fetchFriendships, requestFriendship } from "../../utils/axios"
 import { Chat, User } from "../../utils/types"
-import ChatRoom from "../messenger/chat"
+import ChatRoom from "../messenger/chat_room"
 import { initiateChat } from "../../utils/axios"
 import { icon } from "../../utils/helpers"
 

@@ -212,3 +212,10 @@ export interface PhotosContextType {
   deleteLikeFromComment: (photoId: string, commentId: string, likeId: string) => void
   addReplyToComment: (photoId: string, commentId: string, reply: Comment) => void
 }
+
+export interface ChatContextType {
+  currentChat: Chat | null
+  isChatOpen: boolean
+  openChat: (chat: Chat) => void
+  closeChat: () => void
+}
