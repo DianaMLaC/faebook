@@ -7,6 +7,7 @@ import PostsProvider from "../context/posts"
 import PhotosProvider from "../context/photos"
 import { CableProvider } from "../context/cable"
 import FriendsProvider from "../context/friends"
+import ChatProvider from "../context/chat"
 
 function Root() {
   return (
@@ -17,7 +18,9 @@ function Root() {
           <PostsProvider>
             <PhotosProvider>
               <FriendsProvider>
-                <App />
+                <ChatProvider>
+                  <App />
+                </ChatProvider>
               </FriendsProvider>
             </PhotosProvider>
           </PostsProvider>

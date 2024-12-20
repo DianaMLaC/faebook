@@ -4,7 +4,7 @@ import { useCable } from "../../context/cable"
 import { fetchFriendships, initiateChat } from "../../utils/axios"
 import { useFriends } from "../../context/friends"
 import { Chat } from "../../utils/types"
-import ChatRoom from "./chat"
+import ChatRoom from "./chat_room"
 import { icon } from "../../utils/helpers"
 
 function ChatList() {
