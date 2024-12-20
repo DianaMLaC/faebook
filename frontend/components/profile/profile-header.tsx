@@ -7,23 +7,24 @@ import { FaPlus, FaCamera } from "react-icons/fa"
 import { MdModeEditOutline } from "react-icons/md"
 import { RiMessengerLine } from "react-icons/ri"
 import { IoPersonAddSharp } from "react-icons/io5"
-import { TbDots } from "react-icons/tb"
 import { RxCross2 } from "react-icons/rx"
 import { deleteFriendship, fetchFriendships, requestFriendship } from "../../utils/axios"
 import { Chat, User } from "../../utils/types"
 import ChatRoom from "../messenger/chat_room"
 import { initiateChat } from "../../utils/axios"
 import { icon } from "../../utils/helpers"
+import { useChat } from "../../context/chat"
 
 function ProfileHeader(): React.ReactElement {
   const { currentUser, setCurrentUser, profileUser } = useAuth()
-  const [chat, setChat] = useState<Chat | null>(null)
+  const { openChat, currentChat, isChatOpen, closeChat } = useChat()
+
   const [profileModalIsOpen, setProfileModalIsOpen] = useState<boolean>(false)
   const [coverModalIsOpen, setCoverModalIsOpen] = useState<boolean>(false)
+
   const [friendshipRequested, setFriendshipRequested] = useState<boolean>(false)
   const [friendshipAccepted, setFriendshipAccepted] = useState<boolean | null>(false)
   const [friendshipId, setFriendshipId] = useState<string | null>(null)
-  const [isChatOpen, setIsChatOpen] = useState<boolean>(false)
 
   useEffect(() => {
     // we don't check for friendship on when current user is on his own profile
@@ -142,27 +143,12 @@ function ProfileHeader(): React.ReactElement {
       break
   }
 
-  const openChat = async () => {
+  const handleOpenChat = async () => {
     console.log("Opening messenger chat")
     if (!currentUser || !profileUser) {
       return
     }
-
-    try {
-      const chatResponse = await initiateChat(currentUser!.id, profileUser!.id)
-      console.log("initiated chat:", chatResponse.name)
-      setChat(chatResponse)
-    } catch (error) {
-      console.error("Error fetching chat data:", error)
-    }
-
-    console.log("opening chat with currentUser:", currentUser)
-    console.log("opening chat with profileUser:", profileUser)
-    setIsChatOpen(true) // Open the chat
-  }
-
-  const closeChat = () => {
-    setIsChatOpen(false) // Close the chat
+    openChat(currentUser.id, profileUser.id)
   }
 
   const openProfileModal = useCallback(() => setProfileModalIsOpen(true), [])
@@ -252,7 +238,10 @@ function ProfileHeader(): React.ReactElement {
               </>
             ) : (
               <>
-                <div className="messenger-button" onClick={openChat}>
+                <div
+                  className="messenger-button"
+                  onClick={() => openChat(currentUser!.id, profileUser!.id)}
+                >
                   <RiMessengerLine />
                   <span>Messenger</span>
                 </div>
@@ -291,7 +280,7 @@ function ProfileHeader(): React.ReactElement {
           </div>
         </nav>
       </header>
-      {isChatOpen && <ChatRoom onClose={closeChat} chat={chat} />}
+      {isChatOpen && <ChatRoom onClose={closeChat} chat={currentChat} />}
     </>
   )
 }

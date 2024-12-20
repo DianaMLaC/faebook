@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from "react"
 import { Chat, ChatContextType } from "../utils/types"
+import { initiateChat } from "../utils/axios"
 
 interface ChatProviderProps {
   children: React.ReactNode
@@ -11,9 +12,18 @@ function ChatProvider({ children }: ChatProviderProps): React.ReactElement {
   const [currentChat, setCurrentChat] = useState<Chat | null>(null)
   const [isChatOpen, setIsChatOpen] = useState(false)
 
-  const openChat = (chat: Chat) => {
-    setCurrentChat(chat)
-    setIsChatOpen(true)
+  const openChat = async (senderId, receiverId) => {
+    if (!senderId || !receiverId) {
+      return
+    }
+
+    try {
+      const chatResponse = await initiateChat(senderId, receiverId)
+      setCurrentChat(chatResponse)
+      setIsChatOpen(true)
+    } catch (error) {
+      console.error("Error initiating chat in Chat Provider", error)
+    }
   }
 
   const closeChat = () => {
