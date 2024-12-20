@@ -8,6 +8,7 @@
 /.bundle
 /app/test/javascripts/bundle.js
 /.node_modules
+/app/assets/javascripts/bundle.js
 
 
 # Ignore all environment files (except templates).
@@ -36,6 +37,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/credentials/production.key
 
 # Vite Ruby
 /public/vite*
@@ -44,3 +46,4 @@ node_modules
 # https://vitejs.dev/guide/env-and-mode.html#env-files
 *.local
 
+/config/credentials/production.key
