@@ -19,6 +19,7 @@ function ProfileHeader(): React.ReactElement {
   const { currentUser, setCurrentUser, profileUser } = useAuth()
   const { openChat, currentChat, isChatOpen } = useChat()
 
+  const [receiver, setReceiver] = useState<User | null>(null)
   const [profileModalIsOpen, setProfileModalIsOpen] = useState<boolean>(false)
   const [coverModalIsOpen, setCoverModalIsOpen] = useState<boolean>(false)
 
@@ -148,6 +149,7 @@ function ProfileHeader(): React.ReactElement {
     if (!currentUser || !profileUser) {
       return
     }
+    setReceiver(profileUser)
     openChat(currentUser.id, profileUser.id)
   }
 
@@ -280,7 +282,7 @@ function ProfileHeader(): React.ReactElement {
           </div>
         </nav>
       </header>
-      {isChatOpen && <ChatRoom chat={currentChat} />}
+      {isChatOpen && <ChatRoom chat={currentChat} receiver={receiver} />}
     </>
   )
 }
