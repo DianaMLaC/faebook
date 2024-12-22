@@ -141,7 +141,8 @@ export interface Chat {
   name: string
   createdAt: string
   updatedAt: string
-  participants: User[]
+  sender: User
+  receiver: User
   messages: Message[]
 }
 
@@ -213,9 +214,15 @@ export interface PhotosContextType {
   addReplyToComment: (photoId: string, commentId: string, reply: Comment) => void
 }
 
+export interface ChatWindow {
+  chat: Chat
+  receiver: User
+  isMinimized: boolean
+}
+
 export interface ChatContextType {
-  currentChat: Chat | null
-  isChatOpen: boolean
-  openChat: (senderId: string, receiverId: string) => void
-  closeChat: () => void
+  activeChats: ChatWindow[]
+  openChat: (sender: User, receiver: User) => void
+  closeChat: (chatId: string) => void
+  toggleMinimizeChat: (chatId: string) => void
 }

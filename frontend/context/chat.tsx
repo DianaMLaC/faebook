@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react"
-import { Chat, ChatContextType } from "../utils/types"
+import { ChatWindow, ChatContextType } from "../utils/types"
 import { initiateChat } from "../utils/axios"
 
 interface ChatProviderProps {
