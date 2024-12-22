@@ -13,8 +13,8 @@ import { createMessage } from "../../utils/axios"
 import { icon } from "../../utils/helpers"
 import { useChat } from "../../context/chat"
 
-function ChatRoom({ chat }): React.ReactElement {
-  const { profileUser, currentUser } = useAuth()
+function ChatRoom({ chat, receiver }): React.ReactElement {
+  const { currentUser } = useAuth()
   const { CableApp } = useCable()
   const { closeChat } = useChat()
   const [messages, setMessages] = useState<Message[] | null>(chat.messages)
@@ -32,6 +32,7 @@ function ChatRoom({ chat }): React.ReactElement {
     if (!chat || !CableApp.cable || hasEffectRun) {
       return
     }
+    console.log({ chat })
     CableApp.cable.subscriptions.create(
       {
         channel: "MessagingChannel",
@@ -69,14 +70,14 @@ function ChatRoom({ chat }): React.ReactElement {
       <header className="chat-header">
         <div className="chat-header-user">
           <div className="avatar">
-            {profileUser?.profilePhotoUrl ? (
-              <img className="profile-photo" src={profileUser.profilePhotoUrl} alt="Profile" />
+            {receiver.profilePhotoUrl ? (
+              <img className="profile-photo" src={receiver.profilePhotoUrl} alt="Profile" />
             ) : (
               <img className="missing-profile-photo" src={icon.noProfilePhoto} alt="Faebook" />
             )}
           </div>
           <div className="chat-header-user-details">
-            <div className="post-user-display-name">{profileUser?.displayName}</div>
+            <div className="post-user-display-name">{receiver.displayName}</div>
             <div className="user-active-ago-time">Active 25 m ago</div>
           </div>
         </div>
