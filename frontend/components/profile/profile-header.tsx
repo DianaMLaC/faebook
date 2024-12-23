@@ -17,9 +17,8 @@ import { useChat } from "../../context/chat"
 
 function ProfileHeader(): React.ReactElement {
   const { currentUser, setCurrentUser, profileUser } = useAuth()
-  const { openChat, currentChat, isChatOpen } = useChat()
+  const { openChat } = useChat()
 
-  const [receiver, setReceiver] = useState<User | null>(null)
   const [profileModalIsOpen, setProfileModalIsOpen] = useState<boolean>(false)
   const [coverModalIsOpen, setCoverModalIsOpen] = useState<boolean>(false)
 
@@ -144,13 +143,10 @@ function ProfileHeader(): React.ReactElement {
       break
   }
 
-  const handleOpenChat = async () => {
-    console.log("Opening messenger chat")
-    if (!currentUser || !profileUser) {
-      return
+  const handleOpenChat = () => {
+    if (currentUser?.id && profileUser?.id) {
+      openChat(currentUser.id, profileUser.id)
     }
-    setReceiver(profileUser)
-    openChat(currentUser.id, profileUser.id)
   }
 
   const openProfileModal = useCallback(() => setProfileModalIsOpen(true), [])
@@ -163,127 +159,121 @@ function ProfileHeader(): React.ReactElement {
   }, [])
 
   return (
-    <>
-      <header className="profile-header">
-        <section className="cover-photo-container">
-          {profileUser?.coverPhotoUrl ? (
-            <img className="cover-photo" src={profileUser.coverPhotoUrl} alt="Cover" />
-          ) : (
-            <div className="missing-cover-photo"></div>
-          )}
+    <header className="profile-header">
+      <section className="cover-photo-container">
+        {profileUser?.coverPhotoUrl ? (
+          <img className="cover-photo" src={profileUser.coverPhotoUrl} alt="Cover" />
+        ) : (
+          <div className="missing-cover-photo"></div>
+        )}
+        {currentUser?.id === profileUser?.id && (
+          <div className="cover-photo-button" onClick={openCoverModal}>
+            <FaCamera />
+            <span>Edit cover photo</span>
+          </div>
+        )}
+        <ReactModal
+          isOpen={coverModalIsOpen}
+          onRequestClose={closeCoverModal}
+          contentLabel="Cover"
+          className="Modal"
+        >
+          <PhotoUpload
+            updatePhoto={updatePhoto}
+            closeModalContainer={closeCoverModal}
+            albumName="Cover"
+          />
+          <button onClick={closeCoverModal} className="close-photo-modal-button">
+            <RxCross2 />
+          </button>
+        </ReactModal>
+      </section>
+      <section className="profile-details-banner">
+        <div className="profile-photo-background">
+          <div className="profile-photo-container">
+            {profileUser?.profilePhotoUrl ? (
+              <img className="profile-photo" src={profileUser.profilePhotoUrl} alt="Profile" />
+            ) : (
+              <img className="missing-profile-photo" src={icon.noProfilePhoto} alt="Faebook" />
+            )}
+          </div>
           {currentUser?.id === profileUser?.id && (
-            <div className="cover-photo-button" onClick={openCoverModal}>
+            <div className="profile-photo-button-container" onClick={openProfileModal}>
               <FaCamera />
-              <span>Edit cover photo</span>
             </div>
           )}
           <ReactModal
-            isOpen={coverModalIsOpen}
-            onRequestClose={closeCoverModal}
-            contentLabel="Cover"
+            isOpen={profileModalIsOpen}
+            onRequestClose={closeProfileModal}
+            contentLabel="Profile"
             className="Modal"
           >
             <PhotoUpload
               updatePhoto={updatePhoto}
-              closeModalContainer={closeCoverModal}
-              albumName="Cover"
+              closeModalContainer={closeProfileModal}
+              albumName="Profile"
             />
-            <button onClick={closeCoverModal} className="close-photo-modal-button">
+            <button onClick={closeProfileModal} className="close-photo-modal-button">
               <RxCross2 />
             </button>
           </ReactModal>
-        </section>
-        <section className="profile-details-banner">
-          <div className="profile-photo-background">
-            <div className="profile-photo-container">
-              {profileUser?.profilePhotoUrl ? (
-                <img className="profile-photo" src={profileUser.profilePhotoUrl} alt="Profile" />
-              ) : (
-                <img className="missing-profile-photo" src={icon.noProfilePhoto} alt="Faebook" />
-              )}
-            </div>
-            {currentUser?.id === profileUser?.id && (
-              <div className="profile-photo-button-container" onClick={openProfileModal}>
-                <FaCamera />
+        </div>
+        <div className="profile-display-name-container">
+          <h1 className="profile-display-name">{profileUser?.displayName}</h1>
+        </div>
+        <div className="profile-header-nav-buttons">
+          {currentUser?.id === profileUser?.id ? (
+            <>
+              <div className="add-to-story-button">
+                <FaPlus />
+                <span>Add to story</span>
               </div>
-            )}
-            <ReactModal
-              isOpen={profileModalIsOpen}
-              onRequestClose={closeProfileModal}
-              contentLabel="Profile"
-              className="Modal"
-            >
-              <PhotoUpload
-                updatePhoto={updatePhoto}
-                closeModalContainer={closeProfileModal}
-                albumName="Profile"
-              />
-              <button onClick={closeProfileModal} className="close-photo-modal-button">
-                <RxCross2 />
-              </button>
-            </ReactModal>
-          </div>
-          <div className="profile-display-name-container">
-            <h1 className="profile-display-name">{profileUser?.displayName}</h1>
-          </div>
-          <div className="profile-header-nav-buttons">
-            {currentUser?.id === profileUser?.id ? (
-              <>
-                <div className="add-to-story-button">
-                  <FaPlus />
-                  <span>Add to story</span>
-                </div>
-                <div className="edit-profile-button">
-                  <MdModeEditOutline />
-                  <span>Edit profile</span>
-                </div>
-              </>
-            ) : (
-              <>
-                <div
-                  className="messenger-button"
-                  onClick={() => openChat(currentUser!.id, profileUser!.id)}
-                >
-                  <RiMessengerLine />
-                  <span>Messenger</span>
-                </div>
-                {friendshipButton}
-              </>
-            )}
-          </div>
-        </section>
+              <div className="edit-profile-button">
+                <MdModeEditOutline />
+                <span>Edit profile</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="messenger-button" onClick={handleOpenChat}>
+                <RiMessengerLine />
+                <span>Messenger</span>
+              </div>
+              {friendshipButton}
+            </>
+          )}
+        </div>
+      </section>
 
-        <nav className="profile-header-nav">
-          <div className="profile-header-nav-links">
-            <NavLink className="profile-header-nav-link" to="posts">
-              Posts
-            </NavLink>
-            <NavLink className="profile-header-nav-link" to="about">
-              About
-            </NavLink>
-            <NavLink className="profile-header-nav-link" to="friends">
-              Friends
-            </NavLink>
-            <NavLink className="profile-header-nav-link" to="photos">
-              Photos
-            </NavLink>
-            <NavLink className="profile-header-nav-link" to="videos">
-              Videos
-            </NavLink>
-            <NavLink className="profile-header-nav-link" to="checkins">
-              Check-ins
-            </NavLink>
-            <NavLink className="profile-header-nav-link" to="music">
-              Music
-            </NavLink>
-            <NavLink className="profile-header-nav-link" to="books">
-              Books
-            </NavLink>
-          </div>
-        </nav>
-      </header>
-      {isChatOpen && <ChatRoom chat={currentChat} />}
-    </>
+      <nav className="profile-header-nav">
+        <div className="profile-header-nav-links">
+          <NavLink className="profile-header-nav-link" to="posts">
+            Posts
+          </NavLink>
+          <NavLink className="profile-header-nav-link" to="about">
+            About
+          </NavLink>
+          <NavLink className="profile-header-nav-link" to="friends">
+            Friends
+          </NavLink>
+          <NavLink className="profile-header-nav-link" to="photos">
+            Photos
+          </NavLink>
+          <NavLink className="profile-header-nav-link" to="videos">
+            Videos
+          </NavLink>
+          <NavLink className="profile-header-nav-link" to="checkins">
+            Check-ins
+          </NavLink>
+          <NavLink className="profile-header-nav-link" to="music">
+            Music
+          </NavLink>
+          <NavLink className="profile-header-nav-link" to="books">
+            Books
+          </NavLink>
+        </div>
+      </nav>
+    </header>
   )
 }
 

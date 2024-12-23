@@ -16,6 +16,7 @@ import Videos from "./profile/videos"
 import CheckIns from "./profile/check-ins"
 import Music from "./profile/music"
 import Books from "./profile/books"
+import MessengerContainer from "./messenger/messenger_container"
 
 const App = () => {
   const { currentUser, profileUser, setProfileUser } = useAuth()
@@ -67,6 +68,7 @@ const App = () => {
         element={
           <EnforceLoggedIn user={currentUser}>
             <NavBar />
+            <MessengerContainer />
           </EnforceLoggedIn>
         }
       >
@@ -123,11 +125,6 @@ const EnforceLoggedOut = ({ user, children }) => {
 
   return children
 }
-
-// function BasicComponent() {
-//   console.log("basic rendered")
-//   return <div>some text</div>
-// }
 
 const EnforceLoggedIn = ({ user, children }) => {
   if (!user) {

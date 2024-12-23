@@ -3,13 +3,8 @@ json.id @chat.id
 json.name @chat.name
 json.createdAt @chat.created_at
 
-
-json.sender do
-  json.extract! @sender, :id, :name, :profile_photo_url, :email
-end
-
 json.receiver do
-  json.extract! @recipient, :id, :name, :profile_photo_url, :email
+  json.partial! 'api/users/user', user: @recipient
 end
 
 # Include messages
