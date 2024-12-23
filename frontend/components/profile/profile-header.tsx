@@ -282,7 +282,7 @@ function ProfileHeader(): React.ReactElement {
           </div>
         </nav>
       </header>
-      {isChatOpen && <ChatRoom chat={currentChat} receiver={receiver} />}
+      {isChatOpen && <ChatRoom chat={currentChat} />}
     </>
   )
 }

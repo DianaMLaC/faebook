@@ -61,7 +61,7 @@ function ChatList() {
             ))}
         </ul>
       </div>
-      {isChatOpen && <ChatRoom chat={currentChat} receiver={receiver} />}
+      {isChatOpen && <ChatRoom chat={currentChat} />}
     </>
   )
 }
