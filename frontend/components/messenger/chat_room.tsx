@@ -13,13 +13,13 @@ import { createMessage } from "../../utils/axios"
 import { icon } from "../../utils/helpers"
 import { useChat } from "../../context/chat"
 
-function ChatRoom({ chat, receiver }): React.ReactElement {
+function ChatRoom({ chat }): React.ReactElement {
   const { currentUser } = useAuth()
   const { CableApp } = useCable()
-  const { closeChat } = useChat()
+  const { closeChat, minimizeChat } = useChat()
   const [messages, setMessages] = useState<Message[] | null>(chat.messages)
   const [messageBody, setMessageBody] = useState("")
-  const [hasEffectRun, setHasEffectRun] = useState(false)
+  // const [hasEffectRun, setHasEffectRun] = useState(false)
 
   useEffect(() => {
     const chatContainer = document.querySelector(".chat-room")
@@ -29,11 +29,14 @@ function ChatRoom({ chat, receiver }): React.ReactElement {
   }, [messages])
 
   useEffect(() => {
-    if (!chat || !CableApp.cable || hasEffectRun) {
+    // if (!chat || !CableApp.cable || hasEffectRun) {
+    //   return
+    // }
+    if (!chat || !CableApp.cable) {
       return
     }
-    console.log({ chat })
-    CableApp.cable.subscriptions.create(
+
+    const subscription = CableApp.cable.subscriptions.create(
       {
         channel: "MessagingChannel",
         chat_id: chat.id,
@@ -43,11 +46,11 @@ function ChatRoom({ chat, receiver }): React.ReactElement {
           if (!messages?.some((message) => message.id === data.id)) {
             setMessages((prevMessages) => (prevMessages ? [...prevMessages, data] : [data]))
           }
-          console.log({ messages })
+          // console.log({ messages })
         },
       }
     )
-    setHasEffectRun(true)
+    // setHasEffectRun(true)
   }, [])
 
   const handleSendMessage = () => {
@@ -57,35 +60,41 @@ function ChatRoom({ chat, receiver }): React.ReactElement {
     }
   }
 
+  const handleMinimize = () => {
+    minimizeChat(chat.id)
+  }
+
+  const handleClose = () => {
+    closeChat(chat.id)
+  }
+
   const handleChatLike = () => {
     if (currentUser && chat) {
       // sendMessageOptimistic(chat.id, "👍", currentUser.id)
     }
   }
 
-  const minimizeChat = () => {}
-
   return (
     <div className="chat-container">
       <header className="chat-header">
         <div className="chat-header-user">
           <div className="avatar">
-            {receiver.profilePhotoUrl ? (
-              <img className="profile-photo" src={receiver.profilePhotoUrl} alt="Profile" />
+            {chat.receiver.profilePhotoUrl ? (
+              <img className="profile-photo" src={chat.receiver.profilePhotoUrl} alt="Profile" />
             ) : (
               <img className="missing-profile-photo" src={icon.noProfilePhoto} alt="Faebook" />
             )}
           </div>
           <div className="chat-header-user-details">
-            <div className="post-user-display-name">{receiver.displayName}</div>
+            <div className="post-user-display-name">{chat.receiver.displayName}</div>
             <div className="user-active-ago-time">Active 25 m ago</div>
           </div>
         </div>
         <div className="chat-header-buttons">
-          <div onClick={minimizeChat}>
+          <div onClick={handleMinimize}>
             <FaMinus />
           </div>
-          <div onClick={() => closeChat}>
+          <div onClick={handleClose}>
             <IoClose />
           </div>
         </div>
