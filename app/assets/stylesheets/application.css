@@ -3431,7 +3431,6 @@ input[type="url"] {
 
 .chat-room {
   flex-grow: 1;
-  padding: 10px;
   background-color: var(--background-color);
   overflow-y: auto;
   padding: 10px;
@@ -3466,9 +3465,6 @@ input[type="url"] {
 
 /* Chat List Container */
 
-.chat-menu-container {
-  /**/
-}
 
 /*position relative on the nav messenger button */
 .chat-list-container {
@@ -3527,16 +3523,27 @@ input[type="url"] {
   display: flex;
   flex-direction: column;
   z-index: 1000; /* High enough to be above main content but below modals */
-  pointer-events: none; /* Avoid blocking other UI elements */
+}
+
+.messenger-container.empty-state {
+  display: none; /* Hide the container when empty */
 }
 
 .open-chats {
   display: flex;
-  justify-content: flex-end; /* Align chats to the bottom-right */
+  justify-content: flex-end;
   gap: 10px;
-  pointer-events: auto; /* Allow interaction only within chat elements */
-  overflow-x: auto; /* Enable horizontal scrolling if too many open chats */
+  overflow-x: auto;
+  padding: 10px;
   max-width: 100%;
+  pointer-events: auto; /* Enable pointer events for this container */
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; /* Enable smooth scrolling */
+}
+
+/* Individual open chat adjustments for alignment */
+.open-chats > .chat-container {
+  scroll-snap-align: end; /* Align chats properly */
 }
 
 .minimized-chats-component {
@@ -3544,12 +3551,29 @@ input[type="url"] {
   justify-content: flex-end;
   margin-right: 10px; /* Align with open chats */
   pointer-events: auto;
+  flex-wrap: wrap;
+  max-width: 100%;
 }
 
-.minimized-chats-component {
-  flex-wrap: wrap; /* Stack rows if there are too many minimized chats */
-  max-height: 100px; /* Limit the height */
-  overflow-y: auto;
+
+.minimized-chats-list li {
+  margin: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.minimized-chats-list li:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure the minimized chat list remains aligned and wraps neatly */
+.minimized-chats-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 100%;
+  padding: 5px;
 }
 
 
