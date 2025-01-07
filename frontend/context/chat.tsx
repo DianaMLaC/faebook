@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react"
-import { Chat, ChatWindow, ChatContextType } from "../utils/types"
+import { Chat, ActiveChats, MinimizedChats, ChatContextType } from "../utils/types"
 import { initiateChat } from "../utils/axios"
 
 interface ChatProviderProps {
@@ -9,8 +9,8 @@ interface ChatProviderProps {
 const ChatContext = createContext<ChatContextType | null>(null)
 
 function ChatProvider({ children }: ChatProviderProps): React.ReactElement {
-  const [activeChats, setActiveChats] = useState<ChatWindow[] | []>([])
-  const [minimizedChats, setMinimizedChats] = useState<ChatWindow[]>([])
+  const [activeChats, setActiveChats] = useState<ActiveChats[] | []>([])
+  const [minimizedChats, setMinimizedChats] = useState<MinimizedChats[]>([])
   const MAX_OPEN_CHATS = 3
 
   // Function to open chat
@@ -41,7 +41,7 @@ function ChatProvider({ children }: ChatProviderProps): React.ReactElement {
     }
   }
 
-  const addChat = (chatResponse: Chat): ChatWindow[] => {
+  const addChat = (chatResponse: Chat): ActiveChats[] => {
     return [...activeChats, { chat: chatResponse, isMinimized: false }]
   }
 
@@ -57,8 +57,11 @@ function ChatProvider({ children }: ChatProviderProps): React.ReactElement {
       const filtered = updatedChats.filter((c) => c.chat.id !== oldChat.chat.id)
       setActiveChats(filtered)
       //change property of isMinimized
-      oldChat.isMinimized = true
-      setMinimizedChats((prevMinimized) => [...prevMinimized, oldChat])
+      const minimizedChat: MinimizedChats = {
+        chat: oldChat.chat,
+        isMinimized: true,
+      }
+      setMinimizedChats((prevMinimized) => [...prevMinimized, minimizedChat])
     }
   }
 
@@ -79,8 +82,11 @@ function ChatProvider({ children }: ChatProviderProps): React.ReactElement {
     const chatToMinimize = activeChats.find((c) => c.chat.id === chatId)
     if (!chatToMinimize) return
     setActiveChats((prevActive) => prevActive.filter((c) => c.chat.id !== chatId))
-    chatToMinimize.isMinimized = true
-    setMinimizedChats((prevMinimized) => [...prevMinimized, chatToMinimize])
+    const minimizedChat: MinimizedChats = {
+      chat: chatToMinimize.chat,
+      isMinimized: true,
+    }
+    setMinimizedChats((prevMinimized) => [...prevMinimized, minimizedChat])
   }
 
   // Function to restore a minimized chat
