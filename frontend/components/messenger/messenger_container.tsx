@@ -13,7 +13,7 @@ function MessengerContainer(): React.ReactElement {
       {/* Render open chats */}
       <div className="open-chats">
         {activeChats.map((chatWindow) => (
-          <ChatRoom key={chatWindow.chat.id} chat={chatWindow.chat} />
+          <ChatRoom key={`chat-${chatWindow.chat.id}`} chat={chatWindow.chat} />
         ))}
       </div>
 
