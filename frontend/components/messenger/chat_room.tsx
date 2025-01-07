@@ -19,7 +19,6 @@ function ChatRoom({ chat }): React.ReactElement {
   const { closeChat, minimizeChat } = useChat()
   const [messages, setMessages] = useState<Message[] | null>(chat.messages)
   const [messageBody, setMessageBody] = useState("")
-  // const [hasEffectRun, setHasEffectRun] = useState(false)
 
   useEffect(() => {
     const chatContainer = document.querySelector(".chat-room")
@@ -29,13 +28,10 @@ function ChatRoom({ chat }): React.ReactElement {
   }, [messages])
 
   useEffect(() => {
-    // if (!chat || !CableApp.cable || hasEffectRun) {
-    //   return
-    // }
     if (!chat || !CableApp.cable) {
       return
     }
-
+    console.log("in chat-room, useEffect")
     const subscription = CableApp.cable.subscriptions.create(
       {
         channel: "MessagingChannel",
@@ -46,7 +42,7 @@ function ChatRoom({ chat }): React.ReactElement {
           if (!messages?.some((message) => message.id === data.id)) {
             setMessages((prevMessages) => (prevMessages ? [...prevMessages, data] : [data]))
           }
-          // console.log({ messages })
+          console.log("messages received:", { messages })
         },
       }
     )
@@ -70,7 +66,7 @@ function ChatRoom({ chat }): React.ReactElement {
 
   const handleChatLike = () => {
     if (currentUser && chat) {
-      // sendMessageOptimistic(chat.id, "👍", currentUser.id)
+      createMessage(chat.id, "👍", currentUser.id)
     }
   }
 

@@ -3313,7 +3313,7 @@ input[type="url"] {
 /* Messenger */
 
 .chat-container {
-  position: fixed;
+  /* position: fixed; */
   background-color: var(--background-color);
   right: 80px;
   bottom: 0px; 

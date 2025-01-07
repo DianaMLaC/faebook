@@ -17,88 +17,78 @@ function ChatProvider({ children }: ChatProviderProps): React.ReactElement {
   const openChat = async (senderId: string, receiverId: string) => {
     try {
       const chatResponse = await initiateChat(senderId, receiverId)
+      console.log({ chatResponse })
+
+      //check if chat is active
+      const activeChat = activeChats.find((c) => c.chat.id === chatResponse.id)
+      if (activeChat) {
+        console.log("Chat already opened - ACTIVE")
+        return
+      }
 
       // Check if chat is already minimized
       const minimizedChat = minimizedChats.find((c) => c.chat.id === chatResponse.id)
       if (minimizedChat) {
+        console.log("Chat already opened - MINIMIZED")
         restoreChat(chatResponse.id)
         return
       }
 
-      // Add to active chats
-      setActiveChats((prevChats) => {
-        if (isChatAlreadyOpen(prevChats, chatResponse.id)) {
-          return prevChats
-        }
-
-        const updatedChats = addChat(prevChats, chatResponse)
-        return enforceOpenChatLimit(updatedChats, MAX_OPEN_CHATS)
-      })
+      // enforceLimit which adds it to ActiveChats
+      enforceOpenedChats(chatResponse)
     } catch (error) {
       console.error("Error opening chat in ChatContext:", error)
     }
   }
 
-  // Utility functions
-  const isChatAlreadyOpen = (activeChats: ChatWindow[], chatId: string): boolean => {
-    return activeChats.some((c) => c.chat.id === chatId)
-  }
-
-  const addChat = (activeChats: ChatWindow[], chatResponse: Chat): ChatWindow[] => {
+  const addChat = (chatResponse: Chat): ChatWindow[] => {
     return [...activeChats, { chat: chatResponse, isMinimized: false }]
   }
 
-  const enforceOpenChatLimit = (activeChats: ChatWindow[], maxOpenChats: number): ChatWindow[] => {
-    const openChatsCount = activeChats.filter((c) => !c.isMinimized).length
-
-    if (openChatsCount > maxOpenChats) {
-      const firstOpenChatIndex = activeChats.findIndex((c) => !c.isMinimized)
-      if (firstOpenChatIndex !== -1) {
-        const updatedChats = [...activeChats]
-        updatedChats[firstOpenChatIndex].isMinimized = true
-        return updatedChats
-      }
+  const enforceOpenedChats = (newChat: Chat) => {
+    // check if queue is 3
+    const updatedChats = addChat(newChat)
+    if (updatedChats.length <= MAX_OPEN_CHATS) {
+      setActiveChats(updatedChats)
+    } else {
+      // find old chat
+      const oldChat = activeChats[0]
+      // create an array newChats where we filter out (unshift) oldChat from updatedChats which has the newChat
+      const filtered = updatedChats.filter((c) => c.chat.id !== oldChat.chat.id)
+      setActiveChats(filtered)
+      //change property of isMinimized
+      oldChat.isMinimized = true
+      setMinimizedChats((prevMinimized) => [...prevMinimized, oldChat])
     }
-
-    return activeChats
   }
 
   // Function to close a chat
   const closeChat = (chatId: string) => {
-    setActiveChats((prevChats) => prevChats.filter((c) => c.chat.id !== chatId))
-  }
-
-  // Function to toggle minimize/maximize state of a chat
-  const toggleMinimizeChat = (chatId: string) => {
-    setActiveChats((prevChats) =>
-      prevChats.map((c) => (c.chat.id === chatId ? { ...c, isMinimized: !c.isMinimized } : c))
-    )
+    const chatActive = activeChats.find((c) => c.chat.id === chatId)
+    if (chatActive) {
+      setActiveChats((prevActive) => prevActive.filter((c) => c.chat.id !== chatId))
+    }
+    const chatMinimized = minimizedChats.find((c) => c.chat.id === chatId)
+    if (chatMinimized) {
+      setMinimizedChats((prevMinimized) => prevMinimized.filter((c) => c.chat.id !== chatId))
+    }
   }
 
   // Function to minimize a chat
   const minimizeChat = (chatId: string) => {
-    setActiveChats((prevChats) => {
-      const chatToMinimize = prevChats.find((c) => c.chat.id === chatId)
-      if (!chatToMinimize) return prevChats
-
-      setMinimizedChats((prevMinimized) => [...prevMinimized, chatToMinimize])
-      return prevChats.filter((c) => c.chat.id !== chatId)
-    })
+    const chatToMinimize = activeChats.find((c) => c.chat.id === chatId)
+    if (!chatToMinimize) return
+    setActiveChats((prevActive) => prevActive.filter((c) => c.chat.id !== chatId))
+    chatToMinimize.isMinimized = true
+    setMinimizedChats((prevMinimized) => [...prevMinimized, chatToMinimize])
   }
 
   // Function to restore a minimized chat
   const restoreChat = (chatId: string) => {
-    setMinimizedChats((prevMinimized) => {
-      const chatToRestore = prevMinimized.find((c) => c.chat.id === chatId)
-      if (!chatToRestore) return prevMinimized
-
-      setActiveChats((prevChats) => {
-        const updatedChats = [...prevChats, chatToRestore]
-        return enforceOpenChatLimit(updatedChats, MAX_OPEN_CHATS)
-      })
-
-      return prevMinimized.filter((c) => c.chat.id !== chatId)
-    })
+    const chatToRestore = minimizedChats.find((c) => c.chat.id === chatId)
+    if (!chatToRestore) return
+    setMinimizedChats((prevMinimized) => prevMinimized.filter((c) => c.chat.id !== chatId))
+    enforceOpenedChats(chatToRestore.chat)
   }
 
   return (
