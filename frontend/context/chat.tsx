@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from "react"
 import { Chat, ActiveChats, MinimizedChats, ChatContextType } from "../utils/types"
 import { initiateChat } from "../utils/axios"
+import useIsMobile from "../utils/useIsMobile"
 
 interface ChatProviderProps {
   children: React.ReactNode
@@ -11,7 +12,8 @@ const ChatContext = createContext<ChatContextType | null>(null)
 function ChatProvider({ children }: ChatProviderProps): React.ReactElement {
   const [activeChats, setActiveChats] = useState<ActiveChats[] | []>([])
   const [minimizedChats, setMinimizedChats] = useState<MinimizedChats[]>([])
-  const MAX_OPEN_CHATS = 3
+  const isMobile = useIsMobile()
+  const MAX_OPEN_CHATS = isMobile ? 1 : 3
 
   // Function to open chat
   const openChat = async (senderId: string, receiverId: string) => {
