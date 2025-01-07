@@ -3460,13 +3460,11 @@ input[type="url"] {
   background-color: var(--shade-background-color);
   color: var(--text-color);
   align-self: flex-start;
-  /* border: 1px solid #ddd; */
 }
 
 /* Chat List Container */
 
 
-/*position relative on the nav messenger button */
 .chat-list-container {
   position: absolute;
   right: 0;
@@ -3519,14 +3517,14 @@ input[type="url"] {
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100%; /* Stretch across the entire bottom */
+  width: 100%; 
   display: flex;
   flex-direction: column;
-  z-index: 1000; /* High enough to be above main content but below modals */
+  z-index: 1000;
 }
 
 .messenger-container.empty-state {
-  display: none; /* Hide the container when empty */
+  display: none; 
 }
 
 .open-chats {
@@ -3535,29 +3533,31 @@ input[type="url"] {
   gap: 10px;
   overflow-x: auto;
   padding: 10px;
-  max-width: 100%;
-  pointer-events: auto; /* Enable pointer events for this container */
+  max-width: calc(100% - 100px);
+  pointer-events: auto; 
   scroll-snap-type: x mandatory;
-  scroll-behavior: smooth; /* Enable smooth scrolling */
+  scroll-behavior: smooth; 
 }
 
-/* Individual open chat adjustments for alignment */
+
 .open-chats > .chat-container {
-  scroll-snap-align: end; /* Align chats properly */
+  scroll-snap-align: end; 
 }
 
 .minimized-chats-component {
+  position: fixed;
+  bottom: 0;
+  right: 5px;
+  width: 100px;
   display: flex;
-  justify-content: flex-end;
-  margin-right: 10px; /* Align with open chats */
+  flex-direction: column;
+  gap: 10px;
   pointer-events: auto;
-  flex-wrap: wrap;
-  max-width: 100%;
 }
 
 
 .minimized-chats-list li {
-  margin: 5px;
+  /* margin: 5px; */
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -3567,7 +3567,6 @@ input[type="url"] {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Ensure the minimized chat list remains aligned and wraps neatly */
 .minimized-chats-list {
   display: flex;
   flex-wrap: wrap;
@@ -3575,6 +3574,66 @@ input[type="url"] {
   max-width: 100%;
   padding: 5px;
 }
+
+.chat-receiver-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  /* margin-right: 12px;  */
+  object-fit: fill; 
+  cursor: pointer;
+}
+
+.chat-profile-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3694,11 +3753,6 @@ input[type="url"] {
     margin-bottom: 4px;
   }
 
-  /* .profile-header-nav {
-    margin-left: 6px;
-    margin-right: 6px;
-    height: 44px;
-  } */
 
   .profile-header-nav-links {
     overflow: scroll;
