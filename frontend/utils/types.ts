@@ -146,10 +146,20 @@ export interface Chat {
   messages: Message[]
 }
 
-export interface ChatWindow {
+export interface ActiveChats {
   chat: Chat
-  isMinimized: boolean
+  isMinimized: false
 }
+
+export interface MinimizedChats {
+  chat: Chat
+  isMinimized: true
+}
+
+// export interface ChatWindow {
+//   chat: Chat
+//   isMinimized: boolean
+// }
 
 export interface Message {
   id: string
@@ -220,8 +230,8 @@ export interface PhotosContextType {
 }
 
 export interface ChatContextType {
-  activeChats: ChatWindow[]
-  minimizedChats: ChatWindow[]
+  activeChats: ActiveChats[]
+  minimizedChats: MinimizedChats[]
   openChat: (senderId: string, receiverId: string) => void
   closeChat: (chatId: string) => void
   minimizeChat: (chatId: string) => void
