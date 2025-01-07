@@ -21,7 +21,7 @@ function MinimizedChats(): React.ReactElement {
                 <div className="chat-receiver-avatar">
                   {chatWindow.chat.receiver.profilePhotoUrl ? (
                     <img
-                      className="profile-photo"
+                      className="chat-profile-photo"
                       src={chatWindow.chat.receiver.profilePhotoUrl}
                       alt="Profile"
                     />
