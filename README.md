@@ -46,7 +46,7 @@ This allows for posts to display an attached picture, or a preview of a URL, ins
 
 When users include URLs in their post the link is automatically parsed and meta-data is fetched using LinkPreview API. The metadata is then stored in the db as a polymorphic association to the post.
 A thumbnail and description of the URL is then displayed in the `Post` next to what was originally typed.
-![alt-text](/docs/gifs/post-url-attached.gif "Post Url")
+![alt-text](/docs/gifs/post-url-attached-seth.gif "Post Url")
 
 ### Photo Upload
 
@@ -75,7 +75,7 @@ Faebook includes a real-time chat messenger, enabling seamless communication bet
 3. Click the Messenger button to initiate a chat.
 4. The chat window opens, and you can start typing and sending messages in real time.
 
-![alt-text](/docs/gifs/messaging-max-geraldine.gif "Max-Geraldine-Messages")
+![alt-text](/docs/gifs/messaging.gif "Seth-Orion-Messages")
 
 ### Mobile-responsiveness
 
