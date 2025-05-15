@@ -108,7 +108,7 @@ function PhotoDetails({ photo }) {
       )}
 
       <div>{likes.length > 0 ? <Likes likes={likes} position={"photo"} /> : <p></p>}</div>
-
+      <div className="separator-line"></div>
       <div className="photo-action-buttons">
         <div className={likedByCurrentUser ? "liked" : "like"} onClick={handlePhotoLike}>
           {likedByCurrentUser ? <BiSolidLike /> : <BiLike />}

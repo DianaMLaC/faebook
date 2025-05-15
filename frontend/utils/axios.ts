@@ -206,6 +206,7 @@ const fetchApiKey = async (): Promise<string> => {
 export const postUrl = async (url: string): Promise<Url> => {
   try {
     const LINK_PREVIEW_API_KEY = await fetchApiKey()
+    console.log({ LINK_PREVIEW_API_KEY })
     const encodedUrl = encodeURIComponent(url)
     const linkPreviewResponse = await axios.get(
       `https://api.linkpreview.net/?key=${LINK_PREVIEW_API_KEY}&q=${encodedUrl}`
@@ -217,6 +218,7 @@ export const postUrl = async (url: string): Promise<Url> => {
       image: linkPreviewResponse.data.image,
       url: linkPreviewResponse.data.url,
     }
+    console.log({ urlPayload })
 
     const urlResponse: AxiosResponse<Url> = await apiClient.post("/post_urls", urlPayload)
     return urlResponse.data

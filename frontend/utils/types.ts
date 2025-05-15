@@ -22,10 +22,9 @@ export interface SessionData {
   password: string
 }
 
-export interface FriendshipFriend {
+export interface FriendshipFriend extends User {
   friendshipId: string
   friendshipStatus: string
-  user: User
 }
 
 export interface FriendshipData {
@@ -142,9 +141,25 @@ export interface Chat {
   name: string
   createdAt: string
   updatedAt: string
-  participants: User[]
+  sender: User
+  receiver: User
   messages: Message[]
 }
+
+export interface ActiveChats {
+  chat: Chat
+  isMinimized: false
+}
+
+export interface MinimizedChats {
+  chat: Chat
+  isMinimized: true
+}
+
+// export interface ChatWindow {
+//   chat: Chat
+//   isMinimized: boolean
+// }
 
 export interface Message {
   id: string
@@ -212,4 +227,13 @@ export interface PhotosContextType {
   addLikeToComment: (photoId: string, commentId: string, like: Like) => void
   deleteLikeFromComment: (photoId: string, commentId: string, likeId: string) => void
   addReplyToComment: (photoId: string, commentId: string, reply: Comment) => void
+}
+
+export interface ChatContextType {
+  activeChats: ActiveChats[]
+  minimizedChats: MinimizedChats[]
+  openChat: (senderId: string, receiverId: string) => void
+  closeChat: (chatId: string) => void
+  minimizeChat: (chatId: string) => void
+  restoreChat: (chatId: string) => void
 }

@@ -37,17 +37,6 @@ function FriendsPage(): React.ReactElement {
     setActiveLink(view)
   }
 
-  // const getViewComponent = () => {
-  //   switch (activeView) {
-  //     case "allFriends":
-  //       return <FriendsIndex friends={acceptedFriends} />
-  //     case "friendRequests":
-  //       return <FriendRequests requests={pendingFriendships} />
-  //     default:
-  //       return null
-  //   }
-  // }
-
   const getViewComponent = () => {
     switch (activeView) {
       case "allFriends":
