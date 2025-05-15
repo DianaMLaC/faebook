@@ -7,11 +7,14 @@ require 'json'
 # helpers
 
 puts 'Clearing database...'
-# Destroy dependent records first to avoid foreign key violations
-[Like, Comment, Post].each(&:destroy_all)
-Photo.destroy_all
 
-# Now destroy higher-level records
+# Level 1: Records that have foreign keys to other entities
+[Message, ChatSubscription, Like, Comment, Post, Photo].each(&:destroy_all)
+
+# Level 2: Records that own the above
+Chat.destroy_all
+
+# Level 3: Records that are root-level
 [Album, Friendship, Intro, User].each(&:destroy_all)
 
 puts 'Database cleared.'
