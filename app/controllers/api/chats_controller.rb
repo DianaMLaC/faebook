@@ -16,12 +16,12 @@ class Api::ChatsController < ApplicationController
   end
 
   def create
-    recipient = User.find(params[:recipient_id])
-    sender = User.find(params[:sender_id])
-    @chat = find_or_create_chat_between(sender, recipient)
+    @recipient = User.find(params[:recipient_id])
+    @sender = User.find(params[:sender_id])
+    @chat = find_or_create_chat_between(@sender, @recipient)
 
     if @chat
-      render :show
+      render :create
     else
       render json: { errors: { chats: 'Unable to create chat' } }, status: :unprocessable_entity
     end
