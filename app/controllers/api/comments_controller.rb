@@ -57,7 +57,6 @@ class Api::CommentsController < ApplicationController
 
     return if @authenticated_user.id == profile_id || existing_relation.present?
 
-    @comment.errors.add(:friendship, 'No relation between users')
-    render json: { errors: @comment.errors.messages }, status: :unprocessable_entity and return
+    render json: { errors: { friendship: 'No relation between users' } }, status: :unprocessable_entity and return
   end
 end

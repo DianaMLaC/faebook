@@ -42,7 +42,7 @@ class Api::LikesController < ApplicationController
                status: :not_found and return
       end
     else
-      render json: { errors: { base: ['Likeable type not found'] } }, status: :not_found and return
+      render json: { errors: { likes: ['Likeable type not found'] } }, status: :not_found and return
     end
   end
 end

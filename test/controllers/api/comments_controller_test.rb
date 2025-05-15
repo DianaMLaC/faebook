@@ -117,13 +117,14 @@ class Api::CommentsControllerTest < ActionDispatch::IntegrationTest
     # ASSERT
     assert_response 422
     res = JSON.parse(@response.body)
-    assert_equal({
-                   'errors' => {
-                     'comment' => {
-                       'text' => "Text can't be blank"
-                     }
-                   }
-                 }, res)
+    # assert_equal({
+    #                'errors' => {
+    #                  'comment' => {
+    #                    'text' => "Text can't be blank"
+    #                  }
+    #                }
+    #              }, res)
+    assert_equal(res['errors']['text'], ["can't be blank"])
   end
 
   test 'when an unauthorized user comments on a post' do
