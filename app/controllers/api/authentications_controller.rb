@@ -10,7 +10,7 @@ class Api::AuthenticationsController < ApplicationController
       render :create
     else
 
-      render json: { errors: @user&.errors&.messages || { base: ['Email and password combination is invalid'] } },
+      render json: { errors: @user&.errors&.messages || { authentication: ['Email and password combination is invalid'] } },
              status: 422
     end
   end
