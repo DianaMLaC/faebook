@@ -8,7 +8,8 @@ require 'json'
 
 puts 'Clearing database...'
 # Destroy dependent records first to avoid foreign key violations
-[Like, Comment, Post, Photo].each(&:destroy_all)
+[Like, Comment, Post].each(&:destroy_all)
+Photo.destroy_all
 
 # Now destroy higher-level records
 [Album, Friendship, Intro, User].each(&:destroy_all)

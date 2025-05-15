@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { useAuth } from "../../context/auth"
-import { useCable } from "../../context/cable"
-import { fetchFriendships, initiateChat } from "../../utils/axios"
+import { fetchFriendships } from "../../utils/axios"
 import { useFriends } from "../../context/friends"
-import { Chat } from "../../utils/types"
-import ChatRoom from "./chat"
 import { icon } from "../../utils/helpers"
+import { useChat } from "../../context/chat"
 
-function ChatList() {
+function ChatList(): React.ReactElement {
   const { currentUser } = useAuth()
-  const [chat, setChat] = useState<Chat | null>(null)
-  const [isChatOpen, setIsChatOpen] = useState<boolean>(false)
-
+  const { openChat } = useChat()
   const { acceptedFriends, setAcceptedFriends } = useFriends()
 
   useEffect(() => {
@@ -31,50 +27,32 @@ function ChatList() {
     getFriendshipsData()
   }, [currentUser])
 
-  const openChat = async (userId) => {
-    console.log("Opening messenger chat")
-    if (!currentUser || !userId) {
-      return
+  const handleOpenChat = (friendId: string) => {
+    if (currentUser?.id) {
+      openChat(currentUser.id, friendId) // Pass sender and receiver IDs
     }
-
-    try {
-      const chatResponse = await initiateChat(currentUser!.id, userId)
-      console.log("initiated chat:", chatResponse.name)
-      setChat(chatResponse)
-    } catch (error) {
-      console.error("Error fetching chat data:", error)
-    }
-    setIsChatOpen(true) // Open the chat
   }
 
   return (
-    <>
-      <div className="chat-list-container">
-        <div className="chat-list-header">Contacts</div>
-        <ul className="chat-friends-list">
-          {acceptedFriends &&
-            acceptedFriends.map((friend) => (
-              <li key={friend.id} onClick={() => openChat(friend.id)}>
-                <div className="friend-item">
-                  <div className="avatar">
-                    {friend.profilePhotoUrl ? (
-                      <img className="profile-photo" src={friend.profilePhotoUrl} alt="Profile" />
-                    ) : (
-                      <img
-                        className="missing-profile-photo"
-                        src={icon.noProfilePhoto}
-                        alt="Faebook"
-                      />
-                    )}
-                  </div>
-                  <div className="post-user-display-name">{friend.displayName}</div>
-                </div>
-              </li>
-            ))}
-        </ul>
-      </div>
-      {isChatOpen && <ChatRoom chat={chat} onClose={() => setIsChatOpen(false)} />}
-    </>
+    <div className="chat-list-container">
+      <div className="chat-list-header">Contacts</div>
+      <ul className="chat-friends-list">
+        {acceptedFriends?.map((friend) => (
+          <li key={friend.id} onClick={() => handleOpenChat(friend.id)}>
+            <div className="friend-item">
+              <div className="avatar">
+                {friend.profilePhotoUrl ? (
+                  <img className="profile-photo" src={friend.profilePhotoUrl} alt="Profile" />
+                ) : (
+                  <img className="missing-profile-photo" src={icon.noProfilePhoto} alt="Faebook" />
+                )}
+              </div>
+              <div className="post-user-display-name">{friend.displayName}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
