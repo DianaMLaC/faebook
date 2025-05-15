@@ -7,11 +7,7 @@ class Api::AuthenticationsControllerTest < ActionDispatch::IntegrationTest
 
     json_response = JSON.parse(@response.body)
 
-    assert_equal(json_response, {
-                   'errors' => {
-                     'authentication' => 'Email and/or password are invalid'
-                   }
-                 })
+    assert_equal(json_response['errors']['authentication'], ['Email and password combination is invalid'])
   end
 
   test 'when password is invalid' do
@@ -25,11 +21,7 @@ class Api::AuthenticationsControllerTest < ActionDispatch::IntegrationTest
 
     json_response = JSON.parse(@response.body)
 
-    assert_equal(json_response, {
-                   'errors' => {
-                     'authentication' => 'Email and/or password are invalid'
-                   }
-                 })
+    assert_equal(json_response['errors']['authentication'], ['Email and password combination is invalid'])
   end
 
   test 'when email is invalid' do

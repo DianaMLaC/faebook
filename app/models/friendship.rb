@@ -22,6 +22,6 @@ class Friendship < ApplicationRecord
   def sender_and_receiver_cannot_be_the_same
     return unless sender_id == receiver_id
 
-    errors.add(:receiver_id, "can't be the same as sender")
+    errors.add(:receiver_id, "Receiver can't be the same as sender")
   end
 end

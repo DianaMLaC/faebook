@@ -36,7 +36,10 @@
 /public/assets
 
 # Ignore master key for decrypting credentials and more.
+/config/credentials/*
+/config/credentials.yml.enc
 /config/master.key
+
 /config/credentials/production.key
 
 # Vite Ruby

@@ -66,7 +66,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_response 404
   end
 
-  test 'when a user requests a friendship with a user that he is already friends with, then response is 403' do
+  test 'when a user requests a friendship with a user that he is already friends with, then response is 422' do
     # Arrange
     user_one = create_and_sign_in_user(user_params)
     reset!
@@ -78,11 +78,11 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     post "/api/users/#{user_one.id}/friendships"
 
     # Assert
-    assert_response 403
+    assert_response 422
     assert_equal(1, Friendship.count)
   end
 
-  test 'when a user requests a friendship with a user that has a pending request from the same user, then response is 403' do
+  test 'when a user requests a friendship with a user that has a pending request from the same user, then response is 422' do
     # Arrange
     user_one = create_and_sign_in_user(user_params)
     reset!
@@ -94,7 +94,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     post "/api/users/#{user_one.id}/friendships"
 
     # Assert
-    assert_response 403
+    assert_response 422
     assert_equal(1, Friendship.count)
   end
 
@@ -108,7 +108,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     # Assert
     assert_response 422
     res = JSON.parse(@response.body)
-    assert_includes(res['errors'], "Receiver can't be the same as sender")
+    assert_includes(res['errors']['receiver_id'], "Receiver can't be the same as sender")
     assert_equal(0, Friendship.count)
   end
 
@@ -146,7 +146,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     patch "/api/friendships/#{friendship.id}/accept"
 
     # Assert
-    assert_response 403
+    assert_response 422
     assert_equal(1, Friendship.count)
     assert_equal(false, Friendship.all.first.is_accepted)
   end
@@ -167,7 +167,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(true, Friendship.all.first.is_accepted)
   end
 
-  test 'when a user tries to accept a friend request that has been sent to someone else, then response is 403' do
+  test 'when a user tries to accept a friend request that has been sent to someone else, then response is 422' do
     # Arrange
     user_one = create_and_sign_in_user(user_params)
     reset!
@@ -180,7 +180,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     patch "/api/friendships/#{friendship.id}/accept"
 
     # Assert
-    assert_response 403
+    assert_response 422
     assert_equal(1, Friendship.count)
     assert_equal(false, Friendship.all.first.is_accepted)
   end
@@ -260,7 +260,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     assert_response 401
   end
 
-  test 'when a user tries to delete a friend request or friendship that involves users other than themselves, then response 403' do
+  test 'when a user tries to delete a friend request or friendship that involves users other than themselves, then response 422' do
     # Arrange
     user_one = create_and_sign_in_user(user_params)
     reset!
@@ -275,7 +275,7 @@ class Api::FriendshipsControllerTest < ActionDispatch::IntegrationTest
     delete "/api/friendships/#{friendship.id}"
 
     # Assert
-    assert_response 403
+    assert_response 422
     assert_equal(1, Friendship.count)
     assert_equal(friendship.id, Friendship.all.first.id)
   end
