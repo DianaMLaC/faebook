@@ -8,6 +8,9 @@ require 'json'
 
 puts 'Clearing database...'
 
+# Purge Active Storage attachments first so destroy_all doesn't hit orphaned attachment callbacks
+ActiveStorage::Attachment.find_each(&:purge)
+
 # Level 1: Records that have foreign keys to other entities
 [Message, ChatSubscription, Like, Comment, Post, Photo].each(&:destroy_all)
 
