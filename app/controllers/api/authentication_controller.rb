@@ -5,7 +5,7 @@ class Api::AuthenticationController < ApplicationController
     if user.nil?
       render json: {
         'errors' => {
-          'authentication' => 'Email and password are invalid'
+          'authentication' => 'Email and/or password are invalid'
         }
       }, status: 422
     else
